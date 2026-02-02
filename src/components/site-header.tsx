@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Schedule", href: "/schedule" },
@@ -23,9 +24,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
-            <Trophy className="h-5 w-5" />
-          </span>
+          <Image src={"/michca.png"} alt="Michigan Cricket Association Logo" width={40} height={40} />
           <p className="text-xl font-semibold text-foreground font-display sm:text-2xl">
             Michigan Cricket Association
           </p>

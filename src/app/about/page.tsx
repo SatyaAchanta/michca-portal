@@ -10,7 +10,7 @@ export default function AboutPage() {
       <PageContainer className="space-y-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            About Michigan Cricket Association
+            Welcome to Michigan Cricket Association
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
             Michigan Cricket Association nurtures competitive cricket across the state.
