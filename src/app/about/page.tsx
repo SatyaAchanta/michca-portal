@@ -10,10 +10,10 @@ export default function AboutPage() {
       <PageContainer className="space-y-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Welcome to Michigan Cricket Association
+           Michigan Cricket Association
           </h1>
-          <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Michigan Cricket Association nurtures competitive cricket across the state.
+          <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
+            A non-profit organization established in 2001, nurturing competitive cricket across Michigan
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Button asChild>
@@ -34,8 +34,7 @@ export default function AboutPage() {
               A single place to keep clubs, players, and officials aligned.
             </h2>
             <p className="text-sm text-muted-foreground">
-              From weekly fixtures to day-of match details, MichCA keeps everything
-              organized so teams can focus on the game.
+              From Pre-Season registrations to Finals day, MichCA's online portal centralizes all league activities.
             </p>
           </div>
           <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-red-100/60 p-4">
@@ -47,8 +46,8 @@ export default function AboutPage() {
               <Link href="/forms" className="text-foreground hover:text-primary">
                 Registration & policies
               </Link>
-              <Link href="/about" className="text-foreground hover:text-primary">
-                League overview
+              <Link href="/grounds" className="text-foreground hover:text-primary">
+                Grounds
               </Link>
             </div>
           </div>
@@ -77,16 +76,13 @@ export default function AboutPage() {
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">Our Mission</h2>
             <p className="text-sm text-muted-foreground">
-              Provide structured leagues, develop talent pipelines, and foster inclusive
-              cricket communities across Michigan. We focus on competitive integrity,
-              player development, and a welcoming match-day experience.
+              To control and improve the quality and standards of cricket in Michigan, recognizing that players and cricket fans are our primary stakeholders. We are committed to accountability, transparency, and integrity as our core values, while promoting and developing the game through tournaments, coaching schemes, and cricket academies.
             </p>
           </Card>
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">What We Do</h2>
             <p className="text-sm text-muted-foreground">
-              Manage seasonal fixtures, train officials, support clubs, and coordinate
-              venues across metro and regional hubs.
+              Organize and conduct tournaments including Test Matches, ODIs, and T20 formats. We encourage formation of cricket clubs and teams, arrange matches across the USA, and foster sportsmanship among school, college, and university students.
             </p>
           </Card>
         </div>
@@ -95,8 +91,7 @@ export default function AboutPage() {
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">Programs</h2>
             <p className="text-sm text-muted-foreground">
-              League play, youth development, umpire certification, and community outreach
-              clinics run throughout the year.
+              Youth cricket coaching camps, facilitating young cricketers to play in national and international tournaments, and seeding the game at school and community levels to provide opportunities for youth to learn, play, and master cricket.
             </p>
           </Card>
           <Card className="space-y-3 p-6">
@@ -109,8 +104,7 @@ export default function AboutPage() {
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">Values</h2>
             <p className="text-sm text-muted-foreground">
-              Fair play, respect, inclusion, and community partnership guide every match
-              day.
+              Sportsmanship, professionalism, transparency, and ethical standards in all aspects of cricket. We ban all forms of inequity and discrimination, promoting elimination of unethical and unfair practices in the game.
             </p>
           </Card>
         </div>
@@ -119,16 +113,17 @@ export default function AboutPage() {
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">Leadership</h2>
             <p className="text-sm text-muted-foreground">
-              A volunteer committee oversees scheduling, umpiring, operations, and
-              community outreach for the league. Captains represent each division.
+              Mich-CA is governed by charter members who constitute committees to oversee various functions. We appoint representatives to the USA National Cricket Governing Body approved by ICC, ensuring proper governance and administration of cricket in Michigan.
             </p>
           </Card>
           <Card className="space-y-3 p-6">
             <h2 className="text-lg font-semibold">Contact</h2>
             <p className="text-sm text-muted-foreground">
-              Email: info@michca.org
+              Detroit, Michigan 48310
               <br />
-              Phone: (555) 012-1987
+              Registered non-profit organization
+              <br />
+              Email: info@michca.org
             </p>
           </Card>
         </div>

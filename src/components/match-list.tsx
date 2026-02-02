@@ -1,4 +1,4 @@
-import type { Match } from "@/lib/mock-data";
+import type { Match } from "@/lib/data";
 import { formatMatchDate } from "@/lib/formatters";
 import { MatchCard } from "@/components/match-card";
 

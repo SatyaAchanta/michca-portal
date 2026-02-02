@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { documents } from "@/lib/mock-data";
+import { documents } from "@/lib/data";
 
 export default function FormsPage() {
   const [search, setSearch] = useState("");

@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import type { Match } from "@/lib/mock-data";
+import type { Match } from "@/lib/data";
 import { formatMatchDateTime } from "@/lib/formatters";
 
 export function MatchCard({ match }: { match: Match }) {
