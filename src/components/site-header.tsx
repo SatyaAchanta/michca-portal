@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 
@@ -17,12 +18,15 @@ const navLinks = [
   { label: "Schedule", href: "/schedule" },
   { label: "Forms", href: "/forms" },
   { label: "Grounds", href: "/grounds" },
+  { label: "Committees", href: "/committees" },
   { label: "About", href: "/about" },
 ];
 
 export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background">
+    <header className="sticky top-0 z-40 w-full bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-80">
           <Image src={"/michca.png"} alt="Michigan Cricket Association Logo" width={40} height={40} />
@@ -41,7 +45,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
@@ -54,7 +58,7 @@ export function SiteHeader() {
             </SheetHeader>
             <div className="mt-6 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <Button key={link.href} asChild variant="ghost" className="justify-start">
+                <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
                   <Link href={link.href}>{link.label}</Link>
                 </Button>
               ))}

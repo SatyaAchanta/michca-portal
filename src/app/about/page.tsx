@@ -13,7 +13,7 @@ export default function AboutPage() {
       <PageContainer className="space-y-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-           Michigan Cricket Association
+           Our Story
           </h1>
           <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
             A non-profit organization established in 2001, nurturing competitive cricket across Michigan
@@ -97,12 +97,57 @@ export default function AboutPage() {
           </div>
         </Card>
 
+        <Card className="space-y-4 p-6 border-primary/30 bg-gradient-to-br from-blue-50 via-white to-blue-100 shadow-md">
+          <div>
+            <h2 className="text-2xl font-semibold text-foreground">Our Mission</h2>
+            <p className="mt-2 text-sm font-medium text-muted-foreground">Non-profit organization registered with the state of Michigan since 2001</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Quality & Standards</h3>
+              <p className="text-sm text-muted-foreground">
+                Control and improve the quality of cricket in Michigan, establishing policies and regulations while maintaining accountability, transparency, and integrity as core values.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Promotion & Development</h3>
+              <p className="text-sm text-muted-foreground">
+                Organize ODIs, T20s, and tournaments. Establish coaching academies and schemes to promote cricket welfare and eliminate unethical practices.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Sportsmanship & Ethics</h3>
+              <p className="text-sm text-muted-foreground">
+                Foster professionalism and ethical standards in players, officials, and administrators. Ban all forms of inequity and discrimination.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Community Building</h3>
+              <p className="text-sm text-muted-foreground">
+                Encourage formation of cricket clubs and teams across Michigan. Arrange matches and tournaments throughout the USA with ICC-approved organizations.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Youth Development</h3>
+              <p className="text-sm text-muted-foreground">
+                Organize youth coaching camps, facilitate participation in national and international tournaments, and seed cricket at school and community levels.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-sm text-primary">Governance</h3>
+              <p className="text-sm text-muted-foreground">
+                Appoint representatives to USA National Cricket Governing Body approved by ICC. Constitute committees to oversee various functions and development.
+              </p>
+            </div>
+          </div>
+        </Card>
+
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { label: "Teams", value: "42+" },
-            { label: "Divisions", value: "5" },
-            { label: "Matches", value: "220+" },
-            { label: "Volunteers", value: "60+" },
+            { label: "Teams", value: "101" },
+            { label: "Divisions", value: "6" },
+            { label: "Matches", value: "500+" },
+            { label: "Grounds", value: "14" },
           ].map((stat) => (
             <Card
               key={stat.label}
@@ -114,21 +159,6 @@ export default function AboutPage() {
               <p className="mt-3 text-2xl font-semibold text-foreground">{stat.value}</p>
             </Card>
           ))}
-        </div>
-
-        <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">Our Mission</h2>
-            <p className="text-sm text-muted-foreground">
-              To control and improve the quality and standards of cricket in Michigan, recognizing that players and cricket fans are our primary stakeholders. We are committed to accountability, transparency, and integrity as our core values, while promoting and developing the game through tournaments, coaching schemes, and cricket academies.
-            </p>
-          </Card>
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">What We Do</h2>
-            <p className="text-sm text-muted-foreground">
-              Organize and conduct tournaments including Test Matches, ODIs, and T20 formats. We encourage formation of cricket clubs and teams, arrange matches across the USA, and foster sportsmanship among school, college, and university students.
-            </p>
-          </Card>
         </div>
 
         <Card className="space-y-6 p-6">
