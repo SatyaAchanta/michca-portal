@@ -28,7 +28,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <Card className="border border-primary/25 bg-gradient-to-br from-blue-50/70 via-white to-red-50/70 p-6">
+        <Card className="border border-primary/25 bg-gradient-to-br from-blue-50/70 via-white to-blue-50/70 p-6">
           <div className="space-y-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
@@ -58,7 +58,7 @@ export default function AboutPage() {
                 </div>
               </div>
               
-              <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-red-100/60 p-4">
+              <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-blue-100/60 p-4">
                 <p className="text-sm font-semibold text-foreground">Connect With Us</p>
                 <div className="mt-3 flex flex-wrap gap-3">
                   <Link
@@ -106,7 +106,7 @@ export default function AboutPage() {
           ].map((stat) => (
             <Card
               key={stat.label}
-              className="border border-primary/15 bg-gradient-to-br from-blue-50/50 via-white to-red-50/50 p-6"
+              className="border border-primary/15 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50 p-6"
             >
               <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground">
                 {stat.label}
@@ -149,7 +149,7 @@ export default function AboutPage() {
                   { name: "Hardeep Singh", role: "Vice President", initials: "HS" },
                 ].map((member, index) => (
                   <div key={index} className="flex flex-col items-center space-y-2 text-center">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-red-500 text-lg font-semibold text-white shadow-lg">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-lg font-semibold text-white shadow-lg">
                       {member.initials}
                     </div>
                     <div className="space-y-1">
@@ -168,7 +168,7 @@ export default function AboutPage() {
                   { name: "Iftekar Ahmad", role: "Public Relations", initials: "IA" }
                 ].map((member, index) => (
                   <div key={index} className="flex flex-col items-center space-y-2 text-center">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-red-500 text-lg font-semibold text-white shadow-lg">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-lg font-semibold text-white shadow-lg">
                       {member.initials}
                     </div>
                     <div className="space-y-1">
