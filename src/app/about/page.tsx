@@ -4,10 +4,12 @@ import { Facebook, Instagram, Youtube } from "lucide-react";
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SiteFooter } from "@/components/site-footer";
 
 export default function AboutPage() {
   return (
-    <div className="bg-background py-12">
+    <>
+      <div className="bg-background py-12">
       <PageContainer className="space-y-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -45,13 +47,13 @@ export default function AboutPage() {
                 <p className="text-sm font-semibold text-foreground">Quick Links</p>
                 <div className="mt-3 grid gap-2 text-sm">
                   <Link href="/schedule" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
-                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Season Schedule
+                    Season Schedule
                   </Link>
                   <Link href="/grounds" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
-                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Grounds & Venues
+                    Grounds & Venues
                   </Link>
                   <Link href="/forms" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
-                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Registration & Forms
+                    Registration & Forms
                   </Link>
                 </div>
               </div>
@@ -129,46 +131,56 @@ export default function AboutPage() {
           </Card>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-3">
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">Programs</h2>
-            <p className="text-sm text-muted-foreground">
-              Youth cricket coaching camps, facilitating young cricketers to play in national and international tournaments, and seeding the game at school and community levels to provide opportunities for youth to learn, play, and master cricket.
-            </p>
-          </Card>
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">Season Format</h2>
-            <p className="text-sm text-muted-foreground">
-              Regular-season fixtures lead into playoffs and finals across multiple
-              divisions to keep competition balanced.
-            </p>
-          </Card>
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">Values</h2>
-            <p className="text-sm text-muted-foreground">
-              Sportsmanship, professionalism, transparency, and ethical standards in all aspects of cricket. We ban all forms of inequity and discrimination, promoting elimination of unethical and unfair practices in the game.
-            </p>
-          </Card>
-        </div>
-
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Card className="space-y-3 p-6">
+        <Card className="space-y-6 p-6">
+          <div className="space-y-2">
             <h2 className="text-lg font-semibold">Leadership</h2>
             <p className="text-sm text-muted-foreground">
               Mich-CA is governed by charter members who constitute committees to oversee various functions. We appoint representatives to the USA National Cricket Governing Body approved by ICC, ensuring proper governance and administration of cricket in Michigan.
             </p>
-          </Card>
-          <Card className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold">Contact</h2>
-            <p className="text-sm text-muted-foreground">
-              Detroit, Michigan 48310
-              <br />
-              Registered non-profit organization
-              <br />
-              Email: info@michca.org
-            </p>
-          </Card>
-        </div>
+          </div>
+          
+          <div>
+            <h3 className="mb-6 text-sm font-semibold text-foreground">General Body Members</h3>
+            <div className="space-y-8">
+              {/* Row 1: President and Vice President */}
+              <div className="flex justify-center gap-12">
+                {[
+                  { name: "Tayefur Rahman", role: "President", initials: "TR" },
+                  { name: "Hardeep Singh", role: "Vice President", initials: "HS" },
+                ].map((member, index) => (
+                  <div key={index} className="flex flex-col items-center space-y-2 text-center">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-red-500 text-lg font-semibold text-white shadow-lg">
+                      {member.initials}
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-foreground">{member.name}</p>
+                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Row 2: Secretary, Treasurer, and Committee Member */}
+              <div className="flex justify-center gap-8">
+                {[
+                  { name: "Praveen Choudhury", role: "Secretary", initials: "PC" },
+                  { name: "Ravi Chalanti", role: "Treasurer", initials: "RC" },
+                  { name: "Iftekar Ahmad", role: "Public Relations", initials: "IA" }
+                ].map((member, index) => (
+                  <div key={index} className="flex flex-col items-center space-y-2 text-center">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-red-500 text-lg font-semibold text-white shadow-lg">
+                      {member.initials}
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-foreground">{member.name}</p>
+                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Card>
 
         <Card className="space-y-3 p-6">
           <h2 className="text-lg font-semibold">Sponsors & Partners</h2>
@@ -178,6 +190,8 @@ export default function AboutPage() {
           </p>
         </Card>
       </PageContainer>
-    </div>
+      </div>
+      <SiteFooter />
+    </>
   );
 }
