@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
@@ -25,30 +26,71 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <Card className="grid gap-4 border border-primary/25 bg-gradient-to-br from-blue-50/70 via-white to-red-50/70 p-6 md:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-              Season Hub
-            </p>
-            <h2 className="text-2xl font-semibold text-foreground">
-              A single place to keep clubs, players, and officials aligned.
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              From Pre-Season registrations to Finals day, MichCA's online portal centralizes all league activities.
-            </p>
-          </div>
-          <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-red-100/60 p-4">
-            <p className="text-sm font-semibold text-foreground">Quick links</p>
-            <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
-              <Link href="/schedule" className="text-foreground hover:text-primary">
-                Season schedule
-              </Link>
-              <Link href="/forms" className="text-foreground hover:text-primary">
-                Registration & policies
-              </Link>
-              <Link href="/grounds" className="text-foreground hover:text-primary">
-                Grounds
-              </Link>
+        <Card className="border border-primary/25 bg-gradient-to-br from-blue-50/70 via-white to-red-50/70 p-6">
+          <div className="space-y-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                Season Hub
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-foreground">
+                A single place to keep clubs, players, and officials aligned.
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                From Pre-Season registrations to Finals day, MichCA's online portal centralizes all league activities.
+              </p>
+            </div>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-red-100/60 p-4">
+                <p className="text-sm font-semibold text-foreground">Quick Links</p>
+                <div className="mt-3 grid gap-2 text-sm">
+                  <Link href="/schedule" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
+                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Season Schedule
+                  </Link>
+                  <Link href="/grounds" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
+                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Grounds & Venues
+                  </Link>
+                  <Link href="/forms" className="group inline-flex items-center text-foreground transition-all duration-200 hover:translate-x-1 hover:text-primary">
+                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span> Registration & Forms
+                  </Link>
+                </div>
+              </div>
+              
+              <div className="rounded-lg border border-primary/25 bg-gradient-to-br from-blue-100/60 via-white to-red-100/60 p-4">
+                <p className="text-sm font-semibold text-foreground">Connect With Us</p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Link
+                    href="https://www.facebook.com/MichiganCricketAssociationUSA/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-200 hover:scale-110 hover:bg-primary hover:text-primary-foreground"
+                    aria-label="Facebook"
+                  >
+                    <Facebook className="h-5 w-5" />
+                  </Link>
+                  <Link
+                    href="https://www.instagram.com/michca2001/?hl=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-200 hover:scale-110 hover:bg-primary hover:text-primary-foreground"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="h-5 w-5" />
+                  </Link>
+                  <Link
+                    href="https://www.youtube.com/channel/UCsFOLC2_wHIVfSAkTqZrwQA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-200 hover:scale-110 hover:bg-primary hover:text-primary-foreground"
+                    aria-label="YouTube"
+                  >
+                    <Youtube className="h-5 w-5" />
+                  </Link>
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Follow us for updates, highlights, and community events
+                </p>
+              </div>
             </div>
           </div>
         </Card>
