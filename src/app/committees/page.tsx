@@ -4,6 +4,14 @@ import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
 
+const leadership = [
+  { name: "Tayefur Rahman", role: "President" },
+  { name: "Hardeep Singh", role: "Vice President" },
+  { name: "Praveen Choudhury", role: "Secretary" },
+  { name: "Ravi Chalanti", role: "Treasurer" },
+  { name: "Iftekar Ahmad", role: "Public Relations" },
+];
+
 const committees = [
   {
     name: "Rules and Disciplinary Committee",
@@ -55,6 +63,16 @@ const committees = [
   },
 ];
 
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
+
 export default function CommitteesPage() {
   return (
     <>
@@ -62,10 +80,44 @@ export default function CommitteesPage() {
         <PageContainer className="space-y-8">
           <div className="space-y-2">
             <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-              Committees
+              Leadership
             </h1>
             <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
-              MichCA 2025-2026 operational committees managing various aspects of the league
+              Meet the league leadership and operational committees for the 2025-2026 season.
+            </p>
+          </div>
+
+          <Card className="space-y-4 p-6">
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold">Executive Leadership</h2>
+              <p className="text-sm text-muted-foreground">
+                The leadership team guides league strategy, governance, and match-day
+                standards across Michigan.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {leadership.map((member) => (
+                <div
+                  key={member.name}
+                  className="flex items-center gap-4 rounded-lg border border-border/70 bg-card p-4"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                    {getInitials(member.name)}
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-foreground">{member.name}</p>
+                    <p className="text-xs text-muted-foreground">{member.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold">Committees</h2>
+            <p className="text-sm text-muted-foreground">
+              Operational committees support rules, statistics, umpiring, media, and other
+              league initiatives.
             </p>
           </div>
 
@@ -73,7 +125,7 @@ export default function CommitteesPage() {
             {committees.map((committee) => (
               <Card
                 key={committee.name}
-                className="flex flex-col space-y-4 p-6 border-primary/15 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50 shadow-sm hover:shadow-md transition-shadow"
+                className="flex flex-col space-y-4 p-6"
               >
                 <div className="space-y-2">
                   <h2 className="text-lg font-semibold text-foreground">
@@ -95,22 +147,27 @@ export default function CommitteesPage() {
                   </div>
                   <ul className="space-y-2">
                     {committee.members.map((member, index) => (
-                      <li key={index} className="space-y-1">
-                        <p className="text-sm font-medium text-foreground">
-                          {member.name}
-                        </p>
-                        <a
-                          href={`tel:${member.phone.replace(/\s/g, "")}`}
-                          className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary"
-                        >
-                          <Phone className="h-3 w-3" />
-                          {member.phone}
-                        </a>
-                        {member.note && (
-                          <p className="text-xs italic text-muted-foreground">
-                            {member.note}
+                      <li key={index} className="flex items-start gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                          {getInitials(member.name)}
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium text-foreground">
+                            {member.name}
                           </p>
-                        )}
+                          <a
+                            href={`tel:${member.phone.replace(/\s/g, "")}`}
+                            className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary"
+                          >
+                            <Phone className="h-3 w-3" />
+                            {member.phone}
+                          </a>
+                          {member.note && (
+                            <p className="text-xs italic text-muted-foreground">
+                              {member.note}
+                            </p>
+                          )}
+                        </div>
                       </li>
                     ))}
                   </ul>
