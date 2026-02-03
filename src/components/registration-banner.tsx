@@ -38,7 +38,7 @@ export function RegistrationBanner() {
   }
 
   return (
-    <Card className="border border-border/70 bg-card px-4 py-3">
+    <Card className="border border-border/60 bg-background/90 px-4 py-3 shadow-none">
       <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
         <div className="flex flex-wrap items-center justify-center gap-2 text-sm sm:justify-start">
           <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
