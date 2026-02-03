@@ -152,7 +152,7 @@ export default function HomePage() {
                 <Link href="/about">Learn About Us</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/committees">View Committees</Link>
+                <Link href="/committees">Our Leadership</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="/grounds">Find Grounds</Link>

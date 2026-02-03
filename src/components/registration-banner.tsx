@@ -38,18 +38,19 @@ export function RegistrationBanner() {
   }
 
   return (
-    <Card className="border-amber-500/40 bg-gradient-to-br from-amber-50 to-orange-50 p-3 shadow-md">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold text-amber-900">
-            ⏰ Registrations are open
-          </p>
+    <Card className="border border-border/70 bg-card px-4 py-3">
+      <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm sm:justify-start">
+          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            Open
+          </span>
+          <p className="font-medium text-foreground">Team registrations are open.</p>
           <Popover>
             <PopoverTrigger asChild>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
-                className="h-6 w-6 p-0 text-amber-700 hover:text-amber-900 hover:bg-amber-100/50"
+                className="h-6 w-6 p-0 text-muted-foreground hover:text-primary"
               >
                 <Info className="h-4 w-4" />
                 <span className="sr-only">View important deadlines</span>
@@ -57,7 +58,7 @@ export function RegistrationBanner() {
             </PopoverTrigger>
             <PopoverContent className="w-80" align="start">
               <div className="space-y-3">
-                <h4 className="font-semibold text-sm text-foreground">
+                <h4 className="text-sm font-semibold text-foreground">
                   Important Deadlines
                 </h4>
                 <div className="space-y-2">
@@ -66,8 +67,8 @@ export function RegistrationBanner() {
                       key={deadline.label}
                       className="flex items-start gap-3 rounded-lg bg-muted/50 p-3"
                     >
-                      <deadline.icon className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <div className="flex-1 min-w-0">
+                      <deadline.icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-foreground">
                           {deadline.date}
                         </p>
@@ -83,9 +84,9 @@ export function RegistrationBanner() {
           </Popover>
         </div>
 
-        <Button asChild variant="destructive" size="sm">
+        <Button asChild size="sm">
           <Link href={REGISTRATION_FORM_URL} target="_blank" rel="noreferrer">
-            Register Now
+            Register
             <ExternalLink className="h-4 w-4" />
           </Link>
         </Button>
