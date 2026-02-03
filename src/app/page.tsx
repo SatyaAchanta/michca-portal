@@ -6,6 +6,7 @@ import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
+import { RegistrationBanner } from "@/components/registration-banner";
 
 const champions = [
   { division: "Premier Division", image: "/docs/premier-champions.jpg", year: "2025", teamName: "Greater Detroit CC Panthers" },
@@ -20,6 +21,13 @@ export default function HomePage() {
   return (
     <>
       <div className="bg-background">
+        {/* Registration Deadline Banner */}
+        <PageContainer className="pt-6">
+          <div className="mx-auto max-w-xl">
+            <RegistrationBanner />
+          </div>
+        </PageContainer>
+
         {/* Hero Section */}
         <div className="relative border-primary/30 bg-gradient-to-br from-white via-blue-50 to-blue-100 shadow-md py-20">
           <PageContainer>
