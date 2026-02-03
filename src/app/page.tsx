@@ -29,7 +29,7 @@ export default function HomePage() {
         </PageContainer>
 
         {/* Hero Section */}
-        <div className="relative border-primary/30 bg-gradient-to-br from-white via-blue-50 to-blue-100 shadow-md py-20">
+        <div className="relative bg-gradient-to-b from-background via-blue-50/40 to-blue-100/70 dark:from-background dark:via-slate-900/60 dark:to-slate-900 py-20">
           <PageContainer>
             <div className="mx-auto max-w-4xl text-center space-y-6">
               <div className="flex justify-center mb-6">
@@ -83,9 +83,9 @@ export default function HomePage() {
             {champions.map((champion) => (
               <Card 
                 key={champion.division}
-                className="overflow-hidden border border-primary/25 bg-gradient-to-br from-blue-50 via-white to-blue-100 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                className="overflow-hidden border border-border/70 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50">
+                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50 dark:from-slate-800 dark:to-slate-900">
                   <Image
                     src={champion.image}
                     alt={`${champion.division} Champions ${champion.year}`}
@@ -110,7 +110,7 @@ export default function HomePage() {
         </PageContainer>
 
         {/* Quick Stats */}
-        <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-16">
+        <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 py-16">
           <PageContainer>
             <div className="text-center space-y-2 mb-12">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -126,7 +126,7 @@ export default function HomePage() {
               ].map((stat) => (
                 <Card
                   key={stat.label}
-                  className="text-center p-6 border border-primary/25 bg-white shadow-md"
+                  className="text-center p-6 border border-border/70 bg-card shadow-md"
                 >
                   <stat.icon className="h-8 w-8 mx-auto mb-2 text-primary" />
                   <p className="text-3xl font-bold text-foreground">{stat.value}</p>
@@ -139,7 +139,7 @@ export default function HomePage() {
 
         {/* Call to Action */}
         <PageContainer className="py-16">
-          <Card className="p-8 md:p-12 text-center border border-primary/25 bg-gradient-to-br from-blue-50 via-white to-blue-100 shadow-md">
+          <Card className="p-8 md:p-12 text-center border border-border/70 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 shadow-md">
             <h2 className="text-3xl font-bold tracking-tight mb-4">
               Join the Michigan Cricket Community
             </h2>
@@ -165,4 +165,3 @@ export default function HomePage() {
     </>
   );
 }
-

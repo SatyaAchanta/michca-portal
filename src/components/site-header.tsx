@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronDown, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Sheet,
   SheetContent,
@@ -40,59 +41,62 @@ export function SiteHeader() {
             <span className="hidden sm:inline">Michigan Cricket Association</span>
           </p>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href} 
-              className="relative text-foreground transition-colors duration-200 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-200 hover:after:w-full"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <details className="group relative">
-            <summary className="flex cursor-pointer list-none items-center gap-1 text-foreground transition-colors duration-200 hover:text-primary">
-              More
-              <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
-            </summary>
-            <div className="absolute right-0 mt-3 w-40 rounded-lg border border-border/70 bg-card p-2 shadow-sm">
-              {moreLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </details>
-        </nav>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Open navigation</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Michigan Cricket Association</SheetTitle>
-            </SheetHeader>
-            <div className="mt-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
-                  <Link href={link.href}>{link.label}</Link>
-                </Button>
-              ))}
-              {moreLinks.map((link) => (
-                <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
-                  <Link href={link.href}>{link.label}</Link>
-                </Button>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+        <div className="flex items-center gap-2">
+          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.href} 
+                href={link.href} 
+                className="relative text-foreground transition-colors duration-200 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-200 hover:after:w-full"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <details className="group relative">
+              <summary className="flex cursor-pointer list-none items-center gap-1 text-foreground transition-colors duration-200 hover:text-primary">
+                More
+                <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              <div className="absolute right-0 mt-3 w-40 rounded-lg border border-border/70 bg-card p-2 shadow-sm">
+                {moreLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          </nav>
+          <ThemeToggle />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Open navigation</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Michigan Cricket Association</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 flex flex-col gap-4">
+                {navLinks.map((link) => (
+                  <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </Button>
+                ))}
+                {moreLinks.map((link) => (
+                  <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </Button>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

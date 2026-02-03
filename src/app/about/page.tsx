@@ -16,7 +16,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <Card className="space-y-4 p-6 border-primary/30 bg-gradient-to-br from-blue-50 via-white to-blue-100 shadow-md">
+        <Card className="space-y-4 p-6 border border-border/70 bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 shadow-md">
           <div>
             <h2 className="text-2xl font-semibold text-foreground">Our Mission</h2>
             <p className="mt-2 text-sm font-medium text-muted-foreground">Non-profit organization registered with the state of Michigan since 2001</p>
@@ -70,7 +70,7 @@ export default function AboutPage() {
           ].map((stat) => (
             <Card
               key={stat.label}
-              className="border border-primary/15 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50 p-6"
+              className="border border-border/70 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 p-6"
             >
               <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground">
                 {stat.label}

@@ -37,7 +37,7 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/70 bg-gradient-to-br from-slate-50 to-slate-100">
+    <footer className="border-t border-border/70 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-4">
           {/* About Section */}
