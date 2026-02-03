@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { assignments, documents } from "@/lib/mock-data";
+import { assignments, documents } from "@/lib/data";
 import { formatMatchDateTime } from "@/lib/formatters";
 
 export default function UmpiringPage() {

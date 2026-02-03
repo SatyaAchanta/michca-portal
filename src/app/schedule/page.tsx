@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { matches } from "@/lib/mock-data";
+import { matches } from "@/lib/data";
 
 export default function SchedulePage() {
   const [search, setSearch] = useState("");
@@ -93,8 +93,8 @@ export default function SchedulePage() {
           <MatchList matches={filteredMatches} />
         ) : (
           <EmptyState
-            title="No matches found"
-            description="Try adjusting the filters or search terms."
+            title="Registrations are currently in progress"
+            description="Scheduled will be announced soon. Please check back later."
           />
         )}
       </PageContainer>

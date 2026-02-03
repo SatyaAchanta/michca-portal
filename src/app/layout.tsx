@@ -10,9 +10,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "MichCA Season Hub",
+  title: "MichCA",
   description:
-    "Michigan Cricket Association season hub with schedules, fantasy league, umpiring, and documents.",
+    "Home of Cricket in Michigan. Stay updated with the latest news, schedules, and events from The MichCA.",
 };
 
 export default function RootLayout({

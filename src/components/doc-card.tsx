@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { Download, FileText } from "lucide-react";
+import { Download, ExternalLink, FileText } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import type { DocumentItem } from "@/lib/mock-data";
+import type { DocumentItem } from "@/lib/data";
 
 export function DocCard({ doc }: { doc: DocumentItem }) {
+  const isGoogleForm = doc.fileType === "FORM";
+  
   return (
     <Card className="flex h-full flex-col justify-between p-6">
       <div>
@@ -19,18 +21,29 @@ export function DocCard({ doc }: { doc: DocumentItem }) {
         ) : null}
       </div>
       <div className="mt-6 flex flex-wrap gap-3">
-        <Button asChild variant="outline" size="sm">
-          <Link href={doc.url} target="_blank" rel="noreferrer">
-            <FileText className="h-4 w-4" />
-            Open
-          </Link>
-        </Button>
-        <Button asChild size="sm">
-          <Link href={doc.url} download>
-            <Download className="h-4 w-4" />
-            Download
-          </Link>
-        </Button>
+        {isGoogleForm ? (
+          <Button asChild size="sm">
+            <Link href={doc.url} target="_blank" rel="noreferrer">
+              <ExternalLink className="h-4 w-4" />
+              Open Form
+            </Link>
+          </Button>
+        ) : (
+          <>
+            <Button asChild variant="outline" size="sm">
+              <Link href={doc.url} target="_blank" rel="noreferrer">
+                <FileText className="h-4 w-4" />
+                Open
+              </Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link href={doc.url} download>
+                <Download className="h-4 w-4" />
+                Download
+              </Link>
+            </Button>
+          </>
+        )}
       </div>
     </Card>
   );
