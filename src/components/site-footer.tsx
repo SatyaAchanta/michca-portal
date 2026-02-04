@@ -7,6 +7,7 @@ const footerLinks = {
     { label: "Grounds", href: "/grounds" },
     { label: "Forms", href: "/forms" },
     { label: "About", href: "/about" },
+    { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
   ],
   contact: [
     { icon: MapPin, label: "Detroit, Michigan 48310" },
@@ -80,6 +81,8 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noreferrer" : undefined}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}

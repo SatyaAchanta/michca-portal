@@ -24,6 +24,7 @@ const navLinks = [
 const moreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "About", href: "/about" },
+  { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
 ];
 
 const socialLinks = [
@@ -80,6 +81,8 @@ export function SiteHeader() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noreferrer" : undefined}
                     className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
                   >
                     {link.label}
@@ -125,7 +128,9 @@ export function SiteHeader() {
                 ))}
                 {moreLinks.map((link) => (
                   <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
-                    <Link href={link.href}>{link.label}</Link>
+                    <Link href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noreferrer" : undefined}>
+                      {link.label}
+                    </Link>
                   </Button>
                 ))}
               </div>
