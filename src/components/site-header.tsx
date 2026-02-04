@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Facebook, Instagram, Menu, Youtube } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -24,6 +24,24 @@ const navLinks = [
 const moreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "About", href: "/about" },
+];
+
+const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/MichiganCricketAssociationUSA/",
+    icon: Facebook,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/michca2001/?hl=en",
+    icon: Instagram,
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/channel/UCsFOLC2_wHIVfSAkTqZrwQA",
+    icon: Youtube,
+  },
 ];
 
 export function SiteHeader() {
@@ -70,6 +88,23 @@ export function SiteHeader() {
               </div>
             </details>
           </nav>
+          <div className="hidden items-center gap-2 md:flex">
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+              return (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  <Icon className="h-4 w-4" />
+                </Link>
+              );
+            })}
+          </div>
           <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -93,6 +128,24 @@ export function SiteHeader() {
                     <Link href={link.href}>{link.label}</Link>
                   </Button>
                 ))}
+              </div>
+              <div className="mt-4 flex items-center gap-3">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <Link
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                      onClick={() => setOpen(false)}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </Link>
+                  );
+                })}
               </div>
             </SheetContent>
           </Sheet>
