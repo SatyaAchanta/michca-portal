@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Division {
+  F40
+  PREMIER_T20
+  DIV1_T20
+  DIV2_T20
+  DIV3_T20
+  T30
+  U15
+  GLT
+}
+
+enum GameType {
+  LEAGUE
+  PLAYOFF
+}
+
+enum GameStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
+model Team {
+  shortCode    String @id
+  name         String
+  gamesAsTeam1 Game[] @relation("Team1")
+  gamesAsTeam2 Game[] @relation("Team2")
+  gamesWon     Game[] @relation("GameWinner")
+}
+
+model Game {
+  id              String     @id @default(uuid())
+  date            DateTime
+  division        Division
+  status          GameStatus @default(SCHEDULED)
+  venue           String?
+  team1ShortCode  String
+  team2ShortCode  String
+  team1           Team       @relation("Team1", fields: [team1ShortCode], references: [shortCode])
+  team2           Team       @relation("Team2", fields: [team2ShortCode], references: [shortCode])
+  gameType        GameType   @default(LEAGUE)
+  winnerShortCode String?
+  winner          Team?      @relation("GameWinner", fields: [winnerShortCode], references: [shortCode])
+  isDraw          Boolean    @default(false)
+  isCancelled     Boolean    @default(false)
+  team1Score      Int?
+  team2Score      Int?
+  resultNotes     String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([date])
+  @@index([status])
+}

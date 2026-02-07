@@ -1,6 +1,7 @@
 import type { Match } from "@/lib/data";
 import { formatMatchDate } from "@/lib/formatters";
 import { MatchCard } from "@/components/match-card";
+import type { ScheduleSortOrder } from "@/app/schedule/types";
 
 function groupMatches(matches: Match[]) {
   return matches.reduce<Record<string, Match[]>>((acc, match) => {
@@ -10,9 +11,17 @@ function groupMatches(matches: Match[]) {
   }, {});
 }
 
-export function MatchList({ matches }: { matches: Match[] }) {
+export function MatchList({
+  matches,
+  sortOrder = "asc",
+}: {
+  matches: Match[];
+  sortOrder?: ScheduleSortOrder;
+}) {
   const grouped = groupMatches(matches);
-  const dates = Object.keys(grouped).sort();
+  const dates = Object.keys(grouped).sort((a, b) =>
+    sortOrder === "asc" ? a.localeCompare(b) : b.localeCompare(a)
+  );
 
   return (
     <div className="space-y-6">

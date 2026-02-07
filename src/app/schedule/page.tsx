@@ -1,49 +1,28 @@
-"use client";
-
-import { useMemo, useState } from "react";
-
 import { PageContainer } from "@/components/page-container";
-import { MatchList } from "@/components/match-list";
-import { EmptyState } from "@/components/empty-state";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { matches } from "@/lib/data";
+import { ScheduleClient } from "@/app/schedule/schedule-client";
+import { getScheduleGames, getScheduleSeasons } from "@/app/schedule/actions";
+import { DETROIT_TIMEZONE, PAGE_SIZE } from "@/app/schedule/types";
 
-export default function SchedulePage() {
-  const [search, setSearch] = useState("");
-  const [division, setDivision] = useState("all");
-  const [venue, setVenue] = useState("all");
-
-  const divisions = useMemo(
-    () => ["all", ...Array.from(new Set(matches.map((match) => match.division)))],
-    []
+export default async function SchedulePage() {
+  const populatedSeasons = await getScheduleSeasons();
+  const currentYear = Number.parseInt(
+    new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      timeZone: DETROIT_TIMEZONE,
+    }).format(new Date()),
+    10
   );
-  const venues = useMemo(
-    () => ["all", ...Array.from(new Set(matches.map((match) => match.venue)))],
-    []
+  const defaultSeason = populatedSeasons[0] ?? currentYear;
+  const seasonOptions = Array.from(new Set([currentYear, ...populatedSeasons])).sort(
+    (a, b) => b - a
   );
 
-  const filteredMatches = useMemo(() => {
-    return matches.filter((match) => {
-      const query = search.trim().toLowerCase();
-      const searchMatch = query
-        ? [match.homeTeam, match.awayTeam, match.venue, match.date]
-            .join(" ")
-            .toLowerCase()
-            .includes(query)
-        : true;
-      const divisionMatch = division === "all" || match.division === division;
-      const venueMatch = venue === "all" || match.venue === venue;
-
-      return searchMatch && divisionMatch && venueMatch;
-    });
-  }, [division, venue, search]);
+  const initialResult = await getScheduleGames({
+    season: defaultSeason,
+    status: "SCHEDULED",
+    page: 1,
+    pageSize: PAGE_SIZE,
+  });
 
   return (
     <div className="bg-background py-12">
@@ -53,50 +32,11 @@ export default function SchedulePage() {
             Season Schedule
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Find upcoming fixtures fast. Filter by division or venue.
+            Browse games by date range, division, team name, and status.
           </p>
         </div>
 
-        <div className="grid gap-3 rounded-xl border border-border/70 bg-card p-4 md:grid-cols-[1.2fr_0.9fr_0.9fr]">
-          <Input
-            placeholder="Search team, venue, or date"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
-          <Select value={division} onValueChange={setDivision}>
-            <SelectTrigger>
-              <SelectValue placeholder="Division" />
-            </SelectTrigger>
-            <SelectContent>
-              {divisions.map((divisionOption) => (
-                <SelectItem key={divisionOption} value={divisionOption}>
-                  {divisionOption === "all" ? "All divisions" : divisionOption}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={venue} onValueChange={setVenue}>
-            <SelectTrigger>
-              <SelectValue placeholder="Venue" />
-            </SelectTrigger>
-            <SelectContent>
-              {venues.map((venueOption) => (
-                <SelectItem key={venueOption} value={venueOption}>
-                  {venueOption === "all" ? "All venues" : venueOption}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {filteredMatches.length ? (
-          <MatchList matches={filteredMatches} />
-        ) : (
-          <EmptyState
-            title="Registrations are currently in progress"
-            description="Scheduled will be announced soon. Please check back later."
-          />
-        )}
+        <ScheduleClient initialResult={initialResult} initialSeasons={seasonOptions} />
       </PageContainer>
     </div>
   );
