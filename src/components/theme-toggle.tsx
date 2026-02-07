@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -24,27 +24,19 @@ function applyTheme(theme: "light" | "dark") {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [mounted, setMounted] = useState(false);
   const modeRef = useRef<ThemeMode>("system");
 
   useEffect(() => {
     const stored = (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) ?? "system";
     modeRef.current = stored;
-
-    const resolvedTheme = stored === "system" ? getSystemTheme() : stored;
-    applyTheme(resolvedTheme);
-    setTheme(resolvedTheme);
-    setMounted(true);
+    applyTheme(stored === "system" ? getSystemTheme() : stored);
 
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (event: MediaQueryListEvent) => {
       if (modeRef.current !== "system") {
         return;
       }
-      const nextTheme = event.matches ? "dark" : "light";
-      applyTheme(nextTheme);
-      setTheme(nextTheme);
+      applyTheme(event.matches ? "dark" : "light");
     };
 
     media.addEventListener("change", handleChange);
@@ -54,11 +46,11 @@ export function ThemeToggle() {
   }, []);
 
   const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
+    const nextTheme =
+      document.documentElement.classList.contains("dark") ? "light" : "dark";
     modeRef.current = nextTheme;
     localStorage.setItem(STORAGE_KEY, nextTheme);
     applyTheme(nextTheme);
-    setTheme(nextTheme);
   };
 
   return (
@@ -69,9 +61,9 @@ export function ThemeToggle() {
       aria-label="Toggle dark mode"
       onClick={toggleTheme}
       className="h-9 w-9"
-      disabled={!mounted}
     >
-      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      <Moon className="h-4 w-4 dark:hidden" />
+      <Sun className="hidden h-4 w-4 dark:block" />
     </Button>
   );
 }
