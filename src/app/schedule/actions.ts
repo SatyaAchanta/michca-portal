@@ -1,10 +1,11 @@
 "use server";
 
 import { GameStatus, Prisma } from "@prisma/client";
-import { addHours, format } from "date-fns";
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 import { prisma } from "@/lib/prisma";
 import {
+  DETROIT_TIMEZONE,
   DIVISION_LABELS,
   DIVISIONS,
   PAGE_SIZE,
@@ -16,10 +17,8 @@ import {
   type ScheduleStatusFilter,
 } from "@/app/schedule/types";
 
-const DISPLAY_HOUR_OFFSET = 4;
-
-function toUtcDateAtTime(dateValue: string, timeValue: string) {
-  return new Date(`${dateValue}T${timeValue}Z`);
+function toDateAtTime(dateValue: string, timeValue: string) {
+  return new Date(`${dateValue}T${timeValue}`);
 }
 
 function normalizeStatus(input: string): ScheduleStatusFilter {
@@ -43,12 +42,24 @@ function normalizePage(input: number) {
 }
 
 function getCurrentYear() {
-  return new Date().getUTCFullYear();
+  return Number.parseInt(
+    new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      timeZone: DETROIT_TIMEZONE,
+    }).format(new Date()),
+    10
+  );
 }
 
 function getSeasonDateBounds(season: number) {
-  const start = toUtcDateAtTime(`${season}-01-01`, "00:00:00.000");
-  const end = toUtcDateAtTime(`${season}-12-31`, "23:59:59.999");
+  const start = fromZonedTime(
+    toDateAtTime(`${season}-01-01`, "00:00:00.000"),
+    DETROIT_TIMEZONE
+  );
+  const end = fromZonedTime(
+    toDateAtTime(`${season}-12-31`, "23:59:59.999"),
+    DETROIT_TIMEZONE
+  );
 
   return { start, end };
 }
@@ -60,10 +71,10 @@ function getClampedDateRange(
   endDate?: string
 ) {
   const requestedStart = startDate
-    ? toUtcDateAtTime(startDate, "00:00:00.000")
+    ? fromZonedTime(toDateAtTime(startDate, "00:00:00.000"), DETROIT_TIMEZONE)
     : undefined;
   const requestedEnd = endDate
-    ? toUtcDateAtTime(endDate, "23:59:59.999")
+    ? fromZonedTime(toDateAtTime(endDate, "23:59:59.999"), DETROIT_TIMEZONE)
     : undefined;
 
   const gte = requestedStart && requestedStart > seasonStart ? requestedStart : seasonStart;
@@ -73,7 +84,7 @@ function getClampedDateRange(
 }
 
 function parseYear(date: Date) {
-  return date.getUTCFullYear();
+  return Number.parseInt(formatInTimeZone(date, DETROIT_TIMEZONE, "yyyy"), 10);
 }
 
 export async function getScheduleSeasons(): Promise<number[]> {
@@ -164,8 +175,9 @@ export async function getScheduleGames(
     items: games.map((game) => ({
       id: game.id,
       date: game.date.toISOString(),
-      displayDateTime: format(
-        addHours(game.date, DISPLAY_HOUR_OFFSET),
+      displayDateTime: formatInTimeZone(
+        game.date,
+        DETROIT_TIMEZONE,
         "EEE, MMM d, HH:mm"
       ),
       division: DIVISION_LABELS[game.division],

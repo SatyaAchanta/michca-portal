@@ -1,13 +1,9 @@
-import { addHours, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
 
-const DISPLAY_HOUR_OFFSET = 4;
-
-function withDisplayOffset(value: string) {
-  return addHours(parseISO(value), DISPLAY_HOUR_OFFSET);
-}
+const DISPLAY_TIMEZONE = "America/Detroit";
 
 export function formatMatchDateTime(value: string) {
-  const date = withDisplayOffset(value);
+  const date = parseISO(value);
   return new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
@@ -15,16 +11,16 @@ export function formatMatchDateTime(value: string) {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-    timeZone: "UTC",
+    timeZone: DISPLAY_TIMEZONE,
   }).format(date);
 }
 
 export function formatMatchDate(value: string) {
-  const date = withDisplayOffset(value);
+  const date = parseISO(value);
   return new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
-    timeZone: "UTC",
+    timeZone: DISPLAY_TIMEZONE,
   }).format(date);
 }

@@ -35,13 +35,15 @@ export function ScheduleClient({ initialResult, initialSeasons }: ScheduleClient
     initialSeasons.length > 0
       ? initialSeasons
       : [result.season].filter((value, index, self) => self.indexOf(value) === index);
+  // TEMP: Hide 2025 season from the dropdown while date migration is being validated.
+  const visibleSeasonValues = seasonValues.filter((year) => year !== 2025);
   const seasonStartDate = new Date(Date.UTC(query.season, 0, 1, 12, 0, 0));
   const seasonEndDate = new Date(Date.UTC(query.season, 11, 31, 12, 0, 0));
 
   return (
     <div className="space-y-6">
       <ScheduleFiltersBar
-        seasonValues={seasonValues}
+        seasonValues={visibleSeasonValues}
         season={query.season}
         isPastSeason={result.isPastSeason}
         status={query.status}
