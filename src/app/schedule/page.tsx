@@ -12,7 +12,8 @@ export default async function SchedulePage() {
     }).format(new Date()),
     10
   );
-  const defaultSeason = populatedSeasons[0] ?? currentYear;
+  // Always default to the current season (2026 right now), not the latest populated past season.
+  const defaultSeason = currentYear;
   const seasonOptions = Array.from(new Set([currentYear, ...populatedSeasons])).sort(
     (a, b) => b - a
   );
