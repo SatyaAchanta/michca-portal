@@ -14,6 +14,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Schedule", href: "/schedule" },
@@ -24,7 +26,7 @@ const navLinks = [
 const moreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "About", href: "/about" },
-  { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
+  { label: "Fantasy", href: "https://www.fantasyleaguemichca.org", external: true },
 ];
 
 const socialLinks = [
@@ -47,6 +49,7 @@ const socialLinks = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
@@ -71,12 +74,19 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <details className="group relative">
-              <summary className="flex cursor-pointer list-none items-center gap-1 text-foreground transition-colors duration-200 hover:text-primary">
-                More
-                <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
-              </summary>
-              <div className="absolute right-0 mt-3 w-40 rounded-lg border border-border/70 bg-card p-2 shadow-sm">
+            <Popover open={moreOpen} onOpenChange={setMoreOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" className="flex items-center gap-1">
+                  More
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-200 ease-out",
+                      moreOpen && "rotate-180"
+                    )}
+                  />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-40 p-2">
                 {moreLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -84,12 +94,13 @@ export function SiteHeader() {
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noreferrer" : undefined}
                     className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setMoreOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-              </div>
-            </details>
+              </PopoverContent>
+            </Popover>
           </nav>
           <div className="hidden items-center gap-2 md:flex">
             {socialLinks.map((social) => {

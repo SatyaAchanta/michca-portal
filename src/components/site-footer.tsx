@@ -10,9 +10,9 @@ const footerLinks = {
     { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
   ],
   contact: [
-    { icon: MapPin, label: "Detroit, Michigan 48310" },
+    { icon: MapPin, label: "Detroit, Michigan 48212, USA" },
     { icon: Mail, label: "communications@michca.org" },
-    { icon: Phone, label: "Contact Us" },
+    { icon: Phone, label: "+1 313 335 6817 (Contact Us)", href: "tel:+13133356817" },
   ],
   social: [
     {
@@ -44,7 +44,7 @@ export function SiteFooter() {
           {/* About Section */}
           <div className="lg:col-span-2">
             <h3 className="mb-4 text-lg font-bold text-foreground">
-              Michigan Cricket Association
+              Michigan Cricket Association, USA
             </h3>
             <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
               A non-profit organization established in 2001, dedicated to nurturing
@@ -103,7 +103,16 @@ export function SiteFooter() {
                 return (
                   <li key={index} className="flex items-start gap-2">
                     <Icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                    <span className="text-sm text-muted-foreground">{item.label}</span>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="text-sm text-muted-foreground hover:text-primary"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">{item.label}</span>
+                    )}
                   </li>
                 );
               })}

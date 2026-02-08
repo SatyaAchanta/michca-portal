@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Mail, Phone, Users } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
@@ -5,23 +6,15 @@ import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
 
 const leadership = [
-  { name: "Tayefur Rahman", role: "President" },
-  { name: "Hardeep Singh", role: "Vice President" },
-  { name: "Praveen Choudhury", role: "Secretary" },
-  { name: "Ravi Chalanti", role: "Treasurer" },
-  { name: "Iftekar Ahmad", role: "Public Relations" },
+  { name: "Tayefur Rahman", role: "Chairman", image: "/executives/tayefur.jpeg" },
+  { name: "Hardeep Singh", role: "Vice Chairman", image: "/executives/hardeep.webp" },
+  { name: "Praveen Choudhury", role: "Secretary", image: "/executives/praveen.webp" },
+  { name: "Ravi Chalanti", role: "Treasurer", image: "/executives/ravi.webp" },
+  { name: "Iftekar Ahmad", role: "Public Relations", image: "/executives/iftekar.jpeg" },
 ];
 
 const committees = [
-  {
-    name: "Rules and Disciplinary Committee",
-    email: "micricketrules@gmail.com",
-    members: [
-      { name: "Kartheek Yalamanchili", phone: "248 952 7557" },
-      { name: "Naveen Chugh", phone: "586 342 4795" },
-      { name: "Tarik Khan", phone: "414 630 4133" },
-    ],
-  },
+
   {
     name: "Stats Committee",
     email: "micricketstats@gmail.com",
@@ -74,6 +67,9 @@ function getInitials(name: string) {
 }
 
 export default function CommitteesPage() {
+  const topLeadership = leadership.slice(0, 2);
+  const bottomLeadership = leadership.slice(2);
+
   return (
     <>
       <div className="bg-background py-12">
@@ -87,7 +83,7 @@ export default function CommitteesPage() {
             </p>
           </div>
 
-          <Card className="space-y-4 p-6">
+          <Card className="space-y-6 border border-border/70 bg-gradient-to-br from-card via-background to-secondary/30 p-6 shadow-sm">
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Executive Leadership</h2>
               <p className="text-sm text-muted-foreground">
@@ -95,25 +91,55 @@ export default function CommitteesPage() {
                 standards across Michigan.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {leadership.map((member) => (
-                <div
-                  key={member.name}
-                  className="flex items-center gap-4 rounded-lg border border-border/70 bg-card p-4"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-                    {getInitials(member.name)}
+            <div className="space-y-5">
+              <div className="mx-auto grid max-w-3xl grid-cols-1 gap-5 sm:grid-cols-2">
+                {topLeadership.map((member) => (
+                  <div
+                    key={member.name}
+                    className="mx-auto flex w-full max-w-sm flex-col items-center rounded-xl border border-border/70 bg-background/80 p-5 text-center shadow-sm transition-colors hover:border-primary/30"
+                  >
+                    <div className="relative h-20 w-20 overflow-hidden rounded-full border border-border/70 ring-2 ring-primary/10">
+                      <Image
+                        src={member.image}
+                        alt={`${member.name} - ${member.role}`}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="mt-3 space-y-1">
+                      <p className="text-base font-semibold text-foreground">{member.name}</p>
+                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-foreground">{member.name}</p>
-                    <p className="text-xs text-muted-foreground">{member.role}</p>
+                ))}
+              </div>
+              <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {bottomLeadership.map((member) => (
+                  <div
+                    key={member.name}
+                    className="mx-auto flex w-full max-w-sm flex-col items-center rounded-xl border border-border/70 bg-background/80 p-5 text-center shadow-sm transition-colors hover:border-primary/30"
+                  >
+                    <div className="relative h-20 w-20 overflow-hidden rounded-full border border-border/70 ring-2 ring-primary/10">
+                      <Image
+                        src={member.image}
+                        alt={`${member.name} - ${member.role}`}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="mt-3 space-y-1">
+                      <p className="text-base font-semibold text-foreground">{member.name}</p>
+                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </Card>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h2 className="text-lg font-semibold">Committees</h2>
             <p className="text-sm text-muted-foreground">
               Operational committees support rules, statistics, umpiring, media, and other
@@ -125,29 +151,29 @@ export default function CommitteesPage() {
             {committees.map((committee) => (
               <Card
                 key={committee.name}
-                className="flex flex-col space-y-4 p-6"
+                className="flex h-full flex-col space-y-5 rounded-xl border border-border/70 bg-gradient-to-br from-card via-background to-secondary/20 p-6 shadow-sm"
               >
                 <div className="space-y-2">
-                  <h2 className="text-lg font-semibold text-foreground">
+                  <h2 className="text-lg font-semibold leading-tight text-foreground">
                     {committee.name}
                   </h2>
                   <a
                     href={`mailto:${committee.email}`}
-                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                    className="flex items-center gap-2 break-all text-sm text-primary hover:underline"
                   >
                     <Mail className="h-4 w-4" />
                     {committee.email}
                   </a>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                     <Users className="h-4 w-4" />
                     <span>Members</span>
                   </div>
-                  <ul className="space-y-2">
+                  <ul className="space-y-3">
                     {committee.members.map((member, index) => (
-                      <li key={index} className="flex items-start gap-3">
+                      <li key={index} className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/70 p-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                           {getInitials(member.name)}
                         </div>
