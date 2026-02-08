@@ -1,11 +1,10 @@
 "use server";
 
 import { GameStatus, Prisma } from "@prisma/client";
-import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
+import { addHours, format } from "date-fns";
 
 import { prisma } from "@/lib/prisma";
 import {
-  DETROIT_TIMEZONE,
   DIVISION_LABELS,
   DIVISIONS,
   PAGE_SIZE,
@@ -17,8 +16,10 @@ import {
   type ScheduleStatusFilter,
 } from "@/app/schedule/types";
 
-function toDateAtTime(dateValue: string, timeValue: string) {
-  return new Date(`${dateValue}T${timeValue}`);
+const DISPLAY_HOUR_OFFSET = 4;
+
+function toUtcDateAtTime(dateValue: string, timeValue: string) {
+  return new Date(`${dateValue}T${timeValue}Z`);
 }
 
 function normalizeStatus(input: string): ScheduleStatusFilter {
@@ -41,25 +42,13 @@ function normalizePage(input: number) {
   return Number.isFinite(input) && input > 0 ? Math.floor(input) : 1;
 }
 
-function getCurrentDetroitYear() {
-  return Number.parseInt(
-    new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      timeZone: DETROIT_TIMEZONE,
-    }).format(new Date()),
-    10
-  );
+function getCurrentYear() {
+  return new Date().getUTCFullYear();
 }
 
 function getSeasonDateBounds(season: number) {
-  const start = fromZonedTime(
-    toDateAtTime(`${season}-01-01`, "00:00:00.000"),
-    DETROIT_TIMEZONE
-  );
-  const end = fromZonedTime(
-    toDateAtTime(`${season}-12-31`, "23:59:59.999"),
-    DETROIT_TIMEZONE
-  );
+  const start = toUtcDateAtTime(`${season}-01-01`, "00:00:00.000");
+  const end = toUtcDateAtTime(`${season}-12-31`, "23:59:59.999");
 
   return { start, end };
 }
@@ -71,10 +60,10 @@ function getClampedDateRange(
   endDate?: string
 ) {
   const requestedStart = startDate
-    ? fromZonedTime(toDateAtTime(startDate, "00:00:00.000"), DETROIT_TIMEZONE)
+    ? toUtcDateAtTime(startDate, "00:00:00.000")
     : undefined;
   const requestedEnd = endDate
-    ? fromZonedTime(toDateAtTime(endDate, "23:59:59.999"), DETROIT_TIMEZONE)
+    ? toUtcDateAtTime(endDate, "23:59:59.999")
     : undefined;
 
   const gte = requestedStart && requestedStart > seasonStart ? requestedStart : seasonStart;
@@ -83,8 +72,8 @@ function getClampedDateRange(
   return { gte, lte };
 }
 
-function parseDetroitYear(date: Date) {
-  return Number.parseInt(formatInTimeZone(date, DETROIT_TIMEZONE, "yyyy"), 10);
+function parseYear(date: Date) {
+  return date.getUTCFullYear();
 }
 
 export async function getScheduleSeasons(): Promise<number[]> {
@@ -95,7 +84,7 @@ export async function getScheduleSeasons(): Promise<number[]> {
 
   const uniqueYears = new Set<number>();
   for (const row of rows) {
-    uniqueYears.add(parseDetroitYear(row.date));
+    uniqueYears.add(parseYear(row.date));
   }
 
   return Array.from(uniqueYears).sort((a, b) => b - a);
@@ -110,7 +99,7 @@ export async function getScheduleGames(
   const pageSize = PAGE_SIZE;
   const teamQuery = filters.teamQuery?.trim();
 
-  const currentYear = getCurrentDetroitYear();
+  const currentYear = getCurrentYear();
   const season = Number.isFinite(filters.season) ? Math.floor(filters.season) : currentYear;
   const isPastSeason = season < currentYear;
   const sortOrder: ScheduleSortOrder = isPastSeason ? "desc" : "asc";
@@ -175,7 +164,10 @@ export async function getScheduleGames(
     items: games.map((game) => ({
       id: game.id,
       date: game.date.toISOString(),
-      displayDateTime: formatInTimeZone(game.date, DETROIT_TIMEZONE, "EEE, MMM d, h:mm a"),
+      displayDateTime: format(
+        addHours(game.date, DISPLAY_HOUR_OFFSET),
+        "EEE, MMM d, HH:mm"
+      ),
       division: DIVISION_LABELS[game.division],
       gameType: game.gameType,
       status: game.status,

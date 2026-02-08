@@ -1,17 +1,11 @@
 import { PageContainer } from "@/components/page-container";
 import { ScheduleClient } from "@/app/schedule/schedule-client";
 import { getScheduleGames, getScheduleSeasons } from "@/app/schedule/actions";
-import { DETROIT_TIMEZONE, PAGE_SIZE } from "@/app/schedule/types";
+import { PAGE_SIZE } from "@/app/schedule/types";
 
 export default async function SchedulePage() {
   const populatedSeasons = await getScheduleSeasons();
-  const currentYear = Number.parseInt(
-    new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      timeZone: DETROIT_TIMEZONE,
-    }).format(new Date()),
-    10
-  );
+  const currentYear = new Date().getUTCFullYear();
   const defaultSeason = populatedSeasons[0] ?? currentYear;
   const seasonOptions = Array.from(new Set([currentYear, ...populatedSeasons])).sort(
     (a, b) => b - a
