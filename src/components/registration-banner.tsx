@@ -11,6 +11,7 @@ import {
 
 const REGISTRATION_FORM_URL = "https://forms.gle/op9QNwjgnSHGHjMN7";
 const FINAL_DEADLINE = new Date("2026-04-07");
+const PAYMENT_DEADLINE = "Feb 25th, 2026";
 
 const deadlines = [
   {
@@ -19,7 +20,7 @@ const deadlines = [
     icon: Calendar,
   },
   {
-    date: "Mar 31, 2026",
+    date: PAYMENT_DEADLINE,
     label: "Full Payment Deadline",
     icon: DollarSign,
   },
@@ -40,48 +41,54 @@ export function RegistrationBanner() {
   return (
     <Card className="border border-border/60 bg-background/90 px-4 py-3 shadow-none">
       <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
-        <div className="flex flex-wrap items-center justify-center gap-2 text-sm sm:justify-start">
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Open
-          </span>
-          <p className="font-medium text-foreground">Team registrations are open.</p>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 w-6 p-0 text-muted-foreground hover:text-primary"
-              >
-                <Info className="h-4 w-4" />
-                <span className="sr-only">View important deadlines</span>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80" align="start">
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-foreground">
-                  Important Deadlines
-                </h4>
-                <div className="space-y-2">
-                  {deadlines.map((deadline) => (
-                    <div
-                      key={deadline.label}
-                      className="flex items-start gap-3 rounded-lg bg-muted/50 p-3"
-                    >
-                      <deadline.icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-foreground">
-                          {deadline.date}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {deadline.label}
-                        </p>
+        <div className="flex flex-col items-center gap-2 text-sm sm:items-start">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+            <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Open
+            </span>
+            <p className="font-medium text-foreground">Team registrations are open.</p>
+          </div>
+          <div className="inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary sm:text-sm">
+            <DollarSign className="h-3.5 w-3.5" />
+            <span>Payment deadline: {PAYMENT_DEADLINE}</span>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-5 w-5 p-0 text-primary/80 hover:bg-transparent hover:text-primary"
+                >
+                  <Info className="h-3.5 w-3.5" />
+                  <span className="sr-only">View important deadlines</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80" align="start">
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold text-foreground">
+                    Important Deadlines
+                  </h4>
+                  <div className="space-y-2">
+                    {deadlines.map((deadline) => (
+                      <div
+                        key={deadline.label}
+                        className="flex items-start gap-3 rounded-lg bg-muted/50 p-3"
+                      >
+                        <deadline.icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold text-foreground">
+                            {deadline.date}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {deadline.label}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
 
         <Button asChild size="sm">
