@@ -11,11 +11,12 @@ import {
 
 const REGISTRATION_FORM_URL = "https://forms.gle/op9QNwjgnSHGHjMN7";
 const FINAL_DEADLINE = new Date("2026-04-07");
-const PAYMENT_DEADLINE = "Feb 25th, 2026";
+const REGISTRATION_DEADLINE = "Feb 25, 2026";
+const PAYMENT_DEADLINE = "Mar 31, 2026";
 
 const deadlines = [
   {
-    date: "Feb 25, 2026",
+    date: REGISTRATION_DEADLINE,
     label: "Registration Deadline",
     icon: Calendar,
   },
@@ -49,8 +50,8 @@ export function RegistrationBanner() {
             <p className="font-medium text-foreground">Team registrations are open.</p>
           </div>
           <div className="inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary sm:text-sm">
-            <DollarSign className="h-3.5 w-3.5" />
-            <span>Payment deadline: {PAYMENT_DEADLINE}</span>
+            <Calendar className="h-3.5 w-3.5" />
+            <span>Registration deadline: {REGISTRATION_DEADLINE}</span>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
