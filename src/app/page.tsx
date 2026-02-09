@@ -7,23 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-const champions = [
-  { division: "Premier Division - T20", image: "/docs/premier-champions.jpg", year: "2025", teamName: "Greater Detroit CC Panthers" },
-  { division: "Division I - T20", image: "/docs/division-1-champions.jpg", year: "2025", teamName: "Killers CC" },
-  { division: "Division II - T20", image: "/docs/div-II-champions.jpg", year: "2025", teamName: "Michigan International CA Thunderbirds" },
-  { division: "Division III - T20", image: "/docs/div-III-champions.jpg", year: "2025", teamName: "Big League Arena CC Knights" },
-  { division: "F40", image: "/docs/f40-champions.jpg", year: "2025", teamName: "Nirvana CC" },
-  { division: "T30", image: "/docs/t30-champions.jpg", year: "2025", teamName: "Michigan Rangers CC" },
-];
+import { SeasonResultsShowcase } from "@/components/season-results-showcase";
 
 export default function HomePage() {
   return (
@@ -73,68 +57,7 @@ export default function HomePage() {
           </PageContainer>
         </div>
 
-        {/* Champions Showcase */}
-        <PageContainer className="py-16 space-y-12">
-          <div className="text-center space-y-2">
-            <div className="flex justify-center mb-4">
-              <Trophy className="h-12 w-12 text-primary" />
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              2025 Season Champions
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Congratulations to all our division winners for their outstanding performance this season
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {champions.map((champion) => (
-              <Dialog key={champion.division}>
-                <DialogTrigger asChild>
-                  <Card
-                    className="cursor-zoom-in overflow-hidden border border-border/70 bg-gradient-to-br from-card via-background to-secondary/50 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-secondary/70 to-background">
-                      <Image
-                        src={champion.image}
-                        alt={`${champion.division} Champions ${champion.year}`}
-                        fill
-                        className="object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-2">
-                        <Trophy className="h-5 w-5 text-primary" />
-                        <h3 className="text-base font-semibold text-foreground">
-                          {champion.division}
-                        </h3>
-                      </div>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {champion.teamName}
-                      </p>
-                    </div>
-                  </Card>
-                </DialogTrigger>
-                <DialogContent>
-                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg bg-black">
-                    <Image
-                      src={champion.image}
-                      alt={`${champion.division} Champions ${champion.year}`}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <DialogHeader className="px-4 pb-4 pt-3 sm:px-6">
-                    <DialogTitle>{champion.division}</DialogTitle>
-                    <DialogDescription>
-                      {champion.teamName} - {champion.year} Champions
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-            ))}
-          </div>
-        </PageContainer>
+        <SeasonResultsShowcase />
 
         {/* Quick Stats */}
         <div className="bg-gradient-to-br from-secondary/40 via-background to-secondary/30 py-16">
@@ -147,7 +70,7 @@ export default function HomePage() {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 { label: "Teams", value: "101", icon: Users },
-                { label: "Divisions", value: "6", icon: Trophy },
+                { label: "Divisions", value: "7", icon: Trophy },
                 { label: "Matches", value: "500+", icon: Calendar },
                 { label: "Prize Money", value: "$10k+", icon: DollarSign },
               ].map((stat) => (
