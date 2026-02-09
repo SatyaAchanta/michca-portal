@@ -57,10 +57,10 @@ export function SiteHeader() {
         <Link href="/" className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-80">
           <Image src={"/michca.png"} alt="Michigan Cricket Association Logo" width={40} height={40} />
           <p className="text-xl font-semibold text-foreground font-display sm:text-2xl">
-            <span className="sm:hidden">
+            <span className="lg:hidden">
               Mich-<span className="text-red-600">CA</span>
             </span>
-            <span className="hidden sm:inline">Michigan Cricket Association</span>
+            <span className="hidden lg:inline">Michigan Cricket Association</span>
           </p>
         </Link>
         <div className="flex items-center gap-2">
