@@ -41,7 +41,7 @@ function normalizePage(input: number) {
   return Number.isFinite(input) && input > 0 ? Math.floor(input) : 1;
 }
 
-function getCurrentDetroitYear() {
+function getCurrentYear() {
   return Number.parseInt(
     new Intl.DateTimeFormat("en-US", {
       year: "numeric",
@@ -83,7 +83,7 @@ function getClampedDateRange(
   return { gte, lte };
 }
 
-function parseDetroitYear(date: Date) {
+function parseYear(date: Date) {
   return Number.parseInt(formatInTimeZone(date, DETROIT_TIMEZONE, "yyyy"), 10);
 }
 
@@ -95,7 +95,7 @@ export async function getScheduleSeasons(): Promise<number[]> {
 
   const uniqueYears = new Set<number>();
   for (const row of rows) {
-    uniqueYears.add(parseDetroitYear(row.date));
+    uniqueYears.add(parseYear(row.date));
   }
 
   return Array.from(uniqueYears).sort((a, b) => b - a);
@@ -110,7 +110,7 @@ export async function getScheduleGames(
   const pageSize = PAGE_SIZE;
   const teamQuery = filters.teamQuery?.trim();
 
-  const currentYear = getCurrentDetroitYear();
+  const currentYear = getCurrentYear();
   const season = Number.isFinite(filters.season) ? Math.floor(filters.season) : currentYear;
   const isPastSeason = season < currentYear;
   const sortOrder: ScheduleSortOrder = isPastSeason ? "desc" : "asc";
@@ -175,7 +175,11 @@ export async function getScheduleGames(
     items: games.map((game) => ({
       id: game.id,
       date: game.date.toISOString(),
-      displayDateTime: formatInTimeZone(game.date, DETROIT_TIMEZONE, "EEE, MMM d, h:mm a"),
+      displayDateTime: formatInTimeZone(
+        game.date,
+        DETROIT_TIMEZONE,
+        "EEE, MMM d, HH:mm"
+      ),
       division: DIVISION_LABELS[game.division],
       gameType: game.gameType,
       status: game.status,

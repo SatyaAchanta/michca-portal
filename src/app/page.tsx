@@ -7,12 +7,20 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const champions = [
-  { division: "Premier Division", image: "/docs/premier-champions.jpg", year: "2025", teamName: "Greater Detroit CC Panthers" },
-  { division: "Division I", image: "/docs/division-1-champions.jpg", year: "2025", teamName: "Killers CC" },
-  { division: "Division II", image: "/docs/div-II-champions.jpg", year: "2025", teamName: "Michigan International CA Thunderbirds" },
-  { division: "Division III", image: "/docs/div-III-champions.jpg", year: "2025", teamName: "Big League Arena CC Knights" },
+  { division: "Premier Division - T20", image: "/docs/premier-champions.jpg", year: "2025", teamName: "Greater Detroit CC Panthers" },
+  { division: "Division I - T20", image: "/docs/division-1-champions.jpg", year: "2025", teamName: "Killers CC" },
+  { division: "Division II - T20", image: "/docs/div-II-champions.jpg", year: "2025", teamName: "Michigan International CA Thunderbirds" },
+  { division: "Division III - T20", image: "/docs/div-III-champions.jpg", year: "2025", teamName: "Big League Arena CC Knights" },
   { division: "F40", image: "/docs/f40-champions.jpg", year: "2025", teamName: "Nirvana CC" },
   { division: "T30", image: "/docs/t30-champions.jpg", year: "2025", teamName: "Michigan Rangers CC" },
 ];
@@ -45,7 +53,7 @@ export default function HomePage() {
                 Celebrating Excellence in Michigan Cricket
               </h1>
               <p className="text-lg text-muted-foreground sm:text-xl">
-                2025 Season Champions - Showcasing the best of competitive cricket in Michigan
+                Showcasing the best of competitive cricket in Michigan
               </p>
               <div className="flex flex-wrap justify-center gap-4 pt-4">
                 <Button asChild size="lg">
@@ -81,30 +89,49 @@ export default function HomePage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {champions.map((champion) => (
-              <Card 
-                key={champion.division}
-                className="overflow-hidden border border-border/70 bg-gradient-to-br from-card via-background to-secondary/50 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-secondary/70 to-background">
-                  <Image
-                    src={champion.image}
-                    alt={`${champion.division} Champions ${champion.year}`}
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Trophy className="h-5 w-5 text-primary" />
-                    <h3 className="font-semibold text-base text-foreground">
-                      {champion.division}
-                    </h3>
+              <Dialog key={champion.division}>
+                <DialogTrigger asChild>
+                  <Card
+                    className="cursor-zoom-in overflow-hidden border border-border/70 bg-gradient-to-br from-card via-background to-secondary/50 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-secondary/70 to-background">
+                      <Image
+                        src={champion.image}
+                        alt={`${champion.division} Champions ${champion.year}`}
+                        fill
+                        className="object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="h-5 w-5 text-primary" />
+                        <h3 className="text-base font-semibold text-foreground">
+                          {champion.division}
+                        </h3>
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {champion.teamName}
+                      </p>
+                    </div>
+                  </Card>
+                </DialogTrigger>
+                <DialogContent>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg bg-black">
+                    <Image
+                      src={champion.image}
+                      alt={`${champion.division} Champions ${champion.year}`}
+                      fill
+                      className="object-contain"
+                    />
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {champion.teamName}
-                  </p>
-                </div>
-              </Card>
+                  <DialogHeader className="px-4 pb-4 pt-3 sm:px-6">
+                    <DialogTitle>{champion.division}</DialogTitle>
+                    <DialogDescription>
+                      {champion.teamName} - {champion.year} Champions
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             ))}
           </div>
         </PageContainer>
