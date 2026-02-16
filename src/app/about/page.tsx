@@ -33,7 +33,7 @@ export default function AboutPage() {
               <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-primary">Promotion & Development</h3>
                 <p className="text-sm text-muted-foreground">
-                  Organize ODIs, T20s, leagues, and tournaments. Establish coaching academies and schemes to promote cricket welfare and eliminate unethical practices.
+                  Organize One-Dayer, T20s, leagues, and tournaments. Establish coaching academies and schemes to promote cricket welfare and eliminate unethical practices.
                 </p>
               </div>
               <div className="space-y-2">

@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const REGISTRATION_FORM_URL = "https://forms.gle/op9QNwjgnSHGHjMN7";
+const REGISTRATION_FORM_URL = "https://forms.gle/E4jetCEnAtSFuRvK9";
 const FINAL_DEADLINE = new Date("2026-04-07");
 const REGISTRATION_DEADLINE = "Feb 25, 2026";
 const PAYMENT_DEADLINE = "Mar 31, 2026";
