@@ -66,7 +66,7 @@ export default function AboutPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { label: "Teams", value: "101" },
-              { label: "Divisions", value: "6" },
+              { label: "Divisions", value: "7" },
               { label: "Matches", value: "500+" },
               { label: "Grounds", value: "14" },
             ].map((stat) => (
