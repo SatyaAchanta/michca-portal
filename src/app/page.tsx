@@ -18,6 +18,17 @@ export default function HomePage() {
           <div className="mx-auto max-w-xl">
             <RegistrationBanner />
           </div>
+          <div className="mx-auto mt-3 max-w-xl rounded-lg border border-primary/35 bg-primary/10 px-4 py-3 text-left">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+              Zelle Payment Info
+            </p>
+            <p className="mt-1 text-sm text-foreground">
+              For MichCA payments, use the official Zelle email:
+            </p>
+            <p className="mt-1 break-all text-sm font-semibold text-foreground sm:text-base">
+              micricketfinance@gmail.com
+            </p>
+          </div>
         </PageContainer>
 
         {/* Hero Section */}
