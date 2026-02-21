@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
@@ -33,7 +35,7 @@ export default function AboutPage() {
               <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-primary">Promotion & Development</h3>
                 <p className="text-sm text-muted-foreground">
-                  Organize ODIs, T20s, leagues, and tournaments. Establish coaching academies and schemes to promote cricket welfare and eliminate unethical practices.
+                  Organize One-Dayer, T20s, leagues, and tournaments. Establish coaching academies and schemes to promote cricket welfare and eliminate unethical practices.
                 </p>
               </div>
               <div className="space-y-2">
@@ -88,6 +90,38 @@ export default function AboutPage() {
               Local partners help us deliver facilities, training, and community events
               throughout the season. We welcome new sponsorships each year to grow the game.
             </p>
+            <div className="mt-4 rounded-xl border border-border/70 bg-card/70 p-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="rounded-lg border border-border/70 bg-background p-3">
+                  <Image
+                    src="/docs/lincode-logo.webp"
+                    alt="Lincode"
+                    width={180}
+                    height={72}
+                    className="h-[56px] w-auto dark:rounded-md dark:bg-white dark:p-1"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-foreground">
+                    <Link
+                      href="https://www.lincode.ai"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-primary underline-offset-4 hover:underline"
+                    >
+                      Lincode
+                    </Link>{" "}
+                    has renewed its sponsorship to support Mich-CA league operations and community
+                    initiatives across Michigan.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    As an AI and computer vision company behind LIVIS (Lincode Intelligent Visual
+                    Inspection System), Lincode helps manufacturers run real-time, scalable visual
+                    quality inspection with a no-code workflow.
+                  </p>
+                </div>
+              </div>
+            </div>
           </Card>
         </PageContainer>
       </div>

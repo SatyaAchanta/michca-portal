@@ -1,15 +1,92 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Trophy, Calendar, Users, ArrowRight, DollarSign } from "lucide-react";
+import { Trophy, Calendar, Users, DollarSign, Handshake } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
 import { SeasonResultsShowcase } from "@/components/season-results-showcase";
 
 export default function HomePage() {
+  const collaborationMessage = (
+    <div className="mx-auto max-w-4xl space-y-4 text-left text-sm leading-7 text-muted-foreground sm:text-base">
+      <p>
+        The Michigan Cricket Association (Mich-CA) is proud to announce that{" "}
+        <Link
+          href="https://www.lincode.ai"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Lincode
+        </Link>{" "}
+        has renewed its sponsorship for another year to support the successful conduct of our
+        cricket league.
+      </p>
+      <p>
+        <Link
+          href="https://www.lincode.ai"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Lincode
+        </Link>{" "}
+        is an artificial intelligence and computer vision organization dedicated to
+        transforming manufacturing quality inspection. Their flagship product, LIVIS (Lincode
+        Intelligent Visual Inspection System), enables real-time quality inspections of components,
+        assemblies, and packaging using advanced AI technology. With a powerful no-code platform,
+        LIVIS empowers engineers, machine operators, and quality managers to train and deploy AI
+        models efficiently across production lines, making visual inspection faster, more accurate,
+        and highly scalable.
+      </p>
+      <p>
+        We are deeply grateful for{" "}
+        <Link
+          href="https://www.lincode.ai"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Lincode
+        </Link>
+        &apos;s continued partnership and commitment to supporting community-driven initiatives like
+        Mich-CA. Their investment strengthens our ability to organize competitive, well-structured,
+        and inclusive cricket leagues that bring together players, families, and supporters across
+        Michigan.
+      </p>
+      <p>
+        On behalf of the entire Mich-CA leadership, players, volunteers, and supporters, we extend
+        our sincere appreciation to{" "}
+        <Link
+          href="https://www.lincode.ai"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Lincode
+        </Link>{" "}
+        for believing in our mission and helping us grow the sport of cricket in Michigan.
+      </p>
+      <p>We look forward to another exciting and successful season together.</p>
+      <p className="pt-2 text-foreground">
+        With appreciation,
+        <br />
+        <span className="font-medium">Tayefur Rahman</span>
+        <br />
+        Chairman, Mich-CA
+      </p>
+    </div>
+  );
+
   return (
     <>
       <div className="bg-background">
@@ -18,51 +95,57 @@ export default function HomePage() {
           <div className="mx-auto max-w-xl">
             <RegistrationBanner />
           </div>
-          <div className="mx-auto mt-3 max-w-xl rounded-lg border border-primary/35 bg-primary/10 px-4 py-3 text-left">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-              Zelle Payment Info
-            </p>
-            <p className="mt-1 text-sm text-foreground">
-              For MichCA payments, use the official Zelle email:
-            </p>
-            <p className="mt-1 break-all text-sm font-semibold text-foreground sm:text-base">
-              micricketfinance@gmail.com
-            </p>
-          </div>
         </PageContainer>
 
-        {/* Hero Section */}
+        {/* Sponsor Thank You Section */}
         <div className="relative bg-gradient-to-b from-background via-primary/5 to-primary/10 py-20">
           <PageContainer>
-            <div className="mx-auto max-w-4xl text-center space-y-6">
-              <div className="flex justify-center mb-6">
-                <Image 
-                  src="/michca.png" 
-                  alt="Michigan Cricket Association" 
-                  width={120} 
-                  height={120}
-                  className="drop-shadow-md"
-                />
+            <div className="mx-auto max-w-5xl space-y-8">
+              <div className="flex flex-col items-center justify-center gap-5 text-center sm:flex-row sm:gap-8">
+                <div className="rounded-xl border border-border/70 bg-card/80 p-4 shadow-sm">
+                  <Image
+                    src="/michca.png"
+                    alt="Michigan Cricket Association"
+                    width={110}
+                    height={110}
+                    className="h-[88px] w-auto sm:h-[96px]"
+                  />
+                </div>
+                <Handshake className="h-10 w-10 text-primary sm:h-12 sm:w-12" aria-label="partnership" />
+                <div className="rounded-xl border border-border/70 bg-card/80 p-4 shadow-sm">
+                  <Image
+                    src="/docs/lincode-logo.webp"
+                    alt="Lincode"
+                    width={220}
+                    height={110}
+                    className="h-[88px] w-auto sm:h-[96px] dark:rounded-md dark:bg-white dark:p-1.5"
+                  />
+                </div>
               </div>
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Celebrating Excellence in Michigan Cricket
-              </h1>
-              <p className="text-lg text-muted-foreground sm:text-xl">
-                Showcasing the best of competitive cricket in Michigan
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 pt-4">
-                <Button asChild size="lg">
-                  <Link href="/schedule">
-                    <Calendar className="h-5 w-5" />
-                    View Schedule
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/forms">
-                    Register Your Team
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
-                </Button>
+              <div className="space-y-5 text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+                  Thank You to{" "}
+                  <Link
+                    href="https://www.lincode.ai"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary underline-offset-4 hover:underline"
+                  >
+                    Lincode
+                  </Link>{" "}
+                  for Renewing Their Support for Mich-CA
+                </h1>
+                <div className="hidden md:block">{collaborationMessage}</div>
+                <div className="mx-auto w-full max-w-4xl md:hidden">
+                  <Accordion type="single" collapsible className="rounded-lg border border-border/70 bg-card/60 px-4">
+                    <AccordionItem value="collaboration-message" className="border-b-0">
+                      <AccordionTrigger className="text-left text-sm text-foreground hover:no-underline">
+                        Read about our collaboration
+                      </AccordionTrigger>
+                      <AccordionContent>{collaborationMessage}</AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               </div>
             </div>
           </PageContainer>

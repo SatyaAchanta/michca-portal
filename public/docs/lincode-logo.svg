@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2134" height="653" viewBox="0 0 2134 653" role="img" aria-label="Lincode logo">
+  <defs>
+    <!-- Approximate white background removal from the source raster logo. -->
+    <filter id="removeWhite" color-interpolation-filters="sRGB">
+      <feColorMatrix
+        in="SourceGraphic"
+        type="matrix"
+        values="
+          1 0 0 0 0
+          0 1 0 0 0
+          0 0 1 0 0
+          -0.333 -0.333 -0.333 0 1"
+      />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="1.4" intercept="-0.25" />
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <image href="/docs/lincode-logo.webp" width="2134" height="653" filter="url(#removeWhite)" />
+</svg>
