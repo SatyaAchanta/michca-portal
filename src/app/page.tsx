@@ -77,6 +77,13 @@ export default function HomePage() {
         for believing in our mission and helping us grow the sport of cricket in Michigan.
       </p>
       <p>We look forward to another exciting and successful season together.</p>
+      <p className="pt-2 text-foreground">
+        With appreciation,
+        <br />
+        <span className="font-medium">Tayefur Rahman</span>
+        <br />
+        Chairman, Mich-CA
+      </p>
     </div>
   );
 
