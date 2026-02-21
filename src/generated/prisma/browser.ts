@@ -27,3 +27,13 @@ export type Team = Prisma.TeamModel
  * 
  */
 export type Game = Prisma.GameModel
+/**
+ * Model UserProfile
+ * 
+ */
+export type UserProfile = Prisma.UserProfileModel
+/**
+ * Model UmpireAssignment
+ * 
+ */
+export type UmpireAssignment = Prisma.UmpireAssignmentModel

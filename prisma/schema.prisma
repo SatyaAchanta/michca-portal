@@ -30,6 +30,12 @@ enum GameStatus {
   CANCELLED
 }
 
+enum UserRole {
+  PLAYER
+  UMPIRE
+  ADMIN
+}
+
 model Team {
   shortCode    String @id
   name         String
@@ -39,27 +45,58 @@ model Team {
 }
 
 model Game {
-  id              String     @id @default(uuid())
-  date            DateTime
-  division        Division
-  league          String
-  status          GameStatus @default(SCHEDULED)
-  venue           String?
-  team1ShortCode  String
-  team2ShortCode  String
-  team1           Team       @relation("Team1", fields: [team1ShortCode], references: [shortCode])
-  team2           Team       @relation("Team2", fields: [team2ShortCode], references: [shortCode])
-  gameType        GameType   @default(LEAGUE)
-  winnerShortCode String?
-  winner          Team?      @relation("GameWinner", fields: [winnerShortCode], references: [shortCode])
-  isDraw          Boolean    @default(false)
-  isCancelled     Boolean    @default(false)
-  team1Score      Int?
-  team2Score      Int?
-  resultNotes     String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  id                String             @id @default(uuid())
+  date              DateTime
+  division          Division
+  league            String
+  status            GameStatus         @default(SCHEDULED)
+  venue             String?
+  team1ShortCode    String
+  team2ShortCode    String
+  team1             Team               @relation("Team1", fields: [team1ShortCode], references: [shortCode])
+  team2             Team               @relation("Team2", fields: [team2ShortCode], references: [shortCode])
+  gameType          GameType           @default(LEAGUE)
+  winnerShortCode   String?
+  winner            Team?              @relation("GameWinner", fields: [winnerShortCode], references: [shortCode])
+  isDraw            Boolean            @default(false)
+  isCancelled       Boolean            @default(false)
+  team1Score        Int?
+  team2Score        Int?
+  resultNotes       String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  umpireAssignments UmpireAssignment[]
 
   @@index([date])
   @@index([status])
+}
+
+model UserProfile {
+  id                   String             @id @default(uuid())
+  clerkUserId          String             @unique
+  email                String
+  firstName            String?
+  lastName             String?
+  notificationsEnabled Boolean            @default(true)
+  newsletterSubscribed Boolean            @default(false)
+  role                 UserRole           @default(PLAYER)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  umpireAssignments    UmpireAssignment[]
+
+  @@index([email])
+  @@index([role])
+}
+
+model UmpireAssignment {
+  id         String      @id @default(uuid())
+  gameId     String
+  umpireId   String
+  assignedAt DateTime    @default(now())
+  game       Game        @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  umpire     UserProfile @relation(fields: [umpireId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, umpireId])
+  @@index([umpireId])
+  @@index([gameId])
 }

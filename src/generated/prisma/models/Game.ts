@@ -319,6 +319,7 @@ export type GameWhereInput = {
   team1?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   team2?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   winner?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
 }
 
 export type GameOrderByWithRelationInput = {
@@ -342,6 +343,7 @@ export type GameOrderByWithRelationInput = {
   team1?: Prisma.TeamOrderByWithRelationInput
   team2?: Prisma.TeamOrderByWithRelationInput
   winner?: Prisma.TeamOrderByWithRelationInput
+  umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
 }
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
@@ -368,6 +370,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   team1?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   team2?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
   winner?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
 }, "id">
 
 export type GameOrderByWithAggregationInput = {
@@ -436,6 +439,7 @@ export type GameCreateInput = {
   team1: Prisma.TeamCreateNestedOneWithoutGamesAsTeam1Input
   team2: Prisma.TeamCreateNestedOneWithoutGamesAsTeam2Input
   winner?: Prisma.TeamCreateNestedOneWithoutGamesWonInput
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateInput = {
@@ -456,6 +460,7 @@ export type GameUncheckedCreateInput = {
   resultNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameUpdateInput = {
@@ -476,6 +481,7 @@ export type GameUpdateInput = {
   team1?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam1NestedInput
   team2?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam2NestedInput
   winner?: Prisma.TeamUpdateOneWithoutGamesWonNestedInput
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateInput = {
@@ -496,6 +502,7 @@ export type GameUncheckedUpdateInput = {
   resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameCreateManyInput = {
@@ -633,6 +640,11 @@ export type GameMinOrderByAggregateInput = {
 export type GameSumOrderByAggregateInput = {
   team1Score?: Prisma.SortOrder
   team2Score?: Prisma.SortOrder
+}
+
+export type GameScalarRelationFilter = {
+  is?: Prisma.GameWhereInput
+  isNot?: Prisma.GameWhereInput
 }
 
 export type GameCreateNestedManyWithoutTeam1Input = {
@@ -793,6 +805,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type GameCreateNestedOneWithoutUmpireAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.GameCreateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedCreateWithoutUmpireAssignmentsInput>
+  connectOrCreate?: Prisma.GameCreateOrConnectWithoutUmpireAssignmentsInput
+  connect?: Prisma.GameWhereUniqueInput
+}
+
+export type GameUpdateOneRequiredWithoutUmpireAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.GameCreateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedCreateWithoutUmpireAssignmentsInput>
+  connectOrCreate?: Prisma.GameCreateOrConnectWithoutUmpireAssignmentsInput
+  upsert?: Prisma.GameUpsertWithoutUmpireAssignmentsInput
+  connect?: Prisma.GameWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GameUpdateToOneWithWhereWithoutUmpireAssignmentsInput, Prisma.GameUpdateWithoutUmpireAssignmentsInput>, Prisma.GameUncheckedUpdateWithoutUmpireAssignmentsInput>
+}
+
 export type GameCreateWithoutTeam1Input = {
   id?: string
   date: Date | string
@@ -810,6 +836,7 @@ export type GameCreateWithoutTeam1Input = {
   updatedAt?: Date | string
   team2: Prisma.TeamCreateNestedOneWithoutGamesAsTeam2Input
   winner?: Prisma.TeamCreateNestedOneWithoutGamesWonInput
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateWithoutTeam1Input = {
@@ -829,6 +856,7 @@ export type GameUncheckedCreateWithoutTeam1Input = {
   resultNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameCreateOrConnectWithoutTeam1Input = {
@@ -858,6 +886,7 @@ export type GameCreateWithoutTeam2Input = {
   updatedAt?: Date | string
   team1: Prisma.TeamCreateNestedOneWithoutGamesAsTeam1Input
   winner?: Prisma.TeamCreateNestedOneWithoutGamesWonInput
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateWithoutTeam2Input = {
@@ -877,6 +906,7 @@ export type GameUncheckedCreateWithoutTeam2Input = {
   resultNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameCreateOrConnectWithoutTeam2Input = {
@@ -906,6 +936,7 @@ export type GameCreateWithoutWinnerInput = {
   updatedAt?: Date | string
   team1: Prisma.TeamCreateNestedOneWithoutGamesAsTeam1Input
   team2: Prisma.TeamCreateNestedOneWithoutGamesAsTeam2Input
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateWithoutWinnerInput = {
@@ -925,6 +956,7 @@ export type GameUncheckedCreateWithoutWinnerInput = {
   resultNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameCreateOrConnectWithoutWinnerInput = {
@@ -1008,6 +1040,102 @@ export type GameUpdateManyWithWhereWithoutWinnerInput = {
   data: Prisma.XOR<Prisma.GameUpdateManyMutationInput, Prisma.GameUncheckedUpdateManyWithoutWinnerInput>
 }
 
+export type GameCreateWithoutUmpireAssignmentsInput = {
+  id?: string
+  date: Date | string
+  division: $Enums.Division
+  league: string
+  status?: $Enums.GameStatus
+  venue?: string | null
+  gameType?: $Enums.GameType
+  isDraw?: boolean
+  isCancelled?: boolean
+  team1Score?: number | null
+  team2Score?: number | null
+  resultNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  team1: Prisma.TeamCreateNestedOneWithoutGamesAsTeam1Input
+  team2: Prisma.TeamCreateNestedOneWithoutGamesAsTeam2Input
+  winner?: Prisma.TeamCreateNestedOneWithoutGamesWonInput
+}
+
+export type GameUncheckedCreateWithoutUmpireAssignmentsInput = {
+  id?: string
+  date: Date | string
+  division: $Enums.Division
+  league: string
+  status?: $Enums.GameStatus
+  venue?: string | null
+  team1ShortCode: string
+  team2ShortCode: string
+  gameType?: $Enums.GameType
+  winnerShortCode?: string | null
+  isDraw?: boolean
+  isCancelled?: boolean
+  team1Score?: number | null
+  team2Score?: number | null
+  resultNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type GameCreateOrConnectWithoutUmpireAssignmentsInput = {
+  where: Prisma.GameWhereUniqueInput
+  create: Prisma.XOR<Prisma.GameCreateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedCreateWithoutUmpireAssignmentsInput>
+}
+
+export type GameUpsertWithoutUmpireAssignmentsInput = {
+  update: Prisma.XOR<Prisma.GameUpdateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedUpdateWithoutUmpireAssignmentsInput>
+  create: Prisma.XOR<Prisma.GameCreateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedCreateWithoutUmpireAssignmentsInput>
+  where?: Prisma.GameWhereInput
+}
+
+export type GameUpdateToOneWithWhereWithoutUmpireAssignmentsInput = {
+  where?: Prisma.GameWhereInput
+  data: Prisma.XOR<Prisma.GameUpdateWithoutUmpireAssignmentsInput, Prisma.GameUncheckedUpdateWithoutUmpireAssignmentsInput>
+}
+
+export type GameUpdateWithoutUmpireAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  division?: Prisma.EnumDivisionFieldUpdateOperationsInput | $Enums.Division
+  league?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  team2Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team1?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam1NestedInput
+  team2?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam2NestedInput
+  winner?: Prisma.TeamUpdateOneWithoutGamesWonNestedInput
+}
+
+export type GameUncheckedUpdateWithoutUmpireAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  division?: Prisma.EnumDivisionFieldUpdateOperationsInput | $Enums.Division
+  league?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  team1ShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  team2ShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  winnerShortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  team2Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type GameCreateManyTeam1Input = {
   id?: string
   date: Date | string
@@ -1082,6 +1210,7 @@ export type GameUpdateWithoutTeam1Input = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team2?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam2NestedInput
   winner?: Prisma.TeamUpdateOneWithoutGamesWonNestedInput
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateWithoutTeam1Input = {
@@ -1101,6 +1230,7 @@ export type GameUncheckedUpdateWithoutTeam1Input = {
   resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateManyWithoutTeam1Input = {
@@ -1139,6 +1269,7 @@ export type GameUpdateWithoutTeam2Input = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team1?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam1NestedInput
   winner?: Prisma.TeamUpdateOneWithoutGamesWonNestedInput
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateWithoutTeam2Input = {
@@ -1158,6 +1289,7 @@ export type GameUncheckedUpdateWithoutTeam2Input = {
   resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateManyWithoutTeam2Input = {
@@ -1196,6 +1328,7 @@ export type GameUpdateWithoutWinnerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team1?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam1NestedInput
   team2?: Prisma.TeamUpdateOneRequiredWithoutGamesAsTeam2NestedInput
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateWithoutWinnerInput = {
@@ -1215,6 +1348,7 @@ export type GameUncheckedUpdateWithoutWinnerInput = {
   resultNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateManyWithoutWinnerInput = {
@@ -1236,6 +1370,35 @@ export type GameUncheckedUpdateManyWithoutWinnerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type GameCountOutputType
+ */
+
+export type GameCountOutputType = {
+  umpireAssignments: number
+}
+
+export type GameCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  umpireAssignments?: boolean | GameCountOutputTypeCountUmpireAssignmentsArgs
+}
+
+/**
+ * GameCountOutputType without action
+ */
+export type GameCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GameCountOutputType
+   */
+  select?: Prisma.GameCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * GameCountOutputType without action
+ */
+export type GameCountOutputTypeCountUmpireAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UmpireAssignmentWhereInput
+}
 
 
 export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1259,6 +1422,8 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   team1?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   team2?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   winner?: boolean | Prisma.Game$winnerArgs<ExtArgs>
+  umpireAssignments?: boolean | Prisma.Game$umpireAssignmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["game"]>
 
 export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1332,6 +1497,8 @@ export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   team1?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   team2?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   winner?: boolean | Prisma.Game$winnerArgs<ExtArgs>
+  umpireAssignments?: boolean | Prisma.Game$umpireAssignmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GameIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team1?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1350,6 +1517,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     team1: Prisma.$TeamPayload<ExtArgs>
     team2: Prisma.$TeamPayload<ExtArgs>
     winner: Prisma.$TeamPayload<ExtArgs> | null
+    umpireAssignments: Prisma.$UmpireAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1766,6 +1934,7 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
   team1<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   team2<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   winner<T extends Prisma.Game$winnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Game$winnerArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  umpireAssignments<T extends Prisma.Game$umpireAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Game$umpireAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmpireAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2224,6 +2393,30 @@ export type Game$winnerArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.TeamInclude<ExtArgs> | null
   where?: Prisma.TeamWhereInput
+}
+
+/**
+ * Game.umpireAssignments
+ */
+export type Game$umpireAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UmpireAssignment
+   */
+  select?: Prisma.UmpireAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UmpireAssignment
+   */
+  omit?: Prisma.UmpireAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UmpireAssignmentInclude<ExtArgs> | null
+  where?: Prisma.UmpireAssignmentWhereInput
+  orderBy?: Prisma.UmpireAssignmentOrderByWithRelationInput | Prisma.UmpireAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.UmpireAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UmpireAssignmentScalarFieldEnum | Prisma.UmpireAssignmentScalarFieldEnum[]
 }
 
 /**

@@ -1,6 +1,7 @@
-"use client";
-
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { UserRole } from "@/generated/prisma/client";
+import { redirect } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
 import { DocCard } from "@/components/doc-card";
@@ -15,8 +16,30 @@ import {
 } from "@/components/ui/accordion";
 import { assignments, documents } from "@/lib/data";
 import { formatMatchDateTime } from "@/lib/formatters";
+import {
+  AuthenticationRequiredError,
+  InsufficientRoleError,
+  requireRole,
+} from "@/lib/user-profile";
 
-export default function UmpiringPage() {
+export default async function UmpiringPage() {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
+  try {
+    await requireRole(UserRole.UMPIRE);
+  } catch (error) {
+    if (error instanceof AuthenticationRequiredError) {
+      redirect("/sign-in");
+    }
+    if (error instanceof InsufficientRoleError) {
+      redirect("/");
+    }
+    throw error;
+  }
+
   const now = new Date();
   const upcomingAssignments = assignments.filter(
     (assignment) => new Date(assignment.date) >= now
