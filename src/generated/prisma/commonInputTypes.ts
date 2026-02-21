@@ -218,6 +218,23 @@ export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
 }
 
+export type EnumUmpiringTrainingResultFilter<$PrismaModel = never> = {
+  equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+}
+
+export type EnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -433,6 +450,23 @@ export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumUmpiringTrainingResultFilter<$PrismaModel = never> = {
+  equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+}
+
+export type NestedEnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel>
 }
 
 

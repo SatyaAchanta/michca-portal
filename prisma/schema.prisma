@@ -36,6 +36,12 @@ enum UserRole {
   ADMIN
 }
 
+enum UmpiringTrainingResult {
+  PENDING
+  PASS
+  FAIL
+}
+
 model Team {
   shortCode    String @id
   name         String
@@ -83,9 +89,32 @@ model UserProfile {
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
   umpireAssignments    UmpireAssignment[]
+  umpiringTraining     UmpiringTraining?
 
   @@index([email])
   @@index([role])
+}
+
+model UmpiringTraining {
+  id                 String                @id @default(uuid())
+  userProfileId      String                @unique
+  firstName          String?
+  lastName           String?
+  email              String
+  contactNumber      String
+  previouslyCertified Boolean
+  affiliation        String?
+  preferredDate      DateTime
+  preferredLocation  String
+  questions          String?
+  result             UmpiringTrainingResult @default(PENDING)
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+  userProfile        UserProfile           @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@index([result])
+  @@index([createdAt])
+  @@index([preferredDate])
 }
 
 model UmpireAssignment {

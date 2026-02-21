@@ -24,7 +24,10 @@ const authAppearance = {
     card: "shadow-none border border-border bg-card",
     formButtonPrimary: "bg-primary text-primary-foreground hover:opacity-90",
     footerActionLink: "text-primary hover:text-primary/80",
-    formFieldInput: "border-input bg-background text-foreground",
+    formFieldInput:
+      "border border-input bg-background text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-ring/50",
+    otpCodeFieldInput:
+      "border border-input bg-background text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-ring/50",
     socialButtonsBlockButton: "border-border bg-background text-foreground hover:bg-muted",
     dividerLine: "bg-border",
     dividerText: "text-muted-foreground",

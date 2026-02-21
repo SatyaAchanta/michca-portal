@@ -23,13 +23,17 @@ const navLinks = [
   { label: "Forms", href: "/forms" },
 ];
 
-const moreLinks = [
+const publicMoreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "About", href: "/about" },
   { label: "Fantasy", href: "https://www.fantasyleaguemichca.org", external: true },
 ];
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  isAdmin?: boolean;
+};
+
+export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
 
@@ -70,7 +74,7 @@ export function SiteHeader() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="end" className="w-40 p-2">
-                {moreLinks.map((link) => (
+                {publicMoreLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -82,6 +86,24 @@ export function SiteHeader() {
                     {link.label}
                   </Link>
                 ))}
+                <SignedIn>
+                  <Link
+                    href="/umpiring-training"
+                    className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setMoreOpen(false)}
+                  >
+                    Umpiring Training
+                  </Link>
+                </SignedIn>
+                {isAdmin ? (
+                  <Link
+                    href="/admin"
+                    className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setMoreOpen(false)}
+                  >
+                    Admin
+                  </Link>
+                ) : null}
               </PopoverContent>
             </Popover>
           </nav>
@@ -133,13 +155,23 @@ export function SiteHeader() {
                     <Link href={link.href}>{link.label}</Link>
                   </Button>
                 ))}
-                {moreLinks.map((link) => (
+                {publicMoreLinks.map((link) => (
                   <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
                     <Link href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noreferrer" : undefined}>
                       {link.label}
                     </Link>
                   </Button>
                 ))}
+                <SignedIn>
+                  <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                    <Link href="/umpiring-training">Umpiring Training</Link>
+                  </Button>
+                </SignedIn>
+                {isAdmin ? (
+                  <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                    <Link href="/admin">Admin</Link>
+                  </Button>
+                ) : null}
               </div>
             </SheetContent>
           </Sheet>
