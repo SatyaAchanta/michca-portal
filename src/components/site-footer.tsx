@@ -7,6 +7,7 @@ const footerLinks = {
     { label: "Grounds", href: "/grounds" },
     { label: "Forms", href: "/forms" },
     { label: "About", href: "/about" },
+    { label: "Lincode", href: "https://www.lincode.ai", external: true },
     { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
   ],
   contact: [
