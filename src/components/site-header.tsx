@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Facebook, Instagram, Menu, Youtube } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -20,31 +21,12 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Schedule", href: "/schedule" },
   { label: "Forms", href: "/forms" },
-  { label: "Leadership", href: "/committees" },
 ];
 
 const moreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "About", href: "/about" },
   { label: "Fantasy", href: "https://www.fantasyleaguemichca.org", external: true },
-];
-
-const socialLinks = [
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/MichiganCricketAssociationUSA/",
-    icon: Facebook,
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/michca2001/?hl=en",
-    icon: Instagram,
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/channel/UCsFOLC2_wHIVfSAkTqZrwQA",
-    icon: Youtube,
-  },
 ];
 
 export function SiteHeader() {
@@ -65,6 +47,7 @@ export function SiteHeader() {
         </Link>
         <div className="flex items-center gap-2">
           <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+            <ThemeToggle />
             {navLinks.map((link) => (
               <Link 
                 key={link.href} 
@@ -103,23 +86,15 @@ export function SiteHeader() {
             </Popover>
           </nav>
           <div className="hidden items-center gap-2 md:flex">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
-                >
-                  <Icon className="h-4 w-4" />
-                </Link>
-              );
-            })}
+            <SignedOut>
+              <Button asChild variant="outline" size="sm">
+                <Link href="/sign-in">Sign In</Link>
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </div>
-          <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
@@ -129,9 +104,30 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>Michigan Cricket Association</SheetTitle>
+              <SheetTitle>Michigan Cricket Association</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-4">
+                <div className="flex items-center">
+                  <ThemeToggle />
+                </div>
+                <SignedOut>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="justify-start"
+                    onClick={() => setOpen(false)}
+                  >
+                    <Link href="/sign-in">Sign In</Link>
+                  </Button>
+                </SignedOut>
+                <SignedIn>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      Signed in
+                    </span>
+                    <UserButton />
+                  </div>
+                </SignedIn>
                 {navLinks.map((link) => (
                   <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
                     <Link href={link.href}>{link.label}</Link>
@@ -144,24 +140,6 @@ export function SiteHeader() {
                     </Link>
                   </Button>
                 ))}
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <Link
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </Link>
-                  );
-                })}
               </div>
             </SheetContent>
           </Sheet>

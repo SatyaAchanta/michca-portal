@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next"
@@ -27,14 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${poppins.variable} bg-background text-foreground antialiased`}
-      >
-        <SiteHeader />
-        <main className="min-h-screen">{children}</main>
-        <Analytics />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${poppins.variable} bg-background text-foreground antialiased`}
+        >
+          <SiteHeader />
+          <main className="min-h-screen">{children}</main>
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

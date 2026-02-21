@@ -1,6 +1,6 @@
 "use server";
 
-import { GameStatus, Prisma } from "@prisma/client";
+import { GameStatus, Prisma } from "@/generated/prisma/client";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 import { prisma } from "@/lib/prisma";
