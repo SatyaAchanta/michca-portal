@@ -140,7 +140,7 @@ export default function HomePage() {
                   <Accordion type="single" collapsible className="rounded-lg border border-border/70 bg-card/60 px-4">
                     <AccordionItem value="collaboration-message" className="border-b-0">
                       <AccordionTrigger className="text-left text-sm text-foreground hover:no-underline">
-                        Read about about our collaboration
+                        Read about our collaboration
                       </AccordionTrigger>
                       <AccordionContent>{collaborationMessage}</AccordionContent>
                     </AccordionItem>

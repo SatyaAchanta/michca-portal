@@ -28,6 +28,7 @@ const committees = [
     email: "micricketumpires@gmail.com",
     members: [
       { name: "Onkar Akolkar", phone: "256 603 1286", note: "Umpire Mentor and Trainer" },
+      { name: "Karthik Raghupathy", phone: "313 727 6563", note: "Umpire Mentor and Trainer" },
       { name: "Vijay Khammam", phone: "870 877 1518" },
       { name: "Hemanth Krishna Chundi", phone: "607 727 4101" },
     ],
