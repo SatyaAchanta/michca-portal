@@ -117,6 +117,15 @@ export function SiteFooter() {
                 );
               })}
             </ul>
+            <div className="mt-5 rounded-lg border border-primary/30 bg-primary/10 p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+                Zelle Payment
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">MichCA finance email</p>
+              <p className="mt-1 break-all text-sm font-semibold text-foreground">
+                micricketfinance@gmail.com
+              </p>
+            </div>
           </div>
         </div>
 
