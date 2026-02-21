@@ -40,7 +40,7 @@ export default function HomePage() {
         >
           Lincode
         </Link>{" "}
-        is a Michigan-based artificial intelligence and computer vision company dedicated to
+        is an artificial intelligence and computer vision organization dedicated to
         transforming manufacturing quality inspection. Their flagship product, LIVIS (Lincode
         Intelligent Visual Inspection System), enables real-time quality inspections of components,
         assemblies, and packaging using advanced AI technology. With a powerful no-code platform,
