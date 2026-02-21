@@ -3,6 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Facebook, Instagram, Menu, Youtube } from "lucide-react";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -103,6 +110,21 @@ export function SiteHeader() {
             </Popover>
           </nav>
           <div className="hidden items-center gap-2 md:flex">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button variant="outline" size="sm">
+                  Sign In
+                </Button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <Button size="sm">Sign Up</Button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
+          <div className="hidden items-center gap-2 md:flex">
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
@@ -132,6 +154,24 @@ export function SiteHeader() {
                 <SheetTitle>Michigan Cricket Association</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-4">
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <Button variant="outline" className="justify-start">
+                      Sign In
+                    </Button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <Button className="justify-start">Sign Up</Button>
+                  </SignUpButton>
+                </SignedOut>
+                <SignedIn>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      Signed in
+                    </span>
+                    <UserButton />
+                  </div>
+                </SignedIn>
                 {navLinks.map((link) => (
                   <Button key={link.href} asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
                     <Link href={link.href}>{link.label}</Link>
