@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SignIn, SignUp } from "@clerk/nextjs";
+import { dark, shadcn } from "@clerk/themes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const AUTH_MODE = {
@@ -8,37 +10,28 @@ const AUTH_MODE = {
   signUp: "sign-up",
 } as const;
 
-const authAppearance = {
-  variables: {
-    colorPrimary: "var(--primary)",
-    colorBackground: "var(--card)",
-    colorText: "var(--foreground)",
-    colorTextSecondary: "var(--muted-foreground)",
-    colorInputBackground: "var(--background)",
-    colorInputText: "var(--foreground)",
-    colorNeutral: "var(--border)",
-    colorDanger: "var(--destructive)",
-    borderRadius: "0.75rem",
-  },
-  elements: {
-    card: "shadow-none border border-border bg-card",
-    formButtonPrimary: "bg-primary text-primary-foreground hover:opacity-90",
-    footerActionLink: "text-primary hover:text-primary/80",
-    formFieldInput:
-      "border border-input bg-background text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-ring/50",
-    otpCodeFieldInput:
-      "border border-input bg-background text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-ring/50",
-    socialButtonsBlockButton: "border-border bg-background text-foreground hover:bg-muted",
-    dividerLine: "bg-border",
-    dividerText: "text-muted-foreground",
-  },
-} as const;
-
 const SignInPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isDark, setIsDark] = useState(false);
+  const appearanceTheme = isDark ? [shadcn, dark] : shadcn;
   const mode = searchParams.get("mode") === AUTH_MODE.signUp ? AUTH_MODE.signUp : AUTH_MODE.signIn;
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () => {
+      setIsDark(root.classList.contains("dark"));
+    };
+
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const setMode = (nextMode: (typeof AUTH_MODE)[keyof typeof AUTH_MODE]) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -90,10 +83,14 @@ const SignInPage = () => {
           <SignIn
             routing="virtual"
             signUpUrl="/sign-in?mode=sign-up"
-            appearance={authAppearance}
+            appearance={{ theme: appearanceTheme }}
           />
         ) : (
-          <SignUp routing="virtual" signInUrl="/sign-in" appearance={authAppearance} />
+          <SignUp
+            routing="virtual"
+            signInUrl="/sign-in"
+            appearance={{ theme: appearanceTheme }}
+          />
         )}
       </div>
     </section>

@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   description:
     "Home of Cricket in Michigan. Stay updated with the latest news, schedules, and events from The MichCA.",
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "/michca.png",
+    shortcut: "/michca.png",
+    apple: "/michca.png",
   },
 };
 
