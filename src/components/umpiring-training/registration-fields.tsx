@@ -6,6 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import {
   CERTIFICATION_OPTIONS,
+  DIETARY_PREFERENCE_OPTIONS,
+  type DietaryPreferenceValue,
   type RegistrationFieldErrors,
   UMPIRING_DATE_OPTIONS,
   UMPIRING_LOCATION_OPTIONS,
@@ -22,6 +24,7 @@ type RegistrationValues = {
   affiliation: string;
   preferredDate: string;
   preferredLocation: string;
+  dietaryPreference: DietaryPreferenceValue | "";
   previouslyCertified: string;
   questions: string;
 };
@@ -32,6 +35,7 @@ type RegistrationFieldsProps = {
   fieldErrors: RegistrationFieldErrors;
   onPreferredDateChange: (value: string) => void;
   onPreferredLocationChange: (value: string) => void;
+  onDietaryPreferenceChange: (value: DietaryPreferenceValue) => void;
   onPreviouslyCertifiedChange: (value: string) => void;
 };
 
@@ -49,6 +53,7 @@ export function RegistrationFields({
   fieldErrors,
   onPreferredDateChange,
   onPreferredLocationChange,
+  onDietaryPreferenceChange,
   onPreviouslyCertifiedChange,
 }: RegistrationFieldsProps) {
   return (
@@ -81,6 +86,27 @@ export function RegistrationFields({
           placeholder="Enter contact number"
         />
         <FieldError message={fieldErrors.contactNumber} />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Dietary Preference</label>
+        <input type="hidden" name="dietaryPreference" value={values.dietaryPreference} />
+        <Select
+          value={values.dietaryPreference}
+          onValueChange={(value) => onDietaryPreferenceChange(value as DietaryPreferenceValue)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select dietary preference" />
+          </SelectTrigger>
+          <SelectContent>
+            {DIETARY_PREFERENCE_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <FieldError message={fieldErrors.dietaryPreference} />
       </div>
 
       <div className="space-y-2">
@@ -166,4 +192,3 @@ export function RegistrationFields({
     </Card>
   );
 }
-

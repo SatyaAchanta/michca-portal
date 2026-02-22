@@ -12,12 +12,14 @@ describe("RegistrationFields", () => {
           affiliation: "Warriors",
           preferredDate: "2026-03-28",
           preferredLocation: "Troy",
+          dietaryPreference: "VEGETARIAN",
           previouslyCertified: "yes",
           questions: "Sample question",
         }}
         fieldErrors={{}}
         onPreferredDateChange={() => {}}
         onPreferredLocationChange={() => {}}
+        onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
       />
     );
@@ -37,25 +39,28 @@ describe("RegistrationFields", () => {
           affiliation: "",
           preferredDate: "",
           preferredLocation: "",
+          dietaryPreference: "",
           previouslyCertified: "",
           questions: "",
         }}
         fieldErrors={{
           contactNumber: "Contact is required",
+          dietaryPreference: "Choose dietary",
           previouslyCertified: "Select one",
           preferredDate: "Pick a date",
           preferredLocation: "Pick a location",
         }}
         onPreferredDateChange={() => {}}
         onPreferredLocationChange={() => {}}
+        onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
       />
     );
 
     expect(screen.getByText("Contact is required")).toBeInTheDocument();
+    expect(screen.getByText("Choose dietary")).toBeInTheDocument();
     expect(screen.getByText("Select one")).toBeInTheDocument();
     expect(screen.getByText("Pick a date")).toBeInTheDocument();
     expect(screen.getByText("Pick a location")).toBeInTheDocument();
   });
 });
-

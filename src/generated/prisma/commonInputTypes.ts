@@ -218,11 +218,28 @@ export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
 }
 
+export type EnumDietaryPreferenceFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietaryPreference | Prisma.EnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  in?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel> | $Enums.DietaryPreference
+}
+
 export type EnumUmpiringTrainingResultFilter<$PrismaModel = never> = {
   equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+}
+
+export type EnumDietaryPreferenceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietaryPreference | Prisma.EnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  in?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietaryPreferenceWithAggregatesFilter<$PrismaModel> | $Enums.DietaryPreference
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel>
 }
 
 export type EnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel = never> = {
@@ -452,11 +469,28 @@ export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
 }
 
+export type NestedEnumDietaryPreferenceFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietaryPreference | Prisma.EnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  in?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel> | $Enums.DietaryPreference
+}
+
 export type NestedEnumUmpiringTrainingResultFilter<$PrismaModel = never> = {
   equals?: $Enums.UmpiringTrainingResult | Prisma.EnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   in?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   notIn?: $Enums.UmpiringTrainingResult[] | Prisma.ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumUmpiringTrainingResultFilter<$PrismaModel> | $Enums.UmpiringTrainingResult
+}
+
+export type NestedEnumDietaryPreferenceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DietaryPreference | Prisma.EnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  in?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DietaryPreference[] | Prisma.ListEnumDietaryPreferenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDietaryPreferenceWithAggregatesFilter<$PrismaModel> | $Enums.DietaryPreference
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDietaryPreferenceFilter<$PrismaModel>
 }
 
 export type NestedEnumUmpiringTrainingResultWithAggregatesFilter<$PrismaModel = never> = {

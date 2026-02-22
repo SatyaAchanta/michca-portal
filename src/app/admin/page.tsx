@@ -46,6 +46,7 @@ export default async function AdminPage() {
       lastName: true,
       email: true,
       contactNumber: true,
+      dietaryPreference: true,
       previouslyCertified: true,
       affiliation: true,
       preferredDate: true,
@@ -81,6 +82,7 @@ export default async function AdminPage() {
                     <th className="px-4 py-3 font-medium">Name</th>
                     <th className="px-4 py-3 font-medium">Email</th>
                     <th className="px-4 py-3 font-medium">Contact</th>
+                    <th className="px-4 py-3 font-medium">Dietary</th>
                     <th className="px-4 py-3 font-medium">Certified</th>
                     <th className="px-4 py-3 font-medium">Affiliation</th>
                     <th className="px-4 py-3 font-medium">Preferred Date</th>
@@ -102,6 +104,11 @@ export default async function AdminPage() {
                       </td>
                       <td className="px-4 py-3">{registration.email}</td>
                       <td className="px-4 py-3">{registration.contactNumber}</td>
+                      <td className="px-4 py-3">
+                        {registration.dietaryPreference === "VEGETARIAN"
+                          ? "Vegetarian"
+                          : "Non-Vegetarian"}
+                      </td>
                       <td className="px-4 py-3">
                         <Badge variant="outline">
                           {registration.previouslyCertified ? "Yes" : "No"}
@@ -154,6 +161,14 @@ export default async function AdminPage() {
                             <Badge variant="outline">
                               {registration.previouslyCertified ? "Yes" : "No"}
                             </Badge>
+                          </div>
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="text-muted-foreground">Dietary</span>
+                            <span>
+                              {registration.dietaryPreference === "VEGETARIAN"
+                                ? "Vegetarian"
+                                : "Non-Vegetarian"}
+                            </span>
                           </div>
                           <div className="flex items-center justify-between gap-3">
                             <span className="text-muted-foreground">Affiliation</span>

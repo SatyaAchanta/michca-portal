@@ -31,6 +31,7 @@ export type UmpiringTrainingMinAggregateOutputType = {
   lastName: string | null
   email: string | null
   contactNumber: string | null
+  dietaryPreference: $Enums.DietaryPreference | null
   previouslyCertified: boolean | null
   affiliation: string | null
   preferredDate: Date | null
@@ -48,6 +49,7 @@ export type UmpiringTrainingMaxAggregateOutputType = {
   lastName: string | null
   email: string | null
   contactNumber: string | null
+  dietaryPreference: $Enums.DietaryPreference | null
   previouslyCertified: boolean | null
   affiliation: string | null
   preferredDate: Date | null
@@ -65,6 +67,7 @@ export type UmpiringTrainingCountAggregateOutputType = {
   lastName: number
   email: number
   contactNumber: number
+  dietaryPreference: number
   previouslyCertified: number
   affiliation: number
   preferredDate: number
@@ -84,6 +87,7 @@ export type UmpiringTrainingMinAggregateInputType = {
   lastName?: true
   email?: true
   contactNumber?: true
+  dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
   preferredDate?: true
@@ -101,6 +105,7 @@ export type UmpiringTrainingMaxAggregateInputType = {
   lastName?: true
   email?: true
   contactNumber?: true
+  dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
   preferredDate?: true
@@ -118,6 +123,7 @@ export type UmpiringTrainingCountAggregateInputType = {
   lastName?: true
   email?: true
   contactNumber?: true
+  dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
   preferredDate?: true
@@ -208,6 +214,7 @@ export type UmpiringTrainingGroupByOutputType = {
   lastName: string | null
   email: string
   contactNumber: string
+  dietaryPreference: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation: string | null
   preferredDate: Date
@@ -246,6 +253,7 @@ export type UmpiringTrainingWhereInput = {
   lastName?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   email?: Prisma.StringFilter<"UmpiringTraining"> | string
   contactNumber?: Prisma.StringFilter<"UmpiringTraining"> | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   preferredDate?: Prisma.DateTimeFilter<"UmpiringTraining"> | Date | string
@@ -264,6 +272,7 @@ export type UmpiringTrainingOrderByWithRelationInput = {
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
@@ -285,6 +294,7 @@ export type UmpiringTrainingWhereUniqueInput = Prisma.AtLeast<{
   lastName?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   email?: Prisma.StringFilter<"UmpiringTraining"> | string
   contactNumber?: Prisma.StringFilter<"UmpiringTraining"> | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   preferredDate?: Prisma.DateTimeFilter<"UmpiringTraining"> | Date | string
@@ -303,6 +313,7 @@ export type UmpiringTrainingOrderByWithAggregationInput = {
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
@@ -326,6 +337,7 @@ export type UmpiringTrainingScalarWhereWithAggregatesInput = {
   lastName?: Prisma.StringNullableWithAggregatesFilter<"UmpiringTraining"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"UmpiringTraining"> | string
   contactNumber?: Prisma.StringWithAggregatesFilter<"UmpiringTraining"> | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceWithAggregatesFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolWithAggregatesFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableWithAggregatesFilter<"UmpiringTraining"> | string | null
   preferredDate?: Prisma.DateTimeWithAggregatesFilter<"UmpiringTraining"> | Date | string
@@ -342,6 +354,7 @@ export type UmpiringTrainingCreateInput = {
   lastName?: string | null
   email: string
   contactNumber: string
+  dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
   preferredDate: Date | string
@@ -360,6 +373,7 @@ export type UmpiringTrainingUncheckedCreateInput = {
   lastName?: string | null
   email: string
   contactNumber: string
+  dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
   preferredDate: Date | string
@@ -376,6 +390,7 @@ export type UmpiringTrainingUpdateInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -394,6 +409,7 @@ export type UmpiringTrainingUncheckedUpdateInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,6 +427,7 @@ export type UmpiringTrainingCreateManyInput = {
   lastName?: string | null
   email: string
   contactNumber: string
+  dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
   preferredDate: Date | string
@@ -427,6 +444,7 @@ export type UmpiringTrainingUpdateManyMutationInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,6 +462,7 @@ export type UmpiringTrainingUncheckedUpdateManyInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -466,6 +485,7 @@ export type UmpiringTrainingCountOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
@@ -483,6 +503,7 @@ export type UmpiringTrainingMaxOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
@@ -500,6 +521,7 @@ export type UmpiringTrainingMinOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   contactNumber?: Prisma.SortOrder
+  dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
   preferredDate?: Prisma.SortOrder
@@ -542,6 +564,10 @@ export type UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UmpiringTrainingUpdateToOneWithWhereWithoutUserProfileInput, Prisma.UmpiringTrainingUpdateWithoutUserProfileInput>, Prisma.UmpiringTrainingUncheckedUpdateWithoutUserProfileInput>
 }
 
+export type EnumDietaryPreferenceFieldUpdateOperationsInput = {
+  set?: $Enums.DietaryPreference
+}
+
 export type EnumUmpiringTrainingResultFieldUpdateOperationsInput = {
   set?: $Enums.UmpiringTrainingResult
 }
@@ -552,6 +578,7 @@ export type UmpiringTrainingCreateWithoutUserProfileInput = {
   lastName?: string | null
   email: string
   contactNumber: string
+  dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
   preferredDate: Date | string
@@ -568,6 +595,7 @@ export type UmpiringTrainingUncheckedCreateWithoutUserProfileInput = {
   lastName?: string | null
   email: string
   contactNumber: string
+  dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
   preferredDate: Date | string
@@ -600,6 +628,7 @@ export type UmpiringTrainingUpdateWithoutUserProfileInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -616,6 +645,7 @@ export type UmpiringTrainingUncheckedUpdateWithoutUserProfileInput = {
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -635,6 +665,7 @@ export type UmpiringTrainingSelect<ExtArgs extends runtime.Types.Extensions.Inte
   lastName?: boolean
   email?: boolean
   contactNumber?: boolean
+  dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
   preferredDate?: boolean
@@ -653,6 +684,7 @@ export type UmpiringTrainingSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   lastName?: boolean
   email?: boolean
   contactNumber?: boolean
+  dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
   preferredDate?: boolean
@@ -671,6 +703,7 @@ export type UmpiringTrainingSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   lastName?: boolean
   email?: boolean
   contactNumber?: boolean
+  dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
   preferredDate?: boolean
@@ -689,6 +722,7 @@ export type UmpiringTrainingSelectScalar = {
   lastName?: boolean
   email?: boolean
   contactNumber?: boolean
+  dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
   preferredDate?: boolean
@@ -699,7 +733,7 @@ export type UmpiringTrainingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UmpiringTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "firstName" | "lastName" | "email" | "contactNumber" | "previouslyCertified" | "affiliation" | "preferredDate" | "preferredLocation" | "questions" | "result" | "createdAt" | "updatedAt", ExtArgs["result"]["umpiringTraining"]>
+export type UmpiringTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "firstName" | "lastName" | "email" | "contactNumber" | "dietaryPreference" | "previouslyCertified" | "affiliation" | "preferredDate" | "preferredLocation" | "questions" | "result" | "createdAt" | "updatedAt", ExtArgs["result"]["umpiringTraining"]>
 export type UmpiringTrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -722,6 +756,7 @@ export type $UmpiringTrainingPayload<ExtArgs extends runtime.Types.Extensions.In
     lastName: string | null
     email: string
     contactNumber: string
+    dietaryPreference: $Enums.DietaryPreference
     previouslyCertified: boolean
     affiliation: string | null
     preferredDate: Date
@@ -1160,6 +1195,7 @@ export interface UmpiringTrainingFieldRefs {
   readonly lastName: Prisma.FieldRef<"UmpiringTraining", 'String'>
   readonly email: Prisma.FieldRef<"UmpiringTraining", 'String'>
   readonly contactNumber: Prisma.FieldRef<"UmpiringTraining", 'String'>
+  readonly dietaryPreference: Prisma.FieldRef<"UmpiringTraining", 'DietaryPreference'>
   readonly previouslyCertified: Prisma.FieldRef<"UmpiringTraining", 'Boolean'>
   readonly affiliation: Prisma.FieldRef<"UmpiringTraining", 'String'>
   readonly preferredDate: Prisma.FieldRef<"UmpiringTraining", 'DateTime'>

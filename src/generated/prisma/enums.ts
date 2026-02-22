@@ -57,3 +57,11 @@ export const UmpiringTrainingResult = {
 } as const
 
 export type UmpiringTrainingResult = (typeof UmpiringTrainingResult)[keyof typeof UmpiringTrainingResult]
+
+
+export const DietaryPreference = {
+  VEGETARIAN: 'VEGETARIAN',
+  NON_VEGETARIAN: 'NON_VEGETARIAN'
+} as const
+
+export type DietaryPreference = (typeof DietaryPreference)[keyof typeof DietaryPreference]

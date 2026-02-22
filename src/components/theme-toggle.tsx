@@ -61,6 +61,7 @@ export function ThemeToggle() {
       aria-label="Toggle dark mode"
       onClick={toggleTheme}
       className="h-9 w-9"
+      suppressHydrationWarning
     >
       <Moon className="h-4 w-4 dark:hidden" />
       <Sun className="hidden h-4 w-4 dark:block" />

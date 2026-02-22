@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { RegistrationFields } from "@/components/umpiring-training/registration-fields";
 import {
+  type DietaryPreferenceValue,
   INITIAL_REGISTRATION_FORM_STATE,
   toIsoDateString,
   type RegistrationFormState,
@@ -14,6 +15,7 @@ import { upsertMyUmpiringTrainingRegistration } from "@/app/umpiring-training/ac
 
 type RegistrationSnapshot = {
   contactNumber: string;
+  dietaryPreference: DietaryPreferenceValue;
   previouslyCertified: boolean;
   affiliation: string | null;
   preferredDate: Date;
@@ -47,7 +49,13 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
   );
 
   const defaults = useMemo(
-    () => ({
+    (): {
+      dietaryPreference: DietaryPreferenceValue | "";
+      previouslyCertified: string;
+      preferredDate: string;
+      preferredLocation: string;
+    } => ({
+      dietaryPreference: registration?.dietaryPreference ?? "",
       previouslyCertified: registration ? (registration.previouslyCertified ? "yes" : "no") : "",
       preferredDate: registration ? toIsoDateString(registration.preferredDate) : "",
       preferredLocation: registration?.preferredLocation ?? "",
@@ -58,6 +66,9 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
   const [previouslyCertified, setPreviouslyCertified] = useState(defaults.previouslyCertified);
   const [preferredDate, setPreferredDate] = useState(defaults.preferredDate);
   const [preferredLocation, setPreferredLocation] = useState(defaults.preferredLocation);
+  const [dietaryPreference, setDietaryPreference] = useState<DietaryPreferenceValue | "">(
+    defaults.dietaryPreference
+  );
 
   return (
     <form action={formAction} className="space-y-4">
@@ -72,12 +83,14 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
           affiliation: registration?.affiliation ?? "",
           preferredDate,
           preferredLocation,
+          dietaryPreference,
           previouslyCertified,
           questions: registration?.questions ?? "",
         }}
         fieldErrors={state.fieldErrors}
         onPreferredDateChange={setPreferredDate}
         onPreferredLocationChange={setPreferredLocation}
+        onDietaryPreferenceChange={setDietaryPreference}
         onPreviouslyCertifiedChange={setPreviouslyCertified}
       />
 
@@ -98,4 +111,3 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
     </form>
   );
 }
-

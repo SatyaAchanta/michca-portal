@@ -28,6 +28,7 @@ export default async function UmpiringTrainingPage() {
     where: { userProfileId: profile.id },
     select: {
       contactNumber: true,
+      dietaryPreference: true,
       previouslyCertified: true,
       affiliation: true,
       preferredDate: true,
@@ -62,4 +63,3 @@ export default async function UmpiringTrainingPage() {
     </div>
   );
 }
-

@@ -13,6 +13,13 @@ export const CERTIFICATION_OPTIONS = [
   { value: "no", label: "No" },
 ] as const;
 
+export const DIETARY_PREFERENCE_OPTIONS = [
+  { value: "VEGETARIAN", label: "Vegetarian" },
+  { value: "NON_VEGETARIAN", label: "Non-Vegetarian" },
+] as const;
+export type DietaryPreferenceValue =
+  (typeof DIETARY_PREFERENCE_OPTIONS)[number]["value"];
+
 export const RESULT_OPTIONS = [
   { value: "PENDING", label: "Pending" },
   { value: "PASS", label: "Pass" },
@@ -23,6 +30,7 @@ export type UmpiringTrainingResultValue = (typeof RESULT_OPTIONS)[number]["value
 export type RegistrationFieldErrors = Partial<
   Record<
     | "contactNumber"
+    | "dietaryPreference"
     | "previouslyCertified"
     | "preferredDate"
     | "preferredLocation"
@@ -44,6 +52,7 @@ export const INITIAL_REGISTRATION_FORM_STATE: RegistrationFormState = {
 
 export type ParsedRegistrationInput = {
   contactNumber: string;
+  dietaryPreference: DietaryPreferenceValue;
   previouslyCertified: boolean;
   affiliation: string | null;
   preferredDate: string;
@@ -65,6 +74,9 @@ export function parseRegistrationForm(
 ): { data?: ParsedRegistrationInput; fieldErrors: RegistrationFieldErrors } {
   const fieldErrors: RegistrationFieldErrors = {};
   const contactNumber = normalizeOptionalText(formData.get("contactNumber"));
+  const dietaryPreferenceRaw = normalizeOptionalText(
+    formData.get("dietaryPreference")
+  );
   const previouslyCertifiedRaw = normalizeOptionalText(
     formData.get("previouslyCertified")
   );
@@ -77,6 +89,17 @@ export function parseRegistrationForm(
 
   if (!contactNumber) {
     fieldErrors.contactNumber = "Contact number is required.";
+  }
+
+  let dietaryPreference: DietaryPreferenceValue | undefined;
+  if (!dietaryPreferenceRaw) {
+    fieldErrors.dietaryPreference = "Dietary preference is required.";
+  } else if (
+    DIETARY_PREFERENCE_OPTIONS.some((option) => option.value === dietaryPreferenceRaw)
+  ) {
+    dietaryPreference = dietaryPreferenceRaw as DietaryPreferenceValue;
+  } else {
+    fieldErrors.dietaryPreference = "Dietary preference must be Vegetarian or Non-Vegetarian.";
   }
 
   let previouslyCertified: boolean | undefined;
@@ -110,6 +133,7 @@ export function parseRegistrationForm(
     fieldErrors: {},
     data: {
       contactNumber: contactNumber as string,
+      dietaryPreference: dietaryPreference as DietaryPreferenceValue,
       previouslyCertified: previouslyCertified as boolean,
       affiliation,
       preferredDate: preferredDate as string,
