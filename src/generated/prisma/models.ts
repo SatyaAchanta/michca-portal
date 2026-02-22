@@ -11,5 +11,6 @@
 export type * from './models/Team'
 export type * from './models/Game'
 export type * from './models/UserProfile'
+export type * from './models/UmpiringTraining'
 export type * from './models/UmpireAssignment'
 export type * from './commonInputTypes'

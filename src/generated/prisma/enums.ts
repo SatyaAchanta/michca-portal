@@ -48,3 +48,28 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const UmpiringTrainingResult = {
+  PENDING: 'PENDING',
+  PASS: 'PASS',
+  FAIL: 'FAIL'
+} as const
+
+export type UmpiringTrainingResult = (typeof UmpiringTrainingResult)[keyof typeof UmpiringTrainingResult]
+
+
+export const DietaryPreference = {
+  VEGETARIAN: 'VEGETARIAN',
+  NON_VEGETARIAN: 'NON_VEGETARIAN'
+} as const
+
+export type DietaryPreference = (typeof DietaryPreference)[keyof typeof DietaryPreference]
+
+
+export const UmpiringTrainingDateOption = {
+  MARCH_28_2026: 'MARCH_28_2026',
+  MARCH_29_2026: 'MARCH_29_2026'
+} as const
+
+export type UmpiringTrainingDateOption = (typeof UmpiringTrainingDateOption)[keyof typeof UmpiringTrainingDateOption]

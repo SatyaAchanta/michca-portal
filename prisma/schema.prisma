@@ -36,6 +36,22 @@ enum UserRole {
   ADMIN
 }
 
+enum UmpiringTrainingResult {
+  PENDING
+  PASS
+  FAIL
+}
+
+enum DietaryPreference {
+  VEGETARIAN
+  NON_VEGETARIAN
+}
+
+enum UmpiringTrainingDateOption {
+  MARCH_28_2026
+  MARCH_29_2026
+}
+
 model Team {
   shortCode    String @id
   name         String
@@ -83,9 +99,33 @@ model UserProfile {
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
   umpireAssignments    UmpireAssignment[]
+  umpiringTraining     UmpiringTraining?
 
   @@index([email])
   @@index([role])
+}
+
+model UmpiringTraining {
+  id                  String                 @id @default(uuid())
+  userProfileId       String                 @unique
+  firstName           String?
+  lastName            String?
+  email               String
+  contactNumber       String
+  dietaryPreference   DietaryPreference      @default(VEGETARIAN)
+  previouslyCertified Boolean
+  affiliation         String?
+  preferredDates      UmpiringTrainingDateOption[]
+  preferredLocation   String
+  questions           String?
+  result              UmpiringTrainingResult @default(PENDING)
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  userProfile         UserProfile            @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@index([result])
+  @@index([createdAt])
+  @@index([preferredDates])
 }
 
 model UmpireAssignment {

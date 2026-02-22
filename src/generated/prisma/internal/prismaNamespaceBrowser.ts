@@ -54,6 +54,7 @@ export const ModelName = {
   Team: 'Team',
   Game: 'Game',
   UserProfile: 'UserProfile',
+  UmpiringTraining: 'UmpiringTraining',
   UmpireAssignment: 'UmpireAssignment'
 } as const
 
@@ -118,6 +119,27 @@ export const UserProfileScalarFieldEnum = {
 } as const
 
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const UmpiringTrainingScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  contactNumber: 'contactNumber',
+  dietaryPreference: 'dietaryPreference',
+  previouslyCertified: 'previouslyCertified',
+  affiliation: 'affiliation',
+  preferredDates: 'preferredDates',
+  preferredLocation: 'preferredLocation',
+  questions: 'questions',
+  result: 'result',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmpiringTrainingScalarFieldEnum = (typeof UmpiringTrainingScalarFieldEnum)[keyof typeof UmpiringTrainingScalarFieldEnum]
 
 
 export const UmpireAssignmentScalarFieldEnum = {

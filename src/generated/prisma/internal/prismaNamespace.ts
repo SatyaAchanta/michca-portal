@@ -387,6 +387,7 @@ export const ModelName = {
   Team: 'Team',
   Game: 'Game',
   UserProfile: 'UserProfile',
+  UmpiringTraining: 'UmpiringTraining',
   UmpireAssignment: 'UmpireAssignment'
 } as const
 
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpireAssignment"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -629,6 +630,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UmpiringTraining: {
+      payload: Prisma.$UmpiringTrainingPayload<ExtArgs>
+      fields: Prisma.UmpiringTrainingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UmpiringTrainingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UmpiringTrainingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        findFirst: {
+          args: Prisma.UmpiringTrainingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UmpiringTrainingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        findMany: {
+          args: Prisma.UmpiringTrainingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>[]
+        }
+        create: {
+          args: Prisma.UmpiringTrainingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        createMany: {
+          args: Prisma.UmpiringTrainingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UmpiringTrainingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>[]
+        }
+        delete: {
+          args: Prisma.UmpiringTrainingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        update: {
+          args: Prisma.UmpiringTrainingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        deleteMany: {
+          args: Prisma.UmpiringTrainingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UmpiringTrainingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UmpiringTrainingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>[]
+        }
+        upsert: {
+          args: Prisma.UmpiringTrainingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmpiringTrainingPayload>
+        }
+        aggregate: {
+          args: Prisma.UmpiringTrainingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUmpiringTraining>
+        }
+        groupBy: {
+          args: Prisma.UmpiringTrainingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmpiringTrainingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UmpiringTrainingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmpiringTrainingCountAggregateOutputType> | number
+        }
+      }
+    }
     UmpireAssignment: {
       payload: Prisma.$UmpireAssignmentPayload<ExtArgs>
       fields: Prisma.UmpireAssignmentFieldRefs
@@ -789,6 +864,27 @@ export const UserProfileScalarFieldEnum = {
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
 
 
+export const UmpiringTrainingScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  contactNumber: 'contactNumber',
+  dietaryPreference: 'dietaryPreference',
+  previouslyCertified: 'previouslyCertified',
+  affiliation: 'affiliation',
+  preferredDates: 'preferredDates',
+  preferredLocation: 'preferredLocation',
+  questions: 'questions',
+  result: 'result',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmpiringTrainingScalarFieldEnum = (typeof UmpiringTrainingScalarFieldEnum)[keyof typeof UmpiringTrainingScalarFieldEnum]
+
+
 export const UmpireAssignmentScalarFieldEnum = {
   id: 'id',
   gameId: 'gameId',
@@ -935,6 +1031,48 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'DietaryPreference'
+ */
+export type EnumDietaryPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DietaryPreference'>
+    
+
+
+/**
+ * Reference to a field of type 'DietaryPreference[]'
+ */
+export type ListEnumDietaryPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DietaryPreference[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingDateOption[]'
+ */
+export type ListEnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingDateOption[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingDateOption'
+ */
+export type EnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingDateOption'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingResult'
+ */
+export type EnumUmpiringTrainingResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingResult'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingResult[]'
+ */
+export type ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingResult[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1045,6 +1183,7 @@ export type GlobalOmitConfig = {
   team?: Prisma.TeamOmit
   game?: Prisma.GameOmit
   userProfile?: Prisma.UserProfileOmit
+  umpiringTraining?: Prisma.UmpiringTrainingOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
 }
 

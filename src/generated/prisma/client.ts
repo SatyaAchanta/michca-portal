@@ -55,6 +55,11 @@ export type Game = Prisma.GameModel
  */
 export type UserProfile = Prisma.UserProfileModel
 /**
+ * Model UmpiringTraining
+ * 
+ */
+export type UmpiringTraining = Prisma.UmpiringTrainingModel
+/**
  * Model UmpireAssignment
  * 
  */
