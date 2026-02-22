@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 
 import { PageContainer } from "@/components/page-container";
-import { Card } from "@/components/ui/card";
 import { RegistrationForm } from "@/components/umpiring-training/registration-form";
 import { prisma } from "@/lib/prisma";
 import { AuthenticationRequiredError, getOrCreateCurrentUserProfile } from "@/lib/user-profile";
@@ -31,7 +30,7 @@ export default async function UmpiringTrainingPage() {
       dietaryPreference: true,
       previouslyCertified: true,
       affiliation: true,
-      preferredDate: true,
+      preferredDates: true,
       preferredLocation: true,
       questions: true,
     },
@@ -49,8 +48,7 @@ export default async function UmpiringTrainingPage() {
           </p>
         </div>
 
-        <Card className="p-6">
-          <RegistrationForm
+        <RegistrationForm
             profile={{
               firstName: profile.firstName,
               lastName: profile.lastName,
@@ -58,7 +56,6 @@ export default async function UmpiringTrainingPage() {
             }}
             registration={registration}
           />
-        </Card>
       </PageContainer>
     </div>
   );

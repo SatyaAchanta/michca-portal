@@ -8,8 +8,8 @@ import { RegistrationFields } from "@/components/umpiring-training/registration-
 import {
   type DietaryPreferenceValue,
   INITIAL_REGISTRATION_FORM_STATE,
-  toIsoDateString,
   type RegistrationFormState,
+  type UmpiringTrainingDateOptionValue,
 } from "@/components/umpiring-training/validation";
 import { upsertMyUmpiringTrainingRegistration } from "@/app/umpiring-training/actions";
 
@@ -18,7 +18,7 @@ type RegistrationSnapshot = {
   dietaryPreference: DietaryPreferenceValue;
   previouslyCertified: boolean;
   affiliation: string | null;
-  preferredDate: Date;
+  preferredDates: UmpiringTrainingDateOptionValue[];
   preferredLocation: string;
   questions: string | null;
 };
@@ -52,19 +52,21 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
     (): {
       dietaryPreference: DietaryPreferenceValue | "";
       previouslyCertified: string;
-      preferredDate: string;
+      preferredDates: UmpiringTrainingDateOptionValue[];
       preferredLocation: string;
     } => ({
       dietaryPreference: registration?.dietaryPreference ?? "",
       previouslyCertified: registration ? (registration.previouslyCertified ? "yes" : "no") : "",
-      preferredDate: registration ? toIsoDateString(registration.preferredDate) : "",
+      preferredDates: registration?.preferredDates ?? [],
       preferredLocation: registration?.preferredLocation ?? "",
     }),
     [registration]
   );
 
   const [previouslyCertified, setPreviouslyCertified] = useState(defaults.previouslyCertified);
-  const [preferredDate, setPreferredDate] = useState(defaults.preferredDate);
+  const [preferredDates, setPreferredDates] = useState<UmpiringTrainingDateOptionValue[]>(
+    defaults.preferredDates
+  );
   const [preferredLocation, setPreferredLocation] = useState(defaults.preferredLocation);
   const [dietaryPreference, setDietaryPreference] = useState<DietaryPreferenceValue | "">(
     defaults.dietaryPreference
@@ -81,14 +83,14 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
         values={{
           contactNumber: registration?.contactNumber ?? "",
           affiliation: registration?.affiliation ?? "",
-          preferredDate,
+          preferredDates,
           preferredLocation,
           dietaryPreference,
           previouslyCertified,
           questions: registration?.questions ?? "",
         }}
         fieldErrors={state.fieldErrors}
-        onPreferredDateChange={setPreferredDate}
+        onPreferredDatesChange={setPreferredDates}
         onPreferredLocationChange={setPreferredLocation}
         onDietaryPreferenceChange={setDietaryPreference}
         onPreviouslyCertifiedChange={setPreviouslyCertified}

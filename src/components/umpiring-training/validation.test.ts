@@ -9,7 +9,7 @@ function createValidFormData() {
   formData.set("contactNumber", "248-555-0101");
   formData.set("dietaryPreference", "VEGETARIAN");
   formData.set("previouslyCertified", "yes");
-  formData.set("preferredDate", "2026-03-28");
+  formData.append("preferredDates", "MARCH_28_2026");
   formData.set("preferredLocation", "Troy");
   formData.set("affiliation", "Falcons");
   formData.set("questions", "Any prep material?");
@@ -26,7 +26,7 @@ describe("parseRegistrationForm", () => {
       dietaryPreference: "VEGETARIAN",
       previouslyCertified: true,
       affiliation: "Falcons",
-      preferredDate: "2026-03-28",
+      preferredDates: ["MARCH_28_2026"],
       preferredLocation: "Troy",
       questions: "Any prep material?",
     });
@@ -41,21 +41,44 @@ describe("parseRegistrationForm", () => {
       contactNumber: expect.any(String),
       dietaryPreference: expect.any(String),
       previouslyCertified: expect.any(String),
-      preferredDate: expect.any(String),
+      preferredDates: expect.any(String),
       preferredLocation: expect.any(String),
     });
   });
 
+  it("accepts selecting both preferred dates", () => {
+    const formData = createValidFormData();
+    formData.append("preferredDates", "MARCH_29_2026");
+
+    const result = parseRegistrationForm(formData);
+
+    expect(result.fieldErrors).toEqual({});
+    expect(result.data?.preferredDates).toEqual([
+      "MARCH_28_2026",
+      "MARCH_29_2026",
+    ]);
+  });
+
   it("rejects invalid preferred date and location", () => {
     const formData = createValidFormData();
-    formData.set("preferredDate", "2026-03-30");
+    formData.delete("preferredDates");
+    formData.append("preferredDates", "MARCH_30_2026");
     formData.set("preferredLocation", "Detroit");
 
     const result = parseRegistrationForm(formData);
 
     expect(result.data).toBeUndefined();
-    expect(result.fieldErrors.preferredDate).toContain("March 28");
+    expect(result.fieldErrors.preferredDates).toContain("March 28");
     expect(result.fieldErrors.preferredLocation).toContain("Troy");
+  });
+
+  it("rejects when no preferred dates are selected", () => {
+    const formData = createValidFormData();
+    formData.delete("preferredDates");
+
+    const result = parseRegistrationForm(formData);
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.preferredDates).toContain("at least one");
   });
 
   it("rejects invalid dietary preference", () => {

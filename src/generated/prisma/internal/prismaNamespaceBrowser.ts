@@ -131,7 +131,7 @@ export const UmpiringTrainingScalarFieldEnum = {
   dietaryPreference: 'dietaryPreference',
   previouslyCertified: 'previouslyCertified',
   affiliation: 'affiliation',
-  preferredDate: 'preferredDate',
+  preferredDates: 'preferredDates',
   preferredLocation: 'preferredLocation',
   questions: 'questions',
   result: 'result',

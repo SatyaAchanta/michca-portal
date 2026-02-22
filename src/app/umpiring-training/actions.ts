@@ -12,10 +12,6 @@ import {
   parseResultValue,
 } from "@/components/umpiring-training/validation";
 
-function toPreferredDate(value: string) {
-  return new Date(`${value}T00:00:00.000Z`);
-}
-
 export async function upsertMyUmpiringTrainingRegistration(
   _prevState: RegistrationFormState,
   formData: FormData
@@ -56,7 +52,7 @@ export async function upsertMyUmpiringTrainingRegistration(
       dietaryPreference: data.dietaryPreference,
       previouslyCertified: data.previouslyCertified,
       affiliation: data.affiliation,
-      preferredDate: toPreferredDate(data.preferredDate),
+      preferredDates: data.preferredDates,
       preferredLocation: data.preferredLocation,
       questions: data.questions,
     },
@@ -68,7 +64,7 @@ export async function upsertMyUmpiringTrainingRegistration(
       dietaryPreference: data.dietaryPreference,
       previouslyCertified: data.previouslyCertified,
       affiliation: data.affiliation,
-      preferredDate: toPreferredDate(data.preferredDate),
+      preferredDates: data.preferredDates,
       preferredLocation: data.preferredLocation,
       questions: data.questions,
     },

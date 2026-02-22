@@ -1,6 +1,8 @@
 import {
   formatName,
-  formatPreferredDate,
+  formatPreferredDates,
+  parseDateFilterParam,
+  parseLocationFilterParam,
   resultBadgeClass,
 } from "@/components/umpiring-training/admin-formatters";
 
@@ -11,13 +13,27 @@ describe("admin-formatters", () => {
     expect(formatName(null, null)).toBe("-");
   });
 
-  it("formats preferred date labels for known dates", () => {
-    expect(formatPreferredDate(new Date("2026-03-28T00:00:00.000Z"))).toBe("March 28, 2026");
-    expect(formatPreferredDate(new Date("2026-03-29T00:00:00.000Z"))).toBe("March 29, 2026");
+  it("formats preferred date labels for known date options", () => {
+    expect(formatPreferredDates(["MARCH_28_2026"])).toBe("March 28, 2026");
+    expect(formatPreferredDates(["MARCH_29_2026"])).toBe("March 29, 2026");
   });
 
-  it("falls back to ISO date for unknown preferred date", () => {
-    expect(formatPreferredDate(new Date("2026-04-01T00:00:00.000Z"))).toBe("2026-04-01");
+  it("formats multiple date options as comma-separated text", () => {
+    expect(formatPreferredDates(["MARCH_28_2026", "MARCH_29_2026"])).toBe(
+      "March 28, 2026, March 29, 2026"
+    );
+  });
+
+  it("parses date and location filter query params", () => {
+    expect(parseDateFilterParam("MARCH_28_2026,MARCH_29_2026")).toEqual([
+      "MARCH_28_2026",
+      "MARCH_29_2026",
+    ]);
+    expect(parseDateFilterParam("MARCH_28_2026,INVALID")).toEqual(["MARCH_28_2026"]);
+    expect(parseLocationFilterParam("Troy,Farmington Hills")).toEqual([
+      "Troy",
+      "Farmington Hills",
+    ]);
   });
 
   it("returns badge classes for each result state", () => {
@@ -26,4 +42,3 @@ describe("admin-formatters", () => {
     expect(resultBadgeClass("PENDING")).toContain("amber");
   });
 });
-

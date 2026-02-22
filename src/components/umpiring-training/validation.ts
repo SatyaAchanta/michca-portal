@@ -1,7 +1,9 @@
 export const UMPIRING_DATE_OPTIONS = [
-  { value: "2026-03-28", label: "March 28, 2026" },
-  { value: "2026-03-29", label: "March 29, 2026" },
+  { value: "MARCH_28_2026", label: "March 28, 2026" },
+  { value: "MARCH_29_2026", label: "March 29, 2026" },
 ] as const;
+export type UmpiringTrainingDateOptionValue =
+  (typeof UMPIRING_DATE_OPTIONS)[number]["value"];
 
 export const UMPIRING_LOCATION_OPTIONS = [
   "Troy",
@@ -32,7 +34,7 @@ export type RegistrationFieldErrors = Partial<
     | "contactNumber"
     | "dietaryPreference"
     | "previouslyCertified"
-    | "preferredDate"
+    | "preferredDates"
     | "preferredLocation"
     | "form",
     string
@@ -55,7 +57,7 @@ export type ParsedRegistrationInput = {
   dietaryPreference: DietaryPreferenceValue;
   previouslyCertified: boolean;
   affiliation: string | null;
-  preferredDate: string;
+  preferredDates: UmpiringTrainingDateOptionValue[];
   preferredLocation: string;
   questions: string | null;
 };
@@ -80,7 +82,11 @@ export function parseRegistrationForm(
   const previouslyCertifiedRaw = normalizeOptionalText(
     formData.get("previouslyCertified")
   );
-  const preferredDate = normalizeOptionalText(formData.get("preferredDate"));
+  const preferredDatesRaw = formData
+    .getAll("preferredDates")
+    .filter((value): value is string => typeof value === "string")
+    .map((value) => value.trim())
+    .filter(Boolean);
   const preferredLocation = normalizeOptionalText(
     formData.get("preferredLocation")
   );
@@ -113,10 +119,16 @@ export function parseRegistrationForm(
     fieldErrors.previouslyCertified = "Invalid certification value.";
   }
 
-  if (!preferredDate) {
-    fieldErrors.preferredDate = "Preferred date is required.";
-  } else if (!UMPIRING_DATE_OPTIONS.some((option) => option.value === preferredDate)) {
-    fieldErrors.preferredDate = "Preferred date must be March 28 or March 29, 2026.";
+  if (preferredDatesRaw.length === 0) {
+    fieldErrors.preferredDates = "Select at least one preferred date.";
+  }
+
+  const invalidPreferredDate = preferredDatesRaw.some(
+    (dateValue) =>
+      !UMPIRING_DATE_OPTIONS.some((option) => option.value === dateValue)
+  );
+  if (invalidPreferredDate) {
+    fieldErrors.preferredDates = "Preferred dates must be March 28 or March 29, 2026.";
   }
 
   if (!preferredLocation) {
@@ -136,7 +148,7 @@ export function parseRegistrationForm(
       dietaryPreference: dietaryPreference as DietaryPreferenceValue,
       previouslyCertified: previouslyCertified as boolean,
       affiliation,
-      preferredDate: preferredDate as string,
+      preferredDates: preferredDatesRaw as UmpiringTrainingDateOptionValue[],
       preferredLocation: preferredLocation as string,
       questions,
     },

@@ -47,6 +47,11 @@ enum DietaryPreference {
   NON_VEGETARIAN
 }
 
+enum UmpiringTrainingDateOption {
+  MARCH_28_2026
+  MARCH_29_2026
+}
+
 model Team {
   shortCode    String @id
   name         String
@@ -110,7 +115,7 @@ model UmpiringTraining {
   dietaryPreference   DietaryPreference      @default(VEGETARIAN)
   previouslyCertified Boolean
   affiliation         String?
-  preferredDate       DateTime
+  preferredDates      UmpiringTrainingDateOption[]
   preferredLocation   String
   questions           String?
   result              UmpiringTrainingResult @default(PENDING)
@@ -120,7 +125,7 @@ model UmpiringTraining {
 
   @@index([result])
   @@index([createdAt])
-  @@index([preferredDate])
+  @@index([preferredDates])
 }
 
 model UmpireAssignment {

@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +10,7 @@ import {
   DIETARY_PREFERENCE_OPTIONS,
   type DietaryPreferenceValue,
   type RegistrationFieldErrors,
+  type UmpiringTrainingDateOptionValue,
   UMPIRING_DATE_OPTIONS,
   UMPIRING_LOCATION_OPTIONS,
 } from "@/components/umpiring-training/validation";
@@ -22,7 +24,7 @@ type ProfileValues = {
 type RegistrationValues = {
   contactNumber: string;
   affiliation: string;
-  preferredDate: string;
+  preferredDates: UmpiringTrainingDateOptionValue[];
   preferredLocation: string;
   dietaryPreference: DietaryPreferenceValue | "";
   previouslyCertified: string;
@@ -33,7 +35,7 @@ type RegistrationFieldsProps = {
   profile: ProfileValues;
   values: RegistrationValues;
   fieldErrors: RegistrationFieldErrors;
-  onPreferredDateChange: (value: string) => void;
+  onPreferredDatesChange: (value: UmpiringTrainingDateOptionValue[]) => void;
   onPreferredLocationChange: (value: string) => void;
   onDietaryPreferenceChange: (value: DietaryPreferenceValue) => void;
   onPreviouslyCertifiedChange: (value: string) => void;
@@ -51,11 +53,19 @@ export function RegistrationFields({
   profile,
   values,
   fieldErrors,
-  onPreferredDateChange,
+  onPreferredDatesChange,
   onPreferredLocationChange,
   onDietaryPreferenceChange,
   onPreviouslyCertifiedChange,
 }: RegistrationFieldsProps) {
+  const togglePreferredDate = (dateValue: UmpiringTrainingDateOptionValue) => {
+    const hasDate = values.preferredDates.includes(dateValue);
+    const nextDates = hasDate
+      ? values.preferredDates.filter((value) => value !== dateValue)
+      : [...values.preferredDates, dateValue];
+    onPreferredDatesChange(nextDates);
+  };
+
   return (
     <Card className="space-y-6 p-6">
       <div className="grid gap-4 md:grid-cols-2">
@@ -142,20 +152,21 @@ export function RegistrationFields({
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <label className="text-sm font-medium">Preferred Date</label>
-          <input type="hidden" name="preferredDate" value={values.preferredDate} />
-          <Select value={values.preferredDate} onValueChange={onPreferredDateChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select preferred date" />
-            </SelectTrigger>
-            <SelectContent>
-              {UMPIRING_DATE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FieldError message={fieldErrors.preferredDate} />
+          <div className="space-y-2 rounded-lg border border-border/70 p-3">
+            {UMPIRING_DATE_OPTIONS.map((option) => (
+              <label key={option.value} className="flex items-center gap-2 text-sm">
+                <Checkbox
+                  checked={values.preferredDates.includes(option.value)}
+                  onCheckedChange={() => togglePreferredDate(option.value)}
+                />
+                <span>{option.label}</span>
+                {values.preferredDates.includes(option.value) ? (
+                  <input type="hidden" name="preferredDates" value={option.value} />
+                ) : null}
+              </label>
+            ))}
+          </div>
+          <FieldError message={fieldErrors.preferredDates} />
         </div>
 
         <div className="space-y-2">

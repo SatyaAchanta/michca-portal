@@ -1,61 +1,28 @@
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
-import { UserRole } from "@/generated/prisma/client";
-
 import { PageContainer } from "@/components/page-container";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { AdminFilters } from "@/components/umpiring-training/admin-filters";
 import { ResultCell } from "@/components/umpiring-training/result-cell";
-import {
-  AuthenticationRequiredError,
-  InsufficientRoleError,
-  requireRole,
-} from "@/lib/user-profile";
-import { prisma } from "@/lib/prisma";
+import { getAdminRegistrations } from "@/app/admin/actions";
 import {
   formatName,
-  formatPreferredDate,
+  formatPreferredDates,
   formatSubmittedDate,
   resultBadgeClass,
 } from "@/components/umpiring-training/admin-formatters";
 
-export default async function AdminPage() {
-  const { userId } = await auth();
-  if (!userId) {
-    redirect("/sign-in");
-  }
+type AdminPageProps = {
+  searchParams?: Promise<{ dates?: string; locations?: string }>;
+};
 
-  try {
-    await requireRole(UserRole.ADMIN);
-  } catch (error) {
-    if (error instanceof AuthenticationRequiredError) {
-      redirect("/sign-in");
-    }
-    if (error instanceof InsufficientRoleError) {
-      redirect("/");
-    }
-    throw error;
-  }
-
-  const registrations = await prisma.umpiringTraining.findMany({
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      contactNumber: true,
-      dietaryPreference: true,
-      previouslyCertified: true,
-      affiliation: true,
-      preferredDate: true,
-      preferredLocation: true,
-      questions: true,
-      result: true,
-      createdAt: true,
-    },
-  });
+export default async function AdminPage({ searchParams }: AdminPageProps) {
+  const resolvedParams = searchParams ? await searchParams : undefined;
+  const { registrations, selectedDates, selectedLocations } =
+    await getAdminRegistrations({
+      datesParam: resolvedParams?.dates,
+      locationsParam: resolvedParams?.locations,
+    });
 
   return (
     <div className="bg-background py-12">
@@ -66,6 +33,8 @@ export default async function AdminPage() {
             Umpiring training registrations.
           </p>
         </div>
+
+        <AdminFilters initialDates={selectedDates} initialLocations={selectedLocations} />
 
         {registrations.length === 0 ? (
           <Card className="p-6">
@@ -115,7 +84,7 @@ export default async function AdminPage() {
                         </Badge>
                       </td>
                       <td className="px-4 py-3">{registration.affiliation ?? "-"}</td>
-                      <td className="px-4 py-3">{formatPreferredDate(registration.preferredDate)}</td>
+                      <td className="px-4 py-3">{formatPreferredDates(registration.preferredDates)}</td>
                       <td className="px-4 py-3">{registration.preferredLocation}</td>
                       <td className="max-w-[260px] px-4 py-3 whitespace-pre-wrap break-words">
                         {registration.questions ?? "-"}
@@ -176,7 +145,7 @@ export default async function AdminPage() {
                           </div>
                           <div className="flex items-center justify-between gap-3">
                             <span className="text-muted-foreground">Preferred Date</span>
-                            <span>{formatPreferredDate(registration.preferredDate)}</span>
+                            <span>{formatPreferredDates(registration.preferredDates)}</span>
                           </div>
                           <div className="flex items-center justify-between gap-3">
                             <span className="text-muted-foreground">Location</span>

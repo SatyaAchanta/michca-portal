@@ -874,7 +874,7 @@ export const UmpiringTrainingScalarFieldEnum = {
   dietaryPreference: 'dietaryPreference',
   previouslyCertified: 'previouslyCertified',
   affiliation: 'affiliation',
-  preferredDate: 'preferredDate',
+  preferredDates: 'preferredDates',
   preferredLocation: 'preferredLocation',
   questions: 'questions',
   result: 'result',
@@ -1041,6 +1041,20 @@ export type EnumDietaryPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'DietaryPreference[]'
  */
 export type ListEnumDietaryPreferenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DietaryPreference[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingDateOption[]'
+ */
+export type ListEnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingDateOption[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UmpiringTrainingDateOption'
+ */
+export type EnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UmpiringTrainingDateOption'>
     
 
 

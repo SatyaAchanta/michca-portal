@@ -34,7 +34,6 @@ export type UmpiringTrainingMinAggregateOutputType = {
   dietaryPreference: $Enums.DietaryPreference | null
   previouslyCertified: boolean | null
   affiliation: string | null
-  preferredDate: Date | null
   preferredLocation: string | null
   questions: string | null
   result: $Enums.UmpiringTrainingResult | null
@@ -52,7 +51,6 @@ export type UmpiringTrainingMaxAggregateOutputType = {
   dietaryPreference: $Enums.DietaryPreference | null
   previouslyCertified: boolean | null
   affiliation: string | null
-  preferredDate: Date | null
   preferredLocation: string | null
   questions: string | null
   result: $Enums.UmpiringTrainingResult | null
@@ -70,7 +68,7 @@ export type UmpiringTrainingCountAggregateOutputType = {
   dietaryPreference: number
   previouslyCertified: number
   affiliation: number
-  preferredDate: number
+  preferredDates: number
   preferredLocation: number
   questions: number
   result: number
@@ -90,7 +88,6 @@ export type UmpiringTrainingMinAggregateInputType = {
   dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
-  preferredDate?: true
   preferredLocation?: true
   questions?: true
   result?: true
@@ -108,7 +105,6 @@ export type UmpiringTrainingMaxAggregateInputType = {
   dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
-  preferredDate?: true
   preferredLocation?: true
   questions?: true
   result?: true
@@ -126,7 +122,7 @@ export type UmpiringTrainingCountAggregateInputType = {
   dietaryPreference?: true
   previouslyCertified?: true
   affiliation?: true
-  preferredDate?: true
+  preferredDates?: true
   preferredLocation?: true
   questions?: true
   result?: true
@@ -217,7 +213,7 @@ export type UmpiringTrainingGroupByOutputType = {
   dietaryPreference: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation: string | null
-  preferredDate: Date
+  preferredDates: $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions: string | null
   result: $Enums.UmpiringTrainingResult
@@ -256,7 +252,7 @@ export type UmpiringTrainingWhereInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
-  preferredDate?: Prisma.DateTimeFilter<"UmpiringTraining"> | Date | string
+  preferredDates?: Prisma.EnumUmpiringTrainingDateOptionNullableListFilter<"UmpiringTraining">
   preferredLocation?: Prisma.StringFilter<"UmpiringTraining"> | string
   questions?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   result?: Prisma.EnumUmpiringTrainingResultFilter<"UmpiringTraining"> | $Enums.UmpiringTrainingResult
@@ -275,7 +271,7 @@ export type UmpiringTrainingOrderByWithRelationInput = {
   dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferredDate?: Prisma.SortOrder
+  preferredDates?: Prisma.SortOrder
   preferredLocation?: Prisma.SortOrder
   questions?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -297,7 +293,7 @@ export type UmpiringTrainingWhereUniqueInput = Prisma.AtLeast<{
   dietaryPreference?: Prisma.EnumDietaryPreferenceFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
-  preferredDate?: Prisma.DateTimeFilter<"UmpiringTraining"> | Date | string
+  preferredDates?: Prisma.EnumUmpiringTrainingDateOptionNullableListFilter<"UmpiringTraining">
   preferredLocation?: Prisma.StringFilter<"UmpiringTraining"> | string
   questions?: Prisma.StringNullableFilter<"UmpiringTraining"> | string | null
   result?: Prisma.EnumUmpiringTrainingResultFilter<"UmpiringTraining"> | $Enums.UmpiringTrainingResult
@@ -316,7 +312,7 @@ export type UmpiringTrainingOrderByWithAggregationInput = {
   dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferredDate?: Prisma.SortOrder
+  preferredDates?: Prisma.SortOrder
   preferredLocation?: Prisma.SortOrder
   questions?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -340,7 +336,7 @@ export type UmpiringTrainingScalarWhereWithAggregatesInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceWithAggregatesFilter<"UmpiringTraining"> | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolWithAggregatesFilter<"UmpiringTraining"> | boolean
   affiliation?: Prisma.StringNullableWithAggregatesFilter<"UmpiringTraining"> | string | null
-  preferredDate?: Prisma.DateTimeWithAggregatesFilter<"UmpiringTraining"> | Date | string
+  preferredDates?: Prisma.EnumUmpiringTrainingDateOptionNullableListFilter<"UmpiringTraining">
   preferredLocation?: Prisma.StringWithAggregatesFilter<"UmpiringTraining"> | string
   questions?: Prisma.StringNullableWithAggregatesFilter<"UmpiringTraining"> | string | null
   result?: Prisma.EnumUmpiringTrainingResultWithAggregatesFilter<"UmpiringTraining"> | $Enums.UmpiringTrainingResult
@@ -357,7 +353,7 @@ export type UmpiringTrainingCreateInput = {
   dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
-  preferredDate: Date | string
+  preferredDates?: Prisma.UmpiringTrainingCreatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions?: string | null
   result?: $Enums.UmpiringTrainingResult
@@ -376,7 +372,7 @@ export type UmpiringTrainingUncheckedCreateInput = {
   dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
-  preferredDate: Date | string
+  preferredDates?: Prisma.UmpiringTrainingCreatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions?: string | null
   result?: $Enums.UmpiringTrainingResult
@@ -393,7 +389,7 @@ export type UmpiringTrainingUpdateInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -412,7 +408,7 @@ export type UmpiringTrainingUncheckedUpdateInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -430,7 +426,7 @@ export type UmpiringTrainingCreateManyInput = {
   dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
-  preferredDate: Date | string
+  preferredDates?: Prisma.UmpiringTrainingCreatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions?: string | null
   result?: $Enums.UmpiringTrainingResult
@@ -447,7 +443,7 @@ export type UmpiringTrainingUpdateManyMutationInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -465,7 +461,7 @@ export type UmpiringTrainingUncheckedUpdateManyInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -478,6 +474,14 @@ export type UmpiringTrainingNullableScalarRelationFilter = {
   isNot?: Prisma.UmpiringTrainingWhereInput | null
 }
 
+export type EnumUmpiringTrainingDateOptionNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.UmpiringTrainingDateOption[] | Prisma.ListEnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> | null
+  has?: $Enums.UmpiringTrainingDateOption | Prisma.EnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.UmpiringTrainingDateOption[] | Prisma.ListEnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.UmpiringTrainingDateOption[] | Prisma.ListEnumUmpiringTrainingDateOptionFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type UmpiringTrainingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userProfileId?: Prisma.SortOrder
@@ -488,7 +492,7 @@ export type UmpiringTrainingCountOrderByAggregateInput = {
   dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
-  preferredDate?: Prisma.SortOrder
+  preferredDates?: Prisma.SortOrder
   preferredLocation?: Prisma.SortOrder
   questions?: Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -506,7 +510,6 @@ export type UmpiringTrainingMaxOrderByAggregateInput = {
   dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
-  preferredDate?: Prisma.SortOrder
   preferredLocation?: Prisma.SortOrder
   questions?: Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -524,7 +527,6 @@ export type UmpiringTrainingMinOrderByAggregateInput = {
   dietaryPreference?: Prisma.SortOrder
   previouslyCertified?: Prisma.SortOrder
   affiliation?: Prisma.SortOrder
-  preferredDate?: Prisma.SortOrder
   preferredLocation?: Prisma.SortOrder
   questions?: Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -564,8 +566,17 @@ export type UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UmpiringTrainingUpdateToOneWithWhereWithoutUserProfileInput, Prisma.UmpiringTrainingUpdateWithoutUserProfileInput>, Prisma.UmpiringTrainingUncheckedUpdateWithoutUserProfileInput>
 }
 
+export type UmpiringTrainingCreatepreferredDatesInput = {
+  set: $Enums.UmpiringTrainingDateOption[]
+}
+
 export type EnumDietaryPreferenceFieldUpdateOperationsInput = {
   set?: $Enums.DietaryPreference
+}
+
+export type UmpiringTrainingUpdatepreferredDatesInput = {
+  set?: $Enums.UmpiringTrainingDateOption[]
+  push?: $Enums.UmpiringTrainingDateOption | $Enums.UmpiringTrainingDateOption[]
 }
 
 export type EnumUmpiringTrainingResultFieldUpdateOperationsInput = {
@@ -581,7 +592,7 @@ export type UmpiringTrainingCreateWithoutUserProfileInput = {
   dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
-  preferredDate: Date | string
+  preferredDates?: Prisma.UmpiringTrainingCreatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions?: string | null
   result?: $Enums.UmpiringTrainingResult
@@ -598,7 +609,7 @@ export type UmpiringTrainingUncheckedCreateWithoutUserProfileInput = {
   dietaryPreference?: $Enums.DietaryPreference
   previouslyCertified: boolean
   affiliation?: string | null
-  preferredDate: Date | string
+  preferredDates?: Prisma.UmpiringTrainingCreatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation: string
   questions?: string | null
   result?: $Enums.UmpiringTrainingResult
@@ -631,7 +642,7 @@ export type UmpiringTrainingUpdateWithoutUserProfileInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -648,7 +659,7 @@ export type UmpiringTrainingUncheckedUpdateWithoutUserProfileInput = {
   dietaryPreference?: Prisma.EnumDietaryPreferenceFieldUpdateOperationsInput | $Enums.DietaryPreference
   previouslyCertified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredDates?: Prisma.UmpiringTrainingUpdatepreferredDatesInput | $Enums.UmpiringTrainingDateOption[]
   preferredLocation?: Prisma.StringFieldUpdateOperationsInput | string
   questions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   result?: Prisma.EnumUmpiringTrainingResultFieldUpdateOperationsInput | $Enums.UmpiringTrainingResult
@@ -668,7 +679,7 @@ export type UmpiringTrainingSelect<ExtArgs extends runtime.Types.Extensions.Inte
   dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
-  preferredDate?: boolean
+  preferredDates?: boolean
   preferredLocation?: boolean
   questions?: boolean
   result?: boolean
@@ -687,7 +698,7 @@ export type UmpiringTrainingSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
-  preferredDate?: boolean
+  preferredDates?: boolean
   preferredLocation?: boolean
   questions?: boolean
   result?: boolean
@@ -706,7 +717,7 @@ export type UmpiringTrainingSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
-  preferredDate?: boolean
+  preferredDates?: boolean
   preferredLocation?: boolean
   questions?: boolean
   result?: boolean
@@ -725,7 +736,7 @@ export type UmpiringTrainingSelectScalar = {
   dietaryPreference?: boolean
   previouslyCertified?: boolean
   affiliation?: boolean
-  preferredDate?: boolean
+  preferredDates?: boolean
   preferredLocation?: boolean
   questions?: boolean
   result?: boolean
@@ -733,7 +744,7 @@ export type UmpiringTrainingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UmpiringTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "firstName" | "lastName" | "email" | "contactNumber" | "dietaryPreference" | "previouslyCertified" | "affiliation" | "preferredDate" | "preferredLocation" | "questions" | "result" | "createdAt" | "updatedAt", ExtArgs["result"]["umpiringTraining"]>
+export type UmpiringTrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "firstName" | "lastName" | "email" | "contactNumber" | "dietaryPreference" | "previouslyCertified" | "affiliation" | "preferredDates" | "preferredLocation" | "questions" | "result" | "createdAt" | "updatedAt", ExtArgs["result"]["umpiringTraining"]>
 export type UmpiringTrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -759,7 +770,7 @@ export type $UmpiringTrainingPayload<ExtArgs extends runtime.Types.Extensions.In
     dietaryPreference: $Enums.DietaryPreference
     previouslyCertified: boolean
     affiliation: string | null
-    preferredDate: Date
+    preferredDates: $Enums.UmpiringTrainingDateOption[]
     preferredLocation: string
     questions: string | null
     result: $Enums.UmpiringTrainingResult
@@ -1198,7 +1209,7 @@ export interface UmpiringTrainingFieldRefs {
   readonly dietaryPreference: Prisma.FieldRef<"UmpiringTraining", 'DietaryPreference'>
   readonly previouslyCertified: Prisma.FieldRef<"UmpiringTraining", 'Boolean'>
   readonly affiliation: Prisma.FieldRef<"UmpiringTraining", 'String'>
-  readonly preferredDate: Prisma.FieldRef<"UmpiringTraining", 'DateTime'>
+  readonly preferredDates: Prisma.FieldRef<"UmpiringTraining", 'UmpiringTrainingDateOption[]'>
   readonly preferredLocation: Prisma.FieldRef<"UmpiringTraining", 'String'>
   readonly questions: Prisma.FieldRef<"UmpiringTraining", 'String'>
   readonly result: Prisma.FieldRef<"UmpiringTraining", 'UmpiringTrainingResult'>

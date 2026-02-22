@@ -10,14 +10,14 @@ describe("RegistrationFields", () => {
         values={{
           contactNumber: "248-555-0101",
           affiliation: "Warriors",
-          preferredDate: "2026-03-28",
+          preferredDates: ["MARCH_28_2026"],
           preferredLocation: "Troy",
           dietaryPreference: "VEGETARIAN",
           previouslyCertified: "yes",
           questions: "Sample question",
         }}
         fieldErrors={{}}
-        onPreferredDateChange={() => {}}
+        onPreferredDatesChange={() => {}}
         onPreferredLocationChange={() => {}}
         onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
@@ -37,7 +37,7 @@ describe("RegistrationFields", () => {
         values={{
           contactNumber: "",
           affiliation: "",
-          preferredDate: "",
+          preferredDates: [],
           preferredLocation: "",
           dietaryPreference: "",
           previouslyCertified: "",
@@ -47,10 +47,10 @@ describe("RegistrationFields", () => {
           contactNumber: "Contact is required",
           dietaryPreference: "Choose dietary",
           previouslyCertified: "Select one",
-          preferredDate: "Pick a date",
+          preferredDates: "Pick dates",
           preferredLocation: "Pick a location",
         }}
-        onPreferredDateChange={() => {}}
+        onPreferredDatesChange={() => {}}
         onPreferredLocationChange={() => {}}
         onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
@@ -60,7 +60,7 @@ describe("RegistrationFields", () => {
     expect(screen.getByText("Contact is required")).toBeInTheDocument();
     expect(screen.getByText("Choose dietary")).toBeInTheDocument();
     expect(screen.getByText("Select one")).toBeInTheDocument();
-    expect(screen.getByText("Pick a date")).toBeInTheDocument();
+    expect(screen.getByText("Pick dates")).toBeInTheDocument();
     expect(screen.getByText("Pick a location")).toBeInTheDocument();
   });
 });
