@@ -14,10 +14,18 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "MichCA",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "MichCA - Michigan Cricket Association",
+    template: "%s | MichCA",
+  },
   description:
-    "Home of Cricket in Michigan. Stay updated with the latest news, schedules, and events from The MichCA.",
+    "Official website of Michigan Cricket Association (Mich-CA). View leagues, schedules, teams, umpires, and cricket news across Michigan.",
   icons: {
     icon: "/michca.png",
     shortcut: "/michca.png",

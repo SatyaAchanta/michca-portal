@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { PageContainer } from "@/components/page-container";
 import { ScheduleClient } from "@/app/schedule/schedule-client";
 import { getScheduleGames, getScheduleSeasons } from "@/app/schedule/actions";
 import { DETROIT_TIMEZONE, PAGE_SIZE } from "@/app/schedule/types";
+
+export const metadata: Metadata = {
+  title: "Cricket Schedule",
+  description:
+    "Browse Mich-CA cricket schedules by season, date, division, team, and match status. View upcoming and completed cricket games across Michigan.",
+};
 
 export default async function SchedulePage() {
   const populatedSeasons = await getScheduleSeasons();
