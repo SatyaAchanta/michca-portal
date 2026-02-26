@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
+
+export const metadata: Metadata = {
+  title: "About Michigan Cricket Association",
+  description:
+    "Learn about Mich-CA (Michigan Cricket Association), our mission, cricket development programs, governance, sponsors, and community impact across Michigan.",
+};
 
 export default function AboutPage() {
   return (
