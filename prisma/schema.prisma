@@ -42,6 +42,23 @@ enum UmpiringTrainingResult {
   FAIL
 }
 
+enum CertificationWindowStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+}
+
+enum CertificationAttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+  TIME_EXPIRED
+}
+
+enum CertificationAttemptResult {
+  PASS
+  FAIL
+}
+
 enum DietaryPreference {
   VEGETARIAN
   NON_VEGETARIAN
@@ -100,6 +117,9 @@ model UserProfile {
   updatedAt            DateTime           @updatedAt
   umpireAssignments    UmpireAssignment[]
   umpiringTraining     UmpiringTraining?
+  certificationQuestionsCreated CertificationQuestion[] @relation("CertificationQuestionCreatedBy")
+  certificationWindowsStarted   CertificationTestWindow[] @relation("CertificationWindowStartedBy")
+  certificationAttempts         CertificationAttempt[]
 
   @@index([email])
   @@index([role])
@@ -139,4 +159,94 @@ model UmpireAssignment {
   @@unique([gameId, umpireId])
   @@index([umpireId])
   @@index([gameId])
+}
+
+model CertificationQuestion {
+  id              String                        @id @default(uuid())
+  prompt          String
+  isActive        Boolean                       @default(true)
+  createdByUserId String
+  createdBy       UserProfile                   @relation("CertificationQuestionCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  options         CertificationQuestionOption[]
+  createdAt       DateTime                      @default(now())
+  updatedAt       DateTime                      @updatedAt
+
+  @@index([isActive])
+  @@index([createdByUserId])
+}
+
+model CertificationQuestionOption {
+  id         String                @id @default(uuid())
+  questionId String
+  question   CertificationQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  label      String
+  isCorrect  Boolean
+  sortOrder  Int
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+
+  @@index([questionId])
+  @@unique([questionId, sortOrder])
+}
+
+model CertificationTestWindow {
+  id              String                    @id @default(uuid())
+  location        String
+  testDateLocal   DateTime                  @db.Date
+  status          CertificationWindowStatus @default(DRAFT)
+  durationMinutes Int                       @default(30)
+  questionCount   Int                       @default(20)
+  startedByUserId String
+  startedBy       UserProfile               @relation("CertificationWindowStartedBy", fields: [startedByUserId], references: [id], onDelete: Restrict)
+  startedAt       DateTime                  @default(now())
+  closedAt        DateTime?
+  attempts        CertificationAttempt[]
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+
+  @@unique([location, testDateLocal])
+  @@index([status])
+  @@index([testDateLocal])
+}
+
+model CertificationAttempt {
+  id            String                     @id @default(uuid())
+  windowId      String
+  userProfileId String
+  startedAt     DateTime                   @default(now())
+  expiresAt     DateTime
+  submittedAt   DateTime?
+  status        CertificationAttemptStatus @default(IN_PROGRESS)
+  scorePercent  Int?
+  correctCount  Int?
+  totalQuestions Int
+  result        CertificationAttemptResult?
+  snapshotVersion Int                      @default(1)
+  window        CertificationTestWindow    @relation(fields: [windowId], references: [id], onDelete: Cascade)
+  userProfile   UserProfile                @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  questions     CertificationAttemptQuestion[]
+  createdAt     DateTime                   @default(now())
+  updatedAt     DateTime                   @updatedAt
+
+  @@unique([windowId, userProfileId])
+  @@index([userProfileId])
+  @@index([status])
+}
+
+model CertificationAttemptQuestion {
+  id                     String               @id @default(uuid())
+  attemptId              String
+  displayOrder           Int
+  questionIdOriginal     String
+  promptSnapshot         String
+  optionsSnapshotJson    Json
+  selectedOptionIdOriginal String?
+  isFlagged              Boolean              @default(false)
+  answeredAt             DateTime?
+  attempt                CertificationAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@unique([attemptId, displayOrder])
+  @@index([attemptId])
 }

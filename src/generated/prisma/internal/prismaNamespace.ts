@@ -388,7 +388,12 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
-  UmpireAssignment: 'UmpireAssignment'
+  UmpireAssignment: 'UmpireAssignment',
+  CertificationQuestion: 'CertificationQuestion',
+  CertificationQuestionOption: 'CertificationQuestionOption',
+  CertificationTestWindow: 'CertificationTestWindow',
+  CertificationAttempt: 'CertificationAttempt',
+  CertificationAttemptQuestion: 'CertificationAttemptQuestion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +783,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CertificationQuestion: {
+      payload: Prisma.$CertificationQuestionPayload<ExtArgs>
+      fields: Prisma.CertificationQuestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CertificationQuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CertificationQuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        findFirst: {
+          args: Prisma.CertificationQuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CertificationQuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        findMany: {
+          args: Prisma.CertificationQuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>[]
+        }
+        create: {
+          args: Prisma.CertificationQuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        createMany: {
+          args: Prisma.CertificationQuestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CertificationQuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>[]
+        }
+        delete: {
+          args: Prisma.CertificationQuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        update: {
+          args: Prisma.CertificationQuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CertificationQuestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CertificationQuestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CertificationQuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CertificationQuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionPayload>
+        }
+        aggregate: {
+          args: Prisma.CertificationQuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCertificationQuestion>
+        }
+        groupBy: {
+          args: Prisma.CertificationQuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationQuestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CertificationQuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationQuestionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CertificationQuestionOption: {
+      payload: Prisma.$CertificationQuestionOptionPayload<ExtArgs>
+      fields: Prisma.CertificationQuestionOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CertificationQuestionOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CertificationQuestionOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.CertificationQuestionOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CertificationQuestionOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        findMany: {
+          args: Prisma.CertificationQuestionOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>[]
+        }
+        create: {
+          args: Prisma.CertificationQuestionOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        createMany: {
+          args: Prisma.CertificationQuestionOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CertificationQuestionOptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>[]
+        }
+        delete: {
+          args: Prisma.CertificationQuestionOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        update: {
+          args: Prisma.CertificationQuestionOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CertificationQuestionOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CertificationQuestionOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CertificationQuestionOptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CertificationQuestionOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationQuestionOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.CertificationQuestionOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCertificationQuestionOption>
+        }
+        groupBy: {
+          args: Prisma.CertificationQuestionOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationQuestionOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CertificationQuestionOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationQuestionOptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CertificationTestWindow: {
+      payload: Prisma.$CertificationTestWindowPayload<ExtArgs>
+      fields: Prisma.CertificationTestWindowFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CertificationTestWindowFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CertificationTestWindowFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        findFirst: {
+          args: Prisma.CertificationTestWindowFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CertificationTestWindowFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        findMany: {
+          args: Prisma.CertificationTestWindowFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>[]
+        }
+        create: {
+          args: Prisma.CertificationTestWindowCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        createMany: {
+          args: Prisma.CertificationTestWindowCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CertificationTestWindowCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>[]
+        }
+        delete: {
+          args: Prisma.CertificationTestWindowDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        update: {
+          args: Prisma.CertificationTestWindowUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        deleteMany: {
+          args: Prisma.CertificationTestWindowDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CertificationTestWindowUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CertificationTestWindowUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>[]
+        }
+        upsert: {
+          args: Prisma.CertificationTestWindowUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationTestWindowPayload>
+        }
+        aggregate: {
+          args: Prisma.CertificationTestWindowAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCertificationTestWindow>
+        }
+        groupBy: {
+          args: Prisma.CertificationTestWindowGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationTestWindowGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CertificationTestWindowCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationTestWindowCountAggregateOutputType> | number
+        }
+      }
+    }
+    CertificationAttempt: {
+      payload: Prisma.$CertificationAttemptPayload<ExtArgs>
+      fields: Prisma.CertificationAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CertificationAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CertificationAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.CertificationAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CertificationAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.CertificationAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.CertificationAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.CertificationAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CertificationAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.CertificationAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        update: {
+          args: Prisma.CertificationAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.CertificationAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CertificationAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CertificationAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.CertificationAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.CertificationAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCertificationAttempt>
+        }
+        groupBy: {
+          args: Prisma.CertificationAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CertificationAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
+    CertificationAttemptQuestion: {
+      payload: Prisma.$CertificationAttemptQuestionPayload<ExtArgs>
+      fields: Prisma.CertificationAttemptQuestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CertificationAttemptQuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CertificationAttemptQuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        findFirst: {
+          args: Prisma.CertificationAttemptQuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CertificationAttemptQuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        findMany: {
+          args: Prisma.CertificationAttemptQuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>[]
+        }
+        create: {
+          args: Prisma.CertificationAttemptQuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        createMany: {
+          args: Prisma.CertificationAttemptQuestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CertificationAttemptQuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>[]
+        }
+        delete: {
+          args: Prisma.CertificationAttemptQuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        update: {
+          args: Prisma.CertificationAttemptQuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CertificationAttemptQuestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CertificationAttemptQuestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CertificationAttemptQuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CertificationAttemptQuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CertificationAttemptQuestionPayload>
+        }
+        aggregate: {
+          args: Prisma.CertificationAttemptQuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCertificationAttemptQuestion>
+        }
+        groupBy: {
+          args: Prisma.CertificationAttemptQuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationAttemptQuestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CertificationAttemptQuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CertificationAttemptQuestionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -895,12 +1270,98 @@ export const UmpireAssignmentScalarFieldEnum = {
 export type UmpireAssignmentScalarFieldEnum = (typeof UmpireAssignmentScalarFieldEnum)[keyof typeof UmpireAssignmentScalarFieldEnum]
 
 
+export const CertificationQuestionScalarFieldEnum = {
+  id: 'id',
+  prompt: 'prompt',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationQuestionScalarFieldEnum = (typeof CertificationQuestionScalarFieldEnum)[keyof typeof CertificationQuestionScalarFieldEnum]
+
+
+export const CertificationQuestionOptionScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  label: 'label',
+  isCorrect: 'isCorrect',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationQuestionOptionScalarFieldEnum = (typeof CertificationQuestionOptionScalarFieldEnum)[keyof typeof CertificationQuestionOptionScalarFieldEnum]
+
+
+export const CertificationTestWindowScalarFieldEnum = {
+  id: 'id',
+  location: 'location',
+  testDateLocal: 'testDateLocal',
+  status: 'status',
+  durationMinutes: 'durationMinutes',
+  questionCount: 'questionCount',
+  startedByUserId: 'startedByUserId',
+  startedAt: 'startedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationTestWindowScalarFieldEnum = (typeof CertificationTestWindowScalarFieldEnum)[keyof typeof CertificationTestWindowScalarFieldEnum]
+
+
+export const CertificationAttemptScalarFieldEnum = {
+  id: 'id',
+  windowId: 'windowId',
+  userProfileId: 'userProfileId',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt',
+  submittedAt: 'submittedAt',
+  status: 'status',
+  scorePercent: 'scorePercent',
+  correctCount: 'correctCount',
+  totalQuestions: 'totalQuestions',
+  result: 'result',
+  snapshotVersion: 'snapshotVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationAttemptScalarFieldEnum = (typeof CertificationAttemptScalarFieldEnum)[keyof typeof CertificationAttemptScalarFieldEnum]
+
+
+export const CertificationAttemptQuestionScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  displayOrder: 'displayOrder',
+  questionIdOriginal: 'questionIdOriginal',
+  promptSnapshot: 'promptSnapshot',
+  optionsSnapshotJson: 'optionsSnapshotJson',
+  selectedOptionIdOriginal: 'selectedOptionIdOriginal',
+  isFlagged: 'isFlagged',
+  answeredAt: 'answeredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationAttemptQuestionScalarFieldEnum = (typeof CertificationAttemptQuestionScalarFieldEnum)[keyof typeof CertificationAttemptQuestionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -917,6 +1378,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1073,6 +1543,62 @@ export type ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'CertificationWindowStatus'
+ */
+export type EnumCertificationWindowStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationWindowStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificationWindowStatus[]'
+ */
+export type ListEnumCertificationWindowStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationWindowStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificationAttemptStatus'
+ */
+export type EnumCertificationAttemptStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationAttemptStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificationAttemptStatus[]'
+ */
+export type ListEnumCertificationAttemptStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationAttemptStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificationAttemptResult'
+ */
+export type EnumCertificationAttemptResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationAttemptResult'>
+    
+
+
+/**
+ * Reference to a field of type 'CertificationAttemptResult[]'
+ */
+export type ListEnumCertificationAttemptResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CertificationAttemptResult[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1185,6 +1711,11 @@ export type GlobalOmitConfig = {
   userProfile?: Prisma.UserProfileOmit
   umpiringTraining?: Prisma.UmpiringTrainingOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
+  certificationQuestion?: Prisma.CertificationQuestionOmit
+  certificationQuestionOption?: Prisma.CertificationQuestionOptionOmit
+  certificationTestWindow?: Prisma.CertificationTestWindowOmit
+  certificationAttempt?: Prisma.CertificationAttemptOmit
+  certificationAttemptQuestion?: Prisma.CertificationAttemptQuestionOmit
 }
 
 /* Types for Logging */

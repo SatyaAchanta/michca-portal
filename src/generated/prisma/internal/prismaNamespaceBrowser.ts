@@ -55,7 +55,12 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
-  UmpireAssignment: 'UmpireAssignment'
+  UmpireAssignment: 'UmpireAssignment',
+  CertificationQuestion: 'CertificationQuestion',
+  CertificationQuestionOption: 'CertificationQuestionOption',
+  CertificationTestWindow: 'CertificationTestWindow',
+  CertificationAttempt: 'CertificationAttempt',
+  CertificationAttemptQuestion: 'CertificationAttemptQuestion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -152,12 +157,98 @@ export const UmpireAssignmentScalarFieldEnum = {
 export type UmpireAssignmentScalarFieldEnum = (typeof UmpireAssignmentScalarFieldEnum)[keyof typeof UmpireAssignmentScalarFieldEnum]
 
 
+export const CertificationQuestionScalarFieldEnum = {
+  id: 'id',
+  prompt: 'prompt',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationQuestionScalarFieldEnum = (typeof CertificationQuestionScalarFieldEnum)[keyof typeof CertificationQuestionScalarFieldEnum]
+
+
+export const CertificationQuestionOptionScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  label: 'label',
+  isCorrect: 'isCorrect',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationQuestionOptionScalarFieldEnum = (typeof CertificationQuestionOptionScalarFieldEnum)[keyof typeof CertificationQuestionOptionScalarFieldEnum]
+
+
+export const CertificationTestWindowScalarFieldEnum = {
+  id: 'id',
+  location: 'location',
+  testDateLocal: 'testDateLocal',
+  status: 'status',
+  durationMinutes: 'durationMinutes',
+  questionCount: 'questionCount',
+  startedByUserId: 'startedByUserId',
+  startedAt: 'startedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationTestWindowScalarFieldEnum = (typeof CertificationTestWindowScalarFieldEnum)[keyof typeof CertificationTestWindowScalarFieldEnum]
+
+
+export const CertificationAttemptScalarFieldEnum = {
+  id: 'id',
+  windowId: 'windowId',
+  userProfileId: 'userProfileId',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt',
+  submittedAt: 'submittedAt',
+  status: 'status',
+  scorePercent: 'scorePercent',
+  correctCount: 'correctCount',
+  totalQuestions: 'totalQuestions',
+  result: 'result',
+  snapshotVersion: 'snapshotVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationAttemptScalarFieldEnum = (typeof CertificationAttemptScalarFieldEnum)[keyof typeof CertificationAttemptScalarFieldEnum]
+
+
+export const CertificationAttemptQuestionScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  displayOrder: 'displayOrder',
+  questionIdOriginal: 'questionIdOriginal',
+  promptSnapshot: 'promptSnapshot',
+  optionsSnapshotJson: 'optionsSnapshotJson',
+  selectedOptionIdOriginal: 'selectedOptionIdOriginal',
+  isFlagged: 'isFlagged',
+  answeredAt: 'answeredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationAttemptQuestionScalarFieldEnum = (typeof CertificationAttemptQuestionScalarFieldEnum)[keyof typeof CertificationAttemptQuestionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -174,4 +265,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

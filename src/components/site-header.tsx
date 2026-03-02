@@ -94,15 +94,38 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                   >
                     Umpiring Training
                   </Link>
-                </SignedIn>
-                {isAdmin ? (
                   <Link
-                    href="/admin"
+                    href="/umpiring-certification"
                     className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
                     onClick={() => setMoreOpen(false)}
                   >
-                    Admin
+                    Umpiring Certification
                   </Link>
+                </SignedIn>
+                {isAdmin ? (
+                  <>
+                    <Link
+                      href="/admin"
+                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      Admin
+                    </Link>
+                    <Link
+                      href="/admin/certification-questions"
+                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      Cert Questions
+                    </Link>
+                    <Link
+                      href="/admin/certification-windows"
+                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      Cert Windows
+                    </Link>
+                  </>
                 ) : null}
               </PopoverContent>
             </Popover>
@@ -163,14 +186,27 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                   </Button>
                 ))}
                 <SignedIn>
-                  <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
-                    <Link href="/umpiring-training">Umpiring Training</Link>
-                  </Button>
+                  <>
+                    <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                      <Link href="/umpiring-training">Umpiring Training</Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                      <Link href="/umpiring-certification">Umpiring Certification</Link>
+                    </Button>
+                  </>
                 </SignedIn>
                 {isAdmin ? (
-                  <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
-                    <Link href="/admin">Admin</Link>
-                  </Button>
+                  <>
+                    <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                      <Link href="/admin">Admin</Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                      <Link href="/admin/certification-questions">Cert Questions</Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="justify-start" onClick={() => setOpen(false)}>
+                      <Link href="/admin/certification-windows">Cert Windows</Link>
+                    </Button>
+                  </>
                 ) : null}
               </div>
             </SheetContent>
