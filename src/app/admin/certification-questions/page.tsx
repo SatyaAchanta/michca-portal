@@ -61,6 +61,7 @@ export default async function CertificationQuestionsPage() {
           questions={questions.map((question) => ({
             id: question.id,
             prompt: question.prompt,
+            imageUrl: question.imageUrl,
             isActive: question.isActive,
             options: question.options,
             createdAtIso: question.createdAt.toISOString(),

@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
+import { ImagePlus, Loader2, Pencil, Plus, Trash2, Upload, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,6 +26,7 @@ type QuestionOption = {
 type Question = {
   id: string;
   prompt: string;
+  imageUrl: string | null;
   isActive: boolean;
   options: QuestionOption[];
   createdAtIso: string;
@@ -34,13 +36,32 @@ type QuestionDraft = {
   prompt: string;
   options: string[];
   correctIndex: number;
+  imageUrl: string | null;
 };
 
 const INITIAL_DRAFT: QuestionDraft = {
   prompt: "",
   options: ["", "", "", ""],
   correctIndex: 0,
+  imageUrl: null,
 };
+
+async function uploadCertificationQuestionImage(file: File) {
+  const formData = new FormData();
+  formData.set("file", file);
+
+  const response = await fetch("/api/certification-question-image", {
+    method: "POST",
+    body: formData,
+  });
+
+  const payload = (await response.json()) as { url?: string; error?: string };
+  if (!response.ok || !payload.url) {
+    throw new Error(payload.error ?? "Image upload failed.");
+  }
+
+  return payload.url;
+}
 
 function QuestionForm({
   value,
@@ -55,13 +76,92 @@ function QuestionForm({
   submitLabel: string;
   isPending: boolean;
 }) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadMessage, setUploadMessage] = useState<string | null>(null);
+  const [isUploading, startUploadTransition] = useTransition();
+
+  const handleFileChange = (file: File | null) => {
+    if (!file) {
+      return;
+    }
+
+    setUploadMessage(null);
+    startUploadTransition(async () => {
+      try {
+        const imageUrl = await uploadCertificationQuestionImage(file);
+        onChange({ ...value, imageUrl });
+        setUploadMessage("Image uploaded.");
+      } catch (error) {
+        setUploadMessage((error as Error).message);
+      } finally {
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      }
+    });
+  };
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <Input
         value={value.prompt}
         onChange={(event) => onChange({ ...value, prompt: event.target.value })}
         placeholder="Question prompt"
       />
+
+      <div className="space-y-3 rounded-lg border border-dashed border-border/70 p-3">
+        <div className="flex items-center gap-2">
+          <ImagePlus className="h-4 w-4" />
+          <p className="text-sm font-medium">Optional question image</p>
+        </div>
+        {value.imageUrl ? (
+          <div className="space-y-3">
+            <div className="relative h-64 w-full overflow-hidden rounded-md border">
+              <Image
+                src={value.imageUrl}
+                alt="Certification question"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-contain"
+              />
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11"
+              onClick={() => onChange({ ...value, imageUrl: null })}
+              disabled={isUploading || isPending}
+            >
+              <X className="mr-2 h-4 w-4" />
+              Remove Image
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="min-h-11 file:mr-3 file:rounded-md file:border file:border-input file:px-3 file:py-2"
+              onChange={(event) => handleFileChange(event.target.files?.[0] ?? null)}
+              disabled={isUploading || isPending}
+            />
+            <p className="text-xs text-muted-foreground">
+              Accepted formats: JPG, PNG, WEBP. Maximum file size: 2MB.
+            </p>
+          </div>
+        )}
+        {uploadMessage ? (
+          <p
+            className={`text-sm ${
+              uploadMessage === "Image uploaded." ? "text-green-700 dark:text-green-300" : "text-destructive"
+            }`}
+          >
+            {uploadMessage}
+          </p>
+        ) : null}
+      </div>
+
       <div className="space-y-2">
         {value.options.map((option, index) => (
           <div key={index} className="flex items-center gap-2">
@@ -86,10 +186,10 @@ function QuestionForm({
         ))}
       </div>
       <p className="text-xs text-muted-foreground">
-        Tap number button to mark the correct answer option.
+        Tap the number button to mark the correct answer option.
       </p>
-      <Button type="button" className="min-h-11" disabled={isPending} onClick={onSubmit}>
-        {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      <Button type="button" className="min-h-11" disabled={isPending || isUploading} onClick={onSubmit}>
+        {isPending || isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
         {submitLabel}
       </Button>
     </div>
@@ -127,6 +227,7 @@ export function AdminQuestionManager({ questions }: { questions: Question[] }) {
     if (!editingId) {
       return;
     }
+
     startTransition(async () => {
       const result = await updateCertificationQuestion(editingId, editingDraft);
       setFeedback(result.message);
@@ -167,6 +268,7 @@ export function AdminQuestionManager({ questions }: { questions: Question[] }) {
                     <Badge variant={question.isActive ? "default" : "outline"}>
                       {question.isActive ? "Active" : "Inactive"}
                     </Badge>
+                    <Badge variant="outline">{question.imageUrl ? "Image attached" : "No image"}</Badge>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -179,6 +281,7 @@ export function AdminQuestionManager({ questions }: { questions: Question[] }) {
                       const correctIndex = question.options.findIndex((option) => option.isCorrect);
                       setEditingDraft({
                         prompt: question.prompt,
+                        imageUrl: question.imageUrl,
                         options: question.options
                           .slice()
                           .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -208,6 +311,18 @@ export function AdminQuestionManager({ questions }: { questions: Question[] }) {
                   </Button>
                 </div>
               </div>
+
+              {question.imageUrl ? (
+                <div className="relative h-72 w-full overflow-hidden rounded-md border">
+                  <Image
+                    src={question.imageUrl}
+                    alt="Certification question"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-contain"
+                  />
+                </div>
+              ) : null}
 
               <div className="space-y-2">
                 {question.options

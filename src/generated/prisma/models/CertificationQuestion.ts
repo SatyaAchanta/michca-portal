@@ -27,6 +27,7 @@ export type AggregateCertificationQuestion = {
 export type CertificationQuestionMinAggregateOutputType = {
   id: string | null
   prompt: string | null
+  imageUrl: string | null
   isActive: boolean | null
   createdByUserId: string | null
   createdAt: Date | null
@@ -36,6 +37,7 @@ export type CertificationQuestionMinAggregateOutputType = {
 export type CertificationQuestionMaxAggregateOutputType = {
   id: string | null
   prompt: string | null
+  imageUrl: string | null
   isActive: boolean | null
   createdByUserId: string | null
   createdAt: Date | null
@@ -45,6 +47,7 @@ export type CertificationQuestionMaxAggregateOutputType = {
 export type CertificationQuestionCountAggregateOutputType = {
   id: number
   prompt: number
+  imageUrl: number
   isActive: number
   createdByUserId: number
   createdAt: number
@@ -56,6 +59,7 @@ export type CertificationQuestionCountAggregateOutputType = {
 export type CertificationQuestionMinAggregateInputType = {
   id?: true
   prompt?: true
+  imageUrl?: true
   isActive?: true
   createdByUserId?: true
   createdAt?: true
@@ -65,6 +69,7 @@ export type CertificationQuestionMinAggregateInputType = {
 export type CertificationQuestionMaxAggregateInputType = {
   id?: true
   prompt?: true
+  imageUrl?: true
   isActive?: true
   createdByUserId?: true
   createdAt?: true
@@ -74,6 +79,7 @@ export type CertificationQuestionMaxAggregateInputType = {
 export type CertificationQuestionCountAggregateInputType = {
   id?: true
   prompt?: true
+  imageUrl?: true
   isActive?: true
   createdByUserId?: true
   createdAt?: true
@@ -156,6 +162,7 @@ export type CertificationQuestionGroupByArgs<ExtArgs extends runtime.Types.Exten
 export type CertificationQuestionGroupByOutputType = {
   id: string
   prompt: string
+  imageUrl: string | null
   isActive: boolean
   createdByUserId: string
   createdAt: Date
@@ -186,6 +193,7 @@ export type CertificationQuestionWhereInput = {
   NOT?: Prisma.CertificationQuestionWhereInput | Prisma.CertificationQuestionWhereInput[]
   id?: Prisma.StringFilter<"CertificationQuestion"> | string
   prompt?: Prisma.StringFilter<"CertificationQuestion"> | string
+  imageUrl?: Prisma.StringNullableFilter<"CertificationQuestion"> | string | null
   isActive?: Prisma.BoolFilter<"CertificationQuestion"> | boolean
   createdByUserId?: Prisma.StringFilter<"CertificationQuestion"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificationQuestion"> | Date | string
@@ -197,6 +205,7 @@ export type CertificationQuestionWhereInput = {
 export type CertificationQuestionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -211,6 +220,7 @@ export type CertificationQuestionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CertificationQuestionWhereInput[]
   NOT?: Prisma.CertificationQuestionWhereInput | Prisma.CertificationQuestionWhereInput[]
   prompt?: Prisma.StringFilter<"CertificationQuestion"> | string
+  imageUrl?: Prisma.StringNullableFilter<"CertificationQuestion"> | string | null
   isActive?: Prisma.BoolFilter<"CertificationQuestion"> | boolean
   createdByUserId?: Prisma.StringFilter<"CertificationQuestion"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificationQuestion"> | Date | string
@@ -222,6 +232,7 @@ export type CertificationQuestionWhereUniqueInput = Prisma.AtLeast<{
 export type CertificationQuestionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -237,6 +248,7 @@ export type CertificationQuestionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CertificationQuestionScalarWhereWithAggregatesInput | Prisma.CertificationQuestionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CertificationQuestion"> | string
   prompt?: Prisma.StringWithAggregatesFilter<"CertificationQuestion"> | string
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"CertificationQuestion"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"CertificationQuestion"> | boolean
   createdByUserId?: Prisma.StringWithAggregatesFilter<"CertificationQuestion"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CertificationQuestion"> | Date | string
@@ -246,6 +258,7 @@ export type CertificationQuestionScalarWhereWithAggregatesInput = {
 export type CertificationQuestionCreateInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -256,6 +269,7 @@ export type CertificationQuestionCreateInput = {
 export type CertificationQuestionUncheckedCreateInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdByUserId: string
   createdAt?: Date | string
@@ -266,6 +280,7 @@ export type CertificationQuestionUncheckedCreateInput = {
 export type CertificationQuestionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -276,6 +291,7 @@ export type CertificationQuestionUpdateInput = {
 export type CertificationQuestionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -286,6 +302,7 @@ export type CertificationQuestionUncheckedUpdateInput = {
 export type CertificationQuestionCreateManyInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdByUserId: string
   createdAt?: Date | string
@@ -295,6 +312,7 @@ export type CertificationQuestionCreateManyInput = {
 export type CertificationQuestionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -303,6 +321,7 @@ export type CertificationQuestionUpdateManyMutationInput = {
 export type CertificationQuestionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -322,6 +341,7 @@ export type CertificationQuestionOrderByRelationAggregateInput = {
 export type CertificationQuestionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,6 +351,7 @@ export type CertificationQuestionCountOrderByAggregateInput = {
 export type CertificationQuestionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -340,6 +361,7 @@ export type CertificationQuestionMaxOrderByAggregateInput = {
 export type CertificationQuestionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -410,6 +432,7 @@ export type CertificationQuestionUpdateOneRequiredWithoutOptionsNestedInput = {
 export type CertificationQuestionCreateWithoutCreatedByInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -419,6 +442,7 @@ export type CertificationQuestionCreateWithoutCreatedByInput = {
 export type CertificationQuestionUncheckedCreateWithoutCreatedByInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -457,6 +481,7 @@ export type CertificationQuestionScalarWhereInput = {
   NOT?: Prisma.CertificationQuestionScalarWhereInput | Prisma.CertificationQuestionScalarWhereInput[]
   id?: Prisma.StringFilter<"CertificationQuestion"> | string
   prompt?: Prisma.StringFilter<"CertificationQuestion"> | string
+  imageUrl?: Prisma.StringNullableFilter<"CertificationQuestion"> | string | null
   isActive?: Prisma.BoolFilter<"CertificationQuestion"> | boolean
   createdByUserId?: Prisma.StringFilter<"CertificationQuestion"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificationQuestion"> | Date | string
@@ -466,6 +491,7 @@ export type CertificationQuestionScalarWhereInput = {
 export type CertificationQuestionCreateWithoutOptionsInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -475,6 +501,7 @@ export type CertificationQuestionCreateWithoutOptionsInput = {
 export type CertificationQuestionUncheckedCreateWithoutOptionsInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdByUserId: string
   createdAt?: Date | string
@@ -500,6 +527,7 @@ export type CertificationQuestionUpdateToOneWithWhereWithoutOptionsInput = {
 export type CertificationQuestionUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -509,6 +537,7 @@ export type CertificationQuestionUpdateWithoutOptionsInput = {
 export type CertificationQuestionUncheckedUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -518,6 +547,7 @@ export type CertificationQuestionUncheckedUpdateWithoutOptionsInput = {
 export type CertificationQuestionCreateManyCreatedByInput = {
   id?: string
   prompt: string
+  imageUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -526,6 +556,7 @@ export type CertificationQuestionCreateManyCreatedByInput = {
 export type CertificationQuestionUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -535,6 +566,7 @@ export type CertificationQuestionUpdateWithoutCreatedByInput = {
 export type CertificationQuestionUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -544,6 +576,7 @@ export type CertificationQuestionUncheckedUpdateWithoutCreatedByInput = {
 export type CertificationQuestionUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -583,6 +616,7 @@ export type CertificationQuestionCountOutputTypeCountOptionsArgs<ExtArgs extends
 export type CertificationQuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   prompt?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
@@ -595,6 +629,7 @@ export type CertificationQuestionSelect<ExtArgs extends runtime.Types.Extensions
 export type CertificationQuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   prompt?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
@@ -605,6 +640,7 @@ export type CertificationQuestionSelectCreateManyAndReturn<ExtArgs extends runti
 export type CertificationQuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   prompt?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
@@ -615,13 +651,14 @@ export type CertificationQuestionSelectUpdateManyAndReturn<ExtArgs extends runti
 export type CertificationQuestionSelectScalar = {
   id?: boolean
   prompt?: boolean
+  imageUrl?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CertificationQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "prompt" | "isActive" | "createdByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["certificationQuestion"]>
+export type CertificationQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "prompt" | "imageUrl" | "isActive" | "createdByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["certificationQuestion"]>
 export type CertificationQuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
   options?: boolean | Prisma.CertificationQuestion$optionsArgs<ExtArgs>
@@ -643,6 +680,7 @@ export type $CertificationQuestionPayload<ExtArgs extends runtime.Types.Extensio
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     prompt: string
+    imageUrl: string | null
     isActive: boolean
     createdByUserId: string
     createdAt: Date
@@ -1074,6 +1112,7 @@ export interface Prisma__CertificationQuestionClient<T, Null = never, ExtArgs ex
 export interface CertificationQuestionFieldRefs {
   readonly id: Prisma.FieldRef<"CertificationQuestion", 'String'>
   readonly prompt: Prisma.FieldRef<"CertificationQuestion", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"CertificationQuestion", 'String'>
   readonly isActive: Prisma.FieldRef<"CertificationQuestion", 'Boolean'>
   readonly createdByUserId: Prisma.FieldRef<"CertificationQuestion", 'String'>
   readonly createdAt: Prisma.FieldRef<"CertificationQuestion", 'DateTime'>

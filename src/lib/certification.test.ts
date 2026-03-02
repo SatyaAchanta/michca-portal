@@ -1,4 +1,5 @@
 import {
+  buildAttemptSnapshots,
   CERTIFICATION_PASS_PERCENT,
   getDetroitDateString,
   gradeAttempt,
@@ -54,5 +55,37 @@ describe("gradeAttempt", () => {
 describe("getDetroitDateString", () => {
   it("returns YYYY-MM-DD", () => {
     expect(getDetroitDateString(new Date("2026-02-26T12:00:00.000Z"))).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+});
+
+describe("buildAttemptSnapshots", () => {
+  it("includes image url in snapshots", () => {
+    const snapshots = buildAttemptSnapshots([
+      {
+        id: "q1",
+        prompt: "Question",
+        imageUrl: "https://example.com/image.webp",
+        isActive: true,
+        createdByUserId: "u1",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        options: [
+          {
+            id: "o1",
+            questionId: "q1",
+            label: "Yes",
+            isCorrect: true,
+            sortOrder: 1,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        ],
+      },
+    ]);
+
+    expect(snapshots[0]).toMatchObject({
+      questionIdOriginal: "q1",
+      imageUrlSnapshot: "https://example.com/image.webp",
+    });
   });
 });

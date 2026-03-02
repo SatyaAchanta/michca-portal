@@ -40,6 +40,7 @@ export type CertificationAttemptQuestionMinAggregateOutputType = {
   displayOrder: number | null
   questionIdOriginal: string | null
   promptSnapshot: string | null
+  imageUrlSnapshot: string | null
   selectedOptionIdOriginal: string | null
   isFlagged: boolean | null
   answeredAt: Date | null
@@ -53,6 +54,7 @@ export type CertificationAttemptQuestionMaxAggregateOutputType = {
   displayOrder: number | null
   questionIdOriginal: string | null
   promptSnapshot: string | null
+  imageUrlSnapshot: string | null
   selectedOptionIdOriginal: string | null
   isFlagged: boolean | null
   answeredAt: Date | null
@@ -66,6 +68,7 @@ export type CertificationAttemptQuestionCountAggregateOutputType = {
   displayOrder: number
   questionIdOriginal: number
   promptSnapshot: number
+  imageUrlSnapshot: number
   optionsSnapshotJson: number
   selectedOptionIdOriginal: number
   isFlagged: number
@@ -90,6 +93,7 @@ export type CertificationAttemptQuestionMinAggregateInputType = {
   displayOrder?: true
   questionIdOriginal?: true
   promptSnapshot?: true
+  imageUrlSnapshot?: true
   selectedOptionIdOriginal?: true
   isFlagged?: true
   answeredAt?: true
@@ -103,6 +107,7 @@ export type CertificationAttemptQuestionMaxAggregateInputType = {
   displayOrder?: true
   questionIdOriginal?: true
   promptSnapshot?: true
+  imageUrlSnapshot?: true
   selectedOptionIdOriginal?: true
   isFlagged?: true
   answeredAt?: true
@@ -116,6 +121,7 @@ export type CertificationAttemptQuestionCountAggregateInputType = {
   displayOrder?: true
   questionIdOriginal?: true
   promptSnapshot?: true
+  imageUrlSnapshot?: true
   optionsSnapshotJson?: true
   selectedOptionIdOriginal?: true
   isFlagged?: true
@@ -217,6 +223,7 @@ export type CertificationAttemptQuestionGroupByOutputType = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot: string | null
   optionsSnapshotJson: runtime.JsonValue
   selectedOptionIdOriginal: string | null
   isFlagged: boolean
@@ -254,6 +261,7 @@ export type CertificationAttemptQuestionWhereInput = {
   displayOrder?: Prisma.IntFilter<"CertificationAttemptQuestion"> | number
   questionIdOriginal?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
   promptSnapshot?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
+  imageUrlSnapshot?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   optionsSnapshotJson?: Prisma.JsonFilter<"CertificationAttemptQuestion">
   selectedOptionIdOriginal?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   isFlagged?: Prisma.BoolFilter<"CertificationAttemptQuestion"> | boolean
@@ -269,6 +277,7 @@ export type CertificationAttemptQuestionOrderByWithRelationInput = {
   displayOrder?: Prisma.SortOrder
   questionIdOriginal?: Prisma.SortOrder
   promptSnapshot?: Prisma.SortOrder
+  imageUrlSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   optionsSnapshotJson?: Prisma.SortOrder
   selectedOptionIdOriginal?: Prisma.SortOrderInput | Prisma.SortOrder
   isFlagged?: Prisma.SortOrder
@@ -288,6 +297,7 @@ export type CertificationAttemptQuestionWhereUniqueInput = Prisma.AtLeast<{
   displayOrder?: Prisma.IntFilter<"CertificationAttemptQuestion"> | number
   questionIdOriginal?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
   promptSnapshot?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
+  imageUrlSnapshot?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   optionsSnapshotJson?: Prisma.JsonFilter<"CertificationAttemptQuestion">
   selectedOptionIdOriginal?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   isFlagged?: Prisma.BoolFilter<"CertificationAttemptQuestion"> | boolean
@@ -303,6 +313,7 @@ export type CertificationAttemptQuestionOrderByWithAggregationInput = {
   displayOrder?: Prisma.SortOrder
   questionIdOriginal?: Prisma.SortOrder
   promptSnapshot?: Prisma.SortOrder
+  imageUrlSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   optionsSnapshotJson?: Prisma.SortOrder
   selectedOptionIdOriginal?: Prisma.SortOrderInput | Prisma.SortOrder
   isFlagged?: Prisma.SortOrder
@@ -325,6 +336,7 @@ export type CertificationAttemptQuestionScalarWhereWithAggregatesInput = {
   displayOrder?: Prisma.IntWithAggregatesFilter<"CertificationAttemptQuestion"> | number
   questionIdOriginal?: Prisma.StringWithAggregatesFilter<"CertificationAttemptQuestion"> | string
   promptSnapshot?: Prisma.StringWithAggregatesFilter<"CertificationAttemptQuestion"> | string
+  imageUrlSnapshot?: Prisma.StringNullableWithAggregatesFilter<"CertificationAttemptQuestion"> | string | null
   optionsSnapshotJson?: Prisma.JsonWithAggregatesFilter<"CertificationAttemptQuestion">
   selectedOptionIdOriginal?: Prisma.StringNullableWithAggregatesFilter<"CertificationAttemptQuestion"> | string | null
   isFlagged?: Prisma.BoolWithAggregatesFilter<"CertificationAttemptQuestion"> | boolean
@@ -338,6 +350,7 @@ export type CertificationAttemptQuestionCreateInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -353,6 +366,7 @@ export type CertificationAttemptQuestionUncheckedCreateInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -366,6 +380,7 @@ export type CertificationAttemptQuestionUpdateInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -381,6 +396,7 @@ export type CertificationAttemptQuestionUncheckedUpdateInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -395,6 +411,7 @@ export type CertificationAttemptQuestionCreateManyInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -408,6 +425,7 @@ export type CertificationAttemptQuestionUpdateManyMutationInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -422,6 +440,7 @@ export type CertificationAttemptQuestionUncheckedUpdateManyInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -451,6 +470,7 @@ export type CertificationAttemptQuestionCountOrderByAggregateInput = {
   displayOrder?: Prisma.SortOrder
   questionIdOriginal?: Prisma.SortOrder
   promptSnapshot?: Prisma.SortOrder
+  imageUrlSnapshot?: Prisma.SortOrder
   optionsSnapshotJson?: Prisma.SortOrder
   selectedOptionIdOriginal?: Prisma.SortOrder
   isFlagged?: Prisma.SortOrder
@@ -469,6 +489,7 @@ export type CertificationAttemptQuestionMaxOrderByAggregateInput = {
   displayOrder?: Prisma.SortOrder
   questionIdOriginal?: Prisma.SortOrder
   promptSnapshot?: Prisma.SortOrder
+  imageUrlSnapshot?: Prisma.SortOrder
   selectedOptionIdOriginal?: Prisma.SortOrder
   isFlagged?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
@@ -482,6 +503,7 @@ export type CertificationAttemptQuestionMinOrderByAggregateInput = {
   displayOrder?: Prisma.SortOrder
   questionIdOriginal?: Prisma.SortOrder
   promptSnapshot?: Prisma.SortOrder
+  imageUrlSnapshot?: Prisma.SortOrder
   selectedOptionIdOriginal?: Prisma.SortOrder
   isFlagged?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
@@ -540,6 +562,7 @@ export type CertificationAttemptQuestionCreateWithoutAttemptInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -553,6 +576,7 @@ export type CertificationAttemptQuestionUncheckedCreateWithoutAttemptInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -596,6 +620,7 @@ export type CertificationAttemptQuestionScalarWhereInput = {
   displayOrder?: Prisma.IntFilter<"CertificationAttemptQuestion"> | number
   questionIdOriginal?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
   promptSnapshot?: Prisma.StringFilter<"CertificationAttemptQuestion"> | string
+  imageUrlSnapshot?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   optionsSnapshotJson?: Prisma.JsonFilter<"CertificationAttemptQuestion">
   selectedOptionIdOriginal?: Prisma.StringNullableFilter<"CertificationAttemptQuestion"> | string | null
   isFlagged?: Prisma.BoolFilter<"CertificationAttemptQuestion"> | boolean
@@ -609,6 +634,7 @@ export type CertificationAttemptQuestionCreateManyAttemptInput = {
   displayOrder: number
   questionIdOriginal: string
   promptSnapshot: string
+  imageUrlSnapshot?: string | null
   optionsSnapshotJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: string | null
   isFlagged?: boolean
@@ -622,6 +648,7 @@ export type CertificationAttemptQuestionUpdateWithoutAttemptInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -635,6 +662,7 @@ export type CertificationAttemptQuestionUncheckedUpdateWithoutAttemptInput = {
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -648,6 +676,7 @@ export type CertificationAttemptQuestionUncheckedUpdateManyWithoutAttemptInput =
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   questionIdOriginal?: Prisma.StringFieldUpdateOperationsInput | string
   promptSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrlSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optionsSnapshotJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   selectedOptionIdOriginal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFlagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -664,6 +693,7 @@ export type CertificationAttemptQuestionSelect<ExtArgs extends runtime.Types.Ext
   displayOrder?: boolean
   questionIdOriginal?: boolean
   promptSnapshot?: boolean
+  imageUrlSnapshot?: boolean
   optionsSnapshotJson?: boolean
   selectedOptionIdOriginal?: boolean
   isFlagged?: boolean
@@ -679,6 +709,7 @@ export type CertificationAttemptQuestionSelectCreateManyAndReturn<ExtArgs extend
   displayOrder?: boolean
   questionIdOriginal?: boolean
   promptSnapshot?: boolean
+  imageUrlSnapshot?: boolean
   optionsSnapshotJson?: boolean
   selectedOptionIdOriginal?: boolean
   isFlagged?: boolean
@@ -694,6 +725,7 @@ export type CertificationAttemptQuestionSelectUpdateManyAndReturn<ExtArgs extend
   displayOrder?: boolean
   questionIdOriginal?: boolean
   promptSnapshot?: boolean
+  imageUrlSnapshot?: boolean
   optionsSnapshotJson?: boolean
   selectedOptionIdOriginal?: boolean
   isFlagged?: boolean
@@ -709,6 +741,7 @@ export type CertificationAttemptQuestionSelectScalar = {
   displayOrder?: boolean
   questionIdOriginal?: boolean
   promptSnapshot?: boolean
+  imageUrlSnapshot?: boolean
   optionsSnapshotJson?: boolean
   selectedOptionIdOriginal?: boolean
   isFlagged?: boolean
@@ -717,7 +750,7 @@ export type CertificationAttemptQuestionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CertificationAttemptQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "displayOrder" | "questionIdOriginal" | "promptSnapshot" | "optionsSnapshotJson" | "selectedOptionIdOriginal" | "isFlagged" | "answeredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["certificationAttemptQuestion"]>
+export type CertificationAttemptQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "displayOrder" | "questionIdOriginal" | "promptSnapshot" | "imageUrlSnapshot" | "optionsSnapshotJson" | "selectedOptionIdOriginal" | "isFlagged" | "answeredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["certificationAttemptQuestion"]>
 export type CertificationAttemptQuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attempt?: boolean | Prisma.CertificationAttemptDefaultArgs<ExtArgs>
 }
@@ -739,6 +772,7 @@ export type $CertificationAttemptQuestionPayload<ExtArgs extends runtime.Types.E
     displayOrder: number
     questionIdOriginal: string
     promptSnapshot: string
+    imageUrlSnapshot: string | null
     optionsSnapshotJson: runtime.JsonValue
     selectedOptionIdOriginal: string | null
     isFlagged: boolean
@@ -1174,6 +1208,7 @@ export interface CertificationAttemptQuestionFieldRefs {
   readonly displayOrder: Prisma.FieldRef<"CertificationAttemptQuestion", 'Int'>
   readonly questionIdOriginal: Prisma.FieldRef<"CertificationAttemptQuestion", 'String'>
   readonly promptSnapshot: Prisma.FieldRef<"CertificationAttemptQuestion", 'String'>
+  readonly imageUrlSnapshot: Prisma.FieldRef<"CertificationAttemptQuestion", 'String'>
   readonly optionsSnapshotJson: Prisma.FieldRef<"CertificationAttemptQuestion", 'Json'>
   readonly selectedOptionIdOriginal: Prisma.FieldRef<"CertificationAttemptQuestion", 'String'>
   readonly isFlagged: Prisma.FieldRef<"CertificationAttemptQuestion", 'Boolean'>

@@ -128,6 +128,7 @@ export async function startMyCertificationAttempt(): Promise<CertificationAction
           displayOrder: snapshot.displayOrder,
           questionIdOriginal: snapshot.questionIdOriginal,
           promptSnapshot: snapshot.promptSnapshot,
+          imageUrlSnapshot: snapshot.imageUrlSnapshot,
           optionsSnapshotJson: snapshot.optionsSnapshotJson as Prisma.InputJsonValue,
         })),
       });

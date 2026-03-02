@@ -114,6 +114,7 @@ export function buildAttemptSnapshots(
     displayOrder: index + 1,
     questionIdOriginal: question.id,
     promptSnapshot: question.prompt,
+    imageUrlSnapshot: question.imageUrl ?? null,
     optionsSnapshotJson: buildOptionSnapshot(question.options),
   }));
 }

@@ -1273,6 +1273,7 @@ export type UmpireAssignmentScalarFieldEnum = (typeof UmpireAssignmentScalarFiel
 export const CertificationQuestionScalarFieldEnum = {
   id: 'id',
   prompt: 'prompt',
+  imageUrl: 'imageUrl',
   isActive: 'isActive',
   createdByUserId: 'createdByUserId',
   createdAt: 'createdAt',
@@ -1338,6 +1339,7 @@ export const CertificationAttemptQuestionScalarFieldEnum = {
   displayOrder: 'displayOrder',
   questionIdOriginal: 'questionIdOriginal',
   promptSnapshot: 'promptSnapshot',
+  imageUrlSnapshot: 'imageUrlSnapshot',
   optionsSnapshotJson: 'optionsSnapshotJson',
   selectedOptionIdOriginal: 'selectedOptionIdOriginal',
   isFlagged: 'isFlagged',

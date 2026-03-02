@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { UserRole } from "@/generated/prisma/client";
+import { deleteBlobIfPresent, assertNoActiveCertificationWindows } from "@/lib/certification-admin";
 import { prisma } from "@/lib/prisma";
 import { AuthenticationRequiredError, InsufficientRoleError, requireRole } from "@/lib/user-profile";
 import { validateQuestionPayload } from "@/lib/certification";
@@ -15,6 +16,7 @@ type QuestionPayload = {
   prompt: string;
   options: string[];
   correctIndex: number;
+  imageUrl: string | null;
 };
 
 async function requireAdminProfile() {
@@ -25,15 +27,6 @@ async function requireAdminProfile() {
       return null;
     }
     throw error;
-  }
-}
-
-async function assertNoActiveWindows() {
-  const activeCount = await prisma.certificationTestWindow.count({
-    where: { status: "ACTIVE" },
-  });
-  if (activeCount > 0) {
-    throw new Error("Question bank is locked while any test window is active.");
   }
 }
 
@@ -54,7 +47,7 @@ export async function createCertificationQuestion(payload: QuestionPayload): Pro
   }
 
   try {
-    await assertNoActiveWindows();
+    await assertNoActiveCertificationWindows();
   } catch (error) {
     return { status: "error", message: (error as Error).message };
   }
@@ -62,6 +55,7 @@ export async function createCertificationQuestion(payload: QuestionPayload): Pro
   await prisma.certificationQuestion.create({
     data: {
       prompt: validation.prompt,
+      imageUrl: payload.imageUrl,
       createdByUserId: admin.id,
       isActive: true,
       options: {
@@ -93,15 +87,27 @@ export async function updateCertificationQuestion(
   }
 
   try {
-    await assertNoActiveWindows();
+    await assertNoActiveCertificationWindows();
   } catch (error) {
     return { status: "error", message: (error as Error).message };
+  }
+
+  const existingQuestion = await prisma.certificationQuestion.findUnique({
+    where: { id: questionId },
+    select: { imageUrl: true },
+  });
+
+  if (!existingQuestion) {
+    return { status: "error", message: "Question not found." };
   }
 
   await prisma.$transaction(async (tx) => {
     await tx.certificationQuestion.update({
       where: { id: questionId },
-      data: { prompt: validation.prompt },
+      data: {
+        prompt: validation.prompt,
+        imageUrl: payload.imageUrl,
+      },
     });
 
     await tx.certificationQuestionOption.deleteMany({
@@ -118,6 +124,10 @@ export async function updateCertificationQuestion(
     });
   });
 
+  if (existingQuestion.imageUrl && existingQuestion.imageUrl !== payload.imageUrl) {
+    await deleteBlobIfPresent(existingQuestion.imageUrl);
+  }
+
   revalidateCertificationPages();
   return { status: "success", message: "Question updated." };
 }
@@ -129,14 +139,17 @@ export async function deleteCertificationQuestion(questionId: string): Promise<Q
   }
 
   try {
-    await assertNoActiveWindows();
+    await assertNoActiveCertificationWindows();
   } catch (error) {
     return { status: "error", message: (error as Error).message };
   }
 
-  await prisma.certificationQuestion.delete({
+  const question = await prisma.certificationQuestion.delete({
     where: { id: questionId },
+    select: { imageUrl: true },
   });
+
+  await deleteBlobIfPresent(question.imageUrl);
 
   revalidateCertificationPages();
   return { status: "success", message: "Question deleted." };
@@ -152,7 +165,7 @@ export async function setCertificationQuestionActive(
   }
 
   try {
-    await assertNoActiveWindows();
+    await assertNoActiveCertificationWindows();
   } catch (error) {
     return { status: "error", message: (error as Error).message };
   }

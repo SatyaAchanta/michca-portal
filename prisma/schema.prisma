@@ -164,6 +164,7 @@ model UmpireAssignment {
 model CertificationQuestion {
   id              String                        @id @default(uuid())
   prompt          String
+  imageUrl        String?
   isActive        Boolean                       @default(true)
   createdByUserId String
   createdBy       UserProfile                   @relation("CertificationQuestionCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
@@ -239,6 +240,7 @@ model CertificationAttemptQuestion {
   displayOrder           Int
   questionIdOriginal     String
   promptSnapshot         String
+  imageUrlSnapshot       String?
   optionsSnapshotJson    Json
   selectedOptionIdOriginal String?
   isFlagged              Boolean              @default(false)

@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState, useTransition, useEffect, useRef } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, CheckCircle2, Clock3, Flag, Loader2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clock3, Expand, Flag, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -18,6 +19,7 @@ type AttemptQuestion = {
   id: string;
   displayOrder: number;
   promptSnapshot: string;
+  imageUrl?: string | null;
   selectedOptionIdOriginal: string | null;
   isFlagged: boolean;
   options: AttemptOption[];
@@ -39,6 +41,7 @@ export function CertificationClient({ expiresAtIso, questions }: CertificationCl
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFinishOpen, setIsFinishOpen] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [timeRemaining, setTimeRemaining] = useState(() => new Date(expiresAtIso).getTime() - Date.now());
   const hasExpiredSubmissionStarted = useRef(false);
@@ -123,6 +126,50 @@ export function CertificationClient({ expiresAtIso, questions }: CertificationCl
         </div>
 
         <p className="text-base font-medium leading-7 sm:text-lg">{currentQuestion.promptSnapshot}</p>
+
+        {currentQuestion.imageUrl ? (
+          <>
+            <button
+              type="button"
+              className="group relative block overflow-hidden rounded-lg border bg-muted/20"
+              onClick={() => setIsImageOpen(true)}
+            >
+              <div className="relative h-[260px] w-full sm:h-[420px]">
+                <Image
+                  src={currentQuestion.imageUrl}
+                  alt={`Question ${currentQuestion.displayOrder}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 80vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className="absolute right-3 top-3 rounded-full bg-background/90 p-2 text-foreground shadow-sm">
+                <Expand className="h-4 w-4" />
+              </div>
+            </button>
+            <p className="text-xs text-muted-foreground">
+              Tap the image to enlarge it.
+            </p>
+            <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle>Question Image</DialogTitle>
+                </DialogHeader>
+                <div className="p-4 pt-0">
+                  <div className="relative h-[70vh] w-full">
+                    <Image
+                      src={currentQuestion.imageUrl}
+                      alt={`Question ${currentQuestion.displayOrder}`}
+                      fill
+                      sizes="100vw"
+                      className="rounded-md object-contain"
+                    />
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </>
+        ) : null}
 
         <div className="grid gap-2">
           {currentQuestion.options.map((option) => {

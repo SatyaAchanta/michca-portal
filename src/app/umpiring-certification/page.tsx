@@ -109,6 +109,7 @@ export default async function UmpiringCertificationPage() {
               id: question.id,
               displayOrder: question.displayOrder,
               promptSnapshot: question.promptSnapshot,
+              imageUrl: question.imageUrlSnapshot,
               selectedOptionIdOriginal: question.selectedOptionIdOriginal,
               isFlagged: question.isFlagged,
               options: (question.optionsSnapshotJson as Array<{ id: string; label: string }>).map(
