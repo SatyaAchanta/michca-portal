@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useCallback, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import {
@@ -40,6 +40,7 @@ type ListingFormProps = {
     formData: FormData
   ) => Promise<StoreListingFormState>;
   currentImageCount?: number;
+  resetOnSuccess?: boolean;
 };
 
 function SubmitButton({ label }: { label: string }) {
@@ -52,13 +53,35 @@ function SubmitButton({ label }: { label: string }) {
   );
 }
 
-export function ListingForm({ defaults, submitLabel, action, currentImageCount }: ListingFormProps) {
-  const [state, formAction] = useActionState<StoreListingFormState, FormData>(
-    action,
-    INITIAL_STORE_LISTING_FORM_STATE
-  );
+export function ListingForm({
+  defaults,
+  submitLabel,
+  action,
+  currentImageCount,
+  resetOnSuccess = false,
+}: ListingFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [resetVersion, setResetVersion] = useState(0);
+  const actionWithOptionalReset = useCallback(
+    async (prevState: StoreListingFormState, formData: FormData) => {
+      const nextState = await action(prevState, formData);
+
+      if (resetOnSuccess && nextState.status === "success") {
+        formRef.current?.reset();
+        setSelectedImages([]);
+        setResetVersion((current) => current + 1);
+      }
+
+      return nextState;
+    },
+    [action, resetOnSuccess]
+  );
+  const [state, formAction] = useActionState<StoreListingFormState, FormData>(
+    actionWithOptionalReset,
+    INITIAL_STORE_LISTING_FORM_STATE
+  );
 
   useEffect(() => {
     if (!imageInputRef.current) {
@@ -103,7 +126,7 @@ export function ListingForm({ defaults, submitLabel, action, currentImageCount }
   };
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form ref={formRef} action={formAction} className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <label className="text-sm font-medium" htmlFor="title">
@@ -132,7 +155,7 @@ export function ListingForm({ defaults, submitLabel, action, currentImageCount }
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Condition</label>
-          <Select name="condition" defaultValue={defaults?.condition ?? "USED"}>
+          <Select key={`condition-${resetVersion}`} name="condition" defaultValue={defaults?.condition ?? "USED"}>
             <SelectTrigger>
               <SelectValue placeholder="Select condition" />
             </SelectTrigger>
@@ -241,7 +264,12 @@ export function ListingForm({ defaults, submitLabel, action, currentImageCount }
       </div>
 
       <div className="flex items-center gap-2">
-        <Checkbox id="isNegotiable" name="isNegotiable" defaultChecked={defaults?.isNegotiable ?? false} />
+        <Checkbox
+          key={`negotiable-${resetVersion}`}
+          id="isNegotiable"
+          name="isNegotiable"
+          defaultChecked={defaults?.isNegotiable ?? false}
+        />
         <label htmlFor="isNegotiable" className="text-sm text-muted-foreground">
           Price is negotiable
         </label>

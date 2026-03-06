@@ -21,7 +21,7 @@ export default async function NewStoreListingPage() {
           </p>
         </div>
 
-        <ListingForm action={createStoreListing} submitLabel="Post Listing" />
+        <ListingForm action={createStoreListing} submitLabel="Post Listing" resetOnSuccess />
       </PageContainer>
     </div>
   );
