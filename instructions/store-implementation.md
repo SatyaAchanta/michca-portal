@@ -71,6 +71,12 @@ This token must be present in deployment and local runtime env for blob upload/d
   - mobile: 1 card per row
   - `sm`: 2 cards per row
   - desktop (`xl`): 3 cards per row
+- `/store/my-listings` card media layout:
+  - mobile: compact horizontal card with `88x88` thumbnail
+  - `sm+`: image-first card layout
+- `/store` public listing card media ratio:
+  - mobile: `16:10`
+  - `sm+`: `4:3`
 - Listing action controls (Mark Sold/Delete) are full-width button rows for easier touch interaction on mobile.
 
 ## Maintenance Notes

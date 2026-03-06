@@ -23,9 +23,15 @@ export function ListingCard({ listing }: ListingCardProps) {
   return (
     <Card className="overflow-hidden border-border/70">
       <Link href={`/store/${listing.id}`} className="block">
-        <div className="relative aspect-[4/3] w-full bg-muted/30">
+        <div className="relative aspect-[16/10] w-full bg-muted/30 sm:aspect-[4/3]">
           {image ? (
-            <Image src={image} alt={listing.title} fill className="object-cover" />
+            <Image
+              src={image}
+              alt={listing.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
           ) : null}
         </div>
         <div className="space-y-2 p-4">
