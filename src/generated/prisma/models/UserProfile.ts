@@ -224,6 +224,7 @@ export type UserProfileWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  storeListings?: Prisma.StoreListingListRelationFilter
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -239,6 +240,7 @@ export type UserProfileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
   umpiringTraining?: Prisma.UmpiringTrainingOrderByWithRelationInput
+  storeListings?: Prisma.StoreListingOrderByRelationAggregateInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -257,6 +259,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  storeListings?: Prisma.StoreListingListRelationFilter
 }, "id" | "clerkUserId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -304,6 +307,7 @@ export type UserProfileCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  storeListings?: Prisma.StoreListingCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -319,6 +323,7 @@ export type UserProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  storeListings?: Prisma.StoreListingUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUpdateInput = {
@@ -334,6 +339,7 @@ export type UserProfileUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  storeListings?: Prisma.StoreListingUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -349,6 +355,7 @@ export type UserProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  storeListings?: Prisma.StoreListingUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateManyInput = {
@@ -466,6 +473,20 @@ export type UserProfileUpdateOneRequiredWithoutUmpireAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutUmpireAssignmentsInput, Prisma.UserProfileUpdateWithoutUmpireAssignmentsInput>, Prisma.UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput>
 }
 
+export type UserProfileCreateNestedOneWithoutStoreListingsInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutStoreListingsInput, Prisma.UserProfileUncheckedCreateWithoutStoreListingsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutStoreListingsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutStoreListingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutStoreListingsInput, Prisma.UserProfileUncheckedCreateWithoutStoreListingsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutStoreListingsInput
+  upsert?: Prisma.UserProfileUpsertWithoutStoreListingsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutStoreListingsInput, Prisma.UserProfileUpdateWithoutStoreListingsInput>, Prisma.UserProfileUncheckedUpdateWithoutStoreListingsInput>
+}
+
 export type UserProfileCreateWithoutUmpiringTrainingInput = {
   id?: string
   clerkUserId: string
@@ -478,6 +499,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  storeListings?: Prisma.StoreListingCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
@@ -492,6 +514,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  storeListings?: Prisma.StoreListingUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpiringTrainingInput = {
@@ -522,6 +545,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  storeListings?: Prisma.StoreListingUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
@@ -536,6 +560,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  storeListings?: Prisma.StoreListingUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpireAssignmentsInput = {
@@ -550,6 +575,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  storeListings?: Prisma.StoreListingCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
@@ -564,6 +590,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  storeListings?: Prisma.StoreListingUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpireAssignmentsInput = {
@@ -594,6 +621,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  storeListings?: Prisma.StoreListingUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
@@ -608,6 +636,83 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  storeListings?: Prisma.StoreListingUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutStoreListingsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutStoreListingsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutStoreListingsInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutStoreListingsInput, Prisma.UserProfileUncheckedCreateWithoutStoreListingsInput>
+}
+
+export type UserProfileUpsertWithoutStoreListingsInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutStoreListingsInput, Prisma.UserProfileUncheckedUpdateWithoutStoreListingsInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutStoreListingsInput, Prisma.UserProfileUncheckedCreateWithoutStoreListingsInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutStoreListingsInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutStoreListingsInput, Prisma.UserProfileUncheckedUpdateWithoutStoreListingsInput>
+}
+
+export type UserProfileUpdateWithoutStoreListingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutStoreListingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 
@@ -617,10 +722,12 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
 
 export type UserProfileCountOutputType = {
   umpireAssignments: number
+  storeListings: number
 }
 
 export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | UserProfileCountOutputTypeCountUmpireAssignmentsArgs
+  storeListings?: boolean | UserProfileCountOutputTypeCountStoreListingsArgs
 }
 
 /**
@@ -640,6 +747,13 @@ export type UserProfileCountOutputTypeCountUmpireAssignmentsArgs<ExtArgs extends
   where?: Prisma.UmpireAssignmentWhereInput
 }
 
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountStoreListingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StoreListingWhereInput
+}
+
 
 export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -654,6 +768,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  storeListings?: boolean | Prisma.UserProfile$storeListingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
@@ -700,6 +815,7 @@ export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  storeListings?: boolean | Prisma.UserProfile$storeListingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -710,6 +826,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     umpireAssignments: Prisma.$UmpireAssignmentPayload<ExtArgs>[]
     umpiringTraining: Prisma.$UmpiringTrainingPayload<ExtArgs> | null
+    storeListings: Prisma.$StoreListingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1118,6 +1235,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   umpireAssignments<T extends Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmpireAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   umpiringTraining<T extends Prisma.UserProfile$umpiringTrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>>): Prisma.Prisma__UmpiringTrainingClient<runtime.Types.Result.GetResult<Prisma.$UmpiringTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  storeListings<T extends Prisma.UserProfile$storeListingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$storeListingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoreListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1585,6 +1703,30 @@ export type UserProfile$umpiringTrainingArgs<ExtArgs extends runtime.Types.Exten
    */
   include?: Prisma.UmpiringTrainingInclude<ExtArgs> | null
   where?: Prisma.UmpiringTrainingWhereInput
+}
+
+/**
+ * UserProfile.storeListings
+ */
+export type UserProfile$storeListingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StoreListing
+   */
+  select?: Prisma.StoreListingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StoreListing
+   */
+  omit?: Prisma.StoreListingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StoreListingInclude<ExtArgs> | null
+  where?: Prisma.StoreListingWhereInput
+  orderBy?: Prisma.StoreListingOrderByWithRelationInput | Prisma.StoreListingOrderByWithRelationInput[]
+  cursor?: Prisma.StoreListingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StoreListingScalarFieldEnum | Prisma.StoreListingScalarFieldEnum[]
 }
 
 /**

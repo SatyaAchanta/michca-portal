@@ -64,3 +64,13 @@ export type UmpiringTraining = Prisma.UmpiringTrainingModel
  * 
  */
 export type UmpireAssignment = Prisma.UmpireAssignmentModel
+/**
+ * Model StoreListing
+ * 
+ */
+export type StoreListing = Prisma.StoreListingModel
+/**
+ * Model StoreListingImage
+ * 
+ */
+export type StoreListingImage = Prisma.StoreListingImageModel

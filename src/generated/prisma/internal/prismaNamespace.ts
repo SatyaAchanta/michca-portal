@@ -388,7 +388,9 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
-  UmpireAssignment: 'UmpireAssignment'
+  UmpireAssignment: 'UmpireAssignment',
+  StoreListing: 'StoreListing',
+  StoreListingImage: 'StoreListingImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment" | "storeListing" | "storeListingImage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +780,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StoreListing: {
+      payload: Prisma.$StoreListingPayload<ExtArgs>
+      fields: Prisma.StoreListingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreListingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreListingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        findFirst: {
+          args: Prisma.StoreListingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreListingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        findMany: {
+          args: Prisma.StoreListingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>[]
+        }
+        create: {
+          args: Prisma.StoreListingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        createMany: {
+          args: Prisma.StoreListingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreListingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>[]
+        }
+        delete: {
+          args: Prisma.StoreListingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        update: {
+          args: Prisma.StoreListingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreListingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreListingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreListingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreListingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingPayload>
+        }
+        aggregate: {
+          args: Prisma.StoreListingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreListing>
+        }
+        groupBy: {
+          args: Prisma.StoreListingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreListingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreListingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreListingCountAggregateOutputType> | number
+        }
+      }
+    }
+    StoreListingImage: {
+      payload: Prisma.$StoreListingImagePayload<ExtArgs>
+      fields: Prisma.StoreListingImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreListingImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreListingImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        findFirst: {
+          args: Prisma.StoreListingImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreListingImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        findMany: {
+          args: Prisma.StoreListingImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>[]
+        }
+        create: {
+          args: Prisma.StoreListingImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        createMany: {
+          args: Prisma.StoreListingImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreListingImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>[]
+        }
+        delete: {
+          args: Prisma.StoreListingImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        update: {
+          args: Prisma.StoreListingImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreListingImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreListingImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreListingImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreListingImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreListingImagePayload>
+        }
+        aggregate: {
+          args: Prisma.StoreListingImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreListingImage>
+        }
+        groupBy: {
+          args: Prisma.StoreListingImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreListingImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreListingImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreListingImageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -893,6 +1043,39 @@ export const UmpireAssignmentScalarFieldEnum = {
 } as const
 
 export type UmpireAssignmentScalarFieldEnum = (typeof UmpireAssignmentScalarFieldEnum)[keyof typeof UmpireAssignmentScalarFieldEnum]
+
+
+export const StoreListingScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  sellerName: 'sellerName',
+  sellerPhone: 'sellerPhone',
+  title: 'title',
+  description: 'description',
+  condition: 'condition',
+  priceUsdCents: 'priceUsdCents',
+  isNegotiable: 'isNegotiable',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreListingScalarFieldEnum = (typeof StoreListingScalarFieldEnum)[keyof typeof StoreListingScalarFieldEnum]
+
+
+export const StoreListingImageScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  blobUrl: 'blobUrl',
+  blobPathname: 'blobPathname',
+  width: 'width',
+  height: 'height',
+  sizeBytes: 'sizeBytes',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type StoreListingImageScalarFieldEnum = (typeof StoreListingImageScalarFieldEnum)[keyof typeof StoreListingImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1073,6 +1256,34 @@ export type ListEnumUmpiringTrainingResultFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'GearCondition'
+ */
+export type EnumGearConditionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GearCondition'>
+    
+
+
+/**
+ * Reference to a field of type 'GearCondition[]'
+ */
+export type ListEnumGearConditionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GearCondition[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StoreListingStatus'
+ */
+export type EnumStoreListingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoreListingStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'StoreListingStatus[]'
+ */
+export type ListEnumStoreListingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoreListingStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1185,6 +1396,8 @@ export type GlobalOmitConfig = {
   userProfile?: Prisma.UserProfileOmit
   umpiringTraining?: Prisma.UmpiringTrainingOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
+  storeListing?: Prisma.StoreListingOmit
+  storeListingImage?: Prisma.StoreListingImageOmit
 }
 
 /* Types for Logging */

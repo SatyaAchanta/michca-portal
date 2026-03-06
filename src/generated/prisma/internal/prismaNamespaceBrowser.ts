@@ -55,7 +55,9 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
-  UmpireAssignment: 'UmpireAssignment'
+  UmpireAssignment: 'UmpireAssignment',
+  StoreListing: 'StoreListing',
+  StoreListingImage: 'StoreListingImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -150,6 +152,39 @@ export const UmpireAssignmentScalarFieldEnum = {
 } as const
 
 export type UmpireAssignmentScalarFieldEnum = (typeof UmpireAssignmentScalarFieldEnum)[keyof typeof UmpireAssignmentScalarFieldEnum]
+
+
+export const StoreListingScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  sellerName: 'sellerName',
+  sellerPhone: 'sellerPhone',
+  title: 'title',
+  description: 'description',
+  condition: 'condition',
+  priceUsdCents: 'priceUsdCents',
+  isNegotiable: 'isNegotiable',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreListingScalarFieldEnum = (typeof StoreListingScalarFieldEnum)[keyof typeof StoreListingScalarFieldEnum]
+
+
+export const StoreListingImageScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  blobUrl: 'blobUrl',
+  blobPathname: 'blobPathname',
+  width: 'width',
+  height: 'height',
+  sizeBytes: 'sizeBytes',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type StoreListingImageScalarFieldEnum = (typeof StoreListingImageScalarFieldEnum)[keyof typeof StoreListingImageScalarFieldEnum]
 
 
 export const SortOrder = {

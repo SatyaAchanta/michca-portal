@@ -73,3 +73,19 @@ export const UmpiringTrainingDateOption = {
 } as const
 
 export type UmpiringTrainingDateOption = (typeof UmpiringTrainingDateOption)[keyof typeof UmpiringTrainingDateOption]
+
+
+export const GearCondition = {
+  NEW: 'NEW',
+  USED: 'USED'
+} as const
+
+export type GearCondition = (typeof GearCondition)[keyof typeof GearCondition]
+
+
+export const StoreListingStatus = {
+  ACTIVE: 'ACTIVE',
+  SOLD: 'SOLD'
+} as const
+
+export type StoreListingStatus = (typeof StoreListingStatus)[keyof typeof StoreListingStatus]
