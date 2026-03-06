@@ -42,3 +42,28 @@ export type UmpiringTraining = Prisma.UmpiringTrainingModel
  * 
  */
 export type UmpireAssignment = Prisma.UmpireAssignmentModel
+/**
+ * Model CertificationQuestion
+ * 
+ */
+export type CertificationQuestion = Prisma.CertificationQuestionModel
+/**
+ * Model CertificationQuestionOption
+ * 
+ */
+export type CertificationQuestionOption = Prisma.CertificationQuestionOptionModel
+/**
+ * Model CertificationTestWindow
+ * 
+ */
+export type CertificationTestWindow = Prisma.CertificationTestWindowModel
+/**
+ * Model CertificationAttempt
+ * 
+ */
+export type CertificationAttempt = Prisma.CertificationAttemptModel
+/**
+ * Model CertificationAttemptQuestion
+ * 
+ */
+export type CertificationAttemptQuestion = Prisma.CertificationAttemptQuestionModel

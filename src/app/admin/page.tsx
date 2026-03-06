@@ -1,4 +1,5 @@
 import { PageContainer } from "@/components/page-container";
+import Link from "next/link";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -33,6 +34,15 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             Umpiring training registrations.
           </p>
         </div>
+
+        <Card className="grid gap-3 p-4 sm:grid-cols-2">
+          <Link href="/admin/certification-questions" className="rounded-md border p-3 text-sm font-medium hover:bg-accent">
+            Manage Certification Questions
+          </Link>
+          <Link href="/admin/certification-windows" className="rounded-md border p-3 text-sm font-medium hover:bg-accent">
+            Manage Certification Windows
+          </Link>
+        </Card>
 
         <AdminFilters initialDates={selectedDates} initialLocations={selectedLocations} />
 

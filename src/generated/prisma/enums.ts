@@ -59,6 +59,32 @@ export const UmpiringTrainingResult = {
 export type UmpiringTrainingResult = (typeof UmpiringTrainingResult)[keyof typeof UmpiringTrainingResult]
 
 
+export const CertificationWindowStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  CLOSED: 'CLOSED'
+} as const
+
+export type CertificationWindowStatus = (typeof CertificationWindowStatus)[keyof typeof CertificationWindowStatus]
+
+
+export const CertificationAttemptStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUBMITTED: 'SUBMITTED',
+  TIME_EXPIRED: 'TIME_EXPIRED'
+} as const
+
+export type CertificationAttemptStatus = (typeof CertificationAttemptStatus)[keyof typeof CertificationAttemptStatus]
+
+
+export const CertificationAttemptResult = {
+  PASS: 'PASS',
+  FAIL: 'FAIL'
+} as const
+
+export type CertificationAttemptResult = (typeof CertificationAttemptResult)[keyof typeof CertificationAttemptResult]
+
+
 export const DietaryPreference = {
   VEGETARIAN: 'VEGETARIAN',
   NON_VEGETARIAN: 'NON_VEGETARIAN'

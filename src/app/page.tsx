@@ -1,8 +1,31 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Trophy, Calendar, Users, DollarSign, Handshake } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
+
+export const metadata: Metadata = {
+  title: "MichCA - Michigan Cricket Association | Official Website",
+  description:
+    "Official website of MichCA (Michigan Cricket Association). League schedules, teams, umpires, grounds, and cricket news across Michigan.",
+  keywords: [
+    "MichCA",
+    "Michigan Cricket Association",
+    "MichCA cricket",
+    "Michigan cricket league",
+  ],
+  alternates: {
+    canonical: "https://www.michcausa.org",
+  },
+  openGraph: {
+    title: "MichCA - Michigan Cricket Association",
+    description: "Official website of MichCA — Michigan Cricket Association.",
+    url: "https://www.michcausa.org",
+    siteName: "MichCA",
+    type: "website",
+  },
+};
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,8 +51,8 @@ export default function HomePage() {
         >
           Lincode
         </Link>{" "}
-        has renewed its sponsorship for another year to support the successful conduct of our
-        cricket league.
+        has renewed its sponsorship for another year to support the successful
+        conduct of our cricket league.
       </p>
       <p>
         <Link
@@ -40,13 +63,14 @@ export default function HomePage() {
         >
           Lincode
         </Link>{" "}
-        is an artificial intelligence and computer vision organization dedicated to
-        transforming manufacturing quality inspection. Their flagship product, LIVIS (Lincode
-        Intelligent Visual Inspection System), enables real-time quality inspections of components,
-        assemblies, and packaging using advanced AI technology. With a powerful no-code platform,
-        LIVIS empowers engineers, machine operators, and quality managers to train and deploy AI
-        models efficiently across production lines, making visual inspection faster, more accurate,
-        and highly scalable.
+        is an artificial intelligence and computer vision organization dedicated
+        to transforming manufacturing quality inspection. Their flagship
+        product, LIVIS (Lincode Intelligent Visual Inspection System), enables
+        real-time quality inspections of components, assemblies, and packaging
+        using advanced AI technology. With a powerful no-code platform, LIVIS
+        empowers engineers, machine operators, and quality managers to train and
+        deploy AI models efficiently across production lines, making visual
+        inspection faster, more accurate, and highly scalable.
       </p>
       <p>
         We are deeply grateful for{" "}
@@ -58,14 +82,15 @@ export default function HomePage() {
         >
           Lincode
         </Link>
-        &apos;s continued partnership and commitment to supporting community-driven initiatives like
-        Mich-CA. Their investment strengthens our ability to organize competitive, well-structured,
-        and inclusive cricket leagues that bring together players, families, and supporters across
-        Michigan.
+        &apos;s continued partnership and commitment to supporting
+        community-driven initiatives like Mich-CA. Their investment strengthens
+        our ability to organize competitive, well-structured, and inclusive
+        cricket leagues that bring together players, families, and supporters
+        across Michigan.
       </p>
       <p>
-        On behalf of the entire Mich-CA leadership, players, volunteers, and supporters, we extend
-        our sincere appreciation to{" "}
+        On behalf of the entire Mich-CA leadership, players, volunteers, and
+        supporters, we extend our sincere appreciation to{" "}
         <Link
           href="https://www.lincode.ai"
           target="_blank"
@@ -74,7 +99,8 @@ export default function HomePage() {
         >
           Lincode
         </Link>{" "}
-        for believing in our mission and helping us grow the sport of cricket in Michigan.
+        for believing in our mission and helping us grow the sport of cricket in
+        Michigan.
       </p>
       <p>We look forward to another exciting and successful season together.</p>
       <p className="pt-2 text-foreground">
@@ -111,7 +137,10 @@ export default function HomePage() {
                     className="h-[88px] w-auto sm:h-[96px]"
                   />
                 </div>
-                <Handshake className="h-10 w-10 text-primary sm:h-12 sm:w-12" aria-label="partnership" />
+                <Handshake
+                  className="h-10 w-10 text-primary sm:h-12 sm:w-12"
+                  aria-label="partnership"
+                />
                 <div className="rounded-xl border border-border/70 bg-card/80 p-4 shadow-sm">
                   <Image
                     src="/docs/lincode-logo.webp"
@@ -137,12 +166,21 @@ export default function HomePage() {
                 </h1>
                 <div className="hidden md:block">{collaborationMessage}</div>
                 <div className="mx-auto w-full max-w-4xl md:hidden">
-                  <Accordion type="single" collapsible className="rounded-lg border border-border/70 bg-card/60 px-4">
-                    <AccordionItem value="collaboration-message" className="border-b-0">
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="rounded-lg border border-border/70 bg-card/60 px-4"
+                  >
+                    <AccordionItem
+                      value="collaboration-message"
+                      className="border-b-0"
+                    >
                       <AccordionTrigger className="text-left text-sm text-foreground hover:no-underline">
                         Read about our collaboration
                       </AccordionTrigger>
-                      <AccordionContent>{collaborationMessage}</AccordionContent>
+                      <AccordionContent>
+                        {collaborationMessage}
+                      </AccordionContent>
                     </AccordionItem>
                   </Accordion>
                 </div>
@@ -173,8 +211,12 @@ export default function HomePage() {
                   className="text-center p-6 border border-border/70 bg-card shadow-md"
                 >
                   <stat.icon className="h-8 w-8 mx-auto mb-2 text-primary" />
-                  <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  <p className="text-3xl font-bold text-foreground">
+                    {stat.value}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {stat.label}
+                  </p>
                 </Card>
               ))}
             </div>
@@ -188,8 +230,9 @@ export default function HomePage() {
               Join the Michigan Cricket Community
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              Whether you&apos;re a player, volunteer, or cricket enthusiast, there&apos;s a place for you in MichCA.
-              Explore our programs, committees, and upcoming events.
+              Whether you&apos;re a player, volunteer, or cricket enthusiast,
+              there&apos;s a place for you in MichCA. Explore our programs,
+              committees, and upcoming events.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild size="lg">

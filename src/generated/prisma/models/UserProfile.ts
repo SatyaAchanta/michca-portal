@@ -224,6 +224,9 @@ export type UserProfileWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
+  certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
+  certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -239,6 +242,9 @@ export type UserProfileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
   umpiringTraining?: Prisma.UmpiringTrainingOrderByWithRelationInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionOrderByRelationAggregateInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowOrderByRelationAggregateInput
+  certificationAttempts?: Prisma.CertificationAttemptOrderByRelationAggregateInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -257,6 +263,9 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
+  certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
+  certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
 }, "id" | "clerkUserId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -304,6 +313,9 @@ export type UserProfileCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -319,6 +331,9 @@ export type UserProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUpdateInput = {
@@ -334,6 +349,9 @@ export type UserProfileUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -349,6 +367,9 @@ export type UserProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateManyInput = {
@@ -466,6 +487,48 @@ export type UserProfileUpdateOneRequiredWithoutUmpireAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutUmpireAssignmentsInput, Prisma.UserProfileUpdateWithoutUmpireAssignmentsInput>, Prisma.UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput>
 }
 
+export type UserProfileCreateNestedOneWithoutCertificationQuestionsCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationQuestionsCreatedInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutCertificationQuestionsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationQuestionsCreatedInput
+  upsert?: Prisma.UserProfileUpsertWithoutCertificationQuestionsCreatedInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUpdateWithoutCertificationQuestionsCreatedInput>, Prisma.UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput>
+}
+
+export type UserProfileCreateNestedOneWithoutCertificationWindowsStartedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationWindowsStartedInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutCertificationWindowsStartedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationWindowsStartedInput
+  upsert?: Prisma.UserProfileUpsertWithoutCertificationWindowsStartedInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutCertificationWindowsStartedInput, Prisma.UserProfileUpdateWithoutCertificationWindowsStartedInput>, Prisma.UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput>
+}
+
+export type UserProfileCreateNestedOneWithoutCertificationAttemptsInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedCreateWithoutCertificationAttemptsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationAttemptsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutCertificationAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedCreateWithoutCertificationAttemptsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutCertificationAttemptsInput
+  upsert?: Prisma.UserProfileUpsertWithoutCertificationAttemptsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutCertificationAttemptsInput, Prisma.UserProfileUpdateWithoutCertificationAttemptsInput>, Prisma.UserProfileUncheckedUpdateWithoutCertificationAttemptsInput>
+}
+
 export type UserProfileCreateWithoutUmpiringTrainingInput = {
   id?: string
   clerkUserId: string
@@ -478,6 +541,9 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
@@ -492,6 +558,9 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpiringTrainingInput = {
@@ -522,6 +591,9 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
@@ -536,6 +608,9 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpireAssignmentsInput = {
@@ -550,6 +625,9 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
@@ -564,6 +642,9 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpireAssignmentsInput = {
@@ -594,6 +675,9 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
@@ -608,6 +692,261 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutCertificationQuestionsCreatedInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput>
+}
+
+export type UserProfileUpsertWithoutCertificationQuestionsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutCertificationQuestionsCreatedInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationQuestionsCreatedInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput>
+}
+
+export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutCertificationWindowsStartedInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput>
+}
+
+export type UserProfileUpsertWithoutCertificationWindowsStartedInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutCertificationWindowsStartedInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationWindowsStartedInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput>
+}
+
+export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutCertificationAttemptsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+}
+
+export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+}
+
+export type UserProfileCreateOrConnectWithoutCertificationAttemptsInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedCreateWithoutCertificationAttemptsInput>
+}
+
+export type UserProfileUpsertWithoutCertificationAttemptsInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationAttemptsInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedCreateWithoutCertificationAttemptsInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutCertificationAttemptsInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutCertificationAttemptsInput, Prisma.UserProfileUncheckedUpdateWithoutCertificationAttemptsInput>
+}
+
+export type UserProfileUpdateWithoutCertificationAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
 }
 
 
@@ -617,10 +956,16 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
 
 export type UserProfileCountOutputType = {
   umpireAssignments: number
+  certificationQuestionsCreated: number
+  certificationWindowsStarted: number
+  certificationAttempts: number
 }
 
 export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | UserProfileCountOutputTypeCountUmpireAssignmentsArgs
+  certificationQuestionsCreated?: boolean | UserProfileCountOutputTypeCountCertificationQuestionsCreatedArgs
+  certificationWindowsStarted?: boolean | UserProfileCountOutputTypeCountCertificationWindowsStartedArgs
+  certificationAttempts?: boolean | UserProfileCountOutputTypeCountCertificationAttemptsArgs
 }
 
 /**
@@ -640,6 +985,27 @@ export type UserProfileCountOutputTypeCountUmpireAssignmentsArgs<ExtArgs extends
   where?: Prisma.UmpireAssignmentWhereInput
 }
 
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountCertificationQuestionsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CertificationQuestionWhereInput
+}
+
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountCertificationWindowsStartedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CertificationTestWindowWhereInput
+}
+
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountCertificationAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CertificationAttemptWhereInput
+}
+
 
 export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -654,6 +1020,9 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
+  certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
+  certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
@@ -700,6 +1069,9 @@ export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
+  certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
+  certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -710,6 +1082,9 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     umpireAssignments: Prisma.$UmpireAssignmentPayload<ExtArgs>[]
     umpiringTraining: Prisma.$UmpiringTrainingPayload<ExtArgs> | null
+    certificationQuestionsCreated: Prisma.$CertificationQuestionPayload<ExtArgs>[]
+    certificationWindowsStarted: Prisma.$CertificationTestWindowPayload<ExtArgs>[]
+    certificationAttempts: Prisma.$CertificationAttemptPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1118,6 +1493,9 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   umpireAssignments<T extends Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmpireAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   umpiringTraining<T extends Prisma.UserProfile$umpiringTrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>>): Prisma.Prisma__UmpiringTrainingClient<runtime.Types.Result.GetResult<Prisma.$UmpiringTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  certificationQuestionsCreated<T extends Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  certificationWindowsStarted<T extends Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationTestWindowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  certificationAttempts<T extends Prisma.UserProfile$certificationAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1585,6 +1963,78 @@ export type UserProfile$umpiringTrainingArgs<ExtArgs extends runtime.Types.Exten
    */
   include?: Prisma.UmpiringTrainingInclude<ExtArgs> | null
   where?: Prisma.UmpiringTrainingWhereInput
+}
+
+/**
+ * UserProfile.certificationQuestionsCreated
+ */
+export type UserProfile$certificationQuestionsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CertificationQuestion
+   */
+  select?: Prisma.CertificationQuestionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CertificationQuestion
+   */
+  omit?: Prisma.CertificationQuestionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CertificationQuestionInclude<ExtArgs> | null
+  where?: Prisma.CertificationQuestionWhereInput
+  orderBy?: Prisma.CertificationQuestionOrderByWithRelationInput | Prisma.CertificationQuestionOrderByWithRelationInput[]
+  cursor?: Prisma.CertificationQuestionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CertificationQuestionScalarFieldEnum | Prisma.CertificationQuestionScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.certificationWindowsStarted
+ */
+export type UserProfile$certificationWindowsStartedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CertificationTestWindow
+   */
+  select?: Prisma.CertificationTestWindowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CertificationTestWindow
+   */
+  omit?: Prisma.CertificationTestWindowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CertificationTestWindowInclude<ExtArgs> | null
+  where?: Prisma.CertificationTestWindowWhereInput
+  orderBy?: Prisma.CertificationTestWindowOrderByWithRelationInput | Prisma.CertificationTestWindowOrderByWithRelationInput[]
+  cursor?: Prisma.CertificationTestWindowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CertificationTestWindowScalarFieldEnum | Prisma.CertificationTestWindowScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.certificationAttempts
+ */
+export type UserProfile$certificationAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CertificationAttempt
+   */
+  select?: Prisma.CertificationAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CertificationAttempt
+   */
+  omit?: Prisma.CertificationAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CertificationAttemptInclude<ExtArgs> | null
+  where?: Prisma.CertificationAttemptWhereInput
+  orderBy?: Prisma.CertificationAttemptOrderByWithRelationInput | Prisma.CertificationAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.CertificationAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CertificationAttemptScalarFieldEnum | Prisma.CertificationAttemptScalarFieldEnum[]
 }
 
 /**

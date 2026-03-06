@@ -16,7 +16,9 @@ const poppins = Poppins({
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -59,6 +61,21 @@ export default async function RootLayout({
           <SiteHeader isAdmin={isAdmin} />
           <main className="min-h-screen">{children}</main>
           <Analytics />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SportsOrganization",
+                name: "Michigan Cricket Association",
+                alternateName: "MichCA",
+                url: "https://www.michcausa.org",
+                logo: "https://www.michcausa.org/michca.png",
+                sport: "Cricket",
+                areaServed: "Michigan, USA",
+              }),
+            }}
+          />
         </body>
       </html>
     </ClerkProvider>
