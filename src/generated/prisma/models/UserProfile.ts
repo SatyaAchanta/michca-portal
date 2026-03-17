@@ -224,6 +224,7 @@ export type UserProfileWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -242,6 +243,7 @@ export type UserProfileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
   umpiringTraining?: Prisma.UmpiringTrainingOrderByWithRelationInput
+  youth15Registration?: Prisma.Youth15RegistrationOrderByWithRelationInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionOrderByRelationAggregateInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowOrderByRelationAggregateInput
   certificationAttempts?: Prisma.CertificationAttemptOrderByRelationAggregateInput
@@ -263,6 +265,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
+  youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -313,6 +316,7 @@ export type UserProfileCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -331,6 +335,7 @@ export type UserProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -349,6 +354,7 @@ export type UserProfileUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -367,6 +373,7 @@ export type UserProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -473,6 +480,20 @@ export type UserProfileUpdateOneRequiredWithoutUmpiringTrainingNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutUmpiringTrainingInput, Prisma.UserProfileUpdateWithoutUmpiringTrainingInput>, Prisma.UserProfileUncheckedUpdateWithoutUmpiringTrainingInput>
 }
 
+export type UserProfileCreateNestedOneWithoutYouth15RegistrationInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedCreateWithoutYouth15RegistrationInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutYouth15RegistrationInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutYouth15RegistrationNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedCreateWithoutYouth15RegistrationInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutYouth15RegistrationInput
+  upsert?: Prisma.UserProfileUpsertWithoutYouth15RegistrationInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutYouth15RegistrationInput, Prisma.UserProfileUpdateWithoutYouth15RegistrationInput>, Prisma.UserProfileUncheckedUpdateWithoutYouth15RegistrationInput>
+}
+
 export type UserProfileCreateNestedOneWithoutUmpireAssignmentsInput = {
   create?: Prisma.XOR<Prisma.UserProfileCreateWithoutUmpireAssignmentsInput, Prisma.UserProfileUncheckedCreateWithoutUmpireAssignmentsInput>
   connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutUmpireAssignmentsInput
@@ -541,6 +562,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -558,6 +580,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -591,6 +614,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -608,6 +632,95 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutYouth15RegistrationInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutYouth15RegistrationInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedCreateWithoutYouth15RegistrationInput>
+}
+
+export type UserProfileUpsertWithoutYouth15RegistrationInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedUpdateWithoutYouth15RegistrationInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedCreateWithoutYouth15RegistrationInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutYouth15RegistrationInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutYouth15RegistrationInput, Prisma.UserProfileUncheckedUpdateWithoutYouth15RegistrationInput>
+}
+
+export type UserProfileUpdateWithoutYouth15RegistrationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -625,6 +738,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -642,6 +756,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -675,6 +790,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -692,6 +808,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -710,6 +827,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
 }
@@ -727,6 +845,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
 }
@@ -760,6 +879,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
 }
@@ -777,6 +897,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
 }
@@ -794,6 +915,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
 }
@@ -811,6 +933,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
 }
@@ -844,6 +967,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
 }
@@ -861,6 +985,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
 }
@@ -878,6 +1003,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
 }
@@ -895,6 +1021,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
 }
@@ -928,6 +1055,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
 }
@@ -945,6 +1073,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
 }
@@ -1020,6 +1149,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1069,6 +1199,7 @@ export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
+  youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1082,6 +1213,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     umpireAssignments: Prisma.$UmpireAssignmentPayload<ExtArgs>[]
     umpiringTraining: Prisma.$UmpiringTrainingPayload<ExtArgs> | null
+    youth15Registration: Prisma.$Youth15RegistrationPayload<ExtArgs> | null
     certificationQuestionsCreated: Prisma.$CertificationQuestionPayload<ExtArgs>[]
     certificationWindowsStarted: Prisma.$CertificationTestWindowPayload<ExtArgs>[]
     certificationAttempts: Prisma.$CertificationAttemptPayload<ExtArgs>[]
@@ -1493,6 +1625,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   umpireAssignments<T extends Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmpireAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   umpiringTraining<T extends Prisma.UserProfile$umpiringTrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>>): Prisma.Prisma__UmpiringTrainingClient<runtime.Types.Result.GetResult<Prisma.$UmpiringTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  youth15Registration<T extends Prisma.UserProfile$youth15RegistrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>>): Prisma.Prisma__Youth15RegistrationClient<runtime.Types.Result.GetResult<Prisma.$Youth15RegistrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   certificationQuestionsCreated<T extends Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationWindowsStarted<T extends Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationTestWindowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationAttempts<T extends Prisma.UserProfile$certificationAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1963,6 +2096,25 @@ export type UserProfile$umpiringTrainingArgs<ExtArgs extends runtime.Types.Exten
    */
   include?: Prisma.UmpiringTrainingInclude<ExtArgs> | null
   where?: Prisma.UmpiringTrainingWhereInput
+}
+
+/**
+ * UserProfile.youth15Registration
+ */
+export type UserProfile$youth15RegistrationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Youth15Registration
+   */
+  select?: Prisma.Youth15RegistrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Youth15Registration
+   */
+  omit?: Prisma.Youth15RegistrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.Youth15RegistrationInclude<ExtArgs> | null
+  where?: Prisma.Youth15RegistrationWhereInput
 }
 
 /**

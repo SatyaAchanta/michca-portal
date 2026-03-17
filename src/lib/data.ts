@@ -15,6 +15,7 @@ export type DocumentItem = {
   fileType: "PDF" | "DOC" | "XLS" | "FORM";
   url: string;
   isDownloadable?: boolean;
+  isExternal?: boolean;
 };
 
 export type Assignment = {
@@ -36,6 +37,16 @@ export const matches: Match[] = [];
 
 export const documents: DocumentItem[] = [
   {
+    id: "doc-y15-registration",
+    title: "Youth 15 Registration",
+    description: "Register your club for the 2026 Youth 15 league. Initial deposit due March 31, 2026.",
+    category: "Registration",
+    fileType: "FORM",
+    url: "/y15-registration",
+    isDownloadable: false,
+    isExternal: false,
+  },
+  {
     id: "doc-1",
     title: "Team Registration Form",
     description: "Register your team for the upcoming season.",
@@ -43,6 +54,7 @@ export const documents: DocumentItem[] = [
     fileType: "FORM",
     url: "https://forms.gle/op9QNwjgnSHGHjMN7",
     isDownloadable: false,
+    isExternal: true,
   },
   {
     id: "doc-2",
@@ -52,6 +64,7 @@ export const documents: DocumentItem[] = [
     fileType: "FORM",
     url: "https://forms.gle/dcYcwcwRVz97fbDk6",
     isDownloadable: false,
+    isExternal: true,
   },
   {
     id: "doc-3",

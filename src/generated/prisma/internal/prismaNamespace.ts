@@ -388,6 +388,7 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
+  Youth15Registration: 'Youth15Registration',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -706,6 +707,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UmpiringTrainingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UmpiringTrainingCountAggregateOutputType> | number
+        }
+      }
+    }
+    Youth15Registration: {
+      payload: Prisma.$Youth15RegistrationPayload<ExtArgs>
+      fields: Prisma.Youth15RegistrationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.Youth15RegistrationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.Youth15RegistrationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        findFirst: {
+          args: Prisma.Youth15RegistrationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.Youth15RegistrationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        findMany: {
+          args: Prisma.Youth15RegistrationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>[]
+        }
+        create: {
+          args: Prisma.Youth15RegistrationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        createMany: {
+          args: Prisma.Youth15RegistrationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.Youth15RegistrationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>[]
+        }
+        delete: {
+          args: Prisma.Youth15RegistrationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        update: {
+          args: Prisma.Youth15RegistrationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        deleteMany: {
+          args: Prisma.Youth15RegistrationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.Youth15RegistrationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.Youth15RegistrationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>[]
+        }
+        upsert: {
+          args: Prisma.Youth15RegistrationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Youth15RegistrationPayload>
+        }
+        aggregate: {
+          args: Prisma.Youth15RegistrationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateYouth15Registration>
+        }
+        groupBy: {
+          args: Prisma.Youth15RegistrationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Youth15RegistrationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.Youth15RegistrationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Youth15RegistrationCountAggregateOutputType> | number
         }
       }
     }
@@ -1260,6 +1335,22 @@ export const UmpiringTrainingScalarFieldEnum = {
 export type UmpiringTrainingScalarFieldEnum = (typeof UmpiringTrainingScalarFieldEnum)[keyof typeof UmpiringTrainingScalarFieldEnum]
 
 
+export const Youth15RegistrationScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  clubName: 'clubName',
+  presidentName: 'presidentName',
+  presidentEmail: 'presidentEmail',
+  presidentPhoneNumber: 'presidentPhoneNumber',
+  secretaryName: 'secretaryName',
+  secretaryEmail: 'secretaryEmail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Youth15RegistrationScalarFieldEnum = (typeof Youth15RegistrationScalarFieldEnum)[keyof typeof Youth15RegistrationScalarFieldEnum]
+
+
 export const UmpireAssignmentScalarFieldEnum = {
   id: 'id',
   gameId: 'gameId',
@@ -1712,6 +1803,7 @@ export type GlobalOmitConfig = {
   game?: Prisma.GameOmit
   userProfile?: Prisma.UserProfileOmit
   umpiringTraining?: Prisma.UmpiringTrainingOmit
+  youth15Registration?: Prisma.Youth15RegistrationOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
   certificationQuestion?: Prisma.CertificationQuestionOmit
   certificationQuestionOption?: Prisma.CertificationQuestionOptionOmit

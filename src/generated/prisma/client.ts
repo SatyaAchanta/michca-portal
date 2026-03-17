@@ -60,6 +60,11 @@ export type UserProfile = Prisma.UserProfileModel
  */
 export type UmpiringTraining = Prisma.UmpiringTrainingModel
 /**
+ * Model Youth15Registration
+ * 
+ */
+export type Youth15Registration = Prisma.Youth15RegistrationModel
+/**
  * Model UmpireAssignment
  * 
  */
