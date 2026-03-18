@@ -14,7 +14,7 @@ import { prisma } from "@/lib/prisma";
 import { AuthenticationRequiredError, getOrCreateCurrentUserProfile } from "@/lib/user-profile";
 
 const descriptionContent = (
-  <div className="space-y-4 text-sm leading-7 text-muted-foreground sm:text-base">
+    <div className="space-y-4 text-sm leading-7 text-muted-foreground sm:text-base">
     <p>Note: This form should be filled by the Club President or Secretary.</p>
     <p>
       Registration payments can be made via Zelle or Chase Quick Pay to
@@ -22,8 +22,8 @@ const descriptionContent = (
       <span className="font-medium text-foreground">micricketfinance@gmail.com</span>.
     </p>
     <div className="grid gap-3 sm:grid-cols-2">
-      <Card className="p-4">
-        <p className="text-sm font-medium text-foreground">League details</p>
+      <Card className="border-primary/35 bg-primary/10 p-4 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">League details</p>
         <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
           <li>Age Group: U15</li>
           <li>Players between 10-15 years old</li>
@@ -33,8 +33,8 @@ const descriptionContent = (
           <li>Full fee due by 04/12/2026</li>
         </ul>
       </Card>
-      <Card className="p-4">
-        <p className="text-sm font-medium text-foreground">Season format</p>
+      <Card className="border-primary/35 bg-primary/10 p-4 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Season format</p>
         <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
           <li>League starts: August 1st</li>
           <li>Minimum teams required: 3</li>
@@ -72,6 +72,7 @@ export default async function Youth15RegistrationPage() {
       presidentPhoneNumber: true,
       secretaryName: true,
       secretaryEmail: true,
+      secretaryPhoneNumber: true,
     },
   });
 

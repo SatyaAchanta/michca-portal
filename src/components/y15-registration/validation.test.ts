@@ -8,8 +8,9 @@ function createValidFormData() {
   formData.set("presidentName", "Ava Patel");
   formData.set("presidentEmail", "ava@example.com");
   formData.set("presidentPhoneNumber", "248-555-0101");
-  formData.set("secretaryName", "N/A");
+  formData.set("secretaryName", "Maya Shah");
   formData.set("secretaryEmail", "secretary@example.com");
+  formData.set("secretaryPhoneNumber", "248-555-0102");
   return formData;
 }
 
@@ -23,8 +24,9 @@ describe("parseYouth15RegistrationForm", () => {
       presidentName: "Ava Patel",
       presidentEmail: "ava@example.com",
       presidentPhoneNumber: "248-555-0101",
-      secretaryName: "N/A",
+      secretaryName: "Maya Shah",
       secretaryEmail: "secretary@example.com",
+      secretaryPhoneNumber: "248-555-0102",
     });
   });
 
@@ -37,28 +39,30 @@ describe("parseYouth15RegistrationForm", () => {
       presidentName: expect.any(String),
       presidentEmail: expect.any(String),
       presidentPhoneNumber: expect.any(String),
+      secretaryName: expect.any(String),
       secretaryEmail: expect.any(String),
+      secretaryPhoneNumber: expect.any(String),
     });
   });
 
-  it("accepts an empty secretary name", () => {
+  it("rejects an empty secretary name", () => {
     const formData = createValidFormData();
     formData.set("secretaryName", "");
 
     const result = parseYouth15RegistrationForm(formData);
 
-    expect(result.fieldErrors).toEqual({});
-    expect(result.data?.secretaryName).toBeNull();
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.secretaryName).toContain("required");
   });
 
-  it("accepts N/A for secretary email", () => {
+  it("rejects N/A for secretary email", () => {
     const formData = createValidFormData();
     formData.set("secretaryEmail", "N/A");
 
     const result = parseYouth15RegistrationForm(formData);
 
-    expect(result.fieldErrors).toEqual({});
-    expect(result.data?.secretaryEmail).toBeNull();
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.secretaryEmail).toContain("valid email");
   });
 
   it("rejects invalid email formats", () => {

@@ -69,6 +69,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       <th className="px-4 py-3 font-medium">President Email</th>
                       <th className="px-4 py-3 font-medium">President Phone</th>
                       <th className="px-4 py-3 font-medium">Secretary</th>
+                      <th className="px-4 py-3 font-medium">Secretary Phone</th>
                       <th className="px-4 py-3 font-medium">Secretary Email</th>
                       <th className="px-4 py-3 font-medium">Account Email</th>
                       <th className="px-4 py-3 font-medium">Submitted</th>
@@ -86,6 +87,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                         <td className="px-4 py-3">{registration.presidentEmail}</td>
                         <td className="px-4 py-3">{registration.presidentPhoneNumber}</td>
                         <td className="px-4 py-3">{registration.secretaryName ?? "-"}</td>
+                        <td className="px-4 py-3">{registration.secretaryPhoneNumber}</td>
                         <td className="px-4 py-3">{registration.secretaryEmail}</td>
                         <td className="px-4 py-3">{registration.userProfile.email}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -126,6 +128,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             <div className="flex items-center justify-between gap-3">
                               <span className="text-muted-foreground">Secretary</span>
                               <span>{registration.secretaryName ?? "-"}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Secretary phone</span>
+                              <span>{registration.secretaryPhoneNumber}</span>
                             </div>
                             <div className="flex items-center justify-between gap-3">
                               <span className="text-muted-foreground">Secretary email</span>

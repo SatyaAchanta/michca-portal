@@ -25,6 +25,7 @@ type RegistrationSnapshot = {
   presidentPhoneNumber: string;
   secretaryName: string | null;
   secretaryEmail: string | null;
+  secretaryPhoneNumber: string;
 };
 
 type RegistrationFormProps = {
@@ -49,13 +50,23 @@ export function Youth15RegistrationForm({ registration }: RegistrationFormProps)
       presidentEmail: registration?.presidentEmail ?? "",
       presidentPhoneNumber: registration?.presidentPhoneNumber ?? "",
       secretaryName: registration?.secretaryName ?? "",
-      secretaryEmail: registration?.secretaryEmail ?? "N/A",
+      secretaryEmail: registration?.secretaryEmail ?? "",
+      secretaryPhoneNumber: registration?.secretaryPhoneNumber ?? "",
     }),
     [registration]
   );
 
   const handleOpenConfirmation = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    const form = formRef.current;
+    if (!form) {
+      return;
+    }
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
     setIsDialogOpen(true);
   };
 

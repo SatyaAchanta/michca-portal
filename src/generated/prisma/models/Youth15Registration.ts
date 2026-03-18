@@ -33,6 +33,7 @@ export type Youth15RegistrationMinAggregateOutputType = {
   presidentPhoneNumber: string | null
   secretaryName: string | null
   secretaryEmail: string | null
+  secretaryPhoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +47,7 @@ export type Youth15RegistrationMaxAggregateOutputType = {
   presidentPhoneNumber: string | null
   secretaryName: string | null
   secretaryEmail: string | null
+  secretaryPhoneNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +61,7 @@ export type Youth15RegistrationCountAggregateOutputType = {
   presidentPhoneNumber: number
   secretaryName: number
   secretaryEmail: number
+  secretaryPhoneNumber: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,6 +77,7 @@ export type Youth15RegistrationMinAggregateInputType = {
   presidentPhoneNumber?: true
   secretaryName?: true
   secretaryEmail?: true
+  secretaryPhoneNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,6 +91,7 @@ export type Youth15RegistrationMaxAggregateInputType = {
   presidentPhoneNumber?: true
   secretaryName?: true
   secretaryEmail?: true
+  secretaryPhoneNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +105,7 @@ export type Youth15RegistrationCountAggregateInputType = {
   presidentPhoneNumber?: true
   secretaryName?: true
   secretaryEmail?: true
+  secretaryPhoneNumber?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -186,6 +192,7 @@ export type Youth15RegistrationGroupByOutputType = {
   presidentPhoneNumber: string
   secretaryName: string | null
   secretaryEmail: string | null
+  secretaryPhoneNumber: string
   createdAt: Date
   updatedAt: Date
   _count: Youth15RegistrationCountAggregateOutputType | null
@@ -220,6 +227,7 @@ export type Youth15RegistrationWhereInput = {
   presidentPhoneNumber?: Prisma.StringFilter<"Youth15Registration"> | string
   secretaryName?: Prisma.StringNullableFilter<"Youth15Registration"> | string | null
   secretaryEmail?: Prisma.StringNullableFilter<"Youth15Registration"> | string | null
+  secretaryPhoneNumber?: Prisma.StringFilter<"Youth15Registration"> | string
   createdAt?: Prisma.DateTimeFilter<"Youth15Registration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Youth15Registration"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserProfileScalarRelationFilter, Prisma.UserProfileWhereInput>
@@ -234,6 +242,7 @@ export type Youth15RegistrationOrderByWithRelationInput = {
   presidentPhoneNumber?: Prisma.SortOrder
   secretaryName?: Prisma.SortOrderInput | Prisma.SortOrder
   secretaryEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  secretaryPhoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userProfile?: Prisma.UserProfileOrderByWithRelationInput
@@ -251,6 +260,7 @@ export type Youth15RegistrationWhereUniqueInput = Prisma.AtLeast<{
   presidentPhoneNumber?: Prisma.StringFilter<"Youth15Registration"> | string
   secretaryName?: Prisma.StringNullableFilter<"Youth15Registration"> | string | null
   secretaryEmail?: Prisma.StringNullableFilter<"Youth15Registration"> | string | null
+  secretaryPhoneNumber?: Prisma.StringFilter<"Youth15Registration"> | string
   createdAt?: Prisma.DateTimeFilter<"Youth15Registration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Youth15Registration"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserProfileScalarRelationFilter, Prisma.UserProfileWhereInput>
@@ -265,6 +275,7 @@ export type Youth15RegistrationOrderByWithAggregationInput = {
   presidentPhoneNumber?: Prisma.SortOrder
   secretaryName?: Prisma.SortOrderInput | Prisma.SortOrder
   secretaryEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  secretaryPhoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.Youth15RegistrationCountOrderByAggregateInput
@@ -284,6 +295,7 @@ export type Youth15RegistrationScalarWhereWithAggregatesInput = {
   presidentPhoneNumber?: Prisma.StringWithAggregatesFilter<"Youth15Registration"> | string
   secretaryName?: Prisma.StringNullableWithAggregatesFilter<"Youth15Registration"> | string | null
   secretaryEmail?: Prisma.StringNullableWithAggregatesFilter<"Youth15Registration"> | string | null
+  secretaryPhoneNumber?: Prisma.StringWithAggregatesFilter<"Youth15Registration"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Youth15Registration"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Youth15Registration"> | Date | string
 }
@@ -296,6 +308,7 @@ export type Youth15RegistrationCreateInput = {
   presidentPhoneNumber: string
   secretaryName?: string | null
   secretaryEmail?: string | null
+  secretaryPhoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userProfile: Prisma.UserProfileCreateNestedOneWithoutYouth15RegistrationInput
@@ -310,6 +323,7 @@ export type Youth15RegistrationUncheckedCreateInput = {
   presidentPhoneNumber: string
   secretaryName?: string | null
   secretaryEmail?: string | null
+  secretaryPhoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -322,6 +336,7 @@ export type Youth15RegistrationUpdateInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserProfileUpdateOneRequiredWithoutYouth15RegistrationNestedInput
@@ -336,6 +351,7 @@ export type Youth15RegistrationUncheckedUpdateInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -349,6 +365,7 @@ export type Youth15RegistrationCreateManyInput = {
   presidentPhoneNumber: string
   secretaryName?: string | null
   secretaryEmail?: string | null
+  secretaryPhoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -361,6 +378,7 @@ export type Youth15RegistrationUpdateManyMutationInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,6 +392,7 @@ export type Youth15RegistrationUncheckedUpdateManyInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -392,6 +411,7 @@ export type Youth15RegistrationCountOrderByAggregateInput = {
   presidentPhoneNumber?: Prisma.SortOrder
   secretaryName?: Prisma.SortOrder
   secretaryEmail?: Prisma.SortOrder
+  secretaryPhoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -405,6 +425,7 @@ export type Youth15RegistrationMaxOrderByAggregateInput = {
   presidentPhoneNumber?: Prisma.SortOrder
   secretaryName?: Prisma.SortOrder
   secretaryEmail?: Prisma.SortOrder
+  secretaryPhoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -418,6 +439,7 @@ export type Youth15RegistrationMinOrderByAggregateInput = {
   presidentPhoneNumber?: Prisma.SortOrder
   secretaryName?: Prisma.SortOrder
   secretaryEmail?: Prisma.SortOrder
+  secretaryPhoneNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -462,6 +484,7 @@ export type Youth15RegistrationCreateWithoutUserProfileInput = {
   presidentPhoneNumber: string
   secretaryName?: string | null
   secretaryEmail?: string | null
+  secretaryPhoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -474,6 +497,7 @@ export type Youth15RegistrationUncheckedCreateWithoutUserProfileInput = {
   presidentPhoneNumber: string
   secretaryName?: string | null
   secretaryEmail?: string | null
+  secretaryPhoneNumber: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -502,6 +526,7 @@ export type Youth15RegistrationUpdateWithoutUserProfileInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -514,6 +539,7 @@ export type Youth15RegistrationUncheckedUpdateWithoutUserProfileInput = {
   presidentPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   secretaryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secretaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secretaryPhoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -529,6 +555,7 @@ export type Youth15RegistrationSelect<ExtArgs extends runtime.Types.Extensions.I
   presidentPhoneNumber?: boolean
   secretaryName?: boolean
   secretaryEmail?: boolean
+  secretaryPhoneNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
@@ -543,6 +570,7 @@ export type Youth15RegistrationSelectCreateManyAndReturn<ExtArgs extends runtime
   presidentPhoneNumber?: boolean
   secretaryName?: boolean
   secretaryEmail?: boolean
+  secretaryPhoneNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
@@ -557,6 +585,7 @@ export type Youth15RegistrationSelectUpdateManyAndReturn<ExtArgs extends runtime
   presidentPhoneNumber?: boolean
   secretaryName?: boolean
   secretaryEmail?: boolean
+  secretaryPhoneNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
@@ -571,11 +600,12 @@ export type Youth15RegistrationSelectScalar = {
   presidentPhoneNumber?: boolean
   secretaryName?: boolean
   secretaryEmail?: boolean
+  secretaryPhoneNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type Youth15RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "clubName" | "presidentName" | "presidentEmail" | "presidentPhoneNumber" | "secretaryName" | "secretaryEmail" | "createdAt" | "updatedAt", ExtArgs["result"]["youth15Registration"]>
+export type Youth15RegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "clubName" | "presidentName" | "presidentEmail" | "presidentPhoneNumber" | "secretaryName" | "secretaryEmail" | "secretaryPhoneNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["youth15Registration"]>
 export type Youth15RegistrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -600,6 +630,7 @@ export type $Youth15RegistrationPayload<ExtArgs extends runtime.Types.Extensions
     presidentPhoneNumber: string
     secretaryName: string | null
     secretaryEmail: string | null
+    secretaryPhoneNumber: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["youth15Registration"]>
@@ -1034,6 +1065,7 @@ export interface Youth15RegistrationFieldRefs {
   readonly presidentPhoneNumber: Prisma.FieldRef<"Youth15Registration", 'String'>
   readonly secretaryName: Prisma.FieldRef<"Youth15Registration", 'String'>
   readonly secretaryEmail: Prisma.FieldRef<"Youth15Registration", 'String'>
+  readonly secretaryPhoneNumber: Prisma.FieldRef<"Youth15Registration", 'String'>
   readonly createdAt: Prisma.FieldRef<"Youth15Registration", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Youth15Registration", 'DateTime'>
 }

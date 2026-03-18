@@ -11,6 +11,7 @@ type RegistrationValues = {
   presidentPhoneNumber: string;
   secretaryName: string;
   secretaryEmail: string;
+  secretaryPhoneNumber: string;
 };
 
 type RegistrationFieldsProps = {
@@ -101,11 +102,28 @@ export function Youth15RegistrationFields({
           <Input
             id="secretaryName"
             name="secretaryName"
+            required
             defaultValue={values.secretaryName}
-            placeholder="N/A"
+            placeholder="Enter secretary name"
           />
+          <FieldError message={fieldErrors.secretaryName} />
         </div>
+        <div className="space-y-2">
+          <label htmlFor="secretaryPhoneNumber" className="text-sm font-medium">
+            Secretary Phone Number
+          </label>
+          <Input
+            id="secretaryPhoneNumber"
+            name="secretaryPhoneNumber"
+            required
+            defaultValue={values.secretaryPhoneNumber}
+            placeholder="Enter secretary phone number"
+          />
+          <FieldError message={fieldErrors.secretaryPhoneNumber} />
+        </div>
+      </div>
 
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor="secretaryEmail" className="text-sm font-medium">
             Secretary Email
@@ -115,7 +133,7 @@ export function Youth15RegistrationFields({
             name="secretaryEmail"
             required
             defaultValue={values.secretaryEmail}
-            placeholder="secretary@club.org or N/A"
+            placeholder="secretary@club.org"
           />
           <FieldError message={fieldErrors.secretaryEmail} />
         </div>

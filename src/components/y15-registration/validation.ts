@@ -6,7 +6,9 @@ export type Youth15RegistrationFieldErrors = Partial<
     | "presidentName"
     | "presidentEmail"
     | "presidentPhoneNumber"
+    | "secretaryName"
     | "secretaryEmail"
+    | "secretaryPhoneNumber"
     | "form",
     string
   >
@@ -28,8 +30,9 @@ export type ParsedYouth15RegistrationInput = {
   presidentName: string;
   presidentEmail: string;
   presidentPhoneNumber: string;
-  secretaryName: string | null;
-  secretaryEmail: string | null;
+  secretaryName: string;
+  secretaryEmail: string;
+  secretaryPhoneNumber: string;
 };
 
 function normalizeRequiredText(
@@ -44,19 +47,6 @@ function normalizeRequiredText(
   }
 
   return input.trim();
-}
-
-function normalizeOptionalText(input: FormDataEntryValue | null) {
-  if (typeof input !== "string") {
-    return null;
-  }
-
-  const trimmed = input.trim();
-  return trimmed.length > 0 ? trimmed : null;
-}
-
-function isNotApplicableValue(value: string | null) {
-  return value?.trim().toUpperCase() === "N/A";
 }
 
 export function parseYouth15RegistrationForm(
@@ -86,20 +76,31 @@ export function parseYouth15RegistrationForm(
     "presidentPhoneNumber",
     "President phone number"
   );
-  const secretaryName = normalizeOptionalText(formData.get("secretaryName"));
-  const secretaryEmailRaw = normalizeOptionalText(formData.get("secretaryEmail"));
+  const secretaryName = normalizeRequiredText(
+    formData.get("secretaryName"),
+    fieldErrors,
+    "secretaryName",
+    "Secretary name"
+  );
+  const secretaryEmail = normalizeRequiredText(
+    formData.get("secretaryEmail"),
+    fieldErrors,
+    "secretaryEmail",
+    "Secretary email"
+  );
+  const secretaryPhoneNumber = normalizeRequiredText(
+    formData.get("secretaryPhoneNumber"),
+    fieldErrors,
+    "secretaryPhoneNumber",
+    "Secretary phone number"
+  );
 
   if (presidentEmail && !EMAIL_PATTERN.test(presidentEmail)) {
     fieldErrors.presidentEmail = "President email must be a valid email address.";
   }
 
-  let secretaryEmail: string | null = secretaryEmailRaw;
-  if (!secretaryEmailRaw) {
-    fieldErrors.secretaryEmail = "Secretary email is required.";
-  } else if (isNotApplicableValue(secretaryEmailRaw)) {
-    secretaryEmail = null;
-  } else if (!EMAIL_PATTERN.test(secretaryEmailRaw)) {
-    fieldErrors.secretaryEmail = "Secretary email must be a valid email address or N/A.";
+  if (secretaryEmail && !EMAIL_PATTERN.test(secretaryEmail)) {
+    fieldErrors.secretaryEmail = "Secretary email must be a valid email address.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -113,8 +114,9 @@ export function parseYouth15RegistrationForm(
       presidentName: presidentName as string,
       presidentEmail: presidentEmail as string,
       presidentPhoneNumber: presidentPhoneNumber as string,
-      secretaryName,
-      secretaryEmail,
+      secretaryName: secretaryName as string,
+      secretaryEmail: secretaryEmail as string,
+      secretaryPhoneNumber: secretaryPhoneNumber as string,
     },
   };
 }

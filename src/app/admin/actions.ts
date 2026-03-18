@@ -82,6 +82,7 @@ export async function getAdminRegistrations({
       presidentPhoneNumber: true,
       secretaryName: true,
       secretaryEmail: true,
+      secretaryPhoneNumber: true,
       createdAt: true,
       updatedAt: true,
       userProfile: {

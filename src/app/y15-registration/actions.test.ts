@@ -32,8 +32,9 @@ function createValidFormData() {
   formData.set("presidentName", "Ava Patel");
   formData.set("presidentEmail", "ava@example.com");
   formData.set("presidentPhoneNumber", "248-555-0101");
-  formData.set("secretaryName", "N/A");
-  formData.set("secretaryEmail", "N/A");
+  formData.set("secretaryName", "Maya Shah");
+  formData.set("secretaryEmail", "maya@example.com");
+  formData.set("secretaryPhoneNumber", "248-555-0102");
   return formData;
 }
 
@@ -73,16 +74,18 @@ describe("upsertMyYouth15Registration", () => {
         presidentName: "Ava Patel",
         presidentEmail: "ava@example.com",
         presidentPhoneNumber: "248-555-0101",
-        secretaryName: "N/A",
-        secretaryEmail: null,
+        secretaryName: "Maya Shah",
+        secretaryEmail: "maya@example.com",
+        secretaryPhoneNumber: "248-555-0102",
       },
       update: {
         clubName: "Michigan Falcons",
         presidentName: "Ava Patel",
         presidentEmail: "ava@example.com",
         presidentPhoneNumber: "248-555-0101",
-        secretaryName: "N/A",
-        secretaryEmail: null,
+        secretaryName: "Maya Shah",
+        secretaryEmail: "maya@example.com",
+        secretaryPhoneNumber: "248-555-0102",
       },
     });
     expect(revalidatePath).toHaveBeenCalledWith("/y15-registration");

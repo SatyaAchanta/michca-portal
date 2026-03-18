@@ -10,6 +10,28 @@ describe("Youth15RegistrationForm", () => {
   it("opens the declaration dialog before submit", () => {
     render(<Youth15RegistrationForm registration={null} />);
 
+    fireEvent.change(screen.getByLabelText("Club Name"), {
+      target: { value: "Michigan Falcons" },
+    });
+    fireEvent.change(screen.getByLabelText("President Name"), {
+      target: { value: "Ava Patel" },
+    });
+    fireEvent.change(screen.getByLabelText("President Email"), {
+      target: { value: "ava@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText("President Phone Number"), {
+      target: { value: "248-555-0101" },
+    });
+    fireEvent.change(screen.getByLabelText("Secretary Name"), {
+      target: { value: "Maya Shah" },
+    });
+    fireEvent.change(screen.getByLabelText("Secretary Phone Number"), {
+      target: { value: "248-555-0102" },
+    });
+    fireEvent.change(screen.getByLabelText("Secretary Email"), {
+      target: { value: "maya@example.com" },
+    });
+
     fireEvent.click(screen.getByRole("button", { name: "Review & Submit" }));
 
     expect(screen.getByText("Confirm declaration")).toBeInTheDocument();
@@ -28,8 +50,9 @@ describe("Youth15RegistrationForm", () => {
           presidentName: "Ava Patel",
           presidentEmail: "ava@example.com",
           presidentPhoneNumber: "248-555-0101",
-          secretaryName: "N/A",
-          secretaryEmail: "N/A",
+          secretaryName: "Maya Shah",
+          secretaryEmail: "maya@example.com",
+          secretaryPhoneNumber: "248-555-0102",
         }}
       />
     );

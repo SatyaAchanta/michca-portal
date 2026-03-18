@@ -1344,6 +1344,7 @@ export const Youth15RegistrationScalarFieldEnum = {
   presidentPhoneNumber: 'presidentPhoneNumber',
   secretaryName: 'secretaryName',
   secretaryEmail: 'secretaryEmail',
+  secretaryPhoneNumber: 'secretaryPhoneNumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

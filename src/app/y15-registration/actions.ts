@@ -53,6 +53,7 @@ export async function upsertMyYouth15Registration(
       presidentPhoneNumber: data.presidentPhoneNumber,
       secretaryName: data.secretaryName,
       secretaryEmail: data.secretaryEmail,
+      secretaryPhoneNumber: data.secretaryPhoneNumber,
     },
     update: {
       clubName: data.clubName,
@@ -61,6 +62,7 @@ export async function upsertMyYouth15Registration(
       presidentPhoneNumber: data.presidentPhoneNumber,
       secretaryName: data.secretaryName,
       secretaryEmail: data.secretaryEmail,
+      secretaryPhoneNumber: data.secretaryPhoneNumber,
     },
   });
 
