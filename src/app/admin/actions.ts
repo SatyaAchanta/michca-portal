@@ -72,10 +72,31 @@ export async function getAdminRegistrations({
     },
   });
 
+  const youth15Registrations = await prisma.youth15Registration.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      clubName: true,
+      presidentName: true,
+      presidentEmail: true,
+      presidentPhoneNumber: true,
+      secretaryName: true,
+      secretaryEmail: true,
+      secretaryPhoneNumber: true,
+      createdAt: true,
+      updatedAt: true,
+      userProfile: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  });
+
   return {
     registrations,
+    youth15Registrations,
     selectedDates,
     selectedLocations,
   };
 }
-

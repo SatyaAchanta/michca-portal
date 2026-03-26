@@ -8,6 +8,7 @@ import type { DocumentItem } from "@/lib/data";
 
 export function DocCard({ doc }: { doc: DocumentItem }) {
   const isGoogleForm = doc.fileType === "FORM";
+  const isExternal = doc.isExternal ?? /^https?:\/\//.test(doc.url);
   
   return (
     <Card className="flex h-full flex-col justify-between p-6">
@@ -23,7 +24,7 @@ export function DocCard({ doc }: { doc: DocumentItem }) {
       <div className="mt-6 flex flex-wrap gap-3">
         {isGoogleForm ? (
           <Button asChild size="sm">
-            <Link href={doc.url} target="_blank" rel="noreferrer">
+            <Link href={doc.url} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noreferrer" : undefined}>
               <ExternalLink className="h-4 w-4" />
               Open Form
             </Link>
@@ -31,7 +32,7 @@ export function DocCard({ doc }: { doc: DocumentItem }) {
         ) : (
           <>
             <Button asChild variant="outline" size="sm">
-              <Link href={doc.url} target="_blank" rel="noreferrer">
+              <Link href={doc.url} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noreferrer" : undefined}>
                 <FileText className="h-4 w-4" />
                 Open
               </Link>

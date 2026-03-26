@@ -19,7 +19,7 @@ type AdminPageProps = {
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   const resolvedParams = searchParams ? await searchParams : undefined;
-  const { registrations, selectedDates, selectedLocations } =
+  const { registrations, youth15Registrations, selectedDates, selectedLocations } =
     await getAdminRegistrations({
       datesParam: resolvedParams?.dates,
       locationsParam: resolvedParams?.locations,
@@ -31,7 +31,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Admin</h1>
           <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Umpiring training registrations.
+            Review registration activity across the portal.
           </p>
         </div>
 
@@ -45,6 +45,128 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </Card>
 
         <AdminFilters initialDates={selectedDates} initialLocations={selectedLocations} />
+
+        <section className="space-y-4">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold tracking-tight">Youth 15 registrations</h2>
+            <p className="text-sm text-muted-foreground">
+              Club-level registrations submitted through the Youth 15 form.
+            </p>
+          </div>
+
+          {youth15Registrations.length === 0 ? (
+            <Card className="p-6">
+              <p className="text-sm text-muted-foreground">No Youth 15 registrations found.</p>
+            </Card>
+          ) : (
+            <>
+              <Card className="hidden overflow-x-auto p-0 md:block">
+                <table className="w-full min-w-[1040px] text-sm">
+                  <thead className="bg-muted/60 text-left">
+                    <tr>
+                      <th className="px-4 py-3 font-medium">Club</th>
+                      <th className="px-4 py-3 font-medium">President</th>
+                      <th className="px-4 py-3 font-medium">President Email</th>
+                      <th className="px-4 py-3 font-medium">President Phone</th>
+                      <th className="px-4 py-3 font-medium">Secretary</th>
+                      <th className="px-4 py-3 font-medium">Secretary Phone</th>
+                      <th className="px-4 py-3 font-medium">Secretary Email</th>
+                      <th className="px-4 py-3 font-medium">Account Email</th>
+                      <th className="px-4 py-3 font-medium">Submitted</th>
+                      <th className="px-4 py-3 font-medium">Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {youth15Registrations.map((registration) => (
+                      <tr
+                        key={registration.id}
+                        className="border-t border-border align-top odd:bg-background even:bg-muted/20"
+                      >
+                        <td className="px-4 py-3 font-medium">{registration.clubName}</td>
+                        <td className="px-4 py-3">{registration.presidentName}</td>
+                        <td className="px-4 py-3">{registration.presidentEmail}</td>
+                        <td className="px-4 py-3">{registration.presidentPhoneNumber}</td>
+                        <td className="px-4 py-3">{registration.secretaryName ?? "-"}</td>
+                        <td className="px-4 py-3">{registration.secretaryPhoneNumber}</td>
+                        <td className="px-4 py-3">{registration.secretaryEmail}</td>
+                        <td className="px-4 py-3">{registration.userProfile.email}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          {formatSubmittedDate(registration.createdAt)}
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          {formatSubmittedDate(registration.updatedAt)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Card>
+
+              <div className="md:hidden">
+                <Card className="p-0">
+                  <Accordion type="single" collapsible className="w-full">
+                    {youth15Registrations.map((registration) => (
+                      <AccordionItem key={registration.id} value={`y15-${registration.id}`} className="px-4">
+                        <AccordionTrigger className="text-left">
+                          <div>
+                            <p className="text-sm font-medium">{registration.clubName}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {registration.presidentName}
+                            </p>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="space-y-3 pb-2 text-sm">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">President email</span>
+                              <span>{registration.presidentEmail}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">President phone</span>
+                              <span>{registration.presidentPhoneNumber}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Secretary</span>
+                              <span>{registration.secretaryName ?? "-"}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Secretary phone</span>
+                              <span>{registration.secretaryPhoneNumber}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Secretary email</span>
+                              <span>{registration.secretaryEmail}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Account email</span>
+                              <span>{registration.userProfile.email}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Submitted</span>
+                              <span>{formatSubmittedDate(registration.createdAt)}</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-muted-foreground">Updated</span>
+                              <span>{formatSubmittedDate(registration.updatedAt)}</span>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </Card>
+              </div>
+            </>
+          )}
+        </section>
+
+        <section className="space-y-4">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold tracking-tight">Umpiring training registrations</h2>
+            <p className="text-sm text-muted-foreground">
+              Individual umpiring training signups and result management.
+            </p>
+          </div>
 
         {registrations.length === 0 ? (
           <Card className="p-6">
@@ -193,6 +315,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             </div>
           </>
         ) : null}
+        </section>
       </PageContainer>
     </div>
   );

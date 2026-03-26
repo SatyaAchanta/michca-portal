@@ -55,6 +55,7 @@ export const ModelName = {
   Game: 'Game',
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
+  Youth15Registration: 'Youth15Registration',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -145,6 +146,23 @@ export const UmpiringTrainingScalarFieldEnum = {
 } as const
 
 export type UmpiringTrainingScalarFieldEnum = (typeof UmpiringTrainingScalarFieldEnum)[keyof typeof UmpiringTrainingScalarFieldEnum]
+
+
+export const Youth15RegistrationScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  clubName: 'clubName',
+  presidentName: 'presidentName',
+  presidentEmail: 'presidentEmail',
+  presidentPhoneNumber: 'presidentPhoneNumber',
+  secretaryName: 'secretaryName',
+  secretaryEmail: 'secretaryEmail',
+  secretaryPhoneNumber: 'secretaryPhoneNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Youth15RegistrationScalarFieldEnum = (typeof Youth15RegistrationScalarFieldEnum)[keyof typeof Youth15RegistrationScalarFieldEnum]
 
 
 export const UmpireAssignmentScalarFieldEnum = {
