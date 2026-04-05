@@ -1,4 +1,5 @@
 import {
+  formatResultLabel,
   formatName,
   formatPreferredDates,
   parseDateFilterParam,
@@ -40,5 +41,11 @@ describe("admin-formatters", () => {
     expect(resultBadgeClass("PASS")).toContain("green");
     expect(resultBadgeClass("FAIL")).toContain("red");
     expect(resultBadgeClass("PENDING")).toContain("amber");
+  });
+
+  it("formats result labels for display", () => {
+    expect(formatResultLabel("PASS")).toBe("Pass");
+    expect(formatResultLabel("FAIL")).toBe("Fail");
+    expect(formatResultLabel("PENDING")).toBe("Pending");
   });
 });

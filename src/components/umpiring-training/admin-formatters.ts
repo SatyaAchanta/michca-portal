@@ -72,3 +72,14 @@ export function resultBadgeClass(result: UmpiringTrainingResultValue) {
 
   return "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300";
 }
+
+export function formatResultLabel(result: UmpiringTrainingResultValue) {
+  if (result === "PASS") {
+    return "Pass";
+  }
+  if (result === "FAIL") {
+    return "Fail";
+  }
+
+  return "Pending";
+}
