@@ -90,12 +90,12 @@ export async function getOrCreateCurrentUserProfile(): Promise<UserProfile> {
 
   const roleNeedsPromotion = shouldBeAdmin && existing.role !== UserRole.ADMIN;
 
+  // Only sync email and role from Clerk. firstName/lastName are managed by
+  // the user via the account form and should not be overwritten here.
   return prisma.userProfile.update({
     where: { id: existing.id },
     data: {
       email,
-      firstName,
-      lastName,
       ...(roleNeedsPromotion ? { role: UserRole.ADMIN } : {}),
     },
   });

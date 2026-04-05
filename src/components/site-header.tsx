@@ -106,6 +106,13 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                 ))}
                 <SignedIn>
                   <Link
+                    href="/account"
+                    className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setMoreOpen(false)}
+                  >
+                    Account
+                  </Link>
+                  <Link
                     href="/umpiring-training"
                     className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
                     onClick={() => setMoreOpen(false)}
@@ -221,6 +228,14 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                 ))}
                 <SignedIn>
                   <>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="justify-start"
+                      onClick={() => setOpen(false)}
+                    >
+                      <Link href="/account">Account</Link>
+                    </Button>
                     <Button
                       asChild
                       variant="ghost"
