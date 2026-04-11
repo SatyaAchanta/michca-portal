@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
+import { AlertCircle, CircleEllipsis, RotateCcw, Trophy } from "lucide-react";
 
 import { deleteAccount, updateProfile } from "@/app/account/actions";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +20,7 @@ import type { UserProfile } from "@/generated/prisma/client";
 import type { UpdateProfileState } from "@/app/account/actions";
 import type { UmpiringTrainingResult } from "@/generated/prisma/client";
 import {
+  getUmpiringResultDescription,
   formatResultLabel,
   resultBadgeClass,
 } from "@/components/umpiring-training/admin-formatters";
@@ -30,11 +32,55 @@ type AccountFormProps = {
   umpiringResult: UmpiringTrainingResult | null;
 };
 
+function getResultPresentation(result: UmpiringTrainingResult) {
+  if (result === "PASS") {
+    return {
+      Icon: Trophy,
+      accentClass:
+        "border-green-500/25 bg-[linear-gradient(135deg,rgba(34,197,94,0.12),rgba(255,255,255,0.92))] dark:bg-[linear-gradient(135deg,rgba(34,197,94,0.18),rgba(10,10,10,0.94))]",
+      iconClass:
+        "border-green-500/20 bg-green-500/12 text-green-700 dark:text-green-300",
+      eyebrow: "Certification complete",
+    };
+  }
+
+  if (result === "FAIL") {
+    return {
+      Icon: AlertCircle,
+      accentClass:
+        "border-red-500/25 bg-[linear-gradient(135deg,rgba(239,68,68,0.10),rgba(255,255,255,0.92))] dark:bg-[linear-gradient(135deg,rgba(239,68,68,0.14),rgba(10,10,10,0.94))]",
+      iconClass:
+        "border-red-500/20 bg-red-500/12 text-red-700 dark:text-red-300",
+      eyebrow: "Certification update",
+    };
+  }
+
+  if (result === "REAPPEAR") {
+    return {
+      Icon: RotateCcw,
+      accentClass:
+        "border-sky-500/25 bg-[linear-gradient(135deg,rgba(14,165,233,0.10),rgba(255,255,255,0.92))] dark:bg-[linear-gradient(135deg,rgba(14,165,233,0.16),rgba(10,10,10,0.94))]",
+      iconClass:
+        "border-sky-500/20 bg-sky-500/12 text-sky-700 dark:text-sky-300",
+      eyebrow: "Retake required",
+    };
+  }
+
+  return {
+    Icon: CircleEllipsis,
+    accentClass:
+      "border-amber-500/25 bg-[linear-gradient(135deg,rgba(245,158,11,0.10),rgba(255,255,255,0.92))] dark:bg-[linear-gradient(135deg,rgba(245,158,11,0.16),rgba(10,10,10,0.94))]",
+    iconClass:
+      "border-amber-500/20 bg-amber-500/12 text-amber-700 dark:text-amber-300",
+    eyebrow: "Result in review",
+  };
+}
+
 function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null }) {
   if (!result) {
     return (
-      <Card>
-        <CardHeader>
+      <Card className="border border-border/70 bg-card/80 shadow-sm">
+        <CardHeader className="space-y-2">
           <CardTitle>Umpiring Exam Result</CardTitle>
           <CardDescription>
             No result available. You have not registered for the exam.
@@ -44,21 +90,32 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
     );
   }
 
-  const description =
-    result === "PASS"
-      ? "You passed the umpiring exam."
-      : result === "FAIL"
-        ? "You failed the umpiring exam."
-        : "Your umpiring exam result is still pending.";
+  const { Icon, accentClass, iconClass, eyebrow } = getResultPresentation(result);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Umpiring Exam Result</CardTitle>
-        <CardDescription>{description}</CardDescription>
+    <Card className={`overflow-hidden border shadow-sm ${accentClass}`}>
+      <CardHeader className="relative space-y-4 pb-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              {eyebrow}
+            </p>
+            <CardTitle className="text-2xl tracking-tight">Umpiring Exam Result</CardTitle>
+          </div>
+          <div
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${iconClass}`}
+          >
+            <Icon className="h-5 w-5" />
+          </div>
+        </div>
+        <CardDescription>{getUmpiringResultDescription(result)}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Badge variant="outline" className={resultBadgeClass(result)}>
+      <CardContent className="flex items-center justify-between gap-4 pt-0">
+        <div className="space-y-1">
+          <p className="text-sm font-medium text-muted-foreground">Status</p>
+          <p className="text-lg font-semibold text-foreground">{formatResultLabel(result)}</p>
+        </div>
+        <Badge variant="outline" className={`px-3 py-1 text-sm ${resultBadgeClass(result)}`}>
           {formatResultLabel(result)}
         </Badge>
       </CardContent>

@@ -7,10 +7,10 @@ import { AdminFilters } from "@/components/umpiring-training/admin-filters";
 import { ResultCell } from "@/components/umpiring-training/result-cell";
 import { getAdminRegistrations } from "@/app/admin/actions";
 import {
+  formatResultLabel,
   formatName,
-  formatPreferredDates,
-  formatSubmittedDate,
   resultBadgeClass,
+  formatSubmittedDate,
 } from "@/components/umpiring-training/admin-formatters";
 
 type AdminPageProps = {
@@ -177,21 +177,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         {registrations.length > 0 ? (
           <>
             <Card className="hidden overflow-x-auto p-0 md:block">
-              <table className="w-full min-w-[1160px] text-sm">
+              <table className="w-full min-w-[760px] text-sm">
                 <thead className="bg-muted/60 text-left">
                   <tr>
                     <th className="px-4 py-3 font-medium">Name</th>
                     <th className="px-4 py-3 font-medium">Email</th>
-                    <th className="px-4 py-3 font-medium">Contact</th>
-                    <th className="px-4 py-3 font-medium">Dietary</th>
-                    <th className="px-4 py-3 font-medium">Certified</th>
-                    <th className="px-4 py-3 font-medium">Affiliation</th>
-                    <th className="px-4 py-3 font-medium">Preferred Date</th>
                     <th className="px-4 py-3 font-medium">Location</th>
-                    <th className="px-4 py-3 font-medium">Questions</th>
                     <th className="px-4 py-3 font-medium">Current Result</th>
                     <th className="px-4 py-3 font-medium">Update Result</th>
-                    <th className="px-4 py-3 font-medium">Submitted</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -204,33 +197,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                         {formatName(registration.firstName, registration.lastName)}
                       </td>
                       <td className="px-4 py-3">{registration.email}</td>
-                      <td className="px-4 py-3">{registration.contactNumber}</td>
-                      <td className="px-4 py-3">
-                        {registration.dietaryPreference === "VEGETARIAN"
-                          ? "Vegetarian"
-                          : "Non-Vegetarian"}
-                      </td>
-                      <td className="px-4 py-3">
-                        <Badge variant="outline">
-                          {registration.previouslyCertified ? "Yes" : "No"}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-3">{registration.affiliation ?? "-"}</td>
-                      <td className="px-4 py-3">{formatPreferredDates(registration.preferredDates)}</td>
                       <td className="px-4 py-3">{registration.preferredLocation}</td>
-                      <td className="max-w-[260px] px-4 py-3 whitespace-pre-wrap break-words">
-                        {registration.questions ?? "-"}
-                      </td>
                       <td className="px-4 py-3">
                         <Badge variant="outline" className={resultBadgeClass(registration.result)}>
-                          {registration.result}
+                          {formatResultLabel(registration.result)}
                         </Badge>
                       </td>
                       <td className="px-4 py-3">
                         <ResultCell id={registration.id} initialResult={registration.result} />
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        {formatSubmittedDate(registration.createdAt)}
                       </td>
                     </tr>
                   ))}
@@ -254,40 +228,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       <AccordionContent>
                         <div className="space-y-3 pb-2 text-sm">
                           <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Contact</span>
-                            <span>{registration.contactNumber}</span>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Certified</span>
-                            <Badge variant="outline">
-                              {registration.previouslyCertified ? "Yes" : "No"}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Dietary</span>
-                            <span>
-                              {registration.dietaryPreference === "VEGETARIAN"
-                                ? "Vegetarian"
-                                : "Non-Vegetarian"}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Affiliation</span>
-                            <span>{registration.affiliation ?? "-"}</span>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Preferred Date</span>
-                            <span>{formatPreferredDates(registration.preferredDates)}</span>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
                             <span className="text-muted-foreground">Location</span>
                             <span>{registration.preferredLocation}</span>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-muted-foreground">Questions</p>
-                            <p className="whitespace-pre-wrap break-words">
-                              {registration.questions ?? "-"}
-                            </p>
                           </div>
                           <div className="flex items-center justify-between gap-3">
                             <span className="text-muted-foreground">Current Result</span>
@@ -295,16 +237,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               variant="outline"
                               className={resultBadgeClass(registration.result)}
                             >
-                              {registration.result}
+                              {formatResultLabel(registration.result)}
                             </Badge>
                           </div>
                           <div className="space-y-1">
                             <p className="text-muted-foreground">Update Result</p>
                             <ResultCell id={registration.id} initialResult={registration.result} />
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-muted-foreground">Submitted</span>
-                            <span>{formatSubmittedDate(registration.createdAt)}</span>
                           </div>
                         </div>
                       </AccordionContent>

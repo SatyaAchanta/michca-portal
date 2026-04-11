@@ -97,6 +97,7 @@ describe("parseResultValue", () => {
     expect(parseResultValue("PENDING")).toBe("PENDING");
     expect(parseResultValue("PASS")).toBe("PASS");
     expect(parseResultValue("FAIL")).toBe("FAIL");
+    expect(parseResultValue("REAPPEAR")).toBe("REAPPEAR");
   });
 
   it("rejects unknown result values", () => {

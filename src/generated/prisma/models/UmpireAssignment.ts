@@ -151,7 +151,7 @@ export type UmpireAssignmentGroupByOutputType = {
   _max: UmpireAssignmentMaxAggregateOutputType | null
 }
 
-type GetUmpireAssignmentGroupByPayload<T extends UmpireAssignmentGroupByArgs> = Prisma.PrismaPromise<
+export type GetUmpireAssignmentGroupByPayload<T extends UmpireAssignmentGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UmpireAssignmentGroupByOutputType, T['by']> &
       {
@@ -1207,6 +1207,11 @@ export type UmpireAssignmentFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` UmpireAssignments.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of UmpireAssignments.
+   */
   distinct?: Prisma.UmpireAssignmentScalarFieldEnum | Prisma.UmpireAssignmentScalarFieldEnum[]
 }
 

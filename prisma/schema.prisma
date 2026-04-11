@@ -40,6 +40,7 @@ enum UmpiringTrainingResult {
   PENDING
   PASS
   FAIL
+  REAPPEAR
 }
 
 enum CertificationWindowStatus {

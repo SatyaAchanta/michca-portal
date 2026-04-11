@@ -1,4 +1,5 @@
 import {
+  getUmpiringResultDescription,
   formatResultLabel,
   formatName,
   formatPreferredDates,
@@ -41,11 +42,24 @@ describe("admin-formatters", () => {
     expect(resultBadgeClass("PASS")).toContain("green");
     expect(resultBadgeClass("FAIL")).toContain("red");
     expect(resultBadgeClass("PENDING")).toContain("amber");
+    expect(resultBadgeClass("REAPPEAR")).toContain("sky");
   });
 
   it("formats result labels for display", () => {
     expect(formatResultLabel("PASS")).toBe("Pass");
     expect(formatResultLabel("FAIL")).toBe("Fail");
     expect(formatResultLabel("PENDING")).toBe("Pending");
+    expect(formatResultLabel("REAPPEAR")).toBe("ReAppear");
+  });
+
+  it("returns result descriptions for account messaging", () => {
+    expect(getUmpiringResultDescription("PASS")).toBe("You passed the umpiring exam.");
+    expect(getUmpiringResultDescription("FAIL")).toBe("You failed the umpiring exam.");
+    expect(getUmpiringResultDescription("PENDING")).toBe(
+      "Your umpiring exam result is still pending."
+    );
+    expect(getUmpiringResultDescription("REAPPEAR")).toBe(
+      "You need to retake the umpiring test, but do not need to repeat the full training."
+    );
   });
 });

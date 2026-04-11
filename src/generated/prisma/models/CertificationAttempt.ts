@@ -267,7 +267,7 @@ export type CertificationAttemptGroupByOutputType = {
   _max: CertificationAttemptMaxAggregateOutputType | null
 }
 
-type GetCertificationAttemptGroupByPayload<T extends CertificationAttemptGroupByArgs> = Prisma.PrismaPromise<
+export type GetCertificationAttemptGroupByPayload<T extends CertificationAttemptGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<CertificationAttemptGroupByOutputType, T['by']> &
       {
@@ -1840,6 +1840,11 @@ export type CertificationAttemptFindManyArgs<ExtArgs extends runtime.Types.Exten
    * Skip the first `n` CertificationAttempts.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of CertificationAttempts.
+   */
   distinct?: Prisma.CertificationAttemptScalarFieldEnum | Prisma.CertificationAttemptScalarFieldEnum[]
 }
 

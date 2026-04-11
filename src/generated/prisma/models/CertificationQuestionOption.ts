@@ -206,7 +206,7 @@ export type CertificationQuestionOptionGroupByOutputType = {
   _max: CertificationQuestionOptionMaxAggregateOutputType | null
 }
 
-type GetCertificationQuestionOptionGroupByPayload<T extends CertificationQuestionOptionGroupByArgs> = Prisma.PrismaPromise<
+export type GetCertificationQuestionOptionGroupByPayload<T extends CertificationQuestionOptionGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<CertificationQuestionOptionGroupByOutputType, T['by']> &
       {
@@ -1250,6 +1250,11 @@ export type CertificationQuestionOptionFindManyArgs<ExtArgs extends runtime.Type
    * Skip the first `n` CertificationQuestionOptions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of CertificationQuestionOptions.
+   */
   distinct?: Prisma.CertificationQuestionOptionScalarFieldEnum | Prisma.CertificationQuestionOptionScalarFieldEnum[]
 }
 
