@@ -116,9 +116,9 @@ export default function HomePage() {
   return (
     <>
       <div className="bg-background">
-        {/* Registration Deadline Banner */}
+        {/* Homepage Banner */}
         <PageContainer className="pt-6">
-          <div className="mx-auto max-w-xl">
+          <div className="mx-auto max-w-5xl">
             <RegistrationBanner />
           </div>
         </PageContainer>
