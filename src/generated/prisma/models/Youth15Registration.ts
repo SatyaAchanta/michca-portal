@@ -200,7 +200,7 @@ export type Youth15RegistrationGroupByOutputType = {
   _max: Youth15RegistrationMaxAggregateOutputType | null
 }
 
-type GetYouth15RegistrationGroupByPayload<T extends Youth15RegistrationGroupByArgs> = Prisma.PrismaPromise<
+export type GetYouth15RegistrationGroupByPayload<T extends Youth15RegistrationGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<Youth15RegistrationGroupByOutputType, T['by']> &
       {
@@ -1264,6 +1264,11 @@ export type Youth15RegistrationFindManyArgs<ExtArgs extends runtime.Types.Extens
    * Skip the first `n` Youth15Registrations.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Youth15Registrations.
+   */
   distinct?: Prisma.Youth15RegistrationScalarFieldEnum | Prisma.Youth15RegistrationScalarFieldEnum[]
 }
 

@@ -26,6 +26,7 @@ export const RESULT_OPTIONS = [
   { value: "PENDING", label: "Pending" },
   { value: "PASS", label: "Pass" },
   { value: "FAIL", label: "Fail" },
+  { value: "REAPPEAR", label: "ReAppear" },
 ] as const;
 export type UmpiringTrainingResultValue = (typeof RESULT_OPTIONS)[number]["value"];
 

@@ -53,7 +53,8 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const UmpiringTrainingResult = {
   PENDING: 'PENDING',
   PASS: 'PASS',
-  FAIL: 'FAIL'
+  FAIL: 'FAIL',
+  REAPPEAR: 'REAPPEAR'
 } as const
 
 export type UmpiringTrainingResult = (typeof UmpiringTrainingResult)[keyof typeof UmpiringTrainingResult]

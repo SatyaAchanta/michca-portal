@@ -238,7 +238,7 @@ export type CertificationTestWindowGroupByOutputType = {
   _max: CertificationTestWindowMaxAggregateOutputType | null
 }
 
-type GetCertificationTestWindowGroupByPayload<T extends CertificationTestWindowGroupByArgs> = Prisma.PrismaPromise<
+export type GetCertificationTestWindowGroupByPayload<T extends CertificationTestWindowGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<CertificationTestWindowGroupByOutputType, T['by']> &
       {
@@ -1533,6 +1533,11 @@ export type CertificationTestWindowFindManyArgs<ExtArgs extends runtime.Types.Ex
    * Skip the first `n` CertificationTestWindows.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of CertificationTestWindows.
+   */
   distinct?: Prisma.CertificationTestWindowScalarFieldEnum | Prisma.CertificationTestWindowScalarFieldEnum[]
 }
 

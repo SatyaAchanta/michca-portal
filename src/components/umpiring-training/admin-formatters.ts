@@ -69,6 +69,9 @@ export function resultBadgeClass(result: UmpiringTrainingResultValue) {
   if (result === "FAIL") {
     return "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300";
   }
+  if (result === "REAPPEAR") {
+    return "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300";
+  }
 
   return "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300";
 }
@@ -80,6 +83,23 @@ export function formatResultLabel(result: UmpiringTrainingResultValue) {
   if (result === "FAIL") {
     return "Fail";
   }
+  if (result === "REAPPEAR") {
+    return "ReAppear";
+  }
 
   return "Pending";
+}
+
+export function getUmpiringResultDescription(result: UmpiringTrainingResultValue) {
+  if (result === "PASS") {
+    return "You passed the umpiring exam.";
+  }
+  if (result === "FAIL") {
+    return "You failed the umpiring exam.";
+  }
+  if (result === "REAPPEAR") {
+    return "You need to retake the umpiring test, but do not need to repeat the full training.";
+  }
+
+  return "Your umpiring exam result is still pending.";
 }

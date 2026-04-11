@@ -1,0 +1,1 @@
+ALTER TYPE "UmpiringTrainingResult" ADD VALUE IF NOT EXISTS 'REAPPEAR';

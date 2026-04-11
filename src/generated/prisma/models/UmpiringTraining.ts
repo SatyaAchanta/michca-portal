@@ -224,7 +224,7 @@ export type UmpiringTrainingGroupByOutputType = {
   _max: UmpiringTrainingMaxAggregateOutputType | null
 }
 
-type GetUmpiringTrainingGroupByPayload<T extends UmpiringTrainingGroupByArgs> = Prisma.PrismaPromise<
+export type GetUmpiringTrainingGroupByPayload<T extends UmpiringTrainingGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UmpiringTrainingGroupByOutputType, T['by']> &
       {
@@ -1411,6 +1411,11 @@ export type UmpiringTrainingFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` UmpiringTrainings.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of UmpiringTrainings.
+   */
   distinct?: Prisma.UmpiringTrainingScalarFieldEnum | Prisma.UmpiringTrainingScalarFieldEnum[]
 }
 

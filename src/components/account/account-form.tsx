@@ -19,6 +19,7 @@ import type { UserProfile } from "@/generated/prisma/client";
 import type { UpdateProfileState } from "@/app/account/actions";
 import type { UmpiringTrainingResult } from "@/generated/prisma/client";
 import {
+  getUmpiringResultDescription,
   formatResultLabel,
   resultBadgeClass,
 } from "@/components/umpiring-training/admin-formatters";
@@ -44,18 +45,11 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
     );
   }
 
-  const description =
-    result === "PASS"
-      ? "You passed the umpiring exam."
-      : result === "FAIL"
-        ? "You failed the umpiring exam."
-        : "Your umpiring exam result is still pending.";
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Umpiring Exam Result</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>{getUmpiringResultDescription(result)}</CardDescription>
       </CardHeader>
       <CardContent>
         <Badge variant="outline" className={resultBadgeClass(result)}>
