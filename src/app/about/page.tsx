@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
+import { sponsors } from "@/lib/sponsors";
 
 export const metadata: Metadata = {
   title: "About Michigan Cricket Association",
@@ -95,39 +96,75 @@ export default function AboutPage() {
             <h2 className="text-lg font-semibold">Sponsors & Partners</h2>
             <p className="text-sm text-muted-foreground">
               Local partners help us deliver facilities, training, and community events
-              throughout the season. We welcome new sponsorships each year to grow the game.
+              throughout the season. This year&apos;s lineup reflects Gold, Silver, and
+              DJ support across the Mich-CA community.
             </p>
-            <div className="mt-4 rounded-xl border border-border/70 bg-card/70 p-4">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                <div className="rounded-lg border border-border/70 bg-background p-3">
-                  <Image
-                    src="/docs/lincode-logo.webp"
-                    alt="Lincode"
-                    width={180}
-                    height={72}
-                    className="h-[56px] w-auto dark:rounded-md dark:bg-white dark:p-1"
-                  />
+            <div className="mt-4 grid gap-4">
+              {sponsors.map((sponsor) => (
+                <div
+                  key={sponsor.name}
+                  className="rounded-xl border border-border/70 bg-card/70 p-4"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <div className="rounded-lg border border-border/70 bg-background p-3">
+                      <Image
+                        src={sponsor.logoSrc}
+                        alt={sponsor.logoAlt}
+                        width={180}
+                        height={72}
+                        className="h-[56px] w-auto object-contain dark:rounded-md dark:bg-white dark:p-1"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                        {sponsor.tierLabel}
+                      </p>
+                      <p className="text-sm text-foreground">
+                        {sponsor.href ? (
+                          <Link
+                            href={sponsor.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-medium text-primary underline-offset-4 hover:underline"
+                          >
+                            {sponsor.name}
+                          </Link>
+                        ) : (
+                          <span className="font-medium">{sponsor.name}</span>
+                        )}{" "}
+                        {sponsor.aboutDescription}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <p className="text-sm text-foreground">
-                    <Link
-                      href="https://www.lincode.ai"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="font-medium text-primary underline-offset-4 hover:underline"
-                    >
-                      Lincode
-                    </Link>{" "}
-                    has renewed its sponsorship to support Mich-CA league operations and community
-                    initiatives across Michigan.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    As an AI and computer vision company behind LIVIS (Lincode Intelligent Visual
-                    Inspection System), Lincode helps manufacturers run real-time, scalable visual
-                    quality inspection with a no-code workflow.
-                  </p>
-                </div>
-              </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Looking back at last season? Visit our{" "}
+              <Link
+                href="/history"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                2025 history archive
+              </Link>{" "}
+              for champions and runners-up photos.
+            </p>
+          </Card>
+
+          <Card className="rounded-xl border border-border/70 bg-gradient-to-br from-card via-background to-secondary/20 p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Community Archive</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              We now keep season photo highlights on a dedicated archive page so current
+              season updates can stay focused. Browse the 2025 champions and runners-up
+              in our history section.
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/history"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                Open the 2025 history page
+              </Link>
             </div>
           </Card>
         </PageContainer>

@@ -7,7 +7,10 @@ const footerLinks = {
     { label: "Grounds", href: "/grounds" },
     { label: "Forms", href: "/forms" },
     { label: "About", href: "/about" },
+    { label: "History", href: "/history" },
+    { label: "Authentikka Wixom", href: "https://authentikkawixom.com", external: true },
     { label: "Lincode", href: "https://www.lincode.ai", external: true },
+    { label: "Shiznay Events", href: "https://shiznayevents.com/", external: true },
     { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
   ],
   contact: [
