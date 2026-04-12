@@ -10,14 +10,15 @@ Waiver form for 2026. Players fill in the form
    - Player name as in Cricclubs
    - Player Cricclubs ID
    - City
-   - Social Media Account Name for Tagging. Facebook or Instagram Account
-   - T20 Dvision - We pick list of all unique divisions from Teams list
-     - When they select division, corresponding teams list should be provided to select only one team. For example: If the user selects Premier division, then only list of Premier division teams should be provided and only one among them can be chosen, field name is Team Name ( <division_selected> )
-   - F40 or T30 Division
-     - Now here, a player can be part of any 1 T20 division ( premier or division-1/2/3 ) and either of (F40 or T30). So one can play Division 1 and play T30 but not F40 and T30
-     - same like above selecting either F40 or T30 should bring up list of teams applicable and select one among them
-   - Youth
-     -- ignore this division for now from Waiver form
+
+- Address
+- T20 Dvision - We pick list of all unique divisions from Teams list
+  - When they select division, corresponding teams list should be provided to select only one team. For example: If the user selects Premier division, then only list of Premier division teams should be provided and only one among them can be chosen, field name is Team Name ( <division_selected> )
+- F40 or T30 Division
+  - Now here, a player can be part of any 1 T20 division ( premier or division-1/2/3 ) and either of (F40 or T30). So one can play Division 1 and play T30 but not F40 and T30
+  - same like above selecting either F40 or T30 should bring up list of teams applicable and select one among them
+- Youth
+  -- ignore this division for now from Waiver form
 
 4. All these submissions should be recorded in their database after they submit and also should be shown on the account information.
    - When they submit, we should ask for confirmation saying below `Submit Content` in confirmation dialog along with today's date

@@ -62,7 +62,7 @@ describe("getWaiverAdminData", () => {
         playerName: "Rohan Patel",
         cricclubsId: "123",
         city: "Troy",
-        socialMediaHandle: "@rohan",
+        address: "123 Main St",
         t20Division: "Premier",
         secondaryDivision: "T30",
         year: new Date().getFullYear(),

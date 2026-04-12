@@ -51,22 +51,29 @@ export async function submitMyWaiver(
   }
 
   const teams = await getWaiverTeamOptions();
-  const t20Team = teams.find((team) => team.teamCode === data.t20TeamCode);
-  const secondaryTeam = teams.find((team) => team.teamCode === data.secondaryTeamCode);
+  const t20Team = data.t20TeamCode
+    ? teams.find((team) => team.teamCode === data.t20TeamCode)
+    : null;
+  const secondaryTeam = data.secondaryTeamCode
+    ? teams.find((team) => team.teamCode === data.secondaryTeamCode)
+    : null;
 
   const nextErrors = { ...fieldErrors };
-  if (!WAIVER_PRIMARY_DIVISIONS.includes(data.t20Division as (typeof WAIVER_PRIMARY_DIVISIONS)[number])) {
-    nextErrors.t20Division = "T20 division must be Premier, Division-1, Division-2, or Division-3.";
+  if (data.t20Division !== null) {
+    if (!WAIVER_PRIMARY_DIVISIONS.includes(data.t20Division as (typeof WAIVER_PRIMARY_DIVISIONS)[number])) {
+      nextErrors.t20Division = "T20 division must be Premier, Division-1, Division-2, or Division-3.";
+    } else if (!t20Team || t20Team.format !== "T20" || t20Team.division !== data.t20Division) {
+      nextErrors.t20TeamCode = "Select a valid T20 team for the chosen division.";
+    }
   }
-  if (!t20Team || t20Team.format !== "T20" || t20Team.division !== data.t20Division) {
-    nextErrors.t20TeamCode = "Select a valid T20 team for the chosen division.";
-  }
-  if (
-    !secondaryTeam ||
-    secondaryTeam.division !== data.secondaryDivision ||
-    secondaryTeam.format !== data.secondaryDivision
-  ) {
-    nextErrors.secondaryTeamCode = "Select a valid F40 or T30 team for the chosen division.";
+  if (data.secondaryDivision !== null) {
+    if (
+      !secondaryTeam ||
+      secondaryTeam.division !== data.secondaryDivision ||
+      secondaryTeam.format !== data.secondaryDivision
+    ) {
+      nextErrors.secondaryTeamCode = "Select a valid F40 or T30 team for the chosen division.";
+    }
   }
   if (Object.keys(nextErrors).length > 0) {
     return {
@@ -106,7 +113,7 @@ export async function submitMyWaiver(
       playerName: data.playerName,
       cricclubsId: data.cricclubsId,
       city: data.city,
-      socialMediaHandle: data.socialMediaHandle,
+      address: data.address,
       t20Division: data.t20Division,
       t20TeamCode: data.t20TeamCode,
       secondaryDivision: data.secondaryDivision,

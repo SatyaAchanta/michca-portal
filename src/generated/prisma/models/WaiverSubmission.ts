@@ -40,7 +40,7 @@ export type WaiverSubmissionMinAggregateOutputType = {
   playerName: string | null
   cricclubsId: string | null
   city: string | null
-  socialMediaHandle: string | null
+  address: string | null
   t20Division: string | null
   t20TeamCode: string | null
   secondaryDivision: string | null
@@ -59,7 +59,7 @@ export type WaiverSubmissionMaxAggregateOutputType = {
   playerName: string | null
   cricclubsId: string | null
   city: string | null
-  socialMediaHandle: string | null
+  address: string | null
   t20Division: string | null
   t20TeamCode: string | null
   secondaryDivision: string | null
@@ -78,7 +78,7 @@ export type WaiverSubmissionCountAggregateOutputType = {
   playerName: number
   cricclubsId: number
   city: number
-  socialMediaHandle: number
+  address: number
   t20Division: number
   t20TeamCode: number
   secondaryDivision: number
@@ -107,7 +107,7 @@ export type WaiverSubmissionMinAggregateInputType = {
   playerName?: true
   cricclubsId?: true
   city?: true
-  socialMediaHandle?: true
+  address?: true
   t20Division?: true
   t20TeamCode?: true
   secondaryDivision?: true
@@ -126,7 +126,7 @@ export type WaiverSubmissionMaxAggregateInputType = {
   playerName?: true
   cricclubsId?: true
   city?: true
-  socialMediaHandle?: true
+  address?: true
   t20Division?: true
   t20TeamCode?: true
   secondaryDivision?: true
@@ -145,7 +145,7 @@ export type WaiverSubmissionCountAggregateInputType = {
   playerName?: true
   cricclubsId?: true
   city?: true
-  socialMediaHandle?: true
+  address?: true
   t20Division?: true
   t20TeamCode?: true
   secondaryDivision?: true
@@ -251,11 +251,11 @@ export type WaiverSubmissionGroupByOutputType = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address: string | null
+  t20Division: string | null
+  t20TeamCode: string | null
+  secondaryDivision: string | null
+  secondaryTeamCode: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -293,11 +293,11 @@ export type WaiverSubmissionWhereInput = {
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
-  socialMediaHandle?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
-  t20Division?: Prisma.StringFilter<"WaiverSubmission"> | string
-  t20TeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryDivision?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryTeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
+  address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
@@ -313,11 +313,11 @@ export type WaiverSubmissionOrderByWithRelationInput = {
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  socialMediaHandle?: Prisma.SortOrderInput | Prisma.SortOrder
-  t20Division?: Prisma.SortOrder
-  t20TeamCode?: Prisma.SortOrder
-  secondaryDivision?: Prisma.SortOrder
-  secondaryTeamCode?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryDivision?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -337,11 +337,11 @@ export type WaiverSubmissionWhereUniqueInput = Prisma.AtLeast<{
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
-  socialMediaHandle?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
-  t20Division?: Prisma.StringFilter<"WaiverSubmission"> | string
-  t20TeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryDivision?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryTeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
+  address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
@@ -357,11 +357,11 @@ export type WaiverSubmissionOrderByWithAggregationInput = {
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  socialMediaHandle?: Prisma.SortOrderInput | Prisma.SortOrder
-  t20Division?: Prisma.SortOrder
-  t20TeamCode?: Prisma.SortOrder
-  secondaryDivision?: Prisma.SortOrder
-  secondaryTeamCode?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryDivision?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -384,11 +384,11 @@ export type WaiverSubmissionScalarWhereWithAggregatesInput = {
   playerName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   city?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
-  socialMediaHandle?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
-  t20Division?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
-  t20TeamCode?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
-  secondaryDivision?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
-  secondaryTeamCode?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
+  address?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  t20Division?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  t20TeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  secondaryDivision?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   year?: Prisma.IntWithAggregatesFilter<"WaiverSubmission"> | number
@@ -402,11 +402,11 @@ export type WaiverSubmissionCreateInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -422,11 +422,11 @@ export type WaiverSubmissionUncheckedCreateInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -440,11 +440,11 @@ export type WaiverSubmissionUpdateInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -460,11 +460,11 @@ export type WaiverSubmissionUncheckedUpdateInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -479,11 +479,11 @@ export type WaiverSubmissionCreateManyInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -497,11 +497,11 @@ export type WaiverSubmissionUpdateManyMutationInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -516,11 +516,11 @@ export type WaiverSubmissionUncheckedUpdateManyInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -550,7 +550,7 @@ export type WaiverSubmissionCountOrderByAggregateInput = {
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  socialMediaHandle?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
@@ -573,7 +573,7 @@ export type WaiverSubmissionMaxOrderByAggregateInput = {
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  socialMediaHandle?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
@@ -592,7 +592,7 @@ export type WaiverSubmissionMinOrderByAggregateInput = {
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
   city?: Prisma.SortOrder
-  socialMediaHandle?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
@@ -664,11 +664,11 @@ export type WaiverSubmissionCreateWithoutUserProfileInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -682,11 +682,11 @@ export type WaiverSubmissionUncheckedCreateWithoutUserProfileInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -730,11 +730,11 @@ export type WaiverSubmissionScalarWhereInput = {
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
-  socialMediaHandle?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
-  t20Division?: Prisma.StringFilter<"WaiverSubmission"> | string
-  t20TeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryDivision?: Prisma.StringFilter<"WaiverSubmission"> | string
-  secondaryTeamCode?: Prisma.StringFilter<"WaiverSubmission"> | string
+  address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
@@ -748,11 +748,11 @@ export type WaiverSubmissionCreateManyUserProfileInput = {
   playerName: string
   cricclubsId: string
   city: string
-  socialMediaHandle?: string | null
-  t20Division: string
-  t20TeamCode: string
-  secondaryDivision: string
-  secondaryTeamCode: string
+  address?: string | null
+  t20Division?: string | null
+  t20TeamCode?: string | null
+  secondaryDivision?: string | null
+  secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
   year: number
@@ -766,11 +766,11 @@ export type WaiverSubmissionUpdateWithoutUserProfileInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -784,11 +784,11 @@ export type WaiverSubmissionUncheckedUpdateWithoutUserProfileInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -802,11 +802,11 @@ export type WaiverSubmissionUncheckedUpdateManyWithoutUserProfileInput = {
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
   city?: Prisma.StringFieldUpdateOperationsInput | string
-  socialMediaHandle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  t20Division?: Prisma.StringFieldUpdateOperationsInput | string
-  t20TeamCode?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryDivision?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryTeamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -823,7 +823,7 @@ export type WaiverSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   playerName?: boolean
   cricclubsId?: boolean
   city?: boolean
-  socialMediaHandle?: boolean
+  address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
   secondaryDivision?: boolean
@@ -843,7 +843,7 @@ export type WaiverSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   playerName?: boolean
   cricclubsId?: boolean
   city?: boolean
-  socialMediaHandle?: boolean
+  address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
   secondaryDivision?: boolean
@@ -863,7 +863,7 @@ export type WaiverSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   playerName?: boolean
   cricclubsId?: boolean
   city?: boolean
-  socialMediaHandle?: boolean
+  address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
   secondaryDivision?: boolean
@@ -883,7 +883,7 @@ export type WaiverSubmissionSelectScalar = {
   playerName?: boolean
   cricclubsId?: boolean
   city?: boolean
-  socialMediaHandle?: boolean
+  address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
   secondaryDivision?: boolean
@@ -896,7 +896,7 @@ export type WaiverSubmissionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "city" | "socialMediaHandle" | "t20Division" | "t20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "signatureName" | "acknowledgedSubmitText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
+export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "city" | "address" | "t20Division" | "t20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "signatureName" | "acknowledgedSubmitText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
 export type WaiverSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -918,11 +918,11 @@ export type $WaiverSubmissionPayload<ExtArgs extends runtime.Types.Extensions.In
     playerName: string
     cricclubsId: string
     city: string
-    socialMediaHandle: string | null
-    t20Division: string
-    t20TeamCode: string
-    secondaryDivision: string
-    secondaryTeamCode: string
+    address: string | null
+    t20Division: string | null
+    t20TeamCode: string | null
+    secondaryDivision: string | null
+    secondaryTeamCode: string | null
     signatureName: string
     acknowledgedSubmitText: string
     year: number
@@ -1358,7 +1358,7 @@ export interface WaiverSubmissionFieldRefs {
   readonly playerName: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly cricclubsId: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly city: Prisma.FieldRef<"WaiverSubmission", 'String'>
-  readonly socialMediaHandle: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly address: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly t20Division: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly t20TeamCode: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly secondaryDivision: Prisma.FieldRef<"WaiverSubmission", 'String'>

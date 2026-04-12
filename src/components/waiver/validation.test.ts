@@ -5,7 +5,7 @@ function createValidFormData() {
   formData.set("playerName", "Rohan Patel");
   formData.set("cricclubsId", "CC-12345");
   formData.set("city", "Troy");
-  formData.set("socialMediaHandle", "@rohan");
+  formData.set("address", "123 Main St");
   formData.set("t20Division", "Premier");
   formData.set("t20TeamCode", "T20-MOCC");
   formData.set("secondaryDivision", "T30");
@@ -24,7 +24,7 @@ describe("parseWaiverForm", () => {
       playerName: "Rohan Patel",
       cricclubsId: "CC-12345",
       city: "Troy",
-      socialMediaHandle: "@rohan",
+      address: "123 Main St",
       t20Division: "Premier",
       t20TeamCode: "T20-MOCC",
       secondaryDivision: "T30",
@@ -42,6 +42,7 @@ describe("parseWaiverForm", () => {
       playerName: expect.any(String),
       cricclubsId: expect.any(String),
       city: expect.any(String),
+      address: expect.any(String),
       t20Division: expect.any(String),
       t20TeamCode: expect.any(String),
       secondaryDivision: expect.any(String),
@@ -51,14 +52,14 @@ describe("parseWaiverForm", () => {
     });
   });
 
-  it("allows social media handle to be blank", () => {
+  it("requires address", () => {
     const formData = createValidFormData();
-    formData.set("socialMediaHandle", "");
+    formData.set("address", "");
 
     const result = parseWaiverForm(formData);
 
-    expect(result.fieldErrors).toEqual({});
-    expect(result.data?.socialMediaHandle).toBeNull();
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.address).toContain("Address is required");
   });
 
   it("rejects youth as a secondary division", () => {

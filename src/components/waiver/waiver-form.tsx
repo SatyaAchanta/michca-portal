@@ -41,11 +41,11 @@ type WaiverSnapshot = {
   playerName: string;
   cricclubsId: string;
   city: string;
-  socialMediaHandle: string | null;
-  t20Division: string;
-  t20TeamCode: string;
-  secondaryDivision: SecondaryDivisionValue;
-  secondaryTeamCode: string;
+  address: string | null;
+  t20Division: string | null;
+  t20TeamCode: string | null;
+  secondaryDivision: SecondaryDivisionValue | null;
+  secondaryTeamCode: string | null;
   signatureName: string;
   submittedAt: string;
 };
@@ -75,11 +75,17 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const [signatureName, setSignatureName] = useState(
     waiver?.signatureName ?? "",
   );
-  const [t20Division, setT20Division] = useState(waiver?.t20Division ?? "");
+  const [t20Division, setT20Division] = useState(
+    waiver ? (waiver.t20Division ?? "N/A") : "",
+  );
   const [t20TeamCode, setT20TeamCode] = useState(waiver?.t20TeamCode ?? "");
   const [secondaryDivision, setSecondaryDivision] = useState<
-    SecondaryDivisionValue | ""
-  >(waiver?.secondaryDivision ?? "");
+    SecondaryDivisionValue | "N/A" | ""
+  >(
+    waiver
+      ? ((waiver.secondaryDivision ?? "N/A") as SecondaryDivisionValue | "N/A")
+      : "",
+  );
   const [secondaryTeamCode, setSecondaryTeamCode] = useState(
     waiver?.secondaryTeamCode ?? "",
   );
@@ -87,13 +93,18 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
 
   const t20Teams = useMemo(
     () =>
-      teams.filter(
-        (team) => team.format === "T20" && team.division === t20Division,
-      ),
+      t20Division && t20Division !== "N/A"
+        ? teams.filter(
+            (team) => team.format === "T20" && team.division === t20Division,
+          )
+        : [],
     [teams, t20Division],
   );
   const secondaryTeams = useMemo(
-    () => teams.filter((team) => team.division === secondaryDivision),
+    () =>
+      secondaryDivision && secondaryDivision !== "N/A"
+        ? teams.filter((team) => team.division === secondaryDivision)
+        : [],
     [teams, secondaryDivision],
   );
   const namesMatch =
@@ -188,20 +199,18 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <FieldError message={state.fieldErrors.city} />
             </div>
             <div className="space-y-2">
-              <label
-                htmlFor="socialMediaHandle"
-                className="text-sm font-medium"
-              >
-                Social Media Account Name
+              <label htmlFor="address" className="text-sm font-medium">
+                Address
               </label>
               <Input
-                id="socialMediaHandle"
-                name="socialMediaHandle"
-                defaultValue={waiver?.socialMediaHandle ?? ""}
-                placeholder="Facebook or Instagram"
+                id="address"
+                name="address"
+                defaultValue={waiver?.address ?? ""}
+                required
+                placeholder="Street address"
                 disabled={Boolean(waiver)}
               />
-              <FieldError message={state.fieldErrors.socialMediaHandle} />
+              <FieldError message={state.fieldErrors.address} />
             </div>
           </div>
 
@@ -226,34 +235,37 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                       {division}
                     </SelectItem>
                   ))}
+                  <SelectItem value="N/A">N/A (does not play T20)</SelectItem>
                 </SelectContent>
               </Select>
               <FieldError message={state.fieldErrors.t20Division} />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Team Name {t20Division ? `(${t20Division})` : ""}
-              </label>
-              <input type="hidden" name="t20TeamCode" value={t20TeamCode} />
-              <Select
-                value={t20TeamCode}
-                onValueChange={setT20TeamCode}
-                disabled={!t20Division || Boolean(waiver)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select T20 team" />
-                </SelectTrigger>
-                <SelectContent>
-                  {t20Teams.map((team) => (
-                    <SelectItem key={team.teamCode} value={team.teamCode}>
-                      {team.teamName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FieldError message={state.fieldErrors.t20TeamCode} />
-            </div>
+            {t20Division && t20Division !== "N/A" ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Team Name ({t20Division})
+                </label>
+                <input type="hidden" name="t20TeamCode" value={t20TeamCode} />
+                <Select
+                  value={t20TeamCode}
+                  onValueChange={setT20TeamCode}
+                  disabled={Boolean(waiver)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select T20 team" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {t20Teams.map((team) => (
+                      <SelectItem key={team.teamCode} value={team.teamCode}>
+                        {team.teamName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FieldError message={state.fieldErrors.t20TeamCode} />
+              </div>
+            ) : null}
 
             <div className="space-y-2">
               <label className="text-sm font-medium">F40 or T30 Division</label>
@@ -265,7 +277,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <Select
                 value={secondaryDivision}
                 onValueChange={(value) => {
-                  setSecondaryDivision(value as SecondaryDivisionValue);
+                  setSecondaryDivision(value as SecondaryDivisionValue | "N/A");
                   setSecondaryTeamCode("");
                 }}
                 disabled={Boolean(waiver)}
@@ -279,38 +291,43 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                       {option.label}
                     </SelectItem>
                   ))}
+                  <SelectItem value="N/A">
+                    N/A (does not play F40/T30)
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FieldError message={state.fieldErrors.secondaryDivision} />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Team Name {secondaryDivision ? `(${secondaryDivision})` : ""}
-              </label>
-              <input
-                type="hidden"
-                name="secondaryTeamCode"
-                value={secondaryTeamCode}
-              />
-              <Select
-                value={secondaryTeamCode}
-                onValueChange={setSecondaryTeamCode}
-                disabled={!secondaryDivision || Boolean(waiver)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select F40 or T30 team" />
-                </SelectTrigger>
-                <SelectContent>
-                  {secondaryTeams.map((team) => (
-                    <SelectItem key={team.teamCode} value={team.teamCode}>
-                      {team.teamName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FieldError message={state.fieldErrors.secondaryTeamCode} />
-            </div>
+            {secondaryDivision && secondaryDivision !== "N/A" ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Team Name ({secondaryDivision})
+                </label>
+                <input
+                  type="hidden"
+                  name="secondaryTeamCode"
+                  value={secondaryTeamCode}
+                />
+                <Select
+                  value={secondaryTeamCode}
+                  onValueChange={setSecondaryTeamCode}
+                  disabled={Boolean(waiver)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select F40 or T30 team" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {secondaryTeams.map((team) => (
+                      <SelectItem key={team.teamCode} value={team.teamCode}>
+                        {team.teamName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FieldError message={state.fieldErrors.secondaryTeamCode} />
+              </div>
+            ) : null}
           </div>
 
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">

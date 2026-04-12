@@ -2,12 +2,24 @@
 
 import Link from "next/link";
 import { useActionState, useState, useTransition } from "react";
-import { AlertCircle, CircleEllipsis, FileSignature, RotateCcw, Trophy } from "lucide-react";
+import {
+  AlertCircle,
+  CircleEllipsis,
+  FileSignature,
+  RotateCcw,
+  Trophy,
+} from "lucide-react";
 
 import { deleteAccount, updateProfile } from "@/app/account/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -33,10 +45,11 @@ type AccountFormProps = {
   umpiringResult: UmpiringTrainingResult | null;
   waiverSubmission: {
     submittedAt: string;
-    t20Division: string;
-    secondaryDivision: string;
-    t20TeamCode: string;
-    secondaryTeamCode: string;
+    address: string | null;
+    t20Division: string | null;
+    secondaryDivision: string | null;
+    t20TeamCode: string | null;
+    secondaryTeamCode: string | null;
   } | null;
 };
 
@@ -84,7 +97,11 @@ function getResultPresentation(result: UmpiringTrainingResult) {
   };
 }
 
-function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null }) {
+function UmpiringExamStatus({
+  result,
+}: {
+  result: UmpiringTrainingResult | null;
+}) {
   if (!result) {
     return (
       <Card className="border border-border/70 bg-card/80 shadow-sm">
@@ -98,7 +115,8 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
     );
   }
 
-  const { Icon, accentClass, iconClass, eyebrow } = getResultPresentation(result);
+  const { Icon, accentClass, iconClass, eyebrow } =
+    getResultPresentation(result);
 
   return (
     <Card className={`overflow-hidden border shadow-sm ${accentClass}`}>
@@ -108,7 +126,9 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               {eyebrow}
             </p>
-            <CardTitle className="text-2xl tracking-tight">Umpiring Exam Result</CardTitle>
+            <CardTitle className="text-2xl tracking-tight">
+              Umpiring Exam Result
+            </CardTitle>
           </div>
           <div
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${iconClass}`}
@@ -116,14 +136,21 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
             <Icon className="h-5 w-5" />
           </div>
         </div>
-        <CardDescription>{getUmpiringResultDescription(result)}</CardDescription>
+        <CardDescription>
+          {getUmpiringResultDescription(result)}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center justify-between gap-4 pt-0">
         <div className="space-y-1">
           <p className="text-sm font-medium text-muted-foreground">Status</p>
-          <p className="text-lg font-semibold text-foreground">{formatResultLabel(result)}</p>
+          <p className="text-lg font-semibold text-foreground">
+            {formatResultLabel(result)}
+          </p>
         </div>
-        <Badge variant="outline" className={`px-3 py-1 text-sm ${resultBadgeClass(result)}`}>
+        <Badge
+          variant="outline"
+          className={`px-3 py-1 text-sm ${resultBadgeClass(result)}`}
+        >
           {formatResultLabel(result)}
         </Badge>
       </CardContent>
@@ -162,27 +189,40 @@ function WaiverStatus({
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Current year waiver
             </p>
-            <CardTitle className="text-2xl tracking-tight">Waiver Submitted</CardTitle>
+            <CardTitle className="text-2xl tracking-tight">
+              Waiver Submitted
+            </CardTitle>
           </div>
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-sky-500/20 bg-sky-500/12 text-sky-700 dark:text-sky-300">
             <FileSignature className="h-5 w-5" />
           </div>
         </div>
         <CardDescription>
-          Submitted on {new Date(waiverSubmission.submittedAt).toLocaleString("en-US")}.
+          Submitted on{" "}
+          {new Date(waiverSubmission.submittedAt).toLocaleString("en-US")}.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2 pt-0 text-sm text-muted-foreground">
         <p>
+          Address:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.address ?? "-"}
+          </span>
+        </p>
+        <p>
           T20:{" "}
           <span className="font-medium text-foreground">
-            {waiverSubmission.t20Division} ({waiverSubmission.t20TeamCode})
+            {waiverSubmission.t20Division
+              ? `${waiverSubmission.t20Division} (${waiverSubmission.t20TeamCode})`
+              : "N/A"}
           </span>
         </p>
         <p>
           Secondary:{" "}
           <span className="font-medium text-foreground">
-            {waiverSubmission.secondaryDivision} ({waiverSubmission.secondaryTeamCode})
+            {waiverSubmission.secondaryDivision
+              ? `${waiverSubmission.secondaryDivision} (${waiverSubmission.secondaryTeamCode})`
+              : "N/A"}
           </span>
         </p>
       </CardContent>
@@ -190,7 +230,11 @@ function WaiverStatus({
   );
 }
 
-export function AccountForm({ profile, umpiringResult, waiverSubmission }: AccountFormProps) {
+export function AccountForm({
+  profile,
+  umpiringResult,
+  waiverSubmission,
+}: AccountFormProps) {
   const [updateState, updateFormAction, isUpdatePending] = useActionState<
     UpdateProfileState,
     FormData

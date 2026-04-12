@@ -48,6 +48,7 @@ const Account = async () => {
           },
           select: {
             submittedAt: true,
+            address: true,
             t20Division: true,
             secondaryDivision: true,
             t20TeamCode: true,

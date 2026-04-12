@@ -41,7 +41,7 @@ export async function GET(request: Request) {
     "Account Email": waiver.userProfile.email,
     "CricClubs ID": waiver.cricclubsId,
     City: waiver.city,
-    "Social Media": waiver.socialMediaHandle,
+    Address: waiver.address,
     "T20 Division": waiver.t20Division,
     "T20 Team": waiver.t20Team?.teamName ?? waiver.t20TeamCode,
     "F40/T30 Division": waiver.secondaryDivision,

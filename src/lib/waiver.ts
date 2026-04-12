@@ -4,15 +4,15 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentWaiverYear } from "@/lib/waiver-constants";
 
 export function buildWaiverSortValue(waiver: {
-  t20Division: string;
-  secondaryDivision: string;
+  t20Division: string | null;
+  secondaryDivision: string | null;
   t20Team?: { teamName: string } | null;
   secondaryTeam?: { teamName: string } | null;
   playerName: string;
 }) {
   return [
-    waiver.t20Division,
-    waiver.secondaryDivision,
+    waiver.t20Division ?? "",
+    waiver.secondaryDivision ?? "",
     waiver.t20Team?.teamName ?? "",
     waiver.secondaryTeam?.teamName ?? "",
     waiver.playerName.toLowerCase(),
@@ -20,13 +20,13 @@ export function buildWaiverSortValue(waiver: {
 }
 
 export function compareWaiverRows<T extends {
-  t20Division: string;
-  secondaryDivision: string;
+  t20Division: string | null;
+  secondaryDivision: string | null;
   t20Team?: { teamName: string } | null;
   secondaryTeam?: { teamName: string } | null;
   playerName: string;
 }>(left: T, right: T) {
-  const divisionComparison = right.t20Division.localeCompare(left.t20Division);
+  const divisionComparison = (right.t20Division ?? "").localeCompare(left.t20Division ?? "");
   if (divisionComparison !== 0) {
     return divisionComparison;
   }
@@ -97,7 +97,7 @@ export async function getWaiverAdminData(filters?: {
       playerName: true,
       cricclubsId: true,
       city: true,
-      socialMediaHandle: true,
+      address: true,
       t20Division: true,
       secondaryDivision: true,
       year: true,
@@ -113,7 +113,13 @@ export async function getWaiverAdminData(filters?: {
   });
 
   const teamCodes = Array.from(
-    new Set(waivers.flatMap((waiver) => [waiver.t20TeamCode, waiver.secondaryTeamCode]))
+    new Set(
+      waivers.flatMap((waiver) =>
+        [waiver.t20TeamCode, waiver.secondaryTeamCode].filter(
+          (code): code is string => code !== null,
+        )
+      )
+    )
   );
 
   const teams = teamCodes.length
@@ -131,8 +137,8 @@ export async function getWaiverAdminData(filters?: {
   const rows = waivers
     .map((waiver) => ({
       ...waiver,
-      t20Team: teamMap.get(waiver.t20TeamCode) ?? null,
-      secondaryTeam: teamMap.get(waiver.secondaryTeamCode) ?? null,
+      t20Team: waiver.t20TeamCode ? (teamMap.get(waiver.t20TeamCode) ?? null) : null,
+      secondaryTeam: waiver.secondaryTeamCode ? (teamMap.get(waiver.secondaryTeamCode) ?? null) : null,
     }))
     .sort(compareWaiverRows);
 

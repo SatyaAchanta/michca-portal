@@ -181,7 +181,7 @@ export const WaiverSubmissionScalarFieldEnum = {
   playerName: 'playerName',
   cricclubsId: 'cricclubsId',
   city: 'city',
-  socialMediaHandle: 'socialMediaHandle',
+  address: 'address',
   t20Division: 't20Division',
   t20TeamCode: 't20TeamCode',
   secondaryDivision: 'secondaryDivision',

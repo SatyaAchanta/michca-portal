@@ -79,22 +79,22 @@ enum UmpiringTrainingDateOption {
 }
 
 model Team {
-  teamCode       String      @id
-  format         TeamFormat
-  division       String
-  teamShortCode  String
-  teamName       String
-  description    String?
-  captainId      String?
-  viceCaptainId  String?
-  facebookPage   String?
-  instagramPage  String?
-  logo           String?
-  captain        UserProfile? @relation("TeamCaptain", fields: [captainId], references: [id], onDelete: SetNull)
-  viceCaptain    UserProfile? @relation("TeamViceCaptain", fields: [viceCaptainId], references: [id], onDelete: SetNull)
-  gamesAsTeam1   Game[]      @relation("Team1")
-  gamesAsTeam2   Game[]      @relation("Team2")
-  gamesWon       Game[]      @relation("GameWinner")
+  teamCode      String       @id
+  format        TeamFormat
+  division      String
+  teamShortCode String
+  teamName      String
+  description   String?
+  captainId     String?
+  viceCaptainId String?
+  facebookPage  String?
+  instagramPage String?
+  logo          String?
+  captain       UserProfile? @relation("TeamCaptain", fields: [captainId], references: [id], onDelete: SetNull)
+  viceCaptain   UserProfile? @relation("TeamViceCaptain", fields: [viceCaptainId], references: [id], onDelete: SetNull)
+  gamesAsTeam1  Game[]       @relation("Team1")
+  gamesAsTeam2  Game[]       @relation("Team2")
+  gamesWon      Game[]       @relation("GameWinner")
 
   @@index([division])
   @@index([format])
@@ -134,47 +134,47 @@ model Game {
 }
 
 model UserProfile {
-  id                   String             @id @default(uuid())
-  clerkUserId          String             @unique
-  email                String
-  firstName            String?
-  lastName             String?
-  notificationsEnabled Boolean            @default(true)
-  newsletterSubscribed Boolean            @default(false)
-  role                 UserRole           @default(PLAYER)
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @updatedAt
-  umpireAssignments    UmpireAssignment[]
-  umpiringTraining     UmpiringTraining?
-  youth15Registration  Youth15Registration?
-  waiverSubmissions    WaiverSubmission[]
-  certificationQuestionsCreated CertificationQuestion[] @relation("CertificationQuestionCreatedBy")
+  id                            String                    @id @default(uuid())
+  clerkUserId                   String                    @unique
+  email                         String
+  firstName                     String?
+  lastName                      String?
+  notificationsEnabled          Boolean                   @default(true)
+  newsletterSubscribed          Boolean                   @default(false)
+  role                          UserRole                  @default(PLAYER)
+  createdAt                     DateTime                  @default(now())
+  updatedAt                     DateTime                  @updatedAt
+  umpireAssignments             UmpireAssignment[]
+  umpiringTraining              UmpiringTraining?
+  youth15Registration           Youth15Registration?
+  waiverSubmissions             WaiverSubmission[]
+  certificationQuestionsCreated CertificationQuestion[]   @relation("CertificationQuestionCreatedBy")
   certificationWindowsStarted   CertificationTestWindow[] @relation("CertificationWindowStartedBy")
   certificationAttempts         CertificationAttempt[]
-  teamsCaptained               Team[]                   @relation("TeamCaptain")
-  teamsViceCaptained           Team[]                   @relation("TeamViceCaptain")
+  teamsCaptained                Team[]                    @relation("TeamCaptain")
+  teamsViceCaptained            Team[]                    @relation("TeamViceCaptain")
 
   @@index([email])
   @@index([role])
 }
 
 model UmpiringTraining {
-  id                  String                 @id @default(uuid())
-  userProfileId       String                 @unique
+  id                  String                       @id @default(uuid())
+  userProfileId       String                       @unique
   firstName           String?
   lastName            String?
   email               String
   contactNumber       String
-  dietaryPreference   DietaryPreference      @default(VEGETARIAN)
+  dietaryPreference   DietaryPreference            @default(VEGETARIAN)
   previouslyCertified Boolean
   affiliation         String?
   preferredDates      UmpiringTrainingDateOption[]
   preferredLocation   String
   questions           String?
-  result              UmpiringTrainingResult @default(PENDING)
-  createdAt           DateTime               @default(now())
-  updatedAt           DateTime               @updatedAt
-  userProfile         UserProfile            @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  result              UmpiringTrainingResult       @default(PENDING)
+  createdAt           DateTime                     @default(now())
+  updatedAt           DateTime                     @updatedAt
+  userProfile         UserProfile                  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   @@index([result])
   @@index([createdAt])
@@ -205,11 +205,11 @@ model WaiverSubmission {
   playerName             String
   cricclubsId            String
   city                   String
-  socialMediaHandle      String?
-  t20Division            String
-  t20TeamCode            String
-  secondaryDivision      String
-  secondaryTeamCode      String
+  address                String?
+  t20Division            String?
+  t20TeamCode            String?
+  secondaryDivision      String?
+  secondaryTeamCode      String?
   signatureName          String
   acknowledgedSubmitText String
   year                   Int
@@ -266,8 +266,8 @@ model CertificationQuestionOption {
   createdAt  DateTime              @default(now())
   updatedAt  DateTime              @updatedAt
 
-  @@index([questionId])
   @@unique([questionId, sortOrder])
+  @@index([questionId])
 }
 
 model CertificationTestWindow {
@@ -291,23 +291,23 @@ model CertificationTestWindow {
 }
 
 model CertificationAttempt {
-  id            String                     @id @default(uuid())
-  windowId      String
-  userProfileId String
-  startedAt     DateTime                   @default(now())
-  expiresAt     DateTime
-  submittedAt   DateTime?
-  status        CertificationAttemptStatus @default(IN_PROGRESS)
-  scorePercent  Int?
-  correctCount  Int?
-  totalQuestions Int
-  result        CertificationAttemptResult?
-  snapshotVersion Int                      @default(1)
-  window        CertificationTestWindow    @relation(fields: [windowId], references: [id], onDelete: Cascade)
-  userProfile   UserProfile                @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
-  questions     CertificationAttemptQuestion[]
-  createdAt     DateTime                   @default(now())
-  updatedAt     DateTime                   @updatedAt
+  id              String                         @id @default(uuid())
+  windowId        String
+  userProfileId   String
+  startedAt       DateTime                       @default(now())
+  expiresAt       DateTime
+  submittedAt     DateTime?
+  status          CertificationAttemptStatus     @default(IN_PROGRESS)
+  scorePercent    Int?
+  correctCount    Int?
+  totalQuestions  Int
+  result          CertificationAttemptResult?
+  snapshotVersion Int                            @default(1)
+  window          CertificationTestWindow        @relation(fields: [windowId], references: [id], onDelete: Cascade)
+  userProfile     UserProfile                    @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  questions       CertificationAttemptQuestion[]
+  createdAt       DateTime                       @default(now())
+  updatedAt       DateTime                       @updatedAt
 
   @@unique([windowId, userProfileId])
   @@index([userProfileId])
@@ -315,19 +315,19 @@ model CertificationAttempt {
 }
 
 model CertificationAttemptQuestion {
-  id                     String               @id @default(uuid())
-  attemptId              String
-  displayOrder           Int
-  questionIdOriginal     String
-  promptSnapshot         String
-  imageUrlSnapshot       String?
-  optionsSnapshotJson    Json
+  id                       String               @id @default(uuid())
+  attemptId                String
+  displayOrder             Int
+  questionIdOriginal       String
+  promptSnapshot           String
+  imageUrlSnapshot         String?
+  optionsSnapshotJson      Json
   selectedOptionIdOriginal String?
-  isFlagged              Boolean              @default(false)
-  answeredAt             DateTime?
-  attempt                CertificationAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
-  createdAt              DateTime             @default(now())
-  updatedAt              DateTime             @updatedAt
+  isFlagged                Boolean              @default(false)
+  answeredAt               DateTime?
+  attempt                  CertificationAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
 
   @@unique([attemptId, displayOrder])
   @@index([attemptId])
