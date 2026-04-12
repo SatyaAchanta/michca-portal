@@ -1,0 +1,111 @@
+Format,Division,TeamShortCode,TeamName
+T20,Division-1,DARI,Dark Invaders CC DARI
+T20,Division-1,DCCC,Detroit Challengers CC DCCC
+T20,Division-1,DSKS,Detroit Super Kings CC Sharks DSKS
+T20,Division-1,FCXI,Farmington CC Kings XI FCXI
+T20,Division-1,GRSM,MIGR Single Malt GRSM
+T20,Division-1,MIGR,MIGR Old Monks MIGR
+T20,Division-1,HTCC,Hamtramck CC HTCC
+T20,Division-1,KECC,Karnataka Eagles CC KECC
+T20,Division-1,MACO,Macomb CC Olympians MACO
+T20,Division-1,MBCC,Michigan Bengals CC MBCC
+T20,Division-1,MDCC,Metro Detroit CC MDCC
+T20,Division-1,MICA,Michigan International CA Thunderbirds MICA
+T20,Division-1,MMCH,Mid Michigan CC Heroes MMCH
+T20,Division-1,MOCC,Motown CC MOCC
+T20,Division-1,NLCC,Northville Cricket Club NLCC
+T20,Division-1,ROCK,Rockstars ROCK
+T20,Division-1,SCC,Samrats Cricket Club SCC
+T20,Division-1,SHCC,Smashers Cricket Club SHCC
+T20,Division-1,SLCL,South Lyon Cricket Club  Legends  SLCL
+T20,Division-1,SNCC,Sinha Cricket Club SNCC
+T20,Division-1,UNCC,United CC UNCC
+T20,Division-1,UTCC,University of Toledo Rockets UTCC
+T20,Division-1,WFCC,Warren Flames Cricket Club WFCC
+T20,Division-1,WMCC,West Michigan CC WMCC
+T20,Division-2,ADCC,Aadukalam CC Cheavliers ADCC
+T20,Division-2,BLAK,Big League Arena CCKnights BLAK
+T20,Division-2,DDCC,Detroit Dynos CC DDCC
+T20,Division-2,DEDR,Detroit Dragons DEDR
+T20,Division-2,FBCC,Farmington Blazers CC FBCC
+T20,Division-2,KLCA,Killers Acadamy CC KLCA
+T20,Division-2,MBCW,Michigan Bengals CC Warriors MBCW
+T20,Division-2,MCC,Motor City Chargers Cricket Club MCC
+T20,Division-2,MICH,Michigan Challengers MICH
+T20,Division-2,MIDS,Michigan Dreamers CC MIDS
+T20,Division-2,MIRC,Michigan Rangers CC MIRC
+T20,Division-2,MLCC,Majestic Lions CC MLCC
+T20,Division-2,MVCC,Mavericks Cricket Club MVCC
+T20,Division-2,OCCC,Oakland County CC OCCC
+T20,Division-2,ODCL,Odia CA Lancers ODCL
+T20,Division-2,RACC,Royal Albatross CC RACC
+T20,Division-2,RECC,Rebels Cricket Club RECC
+T20,Division-2,RIST,Rising Stars CC RIST
+T20,Division-2,RKTE,Royal Knights CC Terminators RKTE
+T20,Division-2,SCRP,Scorpions Cricket Club SCRP
+T20,Division-2,SIXC,Sixers Cricket Club SIXC
+T20,Division-2,SLCA,South Lyon Cricket Club Avengers SLCA
+T20,Division-2,TCAS,Troy CA Stars TCAS
+T20,Division-2,TSXI,The Squad Cricket Club TSXI
+T20,Divison-3,ADCB,Aadukalam CC Chembians ADCB
+T20,Divison-3,CRWN,Crowned Strikers CRWN
+T20,Divison-3,DEEG,Detroit Eagles Cricket Club DEEG
+T20,Divison-3,DICE,DETROIT ICE DICE
+T20,Divison-3,DTCC,Deccan Tigers Cricket Club DTCC
+T20,Divison-3,FAFL,Farmington CC Falcons FAFL
+T20,Divison-3,FSCC,Farmington Stars FSCC
+T20,Divison-3,MACH,MACHI CC MACH
+T20,Divison-3,FCCB,Farmington Cricket Club Broncos FCCB
+T20,Divison-3,MELC,Michigan Elite CC MELC
+T20,Divison-3,MICF,Michigan International CA Firebirds MICF
+T20,Divison-3,MRSC,Michigan Rising Stars CC MRSC
+T20,Divison-3,MYCA,MYCA Elite MYCA
+T20,Divison-3,NLCR,Northville Cricket Club Risers NLCR
+T20,Divison-3,NVVK,Novi Vikings NVVK
+T20,Divison-3,ODCT,Odia CA Titans ODCT
+T20,Divison-3,PRSD,Prime Strikers PRSD
+T20,Divison-3,RRCC,Royal Risers Cricket Club RRCC
+T20,Divison-3,SHEP,Sylhet Express SHEP
+T20,Divison-3,SPCA,South Peninsula Cricket Association SPCA
+T20,Divison-3,SPCC,Sparks CC SPCC
+T20,Premier,BBNC,Become Better Novi Cardinals BBNC
+T20,Premier,BSCC,Brownstown Nirvana CC BSCC
+T20,Premier,CHWA,Chargers Warriors Association CHWA
+T20,Premier,DRCC,Detroit Royals CC DRCC
+T20,Premier,GPAN,Greater Detroit CC Panthers GPAN
+T20,Premier,KLCC,Killers CC KLCC
+T20,Premier,MACT,Macomb CC Titans MACT
+T20,Premier,MCUC,Motor City United CC MCUC
+T20,Premier,MICT,Michigan Cheetahs MICT
+T20,Premier,MIWA,Michigan Warriors MIWA
+T20,Premier,ODCC,Odia CA Crusaders ODCC
+T20,Premier,PCC,Punjab Cricket Club PCC
+T20,Premier,SUSC,Stellar United Sporting Club SUSC
+T20,Premier,TCSK,Troy Cricket Super Kings TCSK
+F40,F40,NCC,Nirvana Cricket Club
+F40,F40,RKCC,Royal Knight Cricket Club
+F40,F40,MACC,Macomb Cricket Club
+F40,F40,ODCC,Odia Cricket Association Crusiders
+F40,F40,SCC,Samrat Cricket Club
+F40,F40,GPAN,Greater Detroit CC Panthers
+T30,T30,FCXI,Farmington CC Kings XI
+T30,T30,MIRC,Michigan Rangers Cricket Club
+T30,T30,MICF,Michigan International CA Falcons
+T30,T30,DSKB,Detroit Super Kings Bulls
+T30,T30,SLCE,South Lyon Cricket Club Eagles
+T30,T30,MIWA,Michigan Warriors
+T30,T30,BLAB,Big League Arena Cricket Club
+T30,T30,MOCC,Motown Cricket Club
+T30,T30,SPCA,South Peninsula Cricket Association 
+T30,T30,MICC,Michigan International CA Chargers
+T30,T30,PRSD,Prime Strikers 
+T30,T30,RBCC,Royal Bengal Cricket Club
+T30,T30,MLCC,Majestic Lions Cricket Club
+T30,T30,TSXI,The Squad Cricket Club
+T30,T30,MVCC,Mavericks Cricket Club
+T30,T30,DARI,Dark Invaders Cricket Club
+T30,T30,UNCC,United Cricket Club
+YOUTH,YOUTH,PCAS,Prime Cricket Academy Strikers
+YOUTH,YOUTH,PCAW,Prime Cricket Academy Warriors
+YOUTH,YOUTH,BBCA,Become Better Cricket Academy
+YOUTH,YOUTH,MMYC,Michigan Mustangs

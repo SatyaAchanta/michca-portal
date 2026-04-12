@@ -23,6 +23,17 @@ export const Division = {
 export type Division = (typeof Division)[keyof typeof Division]
 
 
+export const TeamFormat = {
+  T20: 'T20',
+  F40: 'F40',
+  T30: 'T30',
+  YOUTH: 'YOUTH',
+  GLT: 'GLT'
+} as const
+
+export type TeamFormat = (typeof TeamFormat)[keyof typeof TeamFormat]
+
+
 export const GameType = {
   LEAGUE: 'LEAGUE',
   PLAYOFF: 'PLAYOFF'
