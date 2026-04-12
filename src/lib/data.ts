@@ -62,9 +62,9 @@ export const documents: DocumentItem[] = [
     description: "Required waiver for all participating players.",
     category: "Registration",
     fileType: "FORM",
-    url: "https://forms.gle/dcYcwcwRVz97fbDk6",
+    url: "/waiver",
     isDownloadable: false,
-    isExternal: true,
+    isExternal: false,
   },
   {
     id: "doc-3",

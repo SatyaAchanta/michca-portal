@@ -453,14 +453,6 @@ export type CertificationQuestionOptionUncheckedUpdateManyWithoutQuestionNestedI
   deleteMany?: Prisma.CertificationQuestionOptionScalarWhereInput | Prisma.CertificationQuestionOptionScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type CertificationQuestionOptionCreateWithoutQuestionInput = {
   id?: string
   label: string

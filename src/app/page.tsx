@@ -33,7 +33,14 @@ import { RegistrationBanner } from "@/components/registration-banner";
 import { sponsors } from "@/lib/sponsors";
 
 export default function HomePage() {
-  const [goldSponsor, silverSponsor, djSponsor] = sponsors;
+  const [authentikkaSponsor, lincodeSponsor, djSponsor] = sponsors;
+  const featuredSponsors = [authentikkaSponsor, lincodeSponsor];
+  const featuredSponsorSummaries: Record<string, string> = {
+    [authentikkaSponsor.name]:
+      "Food, hospitality, and community energy supporting Mich-CA throughout the 2026 season.",
+    [lincodeSponsor.name]:
+      "AI and computer vision expertise helping strengthen league operations and the wider cricket community.",
+  };
 
   return (
     <>
@@ -58,65 +65,75 @@ export default function HomePage() {
                   <span className="whitespace-nowrap">2026 season</span>
                 </h1>
                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                  Our sponsor lineup for the 2026 campaign starts with a new Gold
-                  sponsor, continues with trusted returning support, and adds event
-                  energy through our DJ partner.
+                  Our sponsor lineup for the 2026 campaign is led by two Gold Sponsors and backed
+                  by an event partner helping shape the atmosphere around the season.
                 </p>
               </div>
 
-              <Card className="overflow-hidden border border-amber-500/30 bg-gradient-to-br from-amber-50 via-card to-orange-100 p-8 shadow-lg dark:from-amber-500/10 dark:via-card dark:to-orange-500/10">
-                <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-                  <div className="space-y-5">
-                    <div className="space-y-3">
-                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400">
-                        {goldSponsor.tierLabel}
-                      </p>
-                      <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                        {goldSponsor.name}
-                      </h2>
-                      <p className="text-base leading-8 text-muted-foreground">
-                        {goldSponsor.homeDescription}
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-amber-500/20 bg-background/70 p-4">
-                      <p className="text-sm font-medium text-foreground">
-                        Exclusive Mich-CA offers
-                      </p>
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                        {goldSponsor.offers?.map((offer) => (
-                          <li key={offer}>{offer}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <Button asChild size="lg">
-                        <Link
-                          href={goldSponsor.href ?? "#"}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Visit Authentikka Wixom
-                        </Link>
-                      </Button>
-                      <p className="text-sm font-medium text-foreground">
-                        {goldSponsor.highlight}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-border/70 bg-card/80 p-6 shadow-sm">
-                    <Image
-                      src={goldSponsor.logoSrc}
-                      alt={goldSponsor.logoAlt}
-                      width={560}
-                      height={260}
-                      className="h-auto w-full object-contain"
-                    />
-                  </div>
-                </div>
-              </Card>
-
               <div className="grid gap-6 lg:grid-cols-2">
-                {[silverSponsor, djSponsor].map((sponsor) => (
+                {featuredSponsors.map((sponsor) => (
+                  <Card
+                    key={sponsor.name}
+                    className="overflow-hidden border border-amber-500/30 bg-gradient-to-br from-amber-50 via-card to-orange-100 p-8 shadow-lg dark:from-amber-500/10 dark:via-card dark:to-orange-500/10"
+                  >
+                    <div className="flex h-full flex-col gap-5">
+                      <div className="space-y-3">
+                        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400">
+                          {sponsor.tierLabel}
+                        </p>
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                          {sponsor.name}
+                        </h2>
+                        <p className="max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+                          {featuredSponsorSummaries[sponsor.name] ?? sponsor.homeDescription}
+                        </p>
+                      </div>
+                      {sponsor.offers?.length ? (
+                        <div className="rounded-2xl border border-amber-500/20 bg-background/70 p-4">
+                          <p className="text-sm font-medium text-foreground">
+                            Exclusive Mich-CA offers
+                          </p>
+                          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                            {sponsor.offers.map((offer) => (
+                              <li key={offer}>{offer}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : (
+                        <div className="rounded-2xl border border-amber-500/20 bg-background/70 p-4">
+                          <p className="text-sm font-medium text-foreground">Partnership focus</p>
+                          <p className="mt-3 text-sm text-muted-foreground">
+                            Supporting Mich-CA through technology, operations, and long-term
+                            league growth.
+                          </p>
+                        </div>
+                      )}
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Button asChild size="lg">
+                          <Link href={sponsor.href ?? "#"} target="_blank" rel="noreferrer">
+                            {sponsor.name === "Lincode" ? "Visit Lincode" : "Visit Authentikka Wixom"}
+                          </Link>
+                        </Button>
+                        <p className="text-sm font-medium text-foreground">
+                          {sponsor.highlight}
+                        </p>
+                      </div>
+                      <div className="mt-auto rounded-2xl border border-border/70 bg-card/80 p-6 shadow-sm">
+                        <Image
+                          src={sponsor.logoSrc}
+                          alt={sponsor.logoAlt}
+                          width={560}
+                          height={260}
+                          className="h-auto w-full object-contain"
+                        />
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-1">
+                {[djSponsor].map((sponsor) => (
                   <Card
                     key={sponsor.name}
                     className="border border-border/70 bg-card/90 p-6 shadow-md"

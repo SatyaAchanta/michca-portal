@@ -389,6 +389,7 @@ export const ModelName = {
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
   Youth15Registration: 'Youth15Registration',
+  WaiverSubmission: 'WaiverSubmission',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -781,6 +782,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.Youth15RegistrationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Youth15RegistrationCountAggregateOutputType> | number
+        }
+      }
+    }
+    WaiverSubmission: {
+      payload: Prisma.$WaiverSubmissionPayload<ExtArgs>
+      fields: Prisma.WaiverSubmissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WaiverSubmissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WaiverSubmissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        findFirst: {
+          args: Prisma.WaiverSubmissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WaiverSubmissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        findMany: {
+          args: Prisma.WaiverSubmissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>[]
+        }
+        create: {
+          args: Prisma.WaiverSubmissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        createMany: {
+          args: Prisma.WaiverSubmissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WaiverSubmissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>[]
+        }
+        delete: {
+          args: Prisma.WaiverSubmissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        update: {
+          args: Prisma.WaiverSubmissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.WaiverSubmissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WaiverSubmissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WaiverSubmissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.WaiverSubmissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WaiverSubmissionPayload>
+        }
+        aggregate: {
+          args: Prisma.WaiverSubmissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWaiverSubmission>
+        }
+        groupBy: {
+          args: Prisma.WaiverSubmissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WaiverSubmissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WaiverSubmissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WaiverSubmissionCountAggregateOutputType> | number
         }
       }
     }
@@ -1361,6 +1436,28 @@ export const Youth15RegistrationScalarFieldEnum = {
 export type Youth15RegistrationScalarFieldEnum = (typeof Youth15RegistrationScalarFieldEnum)[keyof typeof Youth15RegistrationScalarFieldEnum]
 
 
+export const WaiverSubmissionScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  playerName: 'playerName',
+  cricclubsId: 'cricclubsId',
+  city: 'city',
+  address: 'address',
+  t20Division: 't20Division',
+  t20TeamCode: 't20TeamCode',
+  secondaryDivision: 'secondaryDivision',
+  secondaryTeamCode: 'secondaryTeamCode',
+  signatureName: 'signatureName',
+  acknowledgedSubmitText: 'acknowledgedSubmitText',
+  year: 'year',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WaiverSubmissionScalarFieldEnum = (typeof WaiverSubmissionScalarFieldEnum)[keyof typeof WaiverSubmissionScalarFieldEnum]
+
+
 export const UmpireAssignmentScalarFieldEnum = {
   id: 'id',
   gameId: 'gameId',
@@ -1828,6 +1925,7 @@ export type GlobalOmitConfig = {
   userProfile?: Prisma.UserProfileOmit
   umpiringTraining?: Prisma.UmpiringTrainingOmit
   youth15Registration?: Prisma.Youth15RegistrationOmit
+  waiverSubmission?: Prisma.WaiverSubmissionOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
   certificationQuestion?: Prisma.CertificationQuestionOmit
   certificationQuestionOption?: Prisma.CertificationQuestionOptionOmit

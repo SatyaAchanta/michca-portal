@@ -225,6 +225,7 @@ export type UserProfileWhereInput = {
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
   youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
+  waiverSubmissions?: Prisma.WaiverSubmissionListRelationFilter
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -246,6 +247,7 @@ export type UserProfileOrderByWithRelationInput = {
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
   umpiringTraining?: Prisma.UmpiringTrainingOrderByWithRelationInput
   youth15Registration?: Prisma.Youth15RegistrationOrderByWithRelationInput
+  waiverSubmissions?: Prisma.WaiverSubmissionOrderByRelationAggregateInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionOrderByRelationAggregateInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowOrderByRelationAggregateInput
   certificationAttempts?: Prisma.CertificationAttemptOrderByRelationAggregateInput
@@ -270,6 +272,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
   youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
+  waiverSubmissions?: Prisma.WaiverSubmissionListRelationFilter
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -323,6 +326,7 @@ export type UserProfileCreateInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -344,6 +348,7 @@ export type UserProfileUncheckedCreateInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -365,6 +370,7 @@ export type UserProfileUpdateInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -386,6 +392,7 @@ export type UserProfileUncheckedUpdateInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -545,6 +552,20 @@ export type UserProfileUpdateOneRequiredWithoutYouth15RegistrationNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutYouth15RegistrationInput, Prisma.UserProfileUpdateWithoutYouth15RegistrationInput>, Prisma.UserProfileUncheckedUpdateWithoutYouth15RegistrationInput>
 }
 
+export type UserProfileCreateNestedOneWithoutWaiverSubmissionsInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedCreateWithoutWaiverSubmissionsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutWaiverSubmissionsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutWaiverSubmissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedCreateWithoutWaiverSubmissionsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutWaiverSubmissionsInput
+  upsert?: Prisma.UserProfileUpsertWithoutWaiverSubmissionsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutWaiverSubmissionsInput, Prisma.UserProfileUpdateWithoutWaiverSubmissionsInput>, Prisma.UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput>
+}
+
 export type UserProfileCreateNestedOneWithoutUmpireAssignmentsInput = {
   create?: Prisma.XOR<Prisma.UserProfileCreateWithoutUmpireAssignmentsInput, Prisma.UserProfileUncheckedCreateWithoutUmpireAssignmentsInput>
   connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutUmpireAssignmentsInput
@@ -615,6 +636,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -635,6 +657,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -660,6 +683,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -680,6 +704,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -716,6 +741,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -736,6 +762,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -767,6 +794,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -787,6 +815,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -806,6 +835,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -826,6 +856,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -862,6 +893,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -882,6 +914,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -902,6 +935,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -922,6 +956,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -958,6 +993,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -978,6 +1014,107 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+}
+
+export type UserProfileCreateWithoutWaiverSubmissionsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileCreateOrConnectWithoutWaiverSubmissionsInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedCreateWithoutWaiverSubmissionsInput>
+}
+
+export type UserProfileUpsertWithoutWaiverSubmissionsInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedCreateWithoutWaiverSubmissionsInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutWaiverSubmissionsInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutWaiverSubmissionsInput, Prisma.UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput>
+}
+
+export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -998,6 +1135,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -1018,6 +1156,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -1054,6 +1193,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -1074,6 +1214,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -1095,6 +1236,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1115,6 +1257,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1151,6 +1294,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1171,6 +1315,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1191,6 +1336,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1211,6 +1357,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1247,6 +1394,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1267,6 +1415,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1287,6 +1436,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1307,6 +1457,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1343,6 +1494,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1363,6 +1515,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1376,6 +1529,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
 
 export type UserProfileCountOutputType = {
   umpireAssignments: number
+  waiverSubmissions: number
   certificationQuestionsCreated: number
   certificationWindowsStarted: number
   certificationAttempts: number
@@ -1385,6 +1539,7 @@ export type UserProfileCountOutputType = {
 
 export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | UserProfileCountOutputTypeCountUmpireAssignmentsArgs
+  waiverSubmissions?: boolean | UserProfileCountOutputTypeCountWaiverSubmissionsArgs
   certificationQuestionsCreated?: boolean | UserProfileCountOutputTypeCountCertificationQuestionsCreatedArgs
   certificationWindowsStarted?: boolean | UserProfileCountOutputTypeCountCertificationWindowsStartedArgs
   certificationAttempts?: boolean | UserProfileCountOutputTypeCountCertificationAttemptsArgs
@@ -1407,6 +1562,13 @@ export type UserProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
  */
 export type UserProfileCountOutputTypeCountUmpireAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UmpireAssignmentWhereInput
+}
+
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountWaiverSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WaiverSubmissionWhereInput
 }
 
 /**
@@ -1459,6 +1621,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
   youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
+  waiverSubmissions?: boolean | Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1511,6 +1674,7 @@ export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.Internal
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
   youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
+  waiverSubmissions?: boolean | Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1527,6 +1691,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     umpireAssignments: Prisma.$UmpireAssignmentPayload<ExtArgs>[]
     umpiringTraining: Prisma.$UmpiringTrainingPayload<ExtArgs> | null
     youth15Registration: Prisma.$Youth15RegistrationPayload<ExtArgs> | null
+    waiverSubmissions: Prisma.$WaiverSubmissionPayload<ExtArgs>[]
     certificationQuestionsCreated: Prisma.$CertificationQuestionPayload<ExtArgs>[]
     certificationWindowsStarted: Prisma.$CertificationTestWindowPayload<ExtArgs>[]
     certificationAttempts: Prisma.$CertificationAttemptPayload<ExtArgs>[]
@@ -1941,6 +2106,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   umpireAssignments<T extends Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmpireAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   umpiringTraining<T extends Prisma.UserProfile$umpiringTrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>>): Prisma.Prisma__UmpiringTrainingClient<runtime.Types.Result.GetResult<Prisma.$UmpiringTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   youth15Registration<T extends Prisma.UserProfile$youth15RegistrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>>): Prisma.Prisma__Youth15RegistrationClient<runtime.Types.Result.GetResult<Prisma.$Youth15RegistrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  waiverSubmissions<T extends Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WaiverSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationQuestionsCreated<T extends Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationWindowsStarted<T extends Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationTestWindowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationAttempts<T extends Prisma.UserProfile$certificationAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2437,6 +2603,30 @@ export type UserProfile$youth15RegistrationArgs<ExtArgs extends runtime.Types.Ex
    */
   include?: Prisma.Youth15RegistrationInclude<ExtArgs> | null
   where?: Prisma.Youth15RegistrationWhereInput
+}
+
+/**
+ * UserProfile.waiverSubmissions
+ */
+export type UserProfile$waiverSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WaiverSubmission
+   */
+  select?: Prisma.WaiverSubmissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WaiverSubmission
+   */
+  omit?: Prisma.WaiverSubmissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WaiverSubmissionInclude<ExtArgs> | null
+  where?: Prisma.WaiverSubmissionWhereInput
+  orderBy?: Prisma.WaiverSubmissionOrderByWithRelationInput | Prisma.WaiverSubmissionOrderByWithRelationInput[]
+  cursor?: Prisma.WaiverSubmissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WaiverSubmissionScalarFieldEnum | Prisma.WaiverSubmissionScalarFieldEnum[]
 }
 
 /**

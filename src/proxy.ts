@@ -5,6 +5,7 @@ const isProtectedRoute = createRouteMatcher([
   "/umpiring",
   "/umpiring-training",
   "/umpiring-certification",
+  "/waiver",
   "/admin",
 ]);
 

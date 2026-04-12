@@ -1,52 +1,30 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck } from "lucide-react";
+import { ArrowRight, FileSignature } from "lucide-react";
 
-import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export async function RegistrationBanner() {
-  const totalRegistrations = await prisma.umpiringTraining.count();
-
   return (
-    <Card className="relative overflow-hidden border border-border/70 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.14),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.96),rgba(250,250,250,0.92))] shadow-sm dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.12),transparent_26%),linear-gradient(135deg,rgba(10,14,18,0.98),rgba(16,18,24,0.96))]">
-      <div className="absolute inset-y-0 left-0 hidden w-px bg-gradient-to-b from-transparent via-emerald-300/40 to-transparent lg:block" />
-      <div className="relative grid gap-5 p-4 sm:p-5 lg:grid-cols-[200px_minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:p-7">
-        <div className="hidden w-full rounded-2xl border border-emerald-200/70 bg-background/85 p-4 text-left shadow-sm backdrop-blur dark:border-emerald-900/60 dark:bg-background/70 lg:block">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-            Umpiring Registrations
-          </p>
-          <p className="mt-3 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            {totalRegistrations}
-          </p>
-          <p className="mt-2 text-sm leading-5 text-muted-foreground">
-            participants supported through training and certification
-          </p>
-        </div>
-
+    <Card className="overflow-hidden border border-border/70 bg-[linear-gradient(135deg,rgba(255,250,240,0.96),rgba(244,247,241,0.94))] p-5 shadow-sm dark:bg-[linear-gradient(135deg,rgba(24,18,12,0.96),rgba(14,18,16,0.94))] sm:p-6 lg:p-7">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-3 text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/70 bg-emerald-100/80 px-3 py-1 text-xs font-medium text-emerald-900 dark:border-emerald-900/60 dark:bg-emerald-950/50 dark:text-emerald-100">
-            <BadgeCheck className="h-3.5 w-3.5" />
-            Mich-CA Umpiring Appreciation
+            <FileSignature className="h-3.5 w-3.5" />
+            Mich-CA Player Waiver
           </div>
-          <h2 className="max-w-3xl text-xl font-semibold tracking-tight text-foreground sm:text-2xl lg:text-[2rem] lg:leading-[1.15]">
-            <span className="sm:hidden">Thanks for supporting umpiring.</span>
-            <span className="hidden sm:inline">
-              Thank you for strengthening the quality of cricket in Mich-CA.
-            </span>
+          <h2 className="max-w-2xl text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+            Complete the required player waiver for the 2026 season.
           </h2>
-          <p className="hidden max-w-3xl text-sm leading-6 text-muted-foreground sm:block sm:text-[15px] lg:text-base">
-            Mich-CA thanks every participant who registered and took part in
-            umpiring training and certification, and extends special
-            appreciation to the Umpiring Committee for managing the training,
-            logistics, and standards that support the game across Michigan.
+          <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-[15px]">
+            Review the waiver and submit it once from your account before match play.
           </p>
         </div>
 
-        <div className="flex items-start lg:justify-end">
-          <Button asChild size="sm" className="w-full sm:w-auto lg:h-11 lg:px-5">
-            <Link href="/account">
-              View My Result
+        <div className="flex items-start">
+          <Button asChild className="w-full sm:w-auto">
+            <Link href="/waiver">
+              Open Waiver Form
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>

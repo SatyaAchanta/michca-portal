@@ -4,27 +4,28 @@ Waiver form for 2026. Players fill in the form
 
 ## Instructions
 
-1. Every user who fills the form should be logged in.
+1. Every user who fills the form should be logged in. This should be having new page called `/waiver`
 2. Page has some content that I provide in `Page Content` section below
 3. Below are the values user has to fill in the form:
    - Player name as in Cricclubs
    - Player Cricclubs ID
    - City
-   - Social Media Account Name for Tagging. Facebook or Instagram Account
-   - T20 Dvision - We pick list of all unique divisions from Teams list
-     - When they select division, corresponding teams list should be provided to select only one team. For example: If the user selects Premier division, then only list of Premier division teams should be provided and only one among them can be chosen, field name is Team Name ( <division_selected> )
-   - F40 or T30 Division
-     - Now here, a player can be part of any 1 T20 division ( premier or division-1/2/3 ) and either of (F40 or T30). So one can play Division 1 and play T30 but not F40 and T30
-     - same like above selecting either F40 or T30 should bring up list of teams applicable and select one among them
-   - Youth
-     -- ignore this division for now from Waiver form
+
+- Address
+- T20 Dvision - We pick list of all unique divisions from Teams list
+  - When they select division, corresponding teams list should be provided to select only one team. For example: If the user selects Premier division, then only list of Premier division teams should be provided and only one among them can be chosen, field name is Team Name ( <division_selected> )
+- F40 or T30 Division
+  - Now here, a player can be part of any 1 T20 division ( premier or division-1/2/3 ) and either of (F40 or T30). So one can play Division 1 and play T30 but not F40 and T30
+  - same like above selecting either F40 or T30 should bring up list of teams applicable and select one among them
+- Youth
+  -- ignore this division for now from Waiver form
 
 4. All these submissions should be recorded in their database after they submit and also should be shown on the account information.
    - When they submit, we should ask for confirmation saying below `Submit Content` in confirmation dialog along with today's date
    - if the user submits the waiver form, account page should show date and time they submitted. If they haven't submitted a form yet, we should provide link to waiver form `/waiver`
+   - Record `year` as well in the database and use current year as the value, so that users can submit multiple waiver forms through the year. But there will only be one waiver form per year.
 
 5. Admin Page
-   - Right now Admin page displays both Youth team registrations and Umpiring assignments in same page. Extract this to tabbed approach so that Admins can select which Admin Section they want to see.
    - Also, now lets add `Waiver Status` to the list of secitons in dropdown so that Admins can see who all submitted waiver forms
    - Admins should be able to filter waiver status based on `Team Name`, `Division` and `Player Name` ( in our case this is user name )
    - Admins should also be able to export them into PDF or excel sorted in this order: Division (Desc) -> Team Name (ASC) -> User name (ASC)
@@ -87,3 +88,6 @@ By signing below, I am acknowledging that an inherent risk of exposure to COVID-
 ## Design Instructions
 
 - Use shadCN elements and follow current design and color scheme in the project
+
+7. Add waiver form to list of forms in the /forms page
+8. Add link to waiver form in place of umpiring training appreciation. So that users can find it easily.

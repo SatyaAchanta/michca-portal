@@ -32,8 +32,8 @@ export const sponsors: Sponsor[] = [
     ],
   },
   {
-    tier: "silver",
-    tierLabel: "Silver Sponsor",
+    tier: "gold",
+    tierLabel: "Gold Sponsor",
     name: "Lincode",
     href: "https://www.lincode.ai",
     logoSrc: "/docs/lincode-logo.webp",
@@ -41,8 +41,8 @@ export const sponsors: Sponsor[] = [
     homeDescription:
       "Lincode continues its support of Mich-CA, helping us run organized league operations and strengthen the cricket community across Michigan.",
     aboutDescription:
-      "Lincode returns as a continuing partner supporting league operations and community initiatives with its AI and computer vision expertise.",
-    highlight: "Returning sponsor",
+      "Lincode returns as a Gold Sponsor, supporting league operations and community initiatives with its AI and computer vision expertise.",
+    highlight: "Returning Gold Sponsor",
   },
   {
     tier: "dj",
