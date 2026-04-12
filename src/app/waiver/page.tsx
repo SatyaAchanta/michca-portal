@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 
 import { WaiverForm } from "@/components/waiver/waiver-form";
+import type { SecondaryDivisionValue } from "@/components/waiver/validation";
 import { Card } from "@/components/ui/card";
 import { PageContainer } from "@/components/page-container";
 import { prisma } from "@/lib/prisma";
@@ -83,6 +84,19 @@ const waiverContent = (
   </div>
 );
 
+type WaiverPageSubmission = {
+  playerName: string;
+  cricclubsId: string;
+  city: string;
+  socialMediaHandle: string | null;
+  t20Division: string;
+  t20TeamCode: string;
+  secondaryDivision: SecondaryDivisionValue;
+  secondaryTeamCode: string;
+  signatureName: string;
+  submittedAt: string;
+};
+
 export default async function WaiverPage() {
   const { userId } = await auth();
   if (!userId) {
@@ -127,6 +141,20 @@ export default async function WaiverPage() {
   const t20Divisions = Array.from(
     new Set(teams.filter((team) => team.format === "T20").map((team) => team.division))
   );
+  const waiverSubmission: WaiverPageSubmission | null = waiver
+    ? {
+        playerName: waiver.playerName,
+        cricclubsId: waiver.cricclubsId,
+        city: waiver.city,
+        socialMediaHandle: waiver.socialMediaHandle,
+        t20Division: waiver.t20Division,
+        t20TeamCode: waiver.t20TeamCode,
+        secondaryDivision: waiver.secondaryDivision as SecondaryDivisionValue,
+        secondaryTeamCode: waiver.secondaryTeamCode,
+        signatureName: waiver.signatureName,
+        submittedAt: waiver.submittedAt.toISOString(),
+      }
+    : null;
 
   return (
     <div className="bg-background py-12">
@@ -142,7 +170,11 @@ export default async function WaiverPage() {
           {waiverContent}
         </Card>
 
-        <WaiverForm waiver={waiver ? { ...waiver, submittedAt: waiver.submittedAt.toISOString() } : null} t20Divisions={t20Divisions} teams={teams} />
+        <WaiverForm
+          waiver={waiverSubmission}
+          t20Divisions={t20Divisions}
+          teams={teams}
+        />
       </PageContainer>
     </div>
   );

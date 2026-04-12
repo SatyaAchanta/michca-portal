@@ -41,7 +41,7 @@ type WaiverSnapshot = {
   playerName: string;
   cricclubsId: string;
   city: string;
-  socialMediaHandle: string;
+  socialMediaHandle: string | null;
   t20Division: string;
   t20TeamCode: string;
   secondaryDivision: SecondaryDivisionValue;
@@ -67,36 +67,49 @@ function FieldError({ message }: { message?: string }) {
 export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const [state, formAction] = useActionState<WaiverFormState, FormData>(
     submitMyWaiver,
-    INITIAL_WAIVER_FORM_STATE
+    INITIAL_WAIVER_FORM_STATE,
   );
   const formRef = useRef<HTMLFormElement>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [playerName, setPlayerName] = useState(waiver?.playerName ?? "");
-  const [signatureName, setSignatureName] = useState(waiver?.signatureName ?? "");
+  const [signatureName, setSignatureName] = useState(
+    waiver?.signatureName ?? "",
+  );
   const [t20Division, setT20Division] = useState(waiver?.t20Division ?? "");
   const [t20TeamCode, setT20TeamCode] = useState(waiver?.t20TeamCode ?? "");
-  const [secondaryDivision, setSecondaryDivision] = useState<SecondaryDivisionValue | "">(
-    waiver?.secondaryDivision ?? ""
+  const [secondaryDivision, setSecondaryDivision] = useState<
+    SecondaryDivisionValue | ""
+  >(waiver?.secondaryDivision ?? "");
+  const [secondaryTeamCode, setSecondaryTeamCode] = useState(
+    waiver?.secondaryTeamCode ?? "",
   );
-  const [secondaryTeamCode, setSecondaryTeamCode] = useState(waiver?.secondaryTeamCode ?? "");
   const [submitAcknowledgement, setSubmitAcknowledgement] = useState(false);
 
   const t20Teams = useMemo(
-    () => teams.filter((team) => team.format === "T20" && team.division === t20Division),
-    [teams, t20Division]
+    () =>
+      teams.filter(
+        (team) => team.format === "T20" && team.division === t20Division,
+      ),
+    [teams, t20Division],
   );
   const secondaryTeams = useMemo(
     () => teams.filter((team) => team.division === secondaryDivision),
-    [teams, secondaryDivision]
+    [teams, secondaryDivision],
   );
   const namesMatch =
     playerName.trim().length > 0 &&
     signatureName.trim().length > 0 &&
-    playerName.trim().localeCompare(signatureName.trim(), undefined, { sensitivity: "base" }) === 0;
+    playerName.trim().localeCompare(signatureName.trim(), undefined, {
+      sensitivity: "base",
+    }) === 0;
   const showNameMismatch =
-    signatureName.trim().length > 0 && playerName.trim().length > 0 && !namesMatch;
+    signatureName.trim().length > 0 &&
+    playerName.trim().length > 0 &&
+    !namesMatch;
 
-  const handleOpenConfirmation = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenConfirmation = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     if (!submitAcknowledgement || showNameMismatch || waiver) {
       return;
@@ -165,11 +178,20 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <label htmlFor="city" className="text-sm font-medium">
                 City
               </label>
-              <Input id="city" name="city" defaultValue={waiver?.city ?? ""} required disabled={Boolean(waiver)} />
+              <Input
+                id="city"
+                name="city"
+                defaultValue={waiver?.city ?? ""}
+                required
+                disabled={Boolean(waiver)}
+              />
               <FieldError message={state.fieldErrors.city} />
             </div>
             <div className="space-y-2">
-              <label htmlFor="socialMediaHandle" className="text-sm font-medium">
+              <label
+                htmlFor="socialMediaHandle"
+                className="text-sm font-medium"
+              >
                 Social Media Account Name
               </label>
               <Input
@@ -235,7 +257,11 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">F40 or T30 Division</label>
-              <input type="hidden" name="secondaryDivision" value={secondaryDivision} />
+              <input
+                type="hidden"
+                name="secondaryDivision"
+                value={secondaryDivision}
+              />
               <Select
                 value={secondaryDivision}
                 onValueChange={(value) => {
@@ -262,7 +288,11 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <label className="text-sm font-medium">
                 Team Name {secondaryDivision ? `(${secondaryDivision})` : ""}
               </label>
-              <input type="hidden" name="secondaryTeamCode" value={secondaryTeamCode} />
+              <input
+                type="hidden"
+                name="secondaryTeamCode"
+                value={secondaryTeamCode}
+              />
               <Select
                 value={secondaryTeamCode}
                 onValueChange={setSecondaryTeamCode}
@@ -306,7 +336,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
             </div>
             {waiver?.submittedAt ? (
               <p className="text-sm text-muted-foreground md:pb-2">
-                Current year submission on {new Date(waiver.submittedAt).toLocaleString("en-US")}
+                Current year submission on{" "}
+                {new Date(waiver.submittedAt).toLocaleString("en-US")}
               </p>
             ) : null}
           </div>
@@ -320,11 +351,14 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
             <label className="flex items-center gap-3 text-sm leading-6">
               <Checkbox
                 checked={submitAcknowledgement}
-                onCheckedChange={(value) => setSubmitAcknowledgement(value === true)}
+                onCheckedChange={(value) =>
+                  setSubmitAcknowledgement(value === true)
+                }
                 disabled={Boolean(waiver)}
               />
               <span className="flex-1">
-                I have read the waiver text and agree to submit this form for the current year.
+                I have read the waiver text and agree to submit this form for
+                the current year.
               </span>
             </label>
             <FieldError message={state.fieldErrors.submitAcknowledgement} />
@@ -337,7 +371,9 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
         {state.message ? (
           <p
             className={`text-sm ${
-              state.status === "success" ? "text-green-700 dark:text-green-300" : "text-destructive"
+              state.status === "success"
+                ? "text-green-700 dark:text-green-300"
+                : "text-destructive"
             }`}
           >
             {state.message}
@@ -347,7 +383,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
         {waiver ? (
           <Card className="border-amber-500/30 bg-amber-500/5 p-4">
             <p className="text-sm text-muted-foreground">
-              You have already submitted waiver, to reset contact Stats Committee.
+              You have already submitted waiver, to reset contact Stats
+              Committee.
             </p>
           </Card>
         ) : (
@@ -366,7 +403,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
           <DialogHeader className="border-b border-border/70 px-6 py-5">
             <DialogTitle>Confirm waiver submission</DialogTitle>
             <DialogDescription>
-              Review the confirmation text below. Clicking Confirm will submit your waiver.
+              Review the confirmation text below. Clicking Confirm will submit
+              your waiver.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 px-6 py-5 text-sm leading-7 text-muted-foreground">
@@ -382,7 +420,11 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
             </p>
           </div>
           <DialogFooter className="border-t border-border/70 px-6 py-4">
-            <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsDialogOpen(false)}
+            >
               Cancel
             </Button>
             <Button type="button" onClick={handleConfirm}>
