@@ -56,6 +56,7 @@ export const ModelName = {
   UserProfile: 'UserProfile',
   UmpiringTraining: 'UmpiringTraining',
   Youth15Registration: 'Youth15Registration',
+  WaiverSubmission: 'WaiverSubmission',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -172,6 +173,28 @@ export const Youth15RegistrationScalarFieldEnum = {
 } as const
 
 export type Youth15RegistrationScalarFieldEnum = (typeof Youth15RegistrationScalarFieldEnum)[keyof typeof Youth15RegistrationScalarFieldEnum]
+
+
+export const WaiverSubmissionScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  playerName: 'playerName',
+  cricclubsId: 'cricclubsId',
+  city: 'city',
+  socialMediaHandle: 'socialMediaHandle',
+  t20Division: 't20Division',
+  t20TeamCode: 't20TeamCode',
+  secondaryDivision: 'secondaryDivision',
+  secondaryTeamCode: 'secondaryTeamCode',
+  signatureName: 'signatureName',
+  acknowledgedSubmitText: 'acknowledgedSubmitText',
+  year: 'year',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WaiverSubmissionScalarFieldEnum = (typeof WaiverSubmissionScalarFieldEnum)[keyof typeof WaiverSubmissionScalarFieldEnum]
 
 
 export const UmpireAssignmentScalarFieldEnum = {

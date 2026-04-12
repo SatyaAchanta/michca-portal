@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState, useTransition } from "react";
-import { AlertCircle, CircleEllipsis, RotateCcw, Trophy } from "lucide-react";
+import { AlertCircle, CircleEllipsis, FileSignature, RotateCcw, Trophy } from "lucide-react";
 
 import { deleteAccount, updateProfile } from "@/app/account/actions";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,13 @@ const INITIAL_UPDATE_STATE: UpdateProfileState = { status: "idle" };
 type AccountFormProps = {
   profile: UserProfile | null;
   umpiringResult: UmpiringTrainingResult | null;
+  waiverSubmission: {
+    submittedAt: string;
+    t20Division: string;
+    secondaryDivision: string;
+    t20TeamCode: string;
+    secondaryTeamCode: string;
+  } | null;
 };
 
 function getResultPresentation(result: UmpiringTrainingResult) {
@@ -123,7 +131,66 @@ function UmpiringExamStatus({ result }: { result: UmpiringTrainingResult | null 
   );
 }
 
-export function AccountForm({ profile, umpiringResult }: AccountFormProps) {
+function WaiverStatus({
+  waiverSubmission,
+}: {
+  waiverSubmission: AccountFormProps["waiverSubmission"];
+}) {
+  if (!waiverSubmission) {
+    return (
+      <Card className="border border-border/70 bg-card/80 shadow-sm">
+        <CardHeader className="space-y-2">
+          <CardTitle>Waiver Status</CardTitle>
+          <CardDescription>
+            You have not submitted the current year waiver yet.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild>
+            <Link href="/waiver">Go To Waiver Form</Link>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="overflow-hidden border border-sky-500/25 bg-[linear-gradient(135deg,rgba(14,165,233,0.08),rgba(255,255,255,0.94))] shadow-sm dark:bg-[linear-gradient(135deg,rgba(14,165,233,0.14),rgba(10,10,10,0.94))]">
+      <CardHeader className="relative space-y-4 pb-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Current year waiver
+            </p>
+            <CardTitle className="text-2xl tracking-tight">Waiver Submitted</CardTitle>
+          </div>
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-sky-500/20 bg-sky-500/12 text-sky-700 dark:text-sky-300">
+            <FileSignature className="h-5 w-5" />
+          </div>
+        </div>
+        <CardDescription>
+          Submitted on {new Date(waiverSubmission.submittedAt).toLocaleString("en-US")}.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-2 pt-0 text-sm text-muted-foreground">
+        <p>
+          T20:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.t20Division} ({waiverSubmission.t20TeamCode})
+          </span>
+        </p>
+        <p>
+          Secondary:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.secondaryDivision} ({waiverSubmission.secondaryTeamCode})
+          </span>
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
+export function AccountForm({ profile, umpiringResult, waiverSubmission }: AccountFormProps) {
   const [updateState, updateFormAction, isUpdatePending] = useActionState<
     UpdateProfileState,
     FormData
@@ -147,6 +214,7 @@ export function AccountForm({ profile, umpiringResult }: AccountFormProps) {
   return (
     <div className="space-y-10">
       <UmpiringExamStatus result={umpiringResult} />
+      <WaiverStatus waiverSubmission={waiverSubmission} />
 
       {/* Profile section */}
       <section>

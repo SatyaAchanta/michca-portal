@@ -96,8 +96,8 @@ export default function AboutPage() {
             <h2 className="text-lg font-semibold">Sponsors & Partners</h2>
             <p className="text-sm text-muted-foreground">
               Local partners help us deliver facilities, training, and community events
-              throughout the season. This year&apos;s lineup reflects Gold, Silver, and
-              DJ support across the Mich-CA community.
+              throughout the season. This year&apos;s lineup reflects two Gold Sponsors and
+              a DJ partner across the Mich-CA community.
             </p>
             <div className="mt-4 grid gap-4">
               {sponsors.map((sponsor) => (

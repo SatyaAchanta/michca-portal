@@ -4,6 +4,10 @@ import type { TeamFormat } from "@/generated/prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import type { TeamDivision } from "@/lib/team-data";
+import {
+  WAIVER_PRIMARY_DIVISIONS,
+  WAIVER_SECONDARY_DIVISIONS,
+} from "@/lib/waiver-constants";
 
 export async function getTeams(filters?: {
   format?: TeamFormat | "all";
@@ -124,4 +128,36 @@ export async function getTeamAdminOptions() {
   ]);
 
   return { teams, profiles };
+}
+
+export async function getWaiverTeamOptions() {
+  const teams = await prisma.team.findMany({
+    where: {
+      OR: [
+        {
+          format: "T20",
+          division: {
+            in: [...WAIVER_PRIMARY_DIVISIONS],
+          },
+        },
+        {
+          format: {
+            in: ["F40", "T30"],
+          },
+          division: {
+            in: [...WAIVER_SECONDARY_DIVISIONS],
+          },
+        },
+      ],
+    },
+    orderBy: [{ format: "asc" }, { division: "asc" }, { teamName: "asc" }],
+    select: {
+      teamCode: true,
+      teamName: true,
+      division: true,
+      format: true,
+    },
+  });
+
+  return teams;
 }

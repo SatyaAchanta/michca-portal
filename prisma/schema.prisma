@@ -147,6 +147,7 @@ model UserProfile {
   umpireAssignments    UmpireAssignment[]
   umpiringTraining     UmpiringTraining?
   youth15Registration  Youth15Registration?
+  waiverSubmissions    WaiverSubmission[]
   certificationQuestionsCreated CertificationQuestion[] @relation("CertificationQuestionCreatedBy")
   certificationWindowsStarted   CertificationTestWindow[] @relation("CertificationWindowStartedBy")
   certificationAttempts         CertificationAttempt[]
@@ -196,6 +197,35 @@ model Youth15Registration {
 
   @@index([createdAt])
   @@index([clubName])
+}
+
+model WaiverSubmission {
+  id                     String      @id @default(uuid())
+  userProfileId          String
+  playerName             String
+  cricclubsId            String
+  city                   String
+  socialMediaHandle      String?
+  t20Division            String
+  t20TeamCode            String
+  secondaryDivision      String
+  secondaryTeamCode      String
+  signatureName          String
+  acknowledgedSubmitText String
+  year                   Int
+  submittedAt            DateTime
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+  userProfile            UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([userProfileId, year])
+  @@index([year])
+  @@index([submittedAt])
+  @@index([t20Division])
+  @@index([secondaryDivision])
+  @@index([t20TeamCode])
+  @@index([secondaryTeamCode])
+  @@index([playerName])
 }
 
 model UmpireAssignment {

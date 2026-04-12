@@ -43,6 +43,11 @@ export type UmpiringTraining = Prisma.UmpiringTrainingModel
  */
 export type Youth15Registration = Prisma.Youth15RegistrationModel
 /**
+ * Model WaiverSubmission
+ * 
+ */
+export type WaiverSubmission = Prisma.WaiverSubmissionModel
+/**
  * Model UmpireAssignment
  * 
  */
