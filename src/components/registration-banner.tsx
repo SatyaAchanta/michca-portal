@@ -12,7 +12,7 @@ export async function RegistrationBanner() {
     <Card className="relative overflow-hidden border border-border/70 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.14),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.96),rgba(250,250,250,0.92))] shadow-sm dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(251,191,36,0.12),transparent_26%),linear-gradient(135deg,rgba(10,14,18,0.98),rgba(16,18,24,0.96))]">
       <div className="absolute inset-y-0 left-0 hidden w-px bg-gradient-to-b from-transparent via-emerald-300/40 to-transparent lg:block" />
       <div className="relative grid gap-5 p-4 sm:p-5 lg:grid-cols-[200px_minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:p-7">
-        <div className="w-full rounded-2xl border border-emerald-200/70 bg-background/85 p-4 text-left shadow-sm backdrop-blur dark:border-emerald-900/60 dark:bg-background/70">
+        <div className="hidden w-full rounded-2xl border border-emerald-200/70 bg-background/85 p-4 text-left shadow-sm backdrop-blur dark:border-emerald-900/60 dark:bg-background/70 lg:block">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             Umpiring Registrations
           </p>
@@ -30,9 +30,12 @@ export async function RegistrationBanner() {
             Mich-CA Umpiring Appreciation
           </div>
           <h2 className="max-w-3xl text-xl font-semibold tracking-tight text-foreground sm:text-2xl lg:text-[2rem] lg:leading-[1.15]">
-            Thank you for strengthening the quality of cricket in Mich-CA.
+            <span className="sm:hidden">Thanks for supporting umpiring.</span>
+            <span className="hidden sm:inline">
+              Thank you for strengthening the quality of cricket in Mich-CA.
+            </span>
           </h2>
-          <p className="max-w-3xl text-sm leading-6 text-muted-foreground sm:text-[15px] lg:text-base">
+          <p className="hidden max-w-3xl text-sm leading-6 text-muted-foreground sm:block sm:text-[15px] lg:text-base">
             Mich-CA thanks every participant who registered and took part in
             umpiring training and certification, and extends special
             appreciation to the Umpiring Committee for managing the training,

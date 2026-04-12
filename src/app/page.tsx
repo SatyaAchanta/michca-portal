@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Trophy, Calendar, Users, DollarSign, Handshake } from "lucide-react";
+import { Trophy, Calendar, Users, DollarSign, ArrowRight } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 
@@ -28,90 +28,12 @@ export const metadata: Metadata = {
 };
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
-import { SeasonResultsShowcase } from "@/components/season-results-showcase";
+import { sponsors } from "@/lib/sponsors";
 
 export default function HomePage() {
-  const collaborationMessage = (
-    <div className="mx-auto max-w-4xl space-y-4 text-left text-sm leading-7 text-muted-foreground sm:text-base">
-      <p>
-        The Michigan Cricket Association (Mich-CA) is proud to announce that{" "}
-        <Link
-          href="https://www.lincode.ai"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Lincode
-        </Link>{" "}
-        has renewed its sponsorship for another year to support the successful
-        conduct of our cricket league.
-      </p>
-      <p>
-        <Link
-          href="https://www.lincode.ai"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Lincode
-        </Link>{" "}
-        is an artificial intelligence and computer vision organization dedicated
-        to transforming manufacturing quality inspection. Their flagship
-        product, LIVIS (Lincode Intelligent Visual Inspection System), enables
-        real-time quality inspections of components, assemblies, and packaging
-        using advanced AI technology. With a powerful no-code platform, LIVIS
-        empowers engineers, machine operators, and quality managers to train and
-        deploy AI models efficiently across production lines, making visual
-        inspection faster, more accurate, and highly scalable.
-      </p>
-      <p>
-        We are deeply grateful for{" "}
-        <Link
-          href="https://www.lincode.ai"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Lincode
-        </Link>
-        &apos;s continued partnership and commitment to supporting
-        community-driven initiatives like Mich-CA. Their investment strengthens
-        our ability to organize competitive, well-structured, and inclusive
-        cricket leagues that bring together players, families, and supporters
-        across Michigan.
-      </p>
-      <p>
-        On behalf of the entire Mich-CA leadership, players, volunteers, and
-        supporters, we extend our sincere appreciation to{" "}
-        <Link
-          href="https://www.lincode.ai"
-          target="_blank"
-          rel="noreferrer"
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
-          Lincode
-        </Link>{" "}
-        for believing in our mission and helping us grow the sport of cricket in
-        Michigan.
-      </p>
-      <p>We look forward to another exciting and successful season together.</p>
-      <p className="pt-2 text-foreground">
-        With appreciation,
-        <br />
-        <span className="font-medium">Tayefur Rahman</span>
-        <br />
-        Chairman, Mich-CA
-      </p>
-    </div>
-  );
+  const [goldSponsor, silverSponsor, djSponsor] = sponsors;
 
   return (
     <>
@@ -123,73 +45,148 @@ export default function HomePage() {
           </div>
         </PageContainer>
 
-        {/* Sponsor Thank You Section */}
+        {/* Sponsor Section */}
         <div className="relative bg-gradient-to-b from-background via-primary/5 to-primary/10 py-20">
           <PageContainer>
-            <div className="mx-auto max-w-5xl space-y-8">
-              <div className="flex flex-col items-center justify-center gap-5 text-center sm:flex-row sm:gap-8">
-                <div className="rounded-xl border border-border/70 bg-card/80 p-4 shadow-sm">
-                  <Image
-                    src="/michca.png"
-                    alt="Michigan Cricket Association"
-                    width={110}
-                    height={110}
-                    className="h-[88px] w-auto sm:h-[96px]"
-                  />
-                </div>
-                <Handshake
-                  className="h-10 w-10 text-primary sm:h-12 sm:w-12"
-                  aria-label="partnership"
-                />
-                <div className="rounded-xl border border-border/70 bg-card/80 p-4 shadow-sm">
-                  <Image
-                    src="/docs/lincode-logo.webp"
-                    alt="Lincode"
-                    width={220}
-                    height={110}
-                    className="h-[88px] w-auto sm:h-[96px] dark:rounded-md dark:bg-white dark:p-1.5"
-                  />
-                </div>
-              </div>
-              <div className="space-y-5 text-center">
+            <div className="mx-auto max-w-6xl space-y-8">
+              <div className="max-w-3xl space-y-3">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+                  2026 Sponsors & Partners
+                </p>
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-                  Thank You to{" "}
-                  <Link
-                    href="https://www.lincode.ai"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary underline-offset-4 hover:underline"
-                  >
-                    Lincode
-                  </Link>{" "}
-                  for Renewing Their Support for Mich-CA
+                  Gold, Silver, and DJ partners powering the Mich-CA season
                 </h1>
-                <div className="hidden md:block">{collaborationMessage}</div>
-                <div className="mx-auto w-full max-w-4xl md:hidden">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="rounded-lg border border-border/70 bg-card/60 px-4"
-                  >
-                    <AccordionItem
-                      value="collaboration-message"
-                      className="border-b-0"
-                    >
-                      <AccordionTrigger className="text-left text-sm text-foreground hover:no-underline">
-                        Read about our collaboration
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        {collaborationMessage}
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </div>
+                <p className="text-sm leading-7 text-muted-foreground sm:text-base">
+                  Our sponsor lineup for this season starts with a new Gold sponsor,
+                  continues with trusted returning support, and adds event energy
+                  through our DJ partner.
+                </p>
               </div>
+
+              <Card className="overflow-hidden border border-amber-500/30 bg-gradient-to-br from-amber-50 via-card to-orange-100 p-8 shadow-lg dark:from-amber-500/10 dark:via-card dark:to-orange-500/10">
+                <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+                  <div className="space-y-5">
+                    <div className="space-y-3">
+                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400">
+                        {goldSponsor.tierLabel}
+                      </p>
+                      <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        {goldSponsor.name}
+                      </h2>
+                      <p className="text-base leading-8 text-muted-foreground">
+                        {goldSponsor.homeDescription}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-amber-500/20 bg-background/70 p-4">
+                      <p className="text-sm font-medium text-foreground">
+                        Exclusive Mich-CA offers
+                      </p>
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        {goldSponsor.offers?.map((offer) => (
+                          <li key={offer}>{offer}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <Button asChild size="lg">
+                        <Link
+                          href={goldSponsor.href ?? "#"}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Visit Authentikka Wixom
+                        </Link>
+                      </Button>
+                      <p className="text-sm font-medium text-foreground">
+                        {goldSponsor.highlight}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-border/70 bg-card/80 p-6 shadow-sm">
+                    <Image
+                      src={goldSponsor.logoSrc}
+                      alt={goldSponsor.logoAlt}
+                      width={560}
+                      height={260}
+                      className="h-auto w-full object-contain"
+                    />
+                  </div>
+                </div>
+              </Card>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                {[silverSponsor, djSponsor].map((sponsor) => (
+                  <Card
+                    key={sponsor.name}
+                    className="border border-border/70 bg-card/90 p-6 shadow-md"
+                  >
+                    <div className="flex h-full flex-col gap-5">
+                      <div className="space-y-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                          {sponsor.tierLabel}
+                        </p>
+                        <h3 className="text-2xl font-semibold text-foreground">
+                          {sponsor.name}
+                        </h3>
+                      </div>
+                      <div className="rounded-xl border border-border/70 bg-background p-4">
+                        <Image
+                          src={sponsor.logoSrc}
+                          alt={sponsor.logoAlt}
+                          width={320}
+                          height={140}
+                          className="h-20 w-full object-contain"
+                        />
+                      </div>
+                      <p className="text-sm leading-7 text-muted-foreground">
+                        {sponsor.homeDescription}
+                      </p>
+                      <div className="mt-auto flex items-center justify-between gap-4">
+                        <p className="text-sm font-medium text-foreground">
+                          {sponsor.highlight ?? "Season partner"}
+                        </p>
+                        {sponsor.href ? (
+                          <Link
+                            href={sponsor.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                          >
+                            Learn more
+                          </Link>
+                        ) : null}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="border border-border/70 bg-gradient-to-r from-card via-background to-secondary/30 p-6 shadow-md">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
+                      2025 Season History
+                    </p>
+                    <h2 className="text-2xl font-semibold text-foreground">
+                      Explore last season&apos;s champions and runners-up archive
+                    </h2>
+                    <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                      The 2025 photo gallery now lives on a dedicated history page
+                      so the homepage can stay focused on this season&apos;s sponsors
+                      and league updates.
+                    </p>
+                  </div>
+                  <Button asChild size="lg" variant="outline">
+                    <Link href="/history">
+                      View 2025 History
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
             </div>
           </PageContainer>
         </div>
-
-        <SeasonResultsShowcase />
 
         {/* Quick Stats */}
         <div className="bg-gradient-to-br from-secondary/40 via-background to-secondary/30 py-16">
@@ -243,6 +240,9 @@ export default function HomePage() {
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="/grounds">Find Grounds</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/history">Season History</Link>
               </Button>
             </div>
           </Card>
