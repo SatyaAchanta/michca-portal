@@ -139,7 +139,7 @@ export async function getScheduleGames(
     where.OR = [
       {
         team1: {
-          name: {
+          teamName: {
             contains: teamQuery,
             mode: "insensitive",
           },
@@ -147,8 +147,24 @@ export async function getScheduleGames(
       },
       {
         team2: {
-          name: {
+          teamName: {
             contains: teamQuery,
+            mode: "insensitive",
+          },
+        },
+      },
+      {
+        team1: {
+          teamShortCode: {
+            contains: teamQuery.toUpperCase(),
+            mode: "insensitive",
+          },
+        },
+      },
+      {
+        team2: {
+          teamShortCode: {
+            contains: teamQuery.toUpperCase(),
             mode: "insensitive",
           },
         },
@@ -163,9 +179,9 @@ export async function getScheduleGames(
     where,
     orderBy: { date: sortOrder },
     include: {
-      team1: { select: { name: true, shortCode: true } },
-      team2: { select: { name: true, shortCode: true } },
-      winner: { select: { name: true } },
+      team1: { select: { teamName: true, teamShortCode: true } },
+      team2: { select: { teamName: true, teamShortCode: true } },
+      winner: { select: { teamName: true } },
     },
     skip: (currentPage - 1) * pageSize,
     take: pageSize,
@@ -184,9 +200,9 @@ export async function getScheduleGames(
       gameType: game.gameType,
       status: game.status,
       venue: game.venue ?? "Venue TBD",
-      homeTeam: game.team1.name,
-      awayTeam: game.team2.name,
-      winnerTeamName: game.winner?.name,
+      homeTeam: game.team1.teamName,
+      awayTeam: game.team2.teamName,
+      winnerTeamName: game.winner?.teamName,
       isDraw: game.isDraw,
       isCancelled: game.isCancelled,
     })),

@@ -18,6 +18,14 @@ enum Division {
   GLT
 }
 
+enum TeamFormat {
+  T20
+  F40
+  T30
+  YOUTH
+  GLT
+}
+
 enum GameType {
   LEAGUE
   PLAYOFF
@@ -71,11 +79,28 @@ enum UmpiringTrainingDateOption {
 }
 
 model Team {
-  shortCode    String @id
-  name         String
-  gamesAsTeam1 Game[] @relation("Team1")
-  gamesAsTeam2 Game[] @relation("Team2")
-  gamesWon     Game[] @relation("GameWinner")
+  teamCode       String      @id
+  format         TeamFormat
+  division       String
+  teamShortCode  String
+  teamName       String
+  description    String?
+  captainId      String?
+  viceCaptainId  String?
+  facebookPage   String?
+  instagramPage  String?
+  logo           String?
+  captain        UserProfile? @relation("TeamCaptain", fields: [captainId], references: [id], onDelete: SetNull)
+  viceCaptain    UserProfile? @relation("TeamViceCaptain", fields: [viceCaptainId], references: [id], onDelete: SetNull)
+  gamesAsTeam1   Game[]      @relation("Team1")
+  gamesAsTeam2   Game[]      @relation("Team2")
+  gamesWon       Game[]      @relation("GameWinner")
+
+  @@index([division])
+  @@index([format])
+  @@index([teamShortCode])
+  @@index([captainId])
+  @@index([viceCaptainId])
 }
 
 model Game {
@@ -85,13 +110,13 @@ model Game {
   league            String
   status            GameStatus         @default(SCHEDULED)
   venue             String?
-  team1ShortCode    String
-  team2ShortCode    String
-  team1             Team               @relation("Team1", fields: [team1ShortCode], references: [shortCode])
-  team2             Team               @relation("Team2", fields: [team2ShortCode], references: [shortCode])
+  team1Code         String
+  team2Code         String
+  team1             Team               @relation("Team1", fields: [team1Code], references: [teamCode])
+  team2             Team               @relation("Team2", fields: [team2Code], references: [teamCode])
   gameType          GameType           @default(LEAGUE)
-  winnerShortCode   String?
-  winner            Team?              @relation("GameWinner", fields: [winnerShortCode], references: [shortCode])
+  winnerCode        String?
+  winner            Team?              @relation("GameWinner", fields: [winnerCode], references: [teamCode])
   isDraw            Boolean            @default(false)
   isCancelled       Boolean            @default(false)
   team1Score        Int?
@@ -103,6 +128,9 @@ model Game {
 
   @@index([date])
   @@index([status])
+  @@index([team1Code])
+  @@index([team2Code])
+  @@index([winnerCode])
 }
 
 model UserProfile {
@@ -122,6 +150,8 @@ model UserProfile {
   certificationQuestionsCreated CertificationQuestion[] @relation("CertificationQuestionCreatedBy")
   certificationWindowsStarted   CertificationTestWindow[] @relation("CertificationWindowStartedBy")
   certificationAttempts         CertificationAttempt[]
+  teamsCaptained               Team[]                   @relation("TeamCaptain")
+  teamsViceCaptained           Team[]                   @relation("TeamViceCaptain")
 
   @@index([email])
   @@index([role])

@@ -25,35 +25,89 @@ export type AggregateTeam = {
 }
 
 export type TeamMinAggregateOutputType = {
-  shortCode: string | null
-  name: string | null
+  teamCode: string | null
+  format: $Enums.TeamFormat | null
+  division: string | null
+  teamShortCode: string | null
+  teamName: string | null
+  description: string | null
+  captainId: string | null
+  viceCaptainId: string | null
+  facebookPage: string | null
+  instagramPage: string | null
+  logo: string | null
 }
 
 export type TeamMaxAggregateOutputType = {
-  shortCode: string | null
-  name: string | null
+  teamCode: string | null
+  format: $Enums.TeamFormat | null
+  division: string | null
+  teamShortCode: string | null
+  teamName: string | null
+  description: string | null
+  captainId: string | null
+  viceCaptainId: string | null
+  facebookPage: string | null
+  instagramPage: string | null
+  logo: string | null
 }
 
 export type TeamCountAggregateOutputType = {
-  shortCode: number
-  name: number
+  teamCode: number
+  format: number
+  division: number
+  teamShortCode: number
+  teamName: number
+  description: number
+  captainId: number
+  viceCaptainId: number
+  facebookPage: number
+  instagramPage: number
+  logo: number
   _all: number
 }
 
 
 export type TeamMinAggregateInputType = {
-  shortCode?: true
-  name?: true
+  teamCode?: true
+  format?: true
+  division?: true
+  teamShortCode?: true
+  teamName?: true
+  description?: true
+  captainId?: true
+  viceCaptainId?: true
+  facebookPage?: true
+  instagramPage?: true
+  logo?: true
 }
 
 export type TeamMaxAggregateInputType = {
-  shortCode?: true
-  name?: true
+  teamCode?: true
+  format?: true
+  division?: true
+  teamShortCode?: true
+  teamName?: true
+  description?: true
+  captainId?: true
+  viceCaptainId?: true
+  facebookPage?: true
+  instagramPage?: true
+  logo?: true
 }
 
 export type TeamCountAggregateInputType = {
-  shortCode?: true
-  name?: true
+  teamCode?: true
+  format?: true
+  division?: true
+  teamShortCode?: true
+  teamName?: true
+  description?: true
+  captainId?: true
+  viceCaptainId?: true
+  facebookPage?: true
+  instagramPage?: true
+  logo?: true
   _all?: true
 }
 
@@ -130,8 +184,17 @@ export type TeamGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type TeamGroupByOutputType = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description: string | null
+  captainId: string | null
+  viceCaptainId: string | null
+  facebookPage: string | null
+  instagramPage: string | null
+  logo: string | null
   _count: TeamCountAggregateOutputType | null
   _min: TeamMinAggregateOutputType | null
   _max: TeamMaxAggregateOutputType | null
@@ -156,35 +219,77 @@ export type TeamWhereInput = {
   AND?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
   OR?: Prisma.TeamWhereInput[]
   NOT?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
-  shortCode?: Prisma.StringFilter<"Team"> | string
-  name?: Prisma.StringFilter<"Team"> | string
+  teamCode?: Prisma.StringFilter<"Team"> | string
+  format?: Prisma.EnumTeamFormatFilter<"Team"> | $Enums.TeamFormat
+  division?: Prisma.StringFilter<"Team"> | string
+  teamShortCode?: Prisma.StringFilter<"Team"> | string
+  teamName?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
+  captainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  viceCaptainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  facebookPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  instagramPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  logo?: Prisma.StringNullableFilter<"Team"> | string | null
+  captain?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
+  viceCaptain?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   gamesAsTeam1?: Prisma.GameListRelationFilter
   gamesAsTeam2?: Prisma.GameListRelationFilter
   gamesWon?: Prisma.GameListRelationFilter
 }
 
 export type TeamOrderByWithRelationInput = {
-  shortCode?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  teamCode?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  division?: Prisma.SortOrder
+  teamShortCode?: Prisma.SortOrder
+  teamName?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  captainId?: Prisma.SortOrderInput | Prisma.SortOrder
+  viceCaptainId?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebookPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logo?: Prisma.SortOrderInput | Prisma.SortOrder
+  captain?: Prisma.UserProfileOrderByWithRelationInput
+  viceCaptain?: Prisma.UserProfileOrderByWithRelationInput
   gamesAsTeam1?: Prisma.GameOrderByRelationAggregateInput
   gamesAsTeam2?: Prisma.GameOrderByRelationAggregateInput
   gamesWon?: Prisma.GameOrderByRelationAggregateInput
 }
 
 export type TeamWhereUniqueInput = Prisma.AtLeast<{
-  shortCode?: string
+  teamCode?: string
   AND?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
   OR?: Prisma.TeamWhereInput[]
   NOT?: Prisma.TeamWhereInput | Prisma.TeamWhereInput[]
-  name?: Prisma.StringFilter<"Team"> | string
+  format?: Prisma.EnumTeamFormatFilter<"Team"> | $Enums.TeamFormat
+  division?: Prisma.StringFilter<"Team"> | string
+  teamShortCode?: Prisma.StringFilter<"Team"> | string
+  teamName?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
+  captainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  viceCaptainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  facebookPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  instagramPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  logo?: Prisma.StringNullableFilter<"Team"> | string | null
+  captain?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
+  viceCaptain?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
   gamesAsTeam1?: Prisma.GameListRelationFilter
   gamesAsTeam2?: Prisma.GameListRelationFilter
   gamesWon?: Prisma.GameListRelationFilter
-}, "shortCode">
+}, "teamCode">
 
 export type TeamOrderByWithAggregationInput = {
-  shortCode?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  teamCode?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  division?: Prisma.SortOrder
+  teamShortCode?: Prisma.SortOrder
+  teamName?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  captainId?: Prisma.SortOrderInput | Prisma.SortOrder
+  viceCaptainId?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebookPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logo?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TeamCountOrderByAggregateInput
   _max?: Prisma.TeamMaxOrderByAggregateInput
   _min?: Prisma.TeamMinOrderByAggregateInput
@@ -194,70 +299,167 @@ export type TeamScalarWhereWithAggregatesInput = {
   AND?: Prisma.TeamScalarWhereWithAggregatesInput | Prisma.TeamScalarWhereWithAggregatesInput[]
   OR?: Prisma.TeamScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TeamScalarWhereWithAggregatesInput | Prisma.TeamScalarWhereWithAggregatesInput[]
-  shortCode?: Prisma.StringWithAggregatesFilter<"Team"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  teamCode?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  format?: Prisma.EnumTeamFormatWithAggregatesFilter<"Team"> | $Enums.TeamFormat
+  division?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  teamShortCode?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  teamName?: Prisma.StringWithAggregatesFilter<"Team"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
+  captainId?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
+  viceCaptainId?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
+  facebookPage?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
+  instagramPage?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
+  logo?: Prisma.StringNullableWithAggregatesFilter<"Team"> | string | null
 }
 
 export type TeamCreateInput = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  captain?: Prisma.UserProfileCreateNestedOneWithoutTeamsCaptainedInput
+  viceCaptain?: Prisma.UserProfileCreateNestedOneWithoutTeamsViceCaptainedInput
   gamesAsTeam1?: Prisma.GameCreateNestedManyWithoutTeam1Input
   gamesAsTeam2?: Prisma.GameCreateNestedManyWithoutTeam2Input
   gamesWon?: Prisma.GameCreateNestedManyWithoutWinnerInput
 }
 
 export type TeamUncheckedCreateInput = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
   gamesAsTeam1?: Prisma.GameUncheckedCreateNestedManyWithoutTeam1Input
   gamesAsTeam2?: Prisma.GameUncheckedCreateNestedManyWithoutTeam2Input
   gamesWon?: Prisma.GameUncheckedCreateNestedManyWithoutWinnerInput
 }
 
 export type TeamUpdateInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captain?: Prisma.UserProfileUpdateOneWithoutTeamsCaptainedNestedInput
+  viceCaptain?: Prisma.UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput
   gamesAsTeam1?: Prisma.GameUpdateManyWithoutTeam1NestedInput
   gamesAsTeam2?: Prisma.GameUpdateManyWithoutTeam2NestedInput
   gamesWon?: Prisma.GameUpdateManyWithoutWinnerNestedInput
 }
 
 export type TeamUncheckedUpdateInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gamesAsTeam1?: Prisma.GameUncheckedUpdateManyWithoutTeam1NestedInput
   gamesAsTeam2?: Prisma.GameUncheckedUpdateManyWithoutTeam2NestedInput
   gamesWon?: Prisma.GameUncheckedUpdateManyWithoutWinnerNestedInput
 }
 
 export type TeamCreateManyInput = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
 }
 
 export type TeamUpdateManyMutationInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TeamUncheckedUpdateManyInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TeamCountOrderByAggregateInput = {
-  shortCode?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  teamCode?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  division?: Prisma.SortOrder
+  teamShortCode?: Prisma.SortOrder
+  teamName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  captainId?: Prisma.SortOrder
+  viceCaptainId?: Prisma.SortOrder
+  facebookPage?: Prisma.SortOrder
+  instagramPage?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
 }
 
 export type TeamMaxOrderByAggregateInput = {
-  shortCode?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  teamCode?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  division?: Prisma.SortOrder
+  teamShortCode?: Prisma.SortOrder
+  teamName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  captainId?: Prisma.SortOrder
+  viceCaptainId?: Prisma.SortOrder
+  facebookPage?: Prisma.SortOrder
+  instagramPage?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
 }
 
 export type TeamMinOrderByAggregateInput = {
-  shortCode?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  teamCode?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  division?: Prisma.SortOrder
+  teamShortCode?: Prisma.SortOrder
+  teamName?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  captainId?: Prisma.SortOrder
+  viceCaptainId?: Prisma.SortOrder
+  facebookPage?: Prisma.SortOrder
+  instagramPage?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
 }
 
 export type TeamScalarRelationFilter = {
@@ -270,8 +472,26 @@ export type TeamNullableScalarRelationFilter = {
   isNot?: Prisma.TeamWhereInput | null
 }
 
+export type TeamListRelationFilter = {
+  every?: Prisma.TeamWhereInput
+  some?: Prisma.TeamWhereInput
+  none?: Prisma.TeamWhereInput
+}
+
+export type TeamOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type EnumTeamFormatFieldUpdateOperationsInput = {
+  set?: $Enums.TeamFormat
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type TeamCreateNestedOneWithoutGamesAsTeam1Input = {
@@ -318,16 +538,118 @@ export type TeamUpdateOneWithoutGamesWonNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutGamesWonInput, Prisma.TeamUpdateWithoutGamesWonInput>, Prisma.TeamUncheckedUpdateWithoutGamesWonInput>
 }
 
+export type TeamCreateNestedManyWithoutCaptainInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput> | Prisma.TeamCreateWithoutCaptainInput[] | Prisma.TeamUncheckedCreateWithoutCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCaptainInput | Prisma.TeamCreateOrConnectWithoutCaptainInput[]
+  createMany?: Prisma.TeamCreateManyCaptainInputEnvelope
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+}
+
+export type TeamCreateNestedManyWithoutViceCaptainInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput> | Prisma.TeamCreateWithoutViceCaptainInput[] | Prisma.TeamUncheckedCreateWithoutViceCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutViceCaptainInput | Prisma.TeamCreateOrConnectWithoutViceCaptainInput[]
+  createMany?: Prisma.TeamCreateManyViceCaptainInputEnvelope
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+}
+
+export type TeamUncheckedCreateNestedManyWithoutCaptainInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput> | Prisma.TeamCreateWithoutCaptainInput[] | Prisma.TeamUncheckedCreateWithoutCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCaptainInput | Prisma.TeamCreateOrConnectWithoutCaptainInput[]
+  createMany?: Prisma.TeamCreateManyCaptainInputEnvelope
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+}
+
+export type TeamUncheckedCreateNestedManyWithoutViceCaptainInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput> | Prisma.TeamCreateWithoutViceCaptainInput[] | Prisma.TeamUncheckedCreateWithoutViceCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutViceCaptainInput | Prisma.TeamCreateOrConnectWithoutViceCaptainInput[]
+  createMany?: Prisma.TeamCreateManyViceCaptainInputEnvelope
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+}
+
+export type TeamUpdateManyWithoutCaptainNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput> | Prisma.TeamCreateWithoutCaptainInput[] | Prisma.TeamUncheckedCreateWithoutCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCaptainInput | Prisma.TeamCreateOrConnectWithoutCaptainInput[]
+  upsert?: Prisma.TeamUpsertWithWhereUniqueWithoutCaptainInput | Prisma.TeamUpsertWithWhereUniqueWithoutCaptainInput[]
+  createMany?: Prisma.TeamCreateManyCaptainInputEnvelope
+  set?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  disconnect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  delete?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  update?: Prisma.TeamUpdateWithWhereUniqueWithoutCaptainInput | Prisma.TeamUpdateWithWhereUniqueWithoutCaptainInput[]
+  updateMany?: Prisma.TeamUpdateManyWithWhereWithoutCaptainInput | Prisma.TeamUpdateManyWithWhereWithoutCaptainInput[]
+  deleteMany?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+}
+
+export type TeamUpdateManyWithoutViceCaptainNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput> | Prisma.TeamCreateWithoutViceCaptainInput[] | Prisma.TeamUncheckedCreateWithoutViceCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutViceCaptainInput | Prisma.TeamCreateOrConnectWithoutViceCaptainInput[]
+  upsert?: Prisma.TeamUpsertWithWhereUniqueWithoutViceCaptainInput | Prisma.TeamUpsertWithWhereUniqueWithoutViceCaptainInput[]
+  createMany?: Prisma.TeamCreateManyViceCaptainInputEnvelope
+  set?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  disconnect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  delete?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  update?: Prisma.TeamUpdateWithWhereUniqueWithoutViceCaptainInput | Prisma.TeamUpdateWithWhereUniqueWithoutViceCaptainInput[]
+  updateMany?: Prisma.TeamUpdateManyWithWhereWithoutViceCaptainInput | Prisma.TeamUpdateManyWithWhereWithoutViceCaptainInput[]
+  deleteMany?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+}
+
+export type TeamUncheckedUpdateManyWithoutCaptainNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput> | Prisma.TeamCreateWithoutCaptainInput[] | Prisma.TeamUncheckedCreateWithoutCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutCaptainInput | Prisma.TeamCreateOrConnectWithoutCaptainInput[]
+  upsert?: Prisma.TeamUpsertWithWhereUniqueWithoutCaptainInput | Prisma.TeamUpsertWithWhereUniqueWithoutCaptainInput[]
+  createMany?: Prisma.TeamCreateManyCaptainInputEnvelope
+  set?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  disconnect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  delete?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  update?: Prisma.TeamUpdateWithWhereUniqueWithoutCaptainInput | Prisma.TeamUpdateWithWhereUniqueWithoutCaptainInput[]
+  updateMany?: Prisma.TeamUpdateManyWithWhereWithoutCaptainInput | Prisma.TeamUpdateManyWithWhereWithoutCaptainInput[]
+  deleteMany?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+}
+
+export type TeamUncheckedUpdateManyWithoutViceCaptainNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput> | Prisma.TeamCreateWithoutViceCaptainInput[] | Prisma.TeamUncheckedCreateWithoutViceCaptainInput[]
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutViceCaptainInput | Prisma.TeamCreateOrConnectWithoutViceCaptainInput[]
+  upsert?: Prisma.TeamUpsertWithWhereUniqueWithoutViceCaptainInput | Prisma.TeamUpsertWithWhereUniqueWithoutViceCaptainInput[]
+  createMany?: Prisma.TeamCreateManyViceCaptainInputEnvelope
+  set?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  disconnect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  delete?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  connect?: Prisma.TeamWhereUniqueInput | Prisma.TeamWhereUniqueInput[]
+  update?: Prisma.TeamUpdateWithWhereUniqueWithoutViceCaptainInput | Prisma.TeamUpdateWithWhereUniqueWithoutViceCaptainInput[]
+  updateMany?: Prisma.TeamUpdateManyWithWhereWithoutViceCaptainInput | Prisma.TeamUpdateManyWithWhereWithoutViceCaptainInput[]
+  deleteMany?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+}
+
 export type TeamCreateWithoutGamesAsTeam1Input = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  captain?: Prisma.UserProfileCreateNestedOneWithoutTeamsCaptainedInput
+  viceCaptain?: Prisma.UserProfileCreateNestedOneWithoutTeamsViceCaptainedInput
   gamesAsTeam2?: Prisma.GameCreateNestedManyWithoutTeam2Input
   gamesWon?: Prisma.GameCreateNestedManyWithoutWinnerInput
 }
 
 export type TeamUncheckedCreateWithoutGamesAsTeam1Input = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
   gamesAsTeam2?: Prisma.GameUncheckedCreateNestedManyWithoutTeam2Input
   gamesWon?: Prisma.GameUncheckedCreateNestedManyWithoutWinnerInput
 }
@@ -338,15 +660,33 @@ export type TeamCreateOrConnectWithoutGamesAsTeam1Input = {
 }
 
 export type TeamCreateWithoutGamesAsTeam2Input = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  captain?: Prisma.UserProfileCreateNestedOneWithoutTeamsCaptainedInput
+  viceCaptain?: Prisma.UserProfileCreateNestedOneWithoutTeamsViceCaptainedInput
   gamesAsTeam1?: Prisma.GameCreateNestedManyWithoutTeam1Input
   gamesWon?: Prisma.GameCreateNestedManyWithoutWinnerInput
 }
 
 export type TeamUncheckedCreateWithoutGamesAsTeam2Input = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
   gamesAsTeam1?: Prisma.GameUncheckedCreateNestedManyWithoutTeam1Input
   gamesWon?: Prisma.GameUncheckedCreateNestedManyWithoutWinnerInput
 }
@@ -357,15 +697,33 @@ export type TeamCreateOrConnectWithoutGamesAsTeam2Input = {
 }
 
 export type TeamCreateWithoutGamesWonInput = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  captain?: Prisma.UserProfileCreateNestedOneWithoutTeamsCaptainedInput
+  viceCaptain?: Prisma.UserProfileCreateNestedOneWithoutTeamsViceCaptainedInput
   gamesAsTeam1?: Prisma.GameCreateNestedManyWithoutTeam1Input
   gamesAsTeam2?: Prisma.GameCreateNestedManyWithoutTeam2Input
 }
 
 export type TeamUncheckedCreateWithoutGamesWonInput = {
-  shortCode: string
-  name: string
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
   gamesAsTeam1?: Prisma.GameUncheckedCreateNestedManyWithoutTeam1Input
   gamesAsTeam2?: Prisma.GameUncheckedCreateNestedManyWithoutTeam2Input
 }
@@ -387,15 +745,33 @@ export type TeamUpdateToOneWithWhereWithoutGamesAsTeam1Input = {
 }
 
 export type TeamUpdateWithoutGamesAsTeam1Input = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captain?: Prisma.UserProfileUpdateOneWithoutTeamsCaptainedNestedInput
+  viceCaptain?: Prisma.UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput
   gamesAsTeam2?: Prisma.GameUpdateManyWithoutTeam2NestedInput
   gamesWon?: Prisma.GameUpdateManyWithoutWinnerNestedInput
 }
 
 export type TeamUncheckedUpdateWithoutGamesAsTeam1Input = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gamesAsTeam2?: Prisma.GameUncheckedUpdateManyWithoutTeam2NestedInput
   gamesWon?: Prisma.GameUncheckedUpdateManyWithoutWinnerNestedInput
 }
@@ -412,15 +788,33 @@ export type TeamUpdateToOneWithWhereWithoutGamesAsTeam2Input = {
 }
 
 export type TeamUpdateWithoutGamesAsTeam2Input = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captain?: Prisma.UserProfileUpdateOneWithoutTeamsCaptainedNestedInput
+  viceCaptain?: Prisma.UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput
   gamesAsTeam1?: Prisma.GameUpdateManyWithoutTeam1NestedInput
   gamesWon?: Prisma.GameUpdateManyWithoutWinnerNestedInput
 }
 
 export type TeamUncheckedUpdateWithoutGamesAsTeam2Input = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gamesAsTeam1?: Prisma.GameUncheckedUpdateManyWithoutTeam1NestedInput
   gamesWon?: Prisma.GameUncheckedUpdateManyWithoutWinnerNestedInput
 }
@@ -437,17 +831,284 @@ export type TeamUpdateToOneWithWhereWithoutGamesWonInput = {
 }
 
 export type TeamUpdateWithoutGamesWonInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captain?: Prisma.UserProfileUpdateOneWithoutTeamsCaptainedNestedInput
+  viceCaptain?: Prisma.UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput
   gamesAsTeam1?: Prisma.GameUpdateManyWithoutTeam1NestedInput
   gamesAsTeam2?: Prisma.GameUpdateManyWithoutTeam2NestedInput
 }
 
 export type TeamUncheckedUpdateWithoutGamesWonInput = {
-  shortCode?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gamesAsTeam1?: Prisma.GameUncheckedUpdateManyWithoutTeam1NestedInput
   gamesAsTeam2?: Prisma.GameUncheckedUpdateManyWithoutTeam2NestedInput
+}
+
+export type TeamCreateWithoutCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  viceCaptain?: Prisma.UserProfileCreateNestedOneWithoutTeamsViceCaptainedInput
+  gamesAsTeam1?: Prisma.GameCreateNestedManyWithoutTeam1Input
+  gamesAsTeam2?: Prisma.GameCreateNestedManyWithoutTeam2Input
+  gamesWon?: Prisma.GameCreateNestedManyWithoutWinnerInput
+}
+
+export type TeamUncheckedCreateWithoutCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  gamesAsTeam1?: Prisma.GameUncheckedCreateNestedManyWithoutTeam1Input
+  gamesAsTeam2?: Prisma.GameUncheckedCreateNestedManyWithoutTeam2Input
+  gamesWon?: Prisma.GameUncheckedCreateNestedManyWithoutWinnerInput
+}
+
+export type TeamCreateOrConnectWithoutCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput>
+}
+
+export type TeamCreateManyCaptainInputEnvelope = {
+  data: Prisma.TeamCreateManyCaptainInput | Prisma.TeamCreateManyCaptainInput[]
+  skipDuplicates?: boolean
+}
+
+export type TeamCreateWithoutViceCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  captain?: Prisma.UserProfileCreateNestedOneWithoutTeamsCaptainedInput
+  gamesAsTeam1?: Prisma.GameCreateNestedManyWithoutTeam1Input
+  gamesAsTeam2?: Prisma.GameCreateNestedManyWithoutTeam2Input
+  gamesWon?: Prisma.GameCreateNestedManyWithoutWinnerInput
+}
+
+export type TeamUncheckedCreateWithoutViceCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+  gamesAsTeam1?: Prisma.GameUncheckedCreateNestedManyWithoutTeam1Input
+  gamesAsTeam2?: Prisma.GameUncheckedCreateNestedManyWithoutTeam2Input
+  gamesWon?: Prisma.GameUncheckedCreateNestedManyWithoutWinnerInput
+}
+
+export type TeamCreateOrConnectWithoutViceCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput>
+}
+
+export type TeamCreateManyViceCaptainInputEnvelope = {
+  data: Prisma.TeamCreateManyViceCaptainInput | Prisma.TeamCreateManyViceCaptainInput[]
+  skipDuplicates?: boolean
+}
+
+export type TeamUpsertWithWhereUniqueWithoutCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  update: Prisma.XOR<Prisma.TeamUpdateWithoutCaptainInput, Prisma.TeamUncheckedUpdateWithoutCaptainInput>
+  create: Prisma.XOR<Prisma.TeamCreateWithoutCaptainInput, Prisma.TeamUncheckedCreateWithoutCaptainInput>
+}
+
+export type TeamUpdateWithWhereUniqueWithoutCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  data: Prisma.XOR<Prisma.TeamUpdateWithoutCaptainInput, Prisma.TeamUncheckedUpdateWithoutCaptainInput>
+}
+
+export type TeamUpdateManyWithWhereWithoutCaptainInput = {
+  where: Prisma.TeamScalarWhereInput
+  data: Prisma.XOR<Prisma.TeamUpdateManyMutationInput, Prisma.TeamUncheckedUpdateManyWithoutCaptainInput>
+}
+
+export type TeamScalarWhereInput = {
+  AND?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+  OR?: Prisma.TeamScalarWhereInput[]
+  NOT?: Prisma.TeamScalarWhereInput | Prisma.TeamScalarWhereInput[]
+  teamCode?: Prisma.StringFilter<"Team"> | string
+  format?: Prisma.EnumTeamFormatFilter<"Team"> | $Enums.TeamFormat
+  division?: Prisma.StringFilter<"Team"> | string
+  teamShortCode?: Prisma.StringFilter<"Team"> | string
+  teamName?: Prisma.StringFilter<"Team"> | string
+  description?: Prisma.StringNullableFilter<"Team"> | string | null
+  captainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  viceCaptainId?: Prisma.StringNullableFilter<"Team"> | string | null
+  facebookPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  instagramPage?: Prisma.StringNullableFilter<"Team"> | string | null
+  logo?: Prisma.StringNullableFilter<"Team"> | string | null
+}
+
+export type TeamUpsertWithWhereUniqueWithoutViceCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  update: Prisma.XOR<Prisma.TeamUpdateWithoutViceCaptainInput, Prisma.TeamUncheckedUpdateWithoutViceCaptainInput>
+  create: Prisma.XOR<Prisma.TeamCreateWithoutViceCaptainInput, Prisma.TeamUncheckedCreateWithoutViceCaptainInput>
+}
+
+export type TeamUpdateWithWhereUniqueWithoutViceCaptainInput = {
+  where: Prisma.TeamWhereUniqueInput
+  data: Prisma.XOR<Prisma.TeamUpdateWithoutViceCaptainInput, Prisma.TeamUncheckedUpdateWithoutViceCaptainInput>
+}
+
+export type TeamUpdateManyWithWhereWithoutViceCaptainInput = {
+  where: Prisma.TeamScalarWhereInput
+  data: Prisma.XOR<Prisma.TeamUpdateManyMutationInput, Prisma.TeamUncheckedUpdateManyWithoutViceCaptainInput>
+}
+
+export type TeamCreateManyCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  viceCaptainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+}
+
+export type TeamCreateManyViceCaptainInput = {
+  teamCode: string
+  format: $Enums.TeamFormat
+  division: string
+  teamShortCode: string
+  teamName: string
+  description?: string | null
+  captainId?: string | null
+  facebookPage?: string | null
+  instagramPage?: string | null
+  logo?: string | null
+}
+
+export type TeamUpdateWithoutCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptain?: Prisma.UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput
+  gamesAsTeam1?: Prisma.GameUpdateManyWithoutTeam1NestedInput
+  gamesAsTeam2?: Prisma.GameUpdateManyWithoutTeam2NestedInput
+  gamesWon?: Prisma.GameUpdateManyWithoutWinnerNestedInput
+}
+
+export type TeamUncheckedUpdateWithoutCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gamesAsTeam1?: Prisma.GameUncheckedUpdateManyWithoutTeam1NestedInput
+  gamesAsTeam2?: Prisma.GameUncheckedUpdateManyWithoutTeam2NestedInput
+  gamesWon?: Prisma.GameUncheckedUpdateManyWithoutWinnerNestedInput
+}
+
+export type TeamUncheckedUpdateManyWithoutCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viceCaptainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TeamUpdateWithoutViceCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captain?: Prisma.UserProfileUpdateOneWithoutTeamsCaptainedNestedInput
+  gamesAsTeam1?: Prisma.GameUpdateManyWithoutTeam1NestedInput
+  gamesAsTeam2?: Prisma.GameUpdateManyWithoutTeam2NestedInput
+  gamesWon?: Prisma.GameUpdateManyWithoutWinnerNestedInput
+}
+
+export type TeamUncheckedUpdateWithoutViceCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gamesAsTeam1?: Prisma.GameUncheckedUpdateManyWithoutTeam1NestedInput
+  gamesAsTeam2?: Prisma.GameUncheckedUpdateManyWithoutTeam2NestedInput
+  gamesWon?: Prisma.GameUncheckedUpdateManyWithoutWinnerNestedInput
+}
+
+export type TeamUncheckedUpdateManyWithoutViceCaptainInput = {
+  teamCode?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.EnumTeamFormatFieldUpdateOperationsInput | $Enums.TeamFormat
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  teamShortCode?: Prisma.StringFieldUpdateOperationsInput | string
+  teamName?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  captainId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramPage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -500,8 +1161,19 @@ export type TeamCountOutputTypeCountGamesWonArgs<ExtArgs extends runtime.Types.E
 
 
 export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  shortCode?: boolean
-  name?: boolean
+  teamCode?: boolean
+  format?: boolean
+  division?: boolean
+  teamShortCode?: boolean
+  teamName?: boolean
+  description?: boolean
+  captainId?: boolean
+  viceCaptainId?: boolean
+  facebookPage?: boolean
+  instagramPage?: boolean
+  logo?: boolean
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
   gamesAsTeam1?: boolean | Prisma.Team$gamesAsTeam1Args<ExtArgs>
   gamesAsTeam2?: boolean | Prisma.Team$gamesAsTeam2Args<ExtArgs>
   gamesWon?: boolean | Prisma.Team$gamesWonArgs<ExtArgs>
@@ -509,40 +1181,90 @@ export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 }, ExtArgs["result"]["team"]>
 
 export type TeamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  shortCode?: boolean
-  name?: boolean
+  teamCode?: boolean
+  format?: boolean
+  division?: boolean
+  teamShortCode?: boolean
+  teamName?: boolean
+  description?: boolean
+  captainId?: boolean
+  viceCaptainId?: boolean
+  facebookPage?: boolean
+  instagramPage?: boolean
+  logo?: boolean
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
 }, ExtArgs["result"]["team"]>
 
 export type TeamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  shortCode?: boolean
-  name?: boolean
+  teamCode?: boolean
+  format?: boolean
+  division?: boolean
+  teamShortCode?: boolean
+  teamName?: boolean
+  description?: boolean
+  captainId?: boolean
+  viceCaptainId?: boolean
+  facebookPage?: boolean
+  instagramPage?: boolean
+  logo?: boolean
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
 }, ExtArgs["result"]["team"]>
 
 export type TeamSelectScalar = {
-  shortCode?: boolean
-  name?: boolean
+  teamCode?: boolean
+  format?: boolean
+  division?: boolean
+  teamShortCode?: boolean
+  teamName?: boolean
+  description?: boolean
+  captainId?: boolean
+  viceCaptainId?: boolean
+  facebookPage?: boolean
+  instagramPage?: boolean
+  logo?: boolean
 }
 
-export type TeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"shortCode" | "name", ExtArgs["result"]["team"]>
+export type TeamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"teamCode" | "format" | "division" | "teamShortCode" | "teamName" | "description" | "captainId" | "viceCaptainId" | "facebookPage" | "instagramPage" | "logo", ExtArgs["result"]["team"]>
 export type TeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
   gamesAsTeam1?: boolean | Prisma.Team$gamesAsTeam1Args<ExtArgs>
   gamesAsTeam2?: boolean | Prisma.Team$gamesAsTeam2Args<ExtArgs>
   gamesWon?: boolean | Prisma.Team$gamesWonArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type TeamIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type TeamIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type TeamIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
+}
+export type TeamIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  captain?: boolean | Prisma.Team$captainArgs<ExtArgs>
+  viceCaptain?: boolean | Prisma.Team$viceCaptainArgs<ExtArgs>
+}
 
 export type $TeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Team"
   objects: {
+    captain: Prisma.$UserProfilePayload<ExtArgs> | null
+    viceCaptain: Prisma.$UserProfilePayload<ExtArgs> | null
     gamesAsTeam1: Prisma.$GamePayload<ExtArgs>[]
     gamesAsTeam2: Prisma.$GamePayload<ExtArgs>[]
     gamesWon: Prisma.$GamePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    shortCode: string
-    name: string
+    teamCode: string
+    format: $Enums.TeamFormat
+    division: string
+    teamShortCode: string
+    teamName: string
+    description: string | null
+    captainId: string | null
+    viceCaptainId: string | null
+    facebookPage: string | null
+    instagramPage: string | null
+    logo: string | null
   }, ExtArgs["result"]["team"]>
   composites: {}
 }
@@ -626,8 +1348,8 @@ export interface TeamDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * // Get first 10 Teams
    * const teams = await prisma.team.findMany({ take: 10 })
    * 
-   * // Only select the `shortCode`
-   * const teamWithShortCodeOnly = await prisma.team.findMany({ select: { shortCode: true } })
+   * // Only select the `teamCode`
+   * const teamWithTeamCodeOnly = await prisma.team.findMany({ select: { teamCode: true } })
    * 
    */
   findMany<T extends TeamFindManyArgs>(args?: Prisma.SelectSubset<T, TeamFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -671,9 +1393,9 @@ export interface TeamDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Create many Teams and only return the `shortCode`
-   * const teamWithShortCodeOnly = await prisma.team.createManyAndReturn({
-   *   select: { shortCode: true },
+   * // Create many Teams and only return the `teamCode`
+   * const teamWithTeamCodeOnly = await prisma.team.createManyAndReturn({
+   *   select: { teamCode: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -762,9 +1484,9 @@ export interface TeamDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    *   ]
    * })
    * 
-   * // Update zero or more Teams and only return the `shortCode`
-   * const teamWithShortCodeOnly = await prisma.team.updateManyAndReturn({
-   *   select: { shortCode: true },
+   * // Update zero or more Teams and only return the `teamCode`
+   * const teamWithTeamCodeOnly = await prisma.team.updateManyAndReturn({
+   *   select: { teamCode: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -937,6 +1659,8 @@ readonly fields: TeamFieldRefs;
  */
 export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  captain<T extends Prisma.Team$captainArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$captainArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  viceCaptain<T extends Prisma.Team$viceCaptainArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$viceCaptainArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   gamesAsTeam1<T extends Prisma.Team$gamesAsTeam1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$gamesAsTeam1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gamesAsTeam2<T extends Prisma.Team$gamesAsTeam2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$gamesAsTeam2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gamesWon<T extends Prisma.Team$gamesWonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$gamesWonArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -969,8 +1693,17 @@ export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Team model
  */
 export interface TeamFieldRefs {
-  readonly shortCode: Prisma.FieldRef<"Team", 'String'>
-  readonly name: Prisma.FieldRef<"Team", 'String'>
+  readonly teamCode: Prisma.FieldRef<"Team", 'String'>
+  readonly format: Prisma.FieldRef<"Team", 'TeamFormat'>
+  readonly division: Prisma.FieldRef<"Team", 'String'>
+  readonly teamShortCode: Prisma.FieldRef<"Team", 'String'>
+  readonly teamName: Prisma.FieldRef<"Team", 'String'>
+  readonly description: Prisma.FieldRef<"Team", 'String'>
+  readonly captainId: Prisma.FieldRef<"Team", 'String'>
+  readonly viceCaptainId: Prisma.FieldRef<"Team", 'String'>
+  readonly facebookPage: Prisma.FieldRef<"Team", 'String'>
+  readonly instagramPage: Prisma.FieldRef<"Team", 'String'>
+  readonly logo: Prisma.FieldRef<"Team", 'String'>
 }
     
 
@@ -1225,6 +1958,10 @@ export type TeamCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.TeamCreateManyInput | Prisma.TeamCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1295,6 +2032,10 @@ export type TeamUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Teams to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1361,6 +2102,44 @@ export type TeamDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Teams to delete.
    */
   limit?: number
+}
+
+/**
+ * Team.captain
+ */
+export type Team$captainArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserProfile
+   */
+  select?: Prisma.UserProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserProfile
+   */
+  omit?: Prisma.UserProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserProfileInclude<ExtArgs> | null
+  where?: Prisma.UserProfileWhereInput
+}
+
+/**
+ * Team.viceCaptain
+ */
+export type Team$viceCaptainArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserProfile
+   */
+  select?: Prisma.UserProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserProfile
+   */
+  omit?: Prisma.UserProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserProfileInclude<ExtArgs> | null
+  where?: Prisma.UserProfileWhereInput
 }
 
 /**

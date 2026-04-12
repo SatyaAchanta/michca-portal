@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageContainer } from "@/components/page-container";
 import { ScheduleClient } from "@/app/schedule/schedule-client";
 import { getScheduleGames, getScheduleSeasons } from "@/app/schedule/actions";
@@ -41,6 +42,13 @@ export default async function SchedulePage() {
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
             Browse games by date range, division, team name, and status.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Need club details? Browse the{" "}
+            <Link href="/teams" className="font-medium text-foreground underline underline-offset-4">
+              Teams
+            </Link>{" "}
+            directory.
           </p>
         </div>
 

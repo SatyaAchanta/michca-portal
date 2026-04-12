@@ -81,8 +81,17 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 
 export const TeamScalarFieldEnum = {
-  shortCode: 'shortCode',
-  name: 'name'
+  teamCode: 'teamCode',
+  format: 'format',
+  division: 'division',
+  teamShortCode: 'teamShortCode',
+  teamName: 'teamName',
+  description: 'description',
+  captainId: 'captainId',
+  viceCaptainId: 'viceCaptainId',
+  facebookPage: 'facebookPage',
+  instagramPage: 'instagramPage',
+  logo: 'logo'
 } as const
 
 export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
@@ -95,10 +104,10 @@ export const GameScalarFieldEnum = {
   league: 'league',
   status: 'status',
   venue: 'venue',
-  team1ShortCode: 'team1ShortCode',
-  team2ShortCode: 'team2ShortCode',
+  team1Code: 'team1Code',
+  team2Code: 'team2Code',
   gameType: 'gameType',
-  winnerShortCode: 'winnerShortCode',
+  winnerCode: 'winnerCode',
   isDraw: 'isDraw',
   isCancelled: 'isCancelled',
   team1Score: 'team1Score',

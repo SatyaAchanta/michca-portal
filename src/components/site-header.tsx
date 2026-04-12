@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Schedule", href: "/schedule" },
+  { label: "Teams", href: "/teams" },
   { label: "Forms", href: "/forms" },
 ];
 
