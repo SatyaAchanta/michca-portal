@@ -54,12 +54,13 @@ export default function HomePage() {
                   2026 Sponsors & Partners
                 </p>
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-                  Gold, Silver, and DJ partners powering the Mich-CA season
+                  Mich-CA partnerships powering the{" "}
+                  <span className="whitespace-nowrap">2026 season</span>
                 </h1>
                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                  Our sponsor lineup for this season starts with a new Gold sponsor,
-                  continues with trusted returning support, and adds event energy
-                  through our DJ partner.
+                  Our sponsor lineup for the 2026 campaign starts with a new Gold
+                  sponsor, continues with trusted returning support, and adds event
+                  energy through our DJ partner.
                 </p>
               </div>
 
