@@ -72,6 +72,9 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [playerName, setPlayerName] = useState(waiver?.playerName ?? "");
+  const [cricclubsId, setCricclubsId] = useState(waiver?.cricclubsId ?? "");
+  const [city, setCity] = useState(waiver?.city ?? "");
+  const [address, setAddress] = useState(waiver?.address ?? "");
   const [signatureName, setSignatureName] = useState(
     waiver?.signatureName ?? "",
   );
@@ -179,7 +182,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <Input
                 id="cricclubsId"
                 name="cricclubsId"
-                defaultValue={waiver?.cricclubsId ?? ""}
+                value={cricclubsId}
+                onChange={(event) => setCricclubsId(event.target.value)}
                 required
                 disabled={Boolean(waiver)}
               />
@@ -192,7 +196,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <Input
                 id="city"
                 name="city"
-                defaultValue={waiver?.city ?? ""}
+                value={city}
+                onChange={(event) => setCity(event.target.value)}
                 required
                 disabled={Boolean(waiver)}
               />
@@ -205,7 +210,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <Input
                 id="address"
                 name="address"
-                defaultValue={waiver?.address ?? ""}
+                value={address}
+                onChange={(event) => setAddress(event.target.value)}
                 required
                 placeholder="Street address"
                 disabled={Boolean(waiver)}

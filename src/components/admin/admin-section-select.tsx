@@ -28,25 +28,28 @@ export function AdminSectionSelect({ value }: AdminSectionSelectProps) {
 
   return (
     <div className="max-w-xs">
-      <Select
-        value={value}
-        onValueChange={(nextValue) => {
-          const params = new URLSearchParams(searchParams.toString());
-          params.set("section", nextValue);
-          router.replace(`${pathname}?${params.toString()}`);
-        }}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Select a section" />
-        </SelectTrigger>
-        <SelectContent>
-          {SECTION_OPTIONS.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div>
+        <h1 className="mb-2 text-md">Select Section</h1>
+        <Select
+          value={value}
+          onValueChange={(nextValue) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("section", nextValue);
+            router.replace(`${pathname}?${params.toString()}`);
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a section" />
+          </SelectTrigger>
+          <SelectContent>
+            {SECTION_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
