@@ -41,6 +41,19 @@ export async function upsertMyUmpiringTrainingRegistration(
     };
   }
 
+  const existing = await prisma.umpiringTraining.findUnique({
+    where: { userProfileId: profile.id },
+    select: { result: true },
+  });
+  if (existing?.result === "PASS") {
+    return {
+      status: "error",
+      fieldErrors: {
+        form: "You have already passed the umpiring exam and cannot register again.",
+      },
+    };
+  }
+
   await prisma.umpiringTraining.upsert({
     where: { userProfileId: profile.id },
     create: {

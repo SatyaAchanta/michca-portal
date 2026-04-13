@@ -71,7 +71,9 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
   const [dietaryPreference, setDietaryPreference] = useState<DietaryPreferenceValue | "">(
     defaults.dietaryPreference
   );
-
+  const [contactNumber, setContactNumber] = useState(registration?.contactNumber ?? "");
+  const [affiliation, setAffiliation] = useState(registration?.affiliation ?? "");
+  const [questions, setQuestions] = useState(registration?.questions ?? "");
   return (
     <form action={formAction} className="space-y-4">
       <RegistrationFields
@@ -81,19 +83,22 @@ export function RegistrationForm({ profile, registration }: RegistrationFormProp
           email: profile.email,
         }}
         values={{
-          contactNumber: registration?.contactNumber ?? "",
-          affiliation: registration?.affiliation ?? "",
+          contactNumber,
+          affiliation,
           preferredDates,
           preferredLocation,
           dietaryPreference,
           previouslyCertified,
-          questions: registration?.questions ?? "",
+          questions,
         }}
         fieldErrors={state.fieldErrors}
         onPreferredDatesChange={setPreferredDates}
         onPreferredLocationChange={setPreferredLocation}
         onDietaryPreferenceChange={setDietaryPreference}
         onPreviouslyCertifiedChange={setPreviouslyCertified}
+        onContactNumberChange={setContactNumber}
+        onAffiliationChange={setAffiliation}
+        onQuestionsChange={setQuestions}
       />
 
       {state.fieldErrors.form ? (

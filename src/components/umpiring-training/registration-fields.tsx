@@ -39,6 +39,9 @@ type RegistrationFieldsProps = {
   onPreferredLocationChange: (value: string) => void;
   onDietaryPreferenceChange: (value: DietaryPreferenceValue) => void;
   onPreviouslyCertifiedChange: (value: string) => void;
+  onContactNumberChange: (value: string) => void;
+  onAffiliationChange: (value: string) => void;
+  onQuestionsChange: (value: string) => void;
 };
 
 function FieldError({ message }: { message?: string }) {
@@ -57,6 +60,9 @@ export function RegistrationFields({
   onPreferredLocationChange,
   onDietaryPreferenceChange,
   onPreviouslyCertifiedChange,
+  onContactNumberChange,
+  onAffiliationChange,
+  onQuestionsChange,
 }: RegistrationFieldsProps) {
   const togglePreferredDate = (dateValue: UmpiringTrainingDateOptionValue) => {
     const hasDate = values.preferredDates.includes(dateValue);
@@ -92,7 +98,8 @@ export function RegistrationFields({
           id="contactNumber"
           name="contactNumber"
           required
-          defaultValue={values.contactNumber}
+          value={values.contactNumber}
+          onChange={(e) => onContactNumberChange(e.target.value)}
           placeholder="Enter contact number"
         />
         <FieldError message={fieldErrors.contactNumber} />
@@ -144,7 +151,8 @@ export function RegistrationFields({
         <Input
           id="affiliation"
           name="affiliation"
-          defaultValue={values.affiliation}
+          value={values.affiliation}
+          onChange={(e) => onAffiliationChange(e.target.value)}
           placeholder="Optional"
         />
       </div>
@@ -195,7 +203,8 @@ export function RegistrationFields({
         <Textarea
           id="questions"
           name="questions"
-          defaultValue={values.questions}
+          value={values.questions}
+          onChange={(e) => onQuestionsChange(e.target.value)}
           placeholder="Please add any dietary restrictions, accessibility needs, or questions you have about the training."
           rows={4}
         />
