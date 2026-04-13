@@ -46,11 +46,11 @@ export default function HomePage() {
     <>
       <div className="bg-background">
         {/* Homepage Banner */}
-        <PageContainer className="pt-6">
+        {/* <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
             <RegistrationBanner />
           </div>
-        </PageContainer>
+        </PageContainer> */}
 
         {/* Sponsor Section */}
         <div className="relative bg-gradient-to-b from-background via-primary/5 to-primary/10 py-20">
@@ -65,8 +65,9 @@ export default function HomePage() {
                   <span className="whitespace-nowrap">2026 season</span>
                 </h1>
                 <p className="text-sm leading-7 text-muted-foreground sm:text-base">
-                  Our sponsor lineup for the 2026 campaign is led by two Gold Sponsors and backed
-                  by an event partner helping shape the atmosphere around the season.
+                  Our sponsor lineup for the 2026 campaign is led by two Gold
+                  Sponsors and backed by an event partner helping shape the
+                  atmosphere around the season.
                 </p>
               </div>
 
@@ -85,7 +86,8 @@ export default function HomePage() {
                           {sponsor.name}
                         </h2>
                         <p className="max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-                          {featuredSponsorSummaries[sponsor.name] ?? sponsor.homeDescription}
+                          {featuredSponsorSummaries[sponsor.name] ??
+                            sponsor.homeDescription}
                         </p>
                       </div>
                       {sponsor.offers?.length ? (
@@ -101,17 +103,25 @@ export default function HomePage() {
                         </div>
                       ) : (
                         <div className="rounded-2xl border border-amber-500/20 bg-background/70 p-4">
-                          <p className="text-sm font-medium text-foreground">Partnership focus</p>
+                          <p className="text-sm font-medium text-foreground">
+                            Partnership focus
+                          </p>
                           <p className="mt-3 text-sm text-muted-foreground">
-                            Supporting Mich-CA through technology, operations, and long-term
-                            league growth.
+                            Supporting Mich-CA through technology, operations,
+                            and long-term league growth.
                           </p>
                         </div>
                       )}
                       <div className="flex flex-wrap items-center gap-3">
                         <Button asChild size="lg">
-                          <Link href={sponsor.href ?? "#"} target="_blank" rel="noreferrer">
-                            {sponsor.name === "Lincode" ? "Visit Lincode" : "Visit Authentikka Wixom"}
+                          <Link
+                            href={sponsor.href ?? "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {sponsor.name === "Lincode"
+                              ? "Visit Lincode"
+                              : "Visit Authentikka Wixom"}
                           </Link>
                         </Button>
                         <p className="text-sm font-medium text-foreground">
@@ -186,12 +196,13 @@ export default function HomePage() {
                       2025 Season History
                     </p>
                     <h2 className="text-2xl font-semibold text-foreground">
-                      Explore last season&apos;s champions and runners-up archive
+                      Explore last season&apos;s champions and runners-up
+                      archive
                     </h2>
                     <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                      The 2025 photo gallery now lives on a dedicated history page
-                      so the homepage can stay focused on this season&apos;s sponsors
-                      and league updates.
+                      The 2025 photo gallery now lives on a dedicated history
+                      page so the homepage can stay focused on this
+                      season&apos;s sponsors and league updates.
                     </p>
                   </div>
                   <Button asChild size="lg" variant="outline">
