@@ -1,5 +1,5 @@
 import {
-  UMPIRING_DATE_OPTIONS,
+  UMPIRING_ALL_DATE_OPTIONS,
   UMPIRING_LOCATION_OPTIONS,
   type UmpiringTrainingDateOptionValue,
   type UmpiringTrainingResultValue,
@@ -11,7 +11,7 @@ export function formatPreferredDates(values: UmpiringTrainingDateOptionValue[]) 
   }
 
   return values
-    .map((value) => UMPIRING_DATE_OPTIONS.find((option) => option.value === value)?.label ?? value)
+    .map((value) => UMPIRING_ALL_DATE_OPTIONS.find((option) => option.value === value)?.label ?? value)
     .join(", ");
 }
 
@@ -24,7 +24,7 @@ export function parseDateFilterParam(input: string | undefined) {
     .split(",")
     .map((value) => value.trim())
     .filter((value): value is UmpiringTrainingDateOptionValue =>
-      UMPIRING_DATE_OPTIONS.some((option) => option.value === value)
+      UMPIRING_ALL_DATE_OPTIONS.some((option) => option.value === value)
     );
 
   return Array.from(new Set(values));

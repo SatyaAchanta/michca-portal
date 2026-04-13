@@ -1,9 +1,18 @@
 export const UMPIRING_DATE_OPTIONS = [
+  { value: "APRIL_25_2026", label: "April 25, 2026" },
+  { value: "APRIL_26_2026", label: "April 26, 2026" },
+] as const;
+
+// All historical + current date options — used in admin filters and formatters
+export const UMPIRING_ALL_DATE_OPTIONS = [
   { value: "MARCH_28_2026", label: "March 28, 2026" },
   { value: "MARCH_29_2026", label: "March 29, 2026" },
+  { value: "APRIL_25_2026", label: "April 25, 2026" },
+  { value: "APRIL_26_2026", label: "April 26, 2026" },
 ] as const;
+
 export type UmpiringTrainingDateOptionValue =
-  (typeof UMPIRING_DATE_OPTIONS)[number]["value"];
+  (typeof UMPIRING_ALL_DATE_OPTIONS)[number]["value"];
 
 export const UMPIRING_LOCATION_OPTIONS = [
   "Troy",

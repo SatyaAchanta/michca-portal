@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  UMPIRING_DATE_OPTIONS,
+  UMPIRING_ALL_DATE_OPTIONS,
   UMPIRING_LOCATION_OPTIONS,
   type UmpiringTrainingDateOptionValue,
 } from "@/components/umpiring-training/validation";
@@ -25,21 +25,29 @@ function toggleValue(values: string[], value: string) {
   return [...values, value];
 }
 
-export function AdminFilters({ initialDates, initialLocations }: AdminFiltersProps) {
+export function AdminFilters({
+  initialDates,
+  initialLocations,
+}: AdminFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedDates, setSelectedDates] = useState<UmpiringTrainingDateOptionValue[]>(
-    initialDates
-  );
-  const [selectedLocations, setSelectedLocations] = useState<string[]>(initialLocations);
+  const searchParams = useSearchParams();
+  const [selectedDates, setSelectedDates] =
+    useState<UmpiringTrainingDateOptionValue[]>(initialDates);
+  const [selectedLocations, setSelectedLocations] =
+    useState<string[]>(initialLocations);
 
   const applyFilters = () => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams.toString());
     if (selectedDates.length > 0) {
       params.set("dates", serializeFilterValues(selectedDates));
+    } else {
+      params.delete("dates");
     }
     if (selectedLocations.length > 0) {
       params.set("locations", serializeFilterValues(selectedLocations));
+    } else {
+      params.delete("locations");
     }
     const query = params.toString();
     router.push(query ? `${pathname}?${query}` : pathname);
@@ -48,7 +56,11 @@ export function AdminFilters({ initialDates, initialLocations }: AdminFiltersPro
   const clearFilters = () => {
     setSelectedDates([]);
     setSelectedLocations([]);
-    router.push(pathname);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("dates");
+    params.delete("locations");
+    const query = params.toString();
+    router.push(query ? `${pathname}?${query}` : pathname);
   };
 
   return (
@@ -57,13 +69,20 @@ export function AdminFilters({ initialDates, initialLocations }: AdminFiltersPro
         <div className="space-y-2">
           <p className="text-sm font-medium">Filter by Dates</p>
           <div className="space-y-2">
-            {UMPIRING_DATE_OPTIONS.map((option) => (
-              <label key={option.value} className="flex items-center gap-2 text-sm">
+            {UMPIRING_ALL_DATE_OPTIONS.map((option) => (
+              <label
+                key={option.value}
+                className="flex items-center gap-2 text-sm"
+              >
                 <Checkbox
                   checked={selectedDates.includes(option.value)}
                   onCheckedChange={() =>
-                    setSelectedDates((prev) =>
-                      toggleValue(prev, option.value) as UmpiringTrainingDateOptionValue[]
+                    setSelectedDates(
+                      (prev) =>
+                        toggleValue(
+                          prev,
+                          option.value,
+                        ) as UmpiringTrainingDateOptionValue[],
                     )
                   }
                 />
@@ -95,11 +114,15 @@ export function AdminFilters({ initialDates, initialLocations }: AdminFiltersPro
         <Button type="button" size="sm" onClick={applyFilters}>
           Apply
         </Button>
-        <Button type="button" size="sm" variant="outline" onClick={clearFilters}>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          onClick={clearFilters}
+        >
           Clear Filters
         </Button>
       </div>
     </Card>
   );
 }
-

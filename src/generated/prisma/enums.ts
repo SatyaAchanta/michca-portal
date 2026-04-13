@@ -107,7 +107,9 @@ export type DietaryPreference = (typeof DietaryPreference)[keyof typeof DietaryP
 
 export const UmpiringTrainingDateOption = {
   MARCH_28_2026: 'MARCH_28_2026',
-  MARCH_29_2026: 'MARCH_29_2026'
+  MARCH_29_2026: 'MARCH_29_2026',
+  APRIL_25_2026: 'APRIL_25_2026',
+  APRIL_26_2026: 'APRIL_26_2026'
 } as const
 
 export type UmpiringTrainingDateOption = (typeof UmpiringTrainingDateOption)[keyof typeof UmpiringTrainingDateOption]
