@@ -5,8 +5,8 @@ import { auth } from "@clerk/nextjs/server";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next";
-import { UserRole } from "@/generated/prisma/client";
 import { getOrCreateCurrentUserProfile } from "@/lib/user-profile";
+import { isAnyAdminRole } from "@/lib/roles";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -46,7 +46,7 @@ export default async function RootLayout({
   if (userId) {
     try {
       const profile = await getOrCreateCurrentUserProfile();
-      isAdmin = profile.role === UserRole.ADMIN;
+      isAdmin = isAnyAdminRole(profile.role);
     } catch {
       isAdmin = false;
     }

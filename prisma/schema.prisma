@@ -42,6 +42,8 @@ enum UserRole {
   PLAYER
   UMPIRE
   ADMIN
+  UMPIRING_COMMITTEE
+  WAIVER_COMMITTEE
 }
 
 enum UmpiringTrainingResult {

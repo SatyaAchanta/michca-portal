@@ -4,7 +4,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 
 import { UserRole, type UserProfile } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { hasRoleAtLeast } from "@/lib/roles";
+import { hasRoleAtLeast, isAnyAdminRole } from "@/lib/roles";
 
 export class AuthenticationRequiredError extends Error {
   constructor(message = "Authentication required") {
@@ -34,8 +34,30 @@ function getAdminAllowlist() {
     .filter(Boolean);
 }
 
+function getUmpiringCommitteeAllowlist() {
+  return (process.env.UMPIRING_COMMITTEE_EMAIL_ALLOWLIST ?? "")
+    .split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function getWaiverCommitteeAllowlist() {
+  return (process.env.WAIVER_COMMITTEE_EMAIL_ALLOWLIST ?? "")
+    .split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 export function isAdminAllowlisted(email: string) {
   return getAdminAllowlist().includes(normalizeEmail(email));
+}
+
+function resolveRoleForEmail(email: string): UserRole {
+  const normalized = normalizeEmail(email);
+  if (getAdminAllowlist().includes(normalized)) return UserRole.ADMIN;
+  if (getUmpiringCommitteeAllowlist().includes(normalized)) return UserRole.UMPIRING_COMMITTEE;
+  if (getWaiverCommitteeAllowlist().includes(normalized)) return UserRole.WAIVER_COMMITTEE;
+  return UserRole.PLAYER;
 }
 
 function getPrimaryEmail(user: Awaited<ReturnType<typeof currentUser>>) {
@@ -70,7 +92,7 @@ export async function getOrCreateCurrentUserProfile(): Promise<UserProfile> {
   const email = normalizeEmail(rawEmail);
   const firstName = clerkUser.firstName ?? null;
   const lastName = clerkUser.lastName ?? null;
-  const shouldBeAdmin = isAdminAllowlisted(email);
+  const allowlistRole = resolveRoleForEmail(email);
 
   const existing = await prisma.userProfile.findUnique({
     where: { clerkUserId: userId },
@@ -83,12 +105,12 @@ export async function getOrCreateCurrentUserProfile(): Promise<UserProfile> {
         email,
         firstName,
         lastName,
-        role: shouldBeAdmin ? UserRole.ADMIN : UserRole.PLAYER,
+        role: allowlistRole,
       },
     });
   }
 
-  const roleNeedsPromotion = shouldBeAdmin && existing.role !== UserRole.ADMIN;
+  const roleNeedsUpdate = allowlistRole !== UserRole.PLAYER && existing.role !== allowlistRole;
 
   // Only sync email and role from Clerk. firstName/lastName are managed by
   // the user via the account form and should not be overwritten here.
@@ -96,7 +118,7 @@ export async function getOrCreateCurrentUserProfile(): Promise<UserProfile> {
     where: { id: existing.id },
     data: {
       email,
-      ...(roleNeedsPromotion ? { role: UserRole.ADMIN } : {}),
+      ...(roleNeedsUpdate ? { role: allowlistRole } : {}),
     },
   });
 }
@@ -105,6 +127,14 @@ export async function requireRole(minRole: UserRole): Promise<UserProfile> {
   const profile = await getOrCreateCurrentUserProfile();
   if (!hasRoleAtLeast(profile.role, minRole)) {
     throw new InsufficientRoleError(profile.role, minRole);
+  }
+  return profile;
+}
+
+export async function requireAnyAdminRole(): Promise<UserProfile> {
+  const profile = await getOrCreateCurrentUserProfile();
+  if (!isAnyAdminRole(profile.role)) {
+    throw new InsufficientRoleError(profile.role, UserRole.ADMIN);
   }
   return profile;
 }
