@@ -46,11 +46,11 @@ export default function HomePage() {
     <>
       <div className="bg-background">
         {/* Homepage Banner */}
-        {/* <PageContainer className="pt-6">
+        <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
             <RegistrationBanner />
           </div>
-        </PageContainer> */}
+        </PageContainer>
 
         {/* Sponsor Section */}
         <div className="relative bg-gradient-to-b from-background via-primary/5 to-primary/10 py-20">

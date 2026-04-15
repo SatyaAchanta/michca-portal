@@ -136,7 +136,12 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
-    if (!submitAcknowledgement || !rulebookAcknowledgement || showNameMismatch || waiver) {
+    if (
+      !submitAcknowledgement ||
+      !rulebookAcknowledgement ||
+      showNameMismatch ||
+      waiver
+    ) {
       return;
     }
 
@@ -468,12 +473,16 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 and understand all the conditions.
               </span>
             </label>
-            <FieldError message={formState.fieldErrors.rulebookAcknowledgement} />
+            <FieldError
+              message={formState.fieldErrors.rulebookAcknowledgement}
+            />
           </div>
         </Card>
 
         {formState.fieldErrors.form ? (
-          <p className="text-sm text-destructive">{formState.fieldErrors.form}</p>
+          <p className="text-sm text-destructive">
+            {formState.fieldErrors.form}
+          </p>
         ) : null}
         {formState.message ? (
           <p
@@ -491,7 +500,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
           <Card className="border-amber-500/30 bg-amber-500/5 p-4">
             <p className="text-sm text-muted-foreground">
               You have already submitted waiver. If you need to re-submit with
-              updated acknowledgments, contact Stats Committee to reset it.
+              updated acknowledgments, contact Waiver Committee to reset it.
             </p>
           </Card>
         ) : (
