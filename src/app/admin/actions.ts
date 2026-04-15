@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
-import { Prisma, UserRole } from "@/generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
-  requireRole,
+  requireAnyAdminRole,
 } from "@/lib/user-profile";
 import { prisma } from "@/lib/prisma";
 import {
@@ -34,8 +34,9 @@ export async function getAdminRegistrations({
     redirect("/sign-in");
   }
 
+  let userProfile;
   try {
-    await requireRole(UserRole.ADMIN);
+    userProfile = await requireAnyAdminRole();
   } catch (error) {
     if (error instanceof AuthenticationRequiredError) {
       redirect("/sign-in");
@@ -116,5 +117,6 @@ export async function getAdminRegistrations({
     selectedWaiverDivision,
     selectedWaiverTeamCode,
     selectedWaiverPlayerName,
+    userRole: userProfile.role,
   };
 }

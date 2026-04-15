@@ -55,7 +55,9 @@ export type GameStatus = (typeof GameStatus)[keyof typeof GameStatus]
 export const UserRole = {
   PLAYER: 'PLAYER',
   UMPIRE: 'UMPIRE',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  UMPIRING_COMMITTEE: 'UMPIRING_COMMITTEE',
+  WAIVER_COMMITTEE: 'WAIVER_COMMITTEE'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]

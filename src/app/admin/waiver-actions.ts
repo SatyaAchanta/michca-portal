@@ -1,13 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { UserRole } from "@/generated/prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
-  requireRole,
+  requireAnyAdminRole,
 } from "@/lib/user-profile";
 
 type DeleteWaiverState = {
@@ -20,7 +19,7 @@ export async function deleteWaiverSubmission(
   formData: FormData
 ): Promise<DeleteWaiverState> {
   try {
-    await requireRole(UserRole.ADMIN);
+    await requireAnyAdminRole();
   } catch (error) {
     if (error instanceof AuthenticationRequiredError || error instanceof InsufficientRoleError) {
       return {
