@@ -103,12 +103,14 @@ const waiverContent = (
 type WaiverPageSubmission = {
   playerName: string;
   cricclubsId: string;
+  state: string | null;
   city: string;
   address: string | null;
   t20Division: string | null;
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
+  role: string | null;
   signatureName: string;
   submittedAt: string;
 };
@@ -142,12 +144,14 @@ export default async function WaiverPage() {
       select: {
         playerName: true,
         cricclubsId: true,
+        state: true,
         city: true,
         address: true,
         t20Division: true,
         t20TeamCode: true,
         secondaryDivision: true,
         secondaryTeamCode: true,
+        role: true,
         signatureName: true,
         submittedAt: true,
       },
@@ -165,6 +169,7 @@ export default async function WaiverPage() {
     ? {
         playerName: waiver.playerName,
         cricclubsId: waiver.cricclubsId,
+        state: waiver.state,
         city: waiver.city,
         address: waiver.address,
         t20Division: waiver.t20Division,
@@ -172,6 +177,7 @@ export default async function WaiverPage() {
         secondaryDivision:
           waiver.secondaryDivision as SecondaryDivisionValue | null,
         secondaryTeamCode: waiver.secondaryTeamCode,
+        role: waiver.role,
         signatureName: waiver.signatureName,
         submittedAt: waiver.submittedAt.toISOString(),
       }

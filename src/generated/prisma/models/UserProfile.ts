@@ -33,6 +33,9 @@ export type UserProfileMinAggregateOutputType = {
   notificationsEnabled: boolean | null
   newsletterSubscribed: boolean | null
   role: $Enums.UserRole | null
+  t20TeamCode: string | null
+  secondaryTeamCode: string | null
+  playingRole: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +49,9 @@ export type UserProfileMaxAggregateOutputType = {
   notificationsEnabled: boolean | null
   newsletterSubscribed: boolean | null
   role: $Enums.UserRole | null
+  t20TeamCode: string | null
+  secondaryTeamCode: string | null
+  playingRole: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +65,9 @@ export type UserProfileCountAggregateOutputType = {
   notificationsEnabled: number
   newsletterSubscribed: number
   role: number
+  t20TeamCode: number
+  secondaryTeamCode: number
+  playingRole: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,6 +83,9 @@ export type UserProfileMinAggregateInputType = {
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
+  t20TeamCode?: true
+  secondaryTeamCode?: true
+  playingRole?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,6 +99,9 @@ export type UserProfileMaxAggregateInputType = {
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
+  t20TeamCode?: true
+  secondaryTeamCode?: true
+  playingRole?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +115,9 @@ export type UserProfileCountAggregateInputType = {
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
+  t20TeamCode?: true
+  secondaryTeamCode?: true
+  playingRole?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -186,6 +204,9 @@ export type UserProfileGroupByOutputType = {
   notificationsEnabled: boolean
   newsletterSubscribed: boolean
   role: $Enums.UserRole
+  t20TeamCode: string | null
+  secondaryTeamCode: string | null
+  playingRole: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserProfileCountAggregateOutputType | null
@@ -220,6 +241,9 @@ export type UserProfileWhereInput = {
   notificationsEnabled?: Prisma.BoolFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleFilter<"UserProfile"> | $Enums.UserRole
+  t20TeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  playingRole?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
@@ -242,6 +266,9 @@ export type UserProfileOrderByWithRelationInput = {
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  playingRole?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
@@ -267,6 +294,9 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   notificationsEnabled?: Prisma.BoolFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleFilter<"UserProfile"> | $Enums.UserRole
+  t20TeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  playingRole?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
@@ -289,6 +319,9 @@ export type UserProfileOrderByWithAggregationInput = {
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  playingRole?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserProfileCountOrderByAggregateInput
@@ -308,6 +341,9 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   notificationsEnabled?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"UserProfile"> | $Enums.UserRole
+  t20TeamCode?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+  secondaryTeamCode?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+  playingRole?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
 }
@@ -321,6 +357,9 @@ export type UserProfileCreateInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -343,6 +382,9 @@ export type UserProfileUncheckedCreateInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -365,6 +407,9 @@ export type UserProfileUpdateInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -387,6 +432,9 @@ export type UserProfileUncheckedUpdateInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -409,6 +457,9 @@ export type UserProfileCreateManyInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -422,6 +473,9 @@ export type UserProfileUpdateManyMutationInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,6 +489,9 @@ export type UserProfileUncheckedUpdateManyInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +510,9 @@ export type UserProfileCountOrderByAggregateInput = {
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrder
+  playingRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -466,6 +526,9 @@ export type UserProfileMaxOrderByAggregateInput = {
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrder
+  playingRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -479,6 +542,9 @@ export type UserProfileMinOrderByAggregateInput = {
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  t20TeamCode?: Prisma.SortOrder
+  secondaryTeamCode?: Prisma.SortOrder
+  playingRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -631,6 +697,9 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -652,6 +721,9 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -678,6 +750,9 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -699,6 +774,9 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -736,6 +814,9 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -757,6 +838,9 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -789,6 +873,9 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -810,6 +897,9 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -831,6 +921,9 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -852,6 +945,9 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -889,6 +985,9 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -910,6 +1009,9 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -931,6 +1033,9 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -952,6 +1057,9 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -989,6 +1097,9 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1010,6 +1121,9 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1031,6 +1145,9 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1052,6 +1169,9 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1089,6 +1209,9 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1110,6 +1233,9 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1131,6 +1257,9 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
@@ -1152,6 +1281,9 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
@@ -1189,6 +1321,9 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
@@ -1210,6 +1345,9 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
@@ -1231,6 +1369,9 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1252,6 +1393,9 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1289,6 +1433,9 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1310,6 +1457,9 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1331,6 +1481,9 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1352,6 +1505,9 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1389,6 +1545,9 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1410,6 +1569,9 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1431,6 +1593,9 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1452,6 +1617,9 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1489,6 +1657,9 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1510,6 +1681,9 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1616,6 +1790,9 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
+  t20TeamCode?: boolean
+  secondaryTeamCode?: boolean
+  playingRole?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
@@ -1639,6 +1816,9 @@ export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
+  t20TeamCode?: boolean
+  secondaryTeamCode?: boolean
+  playingRole?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["userProfile"]>
@@ -1652,6 +1832,9 @@ export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
+  t20TeamCode?: boolean
+  secondaryTeamCode?: boolean
+  playingRole?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["userProfile"]>
@@ -1665,11 +1848,14 @@ export type UserProfileSelectScalar = {
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
+  t20TeamCode?: boolean
+  secondaryTeamCode?: boolean
+  playingRole?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
+export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "t20TeamCode" | "secondaryTeamCode" | "playingRole" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
@@ -1707,6 +1893,9 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     notificationsEnabled: boolean
     newsletterSubscribed: boolean
     role: $Enums.UserRole
+    t20TeamCode: string | null
+    secondaryTeamCode: string | null
+    playingRole: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userProfile"]>
@@ -2149,6 +2338,9 @@ export interface UserProfileFieldRefs {
   readonly notificationsEnabled: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly newsletterSubscribed: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly role: Prisma.FieldRef<"UserProfile", 'UserRole'>
+  readonly t20TeamCode: Prisma.FieldRef<"UserProfile", 'String'>
+  readonly secondaryTeamCode: Prisma.FieldRef<"UserProfile", 'String'>
+  readonly playingRole: Prisma.FieldRef<"UserProfile", 'String'>
   readonly createdAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
 }

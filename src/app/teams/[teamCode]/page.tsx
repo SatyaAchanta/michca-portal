@@ -33,6 +33,10 @@ function getPersonName(
   return fullName.length > 0 ? fullName : person.email;
 }
 
+function getPlayingRoleLabel(playingRole: string | null) {
+  return playingRole?.trim().length ? playingRole : "Not specified";
+}
+
 export async function generateMetadata({
   params,
 }: TeamDetailPageProps): Promise<Metadata> {
@@ -216,6 +220,35 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
             </CardContent>
           </Card>
         </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Players</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {team.players.length > 0 ? (
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {team.players.map((player) => (
+                  <div
+                    key={player.id}
+                    className="rounded-xl border border-border/70 p-4"
+                  >
+                    <p className="font-medium text-foreground">
+                      {getPersonName(player)}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Playing role: {getPlayingRoleLabel(player.playingRole)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                No current players have selected this team yet.
+              </p>
+            )}
+          </CardContent>
+        </Card>
       </PageContainer>
     </div>
   );

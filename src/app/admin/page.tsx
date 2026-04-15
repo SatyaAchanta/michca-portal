@@ -528,6 +528,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           <th className="px-4 py-3 font-medium">
                             CricClubs ID
                           </th>
+                          <th className="px-4 py-3 font-medium">State</th>
                           <th className="px-4 py-3 font-medium">City</th>
                           <th className="px-4 py-3 font-medium">Address</th>
                           <th className="px-4 py-3 font-medium">
@@ -538,6 +539,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           <th className="px-4 py-3 font-medium">
                             F40/T30 Team
                           </th>
+                          <th className="px-4 py-3 font-medium">Role</th>
                           <th className="px-4 py-3 font-medium">Year</th>
                           <th className="px-4 py-3 font-medium">Submitted</th>
                           <th className="px-4 py-3 font-medium">Actions</th>
@@ -556,6 +558,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {waiver.userProfile.email}
                             </td>
                             <td className="px-4 py-3">{waiver.cricclubsId}</td>
+                            <td className="px-4 py-3">{waiver.state ?? "N/A"}</td>
                             <td className="px-4 py-3">{waiver.city}</td>
                             <td className="px-4 py-3">{waiver.address}</td>
                             <td className="px-4 py-3">
@@ -574,6 +577,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 waiver.secondaryTeamCode ??
                                 "N/A"}
                             </td>
+                            <td className="px-4 py-3">{waiver.role ?? "N/A"}</td>
                             <td className="px-4 py-3">{waiver.year}</td>
                             <td className="px-4 py-3 whitespace-nowrap">
                               {formatSubmittedDate(waiver.submittedAt)}
@@ -623,6 +627,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">
+                                    State
+                                  </span>
+                                  <span>{waiver.state ?? "N/A"}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
                                     City
                                   </span>
                                   <span>{waiver.city}</span>
@@ -652,6 +662,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                       waiver.secondaryTeamCode ??
                                       "N/A"}
                                   </span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
+                                    Role
+                                  </span>
+                                  <span>{waiver.role ?? "N/A"}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">

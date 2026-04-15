@@ -96,10 +96,12 @@ export async function getWaiverAdminData(filters?: {
       id: true,
       playerName: true,
       cricclubsId: true,
+      state: true,
       city: true,
       address: true,
       t20Division: true,
       secondaryDivision: true,
+      role: true,
       year: true,
       submittedAt: true,
       userProfile: {

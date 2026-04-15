@@ -146,6 +146,9 @@ model UserProfile {
   notificationsEnabled          Boolean                   @default(true)
   newsletterSubscribed          Boolean                   @default(false)
   role                          UserRole                  @default(PLAYER)
+  t20TeamCode                   String?
+  secondaryTeamCode             String?
+  playingRole                   String?
   createdAt                     DateTime                  @default(now())
   updatedAt                     DateTime                  @updatedAt
   umpireAssignments             UmpireAssignment[]
@@ -160,6 +163,9 @@ model UserProfile {
 
   @@index([email])
   @@index([role])
+  @@index([t20TeamCode])
+  @@index([secondaryTeamCode])
+  @@index([playingRole])
 }
 
 model UmpiringTraining {
@@ -208,14 +214,17 @@ model WaiverSubmission {
   userProfileId          String
   playerName             String
   cricclubsId            String
+  state                  String?
   city                   String
   address                String?
   t20Division            String?
   t20TeamCode            String?
   secondaryDivision      String?
   secondaryTeamCode      String?
+  role                   String?
   signatureName          String
   acknowledgedSubmitText String
+  acknowledgedRulebookText String?
   year                   Int
   submittedAt            DateTime
   createdAt              DateTime    @default(now())

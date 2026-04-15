@@ -61,10 +61,12 @@ describe("getWaiverAdminData", () => {
         id: "w1",
         playerName: "Rohan Patel",
         cricclubsId: "123",
+        state: "Michigan",
         city: "Troy",
         address: "123 Main St",
         t20Division: "Premier",
         secondaryDivision: "T30",
+        role: "Bowler",
         year: new Date().getFullYear(),
         submittedAt: new Date("2026-04-12T10:00:00.000Z"),
         userProfile: { email: "rohan@example.com" },
@@ -101,7 +103,9 @@ describe("getWaiverAdminData", () => {
       })
     );
     expect(result.count).toBe(1);
+    expect(result.rows[0]?.state).toBe("Michigan");
     expect(result.rows[0]?.t20Team?.teamName).toBe("Michigan OCC");
     expect(result.rows[0]?.secondaryTeam?.teamName).toBe("Michigan OCC T30");
+    expect(result.rows[0]?.role).toBe("Bowler");
   });
 });

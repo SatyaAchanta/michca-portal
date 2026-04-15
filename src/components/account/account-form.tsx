@@ -29,6 +29,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { UserProfile } from "@/generated/prisma/client";
 import type { UpdateProfileState } from "@/app/account/actions";
 import type { UmpiringTrainingResult } from "@/generated/prisma/client";
@@ -37,19 +44,31 @@ import {
   formatResultLabel,
   resultBadgeClass,
 } from "@/components/umpiring-training/admin-formatters";
+import { WAIVER_ROLE_OPTIONS } from "@/lib/waiver-constants";
 
 const INITIAL_UPDATE_STATE: UpdateProfileState = { status: "idle" };
+
+type TeamOption = {
+  teamCode: string;
+  teamName: string;
+  division: string;
+  format: string;
+};
 
 type AccountFormProps = {
   profile: UserProfile | null;
   umpiringResult: UmpiringTrainingResult | null;
+  teams: TeamOption[];
   waiverSubmission: {
     submittedAt: string;
+    state: string | null;
+    city: string;
     address: string | null;
     t20Division: string | null;
     secondaryDivision: string | null;
     t20TeamCode: string | null;
     secondaryTeamCode: string | null;
+    role: string | null;
   } | null;
 };
 
@@ -95,6 +114,58 @@ function getResultPresentation(result: UmpiringTrainingResult) {
       "border-amber-500/20 bg-amber-500/12 text-amber-700 dark:text-amber-300",
     eyebrow: "Result in review",
   };
+}
+
+function getUmpiringMobileSummary(result: UmpiringTrainingResult | null) {
+  if (!result) {
+    return "No umpiring result yet.";
+  }
+
+  return `Umpiring result: ${formatResultLabel(result)}.`;
+}
+
+function getWaiverMobileSummary(
+  waiverSubmission: AccountFormProps["waiverSubmission"]
+) {
+  if (!waiverSubmission) {
+    return "Waiver not submitted yet.";
+  }
+
+  return `Waiver submitted on ${new Date(waiverSubmission.submittedAt).toLocaleDateString(
+    "en-US",
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }
+  )}.`;
+}
+
+function getMobileUmpiringSummaryClass(result: UmpiringTrainingResult | null) {
+  if (result === "PASS") {
+    return "border-green-500/25 bg-green-500/8";
+  }
+  if (result === "FAIL") {
+    return "border-red-500/25 bg-red-500/8";
+  }
+  if (result === "REAPPEAR") {
+    return "border-sky-500/25 bg-sky-500/8";
+  }
+  if (result === "PENDING") {
+    return "border-amber-500/25 bg-amber-500/8";
+  }
+
+  return "border-border/70 bg-card/80";
+}
+
+function getMobileWaiverSummaryClass(
+  waiverSubmission: AccountFormProps["waiverSubmission"]
+) {
+  if (waiverSubmission) {
+    return "border-sky-500/25 bg-sky-500/8";
+  }
+
+  return "border-amber-500/25 bg-amber-500/8";
 }
 
 function UmpiringExamStatus({
@@ -158,6 +229,39 @@ function UmpiringExamStatus({
   );
 }
 
+function MobileStatusSummary({
+  umpiringResult,
+  waiverSubmission,
+}: {
+  umpiringResult: UmpiringTrainingResult | null;
+  waiverSubmission: AccountFormProps["waiverSubmission"];
+}) {
+  return (
+    <div className="space-y-3 lg:hidden">
+      <div
+        className={`rounded-xl border px-4 py-3 text-sm ${getMobileUmpiringSummaryClass(
+          umpiringResult
+        )}`}
+      >
+        <p className="font-medium text-foreground">Umpiring</p>
+        <p className="text-muted-foreground">
+          {getUmpiringMobileSummary(umpiringResult)}
+        </p>
+      </div>
+      <div
+        className={`rounded-xl border px-4 py-3 text-sm ${getMobileWaiverSummaryClass(
+          waiverSubmission
+        )}`}
+      >
+        <p className="font-medium text-foreground">Waiver</p>
+        <p className="text-muted-foreground">
+          {getWaiverMobileSummary(waiverSubmission)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function WaiverStatus({
   waiverSubmission,
 }: {
@@ -204,6 +308,18 @@ function WaiverStatus({
       </CardHeader>
       <CardContent className="space-y-2 pt-0 text-sm text-muted-foreground">
         <p>
+          State:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.state ?? "-"}
+          </span>
+        </p>
+        <p>
+          City:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.city}
+          </span>
+        </p>
+        <p>
           Address:{" "}
           <span className="font-medium text-foreground">
             {waiverSubmission.address ?? "-"}
@@ -225,6 +341,12 @@ function WaiverStatus({
               : "N/A"}
           </span>
         </p>
+        <p>
+          Role:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.role ?? "-"}
+          </span>
+        </p>
       </CardContent>
     </Card>
   );
@@ -233,16 +355,26 @@ function WaiverStatus({
 export function AccountForm({
   profile,
   umpiringResult,
+  teams,
   waiverSubmission,
 }: AccountFormProps) {
   const [updateState, updateFormAction, isUpdatePending] = useActionState<
     UpdateProfileState,
     FormData
   >(updateProfile, INITIAL_UPDATE_STATE);
+  const [t20TeamCode, setT20TeamCode] = useState(profile?.t20TeamCode ?? "");
+  const [secondaryTeamCode, setSecondaryTeamCode] = useState(
+    profile?.secondaryTeamCode ?? ""
+  );
+  const [playingRole, setPlayingRole] = useState(profile?.playingRole ?? "");
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [isDeletePending, startDeleteTransition] = useTransition();
+  const t20Teams = teams.filter((team) => team.format === "T20");
+  const secondaryTeams = teams.filter(
+    (team) => team.format === "F40" || team.format === "T30"
+  );
 
   const handleDeleteConfirm = () => {
     setIsDeleteDialogOpen(false);
@@ -256,76 +388,145 @@ export function AccountForm({
   };
 
   return (
-    <div className="space-y-10">
-      <UmpiringExamStatus result={umpiringResult} />
-      <WaiverStatus waiverSubmission={waiverSubmission} />
+    <div className="space-y-8">
+      <MobileStatusSummary
+        umpiringResult={umpiringResult}
+        waiverSubmission={waiverSubmission}
+      />
 
-      {/* Profile section */}
-      <section>
-        <h2 className="text-xl font-semibold mb-1">Profile</h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Update your display name shown across the portal.
-        </p>
-        <form action={updateFormAction} className="space-y-4 max-w-md">
-          <div className="space-y-1.5">
-            <label htmlFor="firstName" className="text-sm font-medium">
-              First Name
-            </label>
-            <Input
-              id="firstName"
-              name="firstName"
-              defaultValue={profile?.firstName ?? ""}
-              placeholder="First name"
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label htmlFor="lastName" className="text-sm font-medium">
-              Last Name
-            </label>
-            <Input
-              id="lastName"
-              name="lastName"
-              defaultValue={profile?.lastName ?? ""}
-              placeholder="Last name"
-            />
-          </div>
-
-          {updateState.status === "success" && updateState.message && (
-            <p className="text-sm text-green-600 dark:text-green-400">
-              {updateState.message}
+      <div className="space-y-8 lg:grid lg:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.9fr)] lg:gap-12 lg:space-y-0 xl:gap-16">
+        <div className="min-w-0 space-y-8">
+          {/* Profile section */}
+          <section>
+            <h2 className="mb-1 text-xl font-semibold">Profile</h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Update your display name and current player information shown across the portal.
             </p>
-          )}
-          {updateState.status === "error" && updateState.message && (
-            <p className="text-sm text-destructive">{updateState.message}</p>
-          )}
+            <form action={updateFormAction} className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-1.5">
+                <label htmlFor="firstName" className="text-sm font-medium">
+                  First Name
+                </label>
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  defaultValue={profile?.firstName ?? ""}
+                  placeholder="First name"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label htmlFor="lastName" className="text-sm font-medium">
+                  Last Name
+                </label>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  defaultValue={profile?.lastName ?? ""}
+                  placeholder="Last name"
+                />
+              </div>
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="text-sm font-medium">Current T20 Team</label>
+                <input type="hidden" name="t20TeamCode" value={t20TeamCode} />
+                <Select value={t20TeamCode} onValueChange={setT20TeamCode}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select current T20 team" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="NONE">N/A</SelectItem>
+                    {t20Teams.map((team) => (
+                      <SelectItem key={team.teamCode} value={team.teamCode}>
+                        {team.teamName} ({team.division})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="text-sm font-medium">Current F40/T30 Team</label>
+                <input
+                  type="hidden"
+                  name="secondaryTeamCode"
+                  value={secondaryTeamCode}
+                />
+                <Select
+                  value={secondaryTeamCode}
+                  onValueChange={setSecondaryTeamCode}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select current F40/T30 team" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="NONE">N/A</SelectItem>
+                    {secondaryTeams.map((team) => (
+                      <SelectItem key={team.teamCode} value={team.teamCode}>
+                        {team.teamName} ({team.format})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="text-sm font-medium">Playing Role</label>
+                <input type="hidden" name="playingRole" value={playingRole} />
+                <Select value={playingRole} onValueChange={setPlayingRole}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select playing role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="NONE">N/A</SelectItem>
+                    {WAIVER_ROLE_OPTIONS.map((roleOption) => (
+                      <SelectItem key={roleOption} value={roleOption}>
+                        {roleOption}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <Button type="submit" disabled={isUpdatePending}>
-            {isUpdatePending ? "Saving..." : "Save Changes"}
-          </Button>
-        </form>
-      </section>
+              {updateState.status === "success" && updateState.message && (
+                <p className="text-sm text-green-600 dark:text-green-400 md:col-span-2">
+                  {updateState.message}
+                </p>
+              )}
+              {updateState.status === "error" && updateState.message && (
+                <p className="text-sm text-destructive md:col-span-2">{updateState.message}</p>
+              )}
 
-      {/* Danger zone */}
-      <section className="border border-destructive/40 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-destructive mb-1">
-          Danger Zone
-        </h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Permanently deletes your account and all associated data —
-          registrations, umpiring assignments, and certification history. This
-          cannot be undone.
-        </p>
-        {deleteError && (
-          <p className="text-sm text-destructive mb-4">{deleteError}</p>
-        )}
-        <Button
-          variant="destructive"
-          disabled={isDeletePending}
-          onClick={() => setIsDeleteDialogOpen(true)}
-        >
-          {isDeletePending ? "Deleting..." : "Delete Account"}
-        </Button>
-      </section>
+              <Button type="submit" disabled={isUpdatePending} className="md:col-span-2 md:w-fit">
+                {isUpdatePending ? "Saving..." : "Save Changes"}
+              </Button>
+            </form>
+          </section>
+
+          {/* Danger zone */}
+          <section className="rounded-lg border border-destructive/40 p-6">
+            <h2 className="mb-1 text-xl font-semibold text-destructive">
+              Danger Zone
+            </h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Permanently deletes your account and all associated data —
+              registrations, umpiring assignments, and certification history. This
+              cannot be undone.
+            </p>
+            {deleteError && (
+              <p className="mb-4 text-sm text-destructive">{deleteError}</p>
+            )}
+            <Button
+              variant="destructive"
+              disabled={isDeletePending}
+              onClick={() => setIsDeleteDialogOpen(true)}
+            >
+              {isDeletePending ? "Deleting..." : "Delete Account"}
+            </Button>
+          </section>
+        </div>
+
+        <aside className="hidden min-w-0 space-y-6 lg:block">
+          <UmpiringExamStatus result={umpiringResult} />
+          <WaiverStatus waiverSubmission={waiverSubmission} />
+        </aside>
+      </div>
 
       {/* Delete confirmation dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
