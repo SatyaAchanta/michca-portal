@@ -22,13 +22,19 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
+type NavLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
   { label: "Forms", href: "/forms" },
 ];
 
-const mobileNavLinks = [
+const mobileNavLinks: NavLink[] = [
   ...navLinks,
   {
     label: "Fantasy",

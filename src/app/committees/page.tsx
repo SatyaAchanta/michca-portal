@@ -194,13 +194,15 @@ export default function CommitteesPage() {
                   <h2 className="text-lg font-semibold leading-tight text-foreground">
                     {committee.name}
                   </h2>
-                  <a
-                    href={`mailto:${committee.email}`}
-                    className="flex items-center gap-2 break-all text-sm text-primary hover:underline"
-                  >
-                    <Mail className="h-4 w-4" />
-                    {committee.email}
-                  </a>
+                  {committee.email ? (
+                    <a
+                      href={`mailto:${committee.email}`}
+                      className="flex items-center gap-2 break-all text-sm text-primary hover:underline"
+                    >
+                      <Mail className="h-4 w-4" />
+                      {committee.email}
+                    </a>
+                  ) : null}
                 </div>
 
                 <div className="space-y-4">
