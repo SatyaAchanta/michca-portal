@@ -218,6 +218,16 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     </Link>
                   </Button>
                 ))}
+                {isAdmin ? (
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="justify-start"
+                    onClick={() => setOpen(false)}
+                  >
+                    <Link href="/admin">Admin</Link>
+                  </Button>
+                ) : null}
               </div>
             </SheetContent>
           </Sheet>
