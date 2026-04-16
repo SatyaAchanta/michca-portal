@@ -6,15 +6,30 @@ import { Card } from "@/components/ui/card";
 import { SiteFooter } from "@/components/site-footer";
 
 const leadership = [
-  { name: "Tayefur Rahman", role: "Chairman", image: "/executives/tayefur.jpeg" },
-  { name: "Hardeep Singh", role: "Vice Chairman", image: "/executives/hardeep.webp" },
-  { name: "Praveen Choudhury", role: "Secretary", image: "/executives/praveen.webp" },
+  {
+    name: "Tayefur Rahman",
+    role: "Chairman",
+    image: "/executives/tayefur.jpeg",
+  },
+  {
+    name: "Hardeep Singh",
+    role: "Vice Chairman",
+    image: "/executives/hardeep.webp",
+  },
+  {
+    name: "Praveen Choudhury",
+    role: "Secretary",
+    image: "/executives/praveen.webp",
+  },
   { name: "Ravi Chalanti", role: "Treasurer", image: "/executives/ravi.webp" },
-  { name: "Iftekar Ahmad", role: "Public Relations", image: "/executives/iftekar.jpeg" },
+  {
+    name: "Iftekar Ahmad",
+    role: "Public Relations",
+    image: "/executives/iftekar.jpeg",
+  },
 ];
 
 const committees = [
-
   {
     name: "Stats Committee",
     email: "micricketstats@gmail.com",
@@ -24,11 +39,27 @@ const committees = [
     ],
   },
   {
+    name: "Schedule & Youth Coordinator",
+    email: "",
+    members: [
+      { name: "Rajesh Iyengar", phone: "650 537 0345", note: "Schedule" },
+      { name: "Dinesh Kumar", phone: "213 712 3936", note: "Youth" },
+    ],
+  },
+  {
     name: "Umpiring Committee",
     email: "micricketumpires@gmail.com",
     members: [
-      { name: "Onkar Akolkar", phone: "256 603 1286", note: "Umpire Mentor and Trainer" },
-      { name: "Karthik Raghupathy", phone: "313 727 6563", note: "Umpire Mentor and Trainer" },
+      {
+        name: "Onkar Akolkar",
+        phone: "256 603 1286",
+        note: "Umpire Mentor and Trainer",
+      },
+      {
+        name: "Karthik Raghupathy",
+        phone: "313 727 6563",
+        note: "Umpire Mentor and Trainer",
+      },
       { name: "Vijay Khammam", phone: "870 877 1518" },
       { name: "Hemanth Krishna Chundi", phone: "607 727 4101" },
     ],
@@ -36,9 +67,7 @@ const committees = [
   {
     name: "Media",
     email: "micricketmedia@gmail.com",
-    members: [
-      { name: "Andy Koilpillai", phone: "248 943 6053" },
-    ],
+    members: [{ name: "Andy Koilpillai", phone: "248 943 6053" }],
   },
   {
     name: "Fantasy League",
@@ -51,9 +80,7 @@ const committees = [
   {
     name: "Waiver Committee",
     email: "micricketwaiver@gmail.com",
-    members: [
-      { name: "Nagendar Kolipaka", phone: "763 772 6306" },
-    ],
+    members: [{ name: "Nagendar Kolipaka", phone: "763 772 6306" }],
   },
 ];
 
@@ -80,7 +107,8 @@ export default function CommitteesPage() {
               Leadership
             </h1>
             <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
-              Meet the league leadership and operational committees for the 2025-2026 season.
+              Meet the league leadership and operational committees for the
+              2025-2026 season.
             </p>
           </div>
 
@@ -88,8 +116,8 @@ export default function CommitteesPage() {
             <div className="space-y-2">
               <h2 className="text-lg font-semibold">Executive Leadership</h2>
               <p className="text-sm text-muted-foreground">
-                The leadership team guides league strategy, governance, and match-day
-                standards across Michigan.
+                The leadership team guides league strategy, governance, and
+                match-day standards across Michigan.
               </p>
             </div>
             <div className="space-y-5">
@@ -109,8 +137,12 @@ export default function CommitteesPage() {
                       />
                     </div>
                     <div className="mt-3 space-y-1">
-                      <p className="text-base font-semibold text-foreground">{member.name}</p>
-                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                      <p className="text-base font-semibold text-foreground">
+                        {member.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {member.role}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -131,8 +163,12 @@ export default function CommitteesPage() {
                       />
                     </div>
                     <div className="mt-3 space-y-1">
-                      <p className="text-base font-semibold text-foreground">{member.name}</p>
-                      <p className="text-xs text-muted-foreground">{member.role}</p>
+                      <p className="text-base font-semibold text-foreground">
+                        {member.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {member.role}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -143,8 +179,8 @@ export default function CommitteesPage() {
           <div className="space-y-2">
             <h2 className="text-lg font-semibold">Committees</h2>
             <p className="text-sm text-muted-foreground">
-              Operational committees support rules, statistics, umpiring, media, and other
-              league initiatives.
+              Operational committees support rules, statistics, umpiring, media,
+              and other league initiatives.
             </p>
           </div>
 
@@ -174,7 +210,10 @@ export default function CommitteesPage() {
                   </div>
                   <ul className="space-y-3">
                     {committee.members.map((member, index) => (
-                      <li key={index} className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/70 p-3">
+                      <li
+                        key={index}
+                        className="flex items-start gap-3 rounded-lg border border-border/60 bg-background/70 p-3"
+                      >
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                           {getInitials(member.name)}
                         </div>

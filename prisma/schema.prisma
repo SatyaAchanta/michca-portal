@@ -221,7 +221,6 @@ model WaiverSubmission {
   t20TeamCode            String?
   secondaryDivision      String?
   secondaryTeamCode      String?
-  role                   String?
   signatureName          String
   acknowledgedSubmitText String
   acknowledgedRulebookText String?

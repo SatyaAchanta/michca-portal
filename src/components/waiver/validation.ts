@@ -1,7 +1,5 @@
 import {
-  WAIVER_ROLE_OPTIONS,
   WAIVER_US_STATES,
-  type WaiverRoleValue,
   type WaiverUsStateValue,
 } from "@/lib/waiver-constants";
 
@@ -24,7 +22,6 @@ export type WaiverFieldErrors = Partial<
     | "t20TeamCode"
     | "secondaryDivision"
     | "secondaryTeamCode"
-    | "role"
     | "signatureName"
     | "submitAcknowledgement"
     | "rulebookAcknowledgement"
@@ -54,7 +51,6 @@ export type ParsedWaiverInput = {
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
-  role: WaiverRoleValue;
   signatureName: string;
   submitAcknowledgement: true;
   rulebookAcknowledgement: true;
@@ -95,7 +91,6 @@ export function parseWaiverForm(formData: FormData): {
     "signatureName",
     "Signature name"
   );
-  const roleRaw = normalizeRequiredText(formData.get("role"), fieldErrors, "role", "Role");
   const submitAcknowledgement = formData.get("submitAcknowledgement");
   const rulebookAcknowledgement = formData.get("rulebookAcknowledgement");
 
@@ -105,15 +100,6 @@ export function parseWaiverForm(formData: FormData): {
       state = stateRaw as WaiverUsStateValue;
     } else {
       fieldErrors.state = "Select a valid U.S. state.";
-    }
-  }
-
-  let role: WaiverRoleValue | null = null;
-  if (roleRaw) {
-    if (WAIVER_ROLE_OPTIONS.includes(roleRaw as WaiverRoleValue)) {
-      role = roleRaw as WaiverRoleValue;
-    } else {
-      fieldErrors.role = "Select a valid playing role.";
     }
   }
 
@@ -192,7 +178,6 @@ export function parseWaiverForm(formData: FormData): {
       t20TeamCode,
       secondaryDivision,
       secondaryTeamCode,
-      role: role as WaiverRoleValue,
       signatureName: signatureName as string,
       submitAcknowledgement: true,
       rulebookAcknowledgement: true,

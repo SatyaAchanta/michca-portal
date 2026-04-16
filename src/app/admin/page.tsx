@@ -539,7 +539,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           <th className="px-4 py-3 font-medium">
                             F40/T30 Team
                           </th>
-                          <th className="px-4 py-3 font-medium">Role</th>
                           <th className="px-4 py-3 font-medium">Year</th>
                           <th className="px-4 py-3 font-medium">Submitted</th>
                           <th className="px-4 py-3 font-medium">Actions</th>
@@ -577,7 +576,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 waiver.secondaryTeamCode ??
                                 "N/A"}
                             </td>
-                            <td className="px-4 py-3">{waiver.role ?? "N/A"}</td>
                             <td className="px-4 py-3">{waiver.year}</td>
                             <td className="px-4 py-3 whitespace-nowrap">
                               {formatSubmittedDate(waiver.submittedAt)}
@@ -662,12 +660,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                       waiver.secondaryTeamCode ??
                                       "N/A"}
                                   </span>
-                                </div>
-                                <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">
-                                    Role
-                                  </span>
-                                  <span>{waiver.role ?? "N/A"}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">

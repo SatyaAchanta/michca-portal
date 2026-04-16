@@ -30,7 +30,6 @@ import {
   type WaiverFormState,
 } from "@/components/waiver/validation";
 import {
-  WAIVER_ROLE_OPTIONS,
   WAIVER_RULEBOOK_URL,
   WAIVER_US_STATES,
   WAIVER_SUBMIT_TEXT,
@@ -53,7 +52,6 @@ type WaiverSnapshot = {
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
-  role: string | null;
   signatureName: string;
   submittedAt: string;
 };
@@ -101,7 +99,6 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const [secondaryTeamCode, setSecondaryTeamCode] = useState(
     waiver?.secondaryTeamCode ?? "",
   );
-  const [role, setRole] = useState(waiver?.role ?? "");
   const [submitAcknowledgement, setSubmitAcknowledgement] = useState(false);
   const [rulebookAcknowledgement, setRulebookAcknowledgement] = useState(false);
 
@@ -372,27 +369,6 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               </div>
             ) : null}
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Role</label>
-              <input type="hidden" name="role" value={role} />
-              <Select
-                value={role}
-                onValueChange={setRole}
-                disabled={Boolean(waiver)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select role" />
-                </SelectTrigger>
-                <SelectContent>
-                  {WAIVER_ROLE_OPTIONS.map((roleOption) => (
-                    <SelectItem key={roleOption} value={roleOption}>
-                      {roleOption}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FieldError message={formState.fieldErrors.role} />
-            </div>
           </div>
 
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">

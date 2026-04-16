@@ -110,7 +110,6 @@ type WaiverPageSubmission = {
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
-  role: string | null;
   signatureName: string;
   submittedAt: string;
 };
@@ -151,7 +150,6 @@ export default async function WaiverPage() {
         t20TeamCode: true,
         secondaryDivision: true,
         secondaryTeamCode: true,
-        role: true,
         signatureName: true,
         submittedAt: true,
       },
@@ -177,7 +175,6 @@ export default async function WaiverPage() {
         secondaryDivision:
           waiver.secondaryDivision as SecondaryDivisionValue | null,
         secondaryTeamCode: waiver.secondaryTeamCode,
-        role: waiver.role,
         signatureName: waiver.signatureName,
         submittedAt: waiver.submittedAt.toISOString(),
       }

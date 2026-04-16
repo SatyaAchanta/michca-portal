@@ -68,7 +68,6 @@ type AccountFormProps = {
     secondaryDivision: string | null;
     t20TeamCode: string | null;
     secondaryTeamCode: string | null;
-    role: string | null;
   } | null;
 };
 
@@ -339,12 +338,6 @@ function WaiverStatus({
             {waiverSubmission.secondaryDivision
               ? `${waiverSubmission.secondaryDivision} (${waiverSubmission.secondaryTeamCode})`
               : "N/A"}
-          </span>
-        </p>
-        <p>
-          Role:{" "}
-          <span className="font-medium text-foreground">
-            {waiverSubmission.role ?? "-"}
           </span>
         </p>
       </CardContent>

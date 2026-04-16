@@ -30,6 +30,7 @@ const navLinks = [
 
 const publicMoreLinks = [
   { label: "Grounds", href: "/grounds" },
+  { label: "Leadership", href: "/committees" },
   { label: "About", href: "/about" },
   {
     label: "Fantasy",
@@ -136,20 +137,6 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                       onClick={() => setMoreOpen(false)}
                     >
                       Admin
-                    </Link>
-                    <Link
-                      href="/admin/certification-questions"
-                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                      onClick={() => setMoreOpen(false)}
-                    >
-                      Cert Questions
-                    </Link>
-                    <Link
-                      href="/admin/certification-windows"
-                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                      onClick={() => setMoreOpen(false)}
-                    >
-                      Cert Windows
                     </Link>
                   </>
                 ) : null}
@@ -266,26 +253,6 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                       onClick={() => setOpen(false)}
                     >
                       <Link href="/admin">Admin</Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin/certification-questions">
-                        Cert Questions
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin/certification-windows">
-                        Cert Windows
-                      </Link>
                     </Button>
                   </>
                 ) : null}

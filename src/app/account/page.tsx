@@ -65,7 +65,6 @@ const Account = async () => {
             secondaryDivision: true,
             t20TeamCode: true,
             secondaryTeamCode: true,
-            role: true,
           },
         }),
         getWaiverTeamOptions(),

@@ -101,7 +101,6 @@ export async function getWaiverAdminData(filters?: {
       address: true,
       t20Division: true,
       secondaryDivision: true,
-      role: true,
       year: true,
       submittedAt: true,
       userProfile: {

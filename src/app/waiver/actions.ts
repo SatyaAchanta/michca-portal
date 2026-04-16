@@ -121,7 +121,6 @@ export async function submitMyWaiver(
         t20TeamCode: data.t20TeamCode,
         secondaryDivision: data.secondaryDivision,
         secondaryTeamCode: data.secondaryTeamCode,
-        role: data.role,
         signatureName: data.signatureName,
         acknowledgedSubmitText: WAIVER_SUBMIT_TEXT,
         acknowledgedRulebookText: WAIVER_RULEBOOK_ACKNOWLEDGEMENT_TEXT,
@@ -135,7 +134,6 @@ export async function submitMyWaiver(
       data: {
         t20TeamCode: data.t20TeamCode,
         secondaryTeamCode: data.secondaryTeamCode,
-        playingRole: data.role,
       },
     });
   });

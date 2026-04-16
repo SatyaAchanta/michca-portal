@@ -55,7 +55,6 @@ function createValidWaiverFormData() {
   formData.set("t20TeamCode", "T20-MOCC");
   formData.set("secondaryDivision", "T30");
   formData.set("secondaryTeamCode", "T30-MOCC");
-  formData.set("role", "Bowler");
   formData.set("signatureName", "Rohan Patel");
   formData.set("submitAcknowledgement", "yes");
   formData.set("rulebookAcknowledgement", "yes");
@@ -89,7 +88,7 @@ describe("submitMyWaiver", () => {
     );
   });
 
-  it("creates the waiver and syncs current profile team and role fields", async () => {
+  it("creates the waiver and syncs only current profile team fields", async () => {
     const result = await submitMyWaiver(
       { status: "idle", fieldErrors: {} },
       createValidWaiverFormData()
@@ -101,7 +100,6 @@ describe("submitMyWaiver", () => {
       data: {
         t20TeamCode: "T20-MOCC",
         secondaryTeamCode: "T30-MOCC",
-        playingRole: "Bowler",
       },
     });
     expect(revalidatePath).toHaveBeenCalledWith("/account");

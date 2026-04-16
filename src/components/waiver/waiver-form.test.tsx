@@ -1,10 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { WaiverForm } from "@/components/waiver/waiver-form";
-import {
-  WAIVER_ROLE_OPTIONS,
-  WAIVER_RULEBOOK_URL,
-} from "@/lib/waiver-constants";
+import { WAIVER_RULEBOOK_URL } from "@/lib/waiver-constants";
 
 vi.mock("@/app/waiver/actions", () => ({
   submitMyWaiver: vi.fn(),
@@ -61,56 +58,5 @@ describe("WaiverForm", () => {
 
     expect(labels.indexOf("State")).toBeLessThan(labels.indexOf("City"));
     expect(labels.indexOf("City")).toBeLessThan(labels.indexOf("Address"));
-  });
-
-  it("renders role after the team selectors and exposes the requested options", () => {
-    const { container } = render(
-      <WaiverForm
-        waiver={{
-          playerName: "Rohan Patel",
-          cricclubsId: "CC-12345",
-          state: "Michigan",
-          city: "Troy",
-          address: "123 Main St",
-          t20Division: "Premier",
-          t20TeamCode: "T20-MOCC",
-          secondaryDivision: "T30",
-          secondaryTeamCode: "T30-MOCC",
-          role: "Bowler",
-          signatureName: "Rohan Patel",
-          submittedAt: "2026-04-14T10:00:00.000Z",
-        }}
-        t20Divisions={["Premier"]}
-        teams={[
-          {
-            teamCode: "T20-MOCC",
-            teamName: "Michigan OCC",
-            division: "Premier",
-            format: "T20",
-          },
-          {
-            teamCode: "T30-MOCC",
-            teamName: "Michigan OCC T30",
-            division: "T30",
-            format: "T30",
-          },
-        ]}
-      />,
-    );
-
-    const labels = Array.from(container.querySelectorAll("label")).map((label) =>
-      label.textContent?.replace(/\s+/g, " ").trim(),
-    );
-    expect(labels.indexOf("Role")).toBeGreaterThan(
-      labels.indexOf("Team Name (T30)"),
-    );
-
-    const selects = Array.from(container.querySelectorAll("select"));
-    const roleSelect = selects.at(-1);
-    const roleOptions = Array.from(
-      roleSelect?.querySelectorAll("option") ?? [],
-    ).map((option) => option.textContent);
-
-    expect(roleOptions).toEqual([...WAIVER_ROLE_OPTIONS]);
   });
 });

@@ -47,7 +47,6 @@ export async function GET(request: Request) {
     "T20 Team": waiver.t20Team?.teamName ?? waiver.t20TeamCode,
     "F40/T30 Division": waiver.secondaryDivision,
     "F40/T30 Team": waiver.secondaryTeam?.teamName ?? waiver.secondaryTeamCode,
-    Role: waiver.role,
     Year: waiver.year,
     Submitted: formatSubmittedDate(waiver.submittedAt),
   }));
