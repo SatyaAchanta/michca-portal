@@ -28,6 +28,15 @@ const navLinks = [
   { label: "Forms", href: "/forms" },
 ];
 
+const mobileNavLinks = [
+  ...navLinks,
+  {
+    label: "Fantasy",
+    href: "https://www.fantasyleaguemichca.org",
+    external: true,
+  },
+];
+
 const publicMoreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "Leadership", href: "/committees" },
@@ -186,18 +195,7 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     <UserButton />
                   </div>
                 </SignedIn>
-                {navLinks.map((link) => (
-                  <Button
-                    key={link.href}
-                    asChild
-                    variant="ghost"
-                    className="justify-start"
-                    onClick={() => setOpen(false)}
-                  >
-                    <Link href={link.href}>{link.label}</Link>
-                  </Button>
-                ))}
-                {publicMoreLinks.map((link) => (
+                {mobileNavLinks.map((link) => (
                   <Button
                     key={link.href}
                     asChild
@@ -214,48 +212,6 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     </Link>
                   </Button>
                 ))}
-                <SignedIn>
-                  <>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/account">Account</Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/umpiring-training">Umpiring</Link>
-                    </Button>
-                    {/* <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/umpiring-certification">
-                        Umpiring Certification
-                      </Link>
-                    </Button> */}
-                  </>
-                </SignedIn>
-                {isAdmin ? (
-                  <>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin">Admin</Link>
-                    </Button>
-                  </>
-                ) : null}
               </div>
             </SheetContent>
           </Sheet>

@@ -32,6 +32,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
 import { sponsors } from "@/lib/sponsors";
 
+const quickLinks = [
+  { label: "Grounds", href: "/grounds" },
+  { label: "Leadership", href: "/committees" },
+  { label: "About Mich-CA", href: "/about" },
+  { label: "Umpiring", href: "/umpiring-training" },
+];
+
 export default function HomePage() {
   const [authentikkaSponsor, lincodeSponsor, djSponsor] = sponsors;
   const featuredSponsors = [authentikkaSponsor, lincodeSponsor];
@@ -48,6 +55,25 @@ export default function HomePage() {
         {/* Homepage Banner */}
         <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
+            <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                    Quick Links
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Secondary destinations moved out of the mobile navigation.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {quickLinks.map((link) => (
+                    <Button key={link.href} asChild variant="outline" size="sm">
+                      <Link href={link.href}>{link.label}</Link>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </Card>
             <RegistrationBanner />
           </div>
         </PageContainer>
