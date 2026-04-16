@@ -47,7 +47,7 @@ describe("WaiverForm", () => {
     expect(reviewButton).toBeEnabled();
   });
 
-  it("renders State, City, and Address in that order", () => {
+  it("renders Address, City, and State in that order", () => {
     const { container } = render(
       <WaiverForm waiver={null} t20Divisions={[]} teams={[]} />,
     );
@@ -56,7 +56,7 @@ describe("WaiverForm", () => {
       label.textContent?.replace(/\s+/g, " ").trim(),
     );
 
-    expect(labels.indexOf("State")).toBeLessThan(labels.indexOf("City"));
-    expect(labels.indexOf("City")).toBeLessThan(labels.indexOf("Address"));
+    expect(labels.indexOf("Address")).toBeLessThan(labels.indexOf("City"));
+    expect(labels.indexOf("City")).toBeLessThan(labels.indexOf("State"));
   });
 });

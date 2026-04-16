@@ -1,10 +1,38 @@
 import Link from "next/link";
 import { ArrowRight, FileSignature } from "lucide-react";
+import { auth } from "@clerk/nextjs/server";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { prisma } from "@/lib/prisma";
+import { getCurrentWaiverYear } from "@/lib/waiver-constants";
 
 export async function RegistrationBanner() {
+  const { userId } = await auth();
+
+  if (userId) {
+    const profile = await prisma.userProfile.findUnique({
+      where: { clerkUserId: userId },
+      select: { id: true },
+    });
+
+    if (profile) {
+      const existingWaiver = await prisma.waiverSubmission.findUnique({
+        where: {
+          userProfileId_year: {
+            userProfileId: profile.id,
+            year: getCurrentWaiverYear(),
+          },
+        },
+        select: { id: true },
+      });
+
+      if (existingWaiver) {
+        return null;
+      }
+    }
+  }
+
   return (
     <Card className="overflow-hidden border border-border/70 bg-[linear-gradient(135deg,rgba(255,250,240,0.96),rgba(244,247,241,0.94))] p-5 shadow-sm dark:bg-[linear-gradient(135deg,rgba(24,18,12,0.96),rgba(14,18,16,0.94))] sm:p-6 lg:p-7">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">

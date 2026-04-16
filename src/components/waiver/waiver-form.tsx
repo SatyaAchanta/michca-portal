@@ -203,6 +203,35 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
               <FieldError message={formState.fieldErrors.cricclubsId} />
             </div>
             <div className="space-y-2">
+              <label htmlFor="address" className="text-sm font-medium">
+                Address
+              </label>
+              <Input
+                id="address"
+                name="address"
+                value={address}
+                onChange={(event) => setAddress(event.target.value)}
+                required
+                placeholder="Street address"
+                disabled={Boolean(waiver)}
+              />
+              <FieldError message={formState.fieldErrors.address} />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="city" className="text-sm font-medium">
+                City
+              </label>
+              <Input
+                id="city"
+                name="city"
+                value={city}
+                onChange={(event) => setCity(event.target.value)}
+                required
+                disabled={Boolean(waiver)}
+              />
+              <FieldError message={formState.fieldErrors.city} />
+            </div>
+            <div className="space-y-2">
               <label className="text-sm font-medium">State</label>
               <input type="hidden" name="state" value={playerState} />
               <Select
@@ -222,35 +251,6 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 </SelectContent>
               </Select>
               <FieldError message={formState.fieldErrors.state} />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="city" className="text-sm font-medium">
-                City
-              </label>
-              <Input
-                id="city"
-                name="city"
-                value={city}
-                onChange={(event) => setCity(event.target.value)}
-                required
-                disabled={Boolean(waiver)}
-              />
-              <FieldError message={formState.fieldErrors.city} />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="address" className="text-sm font-medium">
-                Address
-              </label>
-              <Input
-                id="address"
-                name="address"
-                value={address}
-                onChange={(event) => setAddress(event.target.value)}
-                required
-                placeholder="Street address"
-                disabled={Boolean(waiver)}
-              />
-              <FieldError message={formState.fieldErrors.address} />
             </div>
           </div>
 
