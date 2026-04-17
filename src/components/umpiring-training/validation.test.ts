@@ -9,7 +9,7 @@ function createValidFormData() {
   formData.set("contactNumber", "248-555-0101");
   formData.set("dietaryPreference", "VEGETARIAN");
   formData.set("previouslyCertified", "yes");
-  formData.append("preferredDates", "MARCH_28_2026");
+  formData.append("preferredDates", "APRIL_25_2026");
   formData.set("preferredLocation", "Troy");
   formData.set("affiliation", "Falcons");
   formData.set("questions", "Any prep material?");
@@ -26,7 +26,7 @@ describe("parseRegistrationForm", () => {
       dietaryPreference: "VEGETARIAN",
       previouslyCertified: true,
       affiliation: "Falcons",
-      preferredDates: ["MARCH_28_2026"],
+      preferredDates: ["APRIL_25_2026"],
       preferredLocation: "Troy",
       questions: "Any prep material?",
     });
@@ -48,14 +48,14 @@ describe("parseRegistrationForm", () => {
 
   it("accepts selecting both preferred dates", () => {
     const formData = createValidFormData();
-    formData.append("preferredDates", "MARCH_29_2026");
+    formData.append("preferredDates", "APRIL_26_2026");
 
     const result = parseRegistrationForm(formData);
 
     expect(result.fieldErrors).toEqual({});
     expect(result.data?.preferredDates).toEqual([
-      "MARCH_28_2026",
-      "MARCH_29_2026",
+      "APRIL_25_2026",
+      "APRIL_26_2026",
     ]);
   });
 
@@ -68,7 +68,7 @@ describe("parseRegistrationForm", () => {
     const result = parseRegistrationForm(formData);
 
     expect(result.data).toBeUndefined();
-    expect(result.fieldErrors.preferredDates).toContain("March 28");
+    expect(result.fieldErrors.preferredDates).toContain("April 25");
     expect(result.fieldErrors.preferredLocation).toContain("Troy");
   });
 
@@ -107,6 +107,6 @@ describe("parseResultValue", () => {
 
 describe("toIsoDateString", () => {
   it("returns YYYY-MM-DD", () => {
-    expect(toIsoDateString(new Date("2026-03-29T12:30:00.000Z"))).toBe("2026-03-29");
+    expect(toIsoDateString(new Date("2026-04-26T12:30:00.000Z"))).toBe("2026-04-26");
   });
 });

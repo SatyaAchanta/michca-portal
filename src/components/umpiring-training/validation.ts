@@ -72,6 +72,18 @@ export type ParsedRegistrationInput = {
   questions: string | null;
 };
 
+function getPreferredDatesErrorMessage() {
+  const labels = UMPIRING_DATE_OPTIONS.map((option) => option.label);
+  if (labels.length === 0) {
+    return "Preferred dates must match the available registration dates.";
+  }
+  if (labels.length === 1) {
+    return `Preferred date must be ${labels[0]}.`;
+  }
+
+  return `Preferred dates must be ${labels.slice(0, -1).join(", ")} or ${labels.at(-1)}.`;
+}
+
 function normalizeOptionalText(input: FormDataEntryValue | null) {
   if (typeof input !== "string") {
     return null;
@@ -138,7 +150,7 @@ export function parseRegistrationForm(
       !UMPIRING_DATE_OPTIONS.some((option) => option.value === dateValue)
   );
   if (invalidPreferredDate) {
-    fieldErrors.preferredDates = "Preferred dates must be March 28 or March 29, 2026.";
+    fieldErrors.preferredDates = getPreferredDatesErrorMessage();
   }
 
   if (!preferredLocation) {
