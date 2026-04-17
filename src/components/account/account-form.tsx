@@ -59,6 +59,7 @@ type AccountFormProps = {
   profile: UserProfile | null;
   umpiringResult: UmpiringTrainingResult | null;
   teams: TeamOption[];
+  captainedTeams?: TeamOption[];
   waiverSubmission: {
     submittedAt: string;
     state: string | null;
@@ -349,6 +350,7 @@ export function AccountForm({
   profile,
   umpiringResult,
   teams,
+  captainedTeams = [],
   waiverSubmission,
 }: AccountFormProps) {
   const [updateState, updateFormAction, isUpdatePending] = useActionState<
@@ -490,6 +492,48 @@ export function AccountForm({
                 {isUpdatePending ? "Saving..." : "Save Changes"}
               </Button>
             </form>
+          </section>
+
+          <section>
+            <h2 className="mb-1 text-xl font-semibold">Captain Status</h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Teams where you are currently listed as captain through the Club Info declaration.
+            </p>
+            {captainedTeams.length > 0 ? (
+              <Card className="border border-sky-500/25 bg-sky-500/8 shadow-sm">
+                <CardContent className="space-y-4 p-6">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="border-sky-500/30 text-sky-700 dark:text-sky-300">
+                      Captain
+                    </Badge>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {captainedTeams.map((team) => (
+                      <div key={team.teamCode} className="rounded-xl border border-border/70 p-4">
+                        <p className="font-medium text-foreground">{team.teamName}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {team.format} · {team.division}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="border border-border/70 bg-card/80 shadow-sm">
+                <CardHeader className="space-y-2">
+                  <CardTitle>No Captain Teams Yet</CardTitle>
+                  <CardDescription>
+                    Submit the Club Info form to connect your captain profile to your team pages.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button asChild>
+                    <Link href="/club-info">Go To Club Info Form</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
           </section>
 
           {/* Danger zone */}

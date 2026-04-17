@@ -48,6 +48,13 @@ function getWaiverCommitteeAllowlist() {
     .filter(Boolean);
 }
 
+function getStatsCommitteeAllowlist() {
+  return (process.env.STATS_COMMITTEE_EMAIL_ALLOWLIST ?? "")
+    .split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 export function isAdminAllowlisted(email: string) {
   return getAdminAllowlist().includes(normalizeEmail(email));
 }
@@ -57,6 +64,7 @@ function resolveRoleForEmail(email: string): UserRole {
   if (getAdminAllowlist().includes(normalized)) return UserRole.ADMIN;
   if (getUmpiringCommitteeAllowlist().includes(normalized)) return UserRole.UMPIRING_COMMITTEE;
   if (getWaiverCommitteeAllowlist().includes(normalized)) return UserRole.WAIVER_COMMITTEE;
+  if (getStatsCommitteeAllowlist().includes(normalized)) return UserRole.STATS_COMMITTEE;
   return UserRole.PLAYER;
 }
 

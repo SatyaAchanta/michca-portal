@@ -390,6 +390,7 @@ export const ModelName = {
   UmpiringTraining: 'UmpiringTraining',
   Youth15Registration: 'Youth15Registration',
   WaiverSubmission: 'WaiverSubmission',
+  ClubInfoSubmission: 'ClubInfoSubmission',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "clubInfoSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -856,6 +857,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WaiverSubmissionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WaiverSubmissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClubInfoSubmission: {
+      payload: Prisma.$ClubInfoSubmissionPayload<ExtArgs>
+      fields: Prisma.ClubInfoSubmissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubInfoSubmissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubInfoSubmissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        findFirst: {
+          args: Prisma.ClubInfoSubmissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubInfoSubmissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        findMany: {
+          args: Prisma.ClubInfoSubmissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>[]
+        }
+        create: {
+          args: Prisma.ClubInfoSubmissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        createMany: {
+          args: Prisma.ClubInfoSubmissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubInfoSubmissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>[]
+        }
+        delete: {
+          args: Prisma.ClubInfoSubmissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        update: {
+          args: Prisma.ClubInfoSubmissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubInfoSubmissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubInfoSubmissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubInfoSubmissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubInfoSubmissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubInfoSubmissionPayload>
+        }
+        aggregate: {
+          args: Prisma.ClubInfoSubmissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubInfoSubmission>
+        }
+        groupBy: {
+          args: Prisma.ClubInfoSubmissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubInfoSubmissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubInfoSubmissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubInfoSubmissionCountAggregateOutputType> | number
         }
       }
     }
@@ -1388,6 +1463,7 @@ export const UserProfileScalarFieldEnum = {
   email: 'email',
   firstName: 'firstName',
   lastName: 'lastName',
+  contactNumber: 'contactNumber',
   notificationsEnabled: 'notificationsEnabled',
   newsletterSubscribed: 'newsletterSubscribed',
   role: 'role',
@@ -1461,6 +1537,24 @@ export const WaiverSubmissionScalarFieldEnum = {
 } as const
 
 export type WaiverSubmissionScalarFieldEnum = (typeof WaiverSubmissionScalarFieldEnum)[keyof typeof WaiverSubmissionScalarFieldEnum]
+
+
+export const ClubInfoSubmissionScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  accountEmail: 'accountEmail',
+  captainName: 'captainName',
+  cricclubsId: 'cricclubsId',
+  contactNumber: 'contactNumber',
+  t20Division: 't20Division',
+  t20TeamCode: 't20TeamCode',
+  secondaryDivision: 'secondaryDivision',
+  secondaryTeamCode: 'secondaryTeamCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubInfoSubmissionScalarFieldEnum = (typeof ClubInfoSubmissionScalarFieldEnum)[keyof typeof ClubInfoSubmissionScalarFieldEnum]
 
 
 export const UmpireAssignmentScalarFieldEnum = {
@@ -1931,6 +2025,7 @@ export type GlobalOmitConfig = {
   umpiringTraining?: Prisma.UmpiringTrainingOmit
   youth15Registration?: Prisma.Youth15RegistrationOmit
   waiverSubmission?: Prisma.WaiverSubmissionOmit
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionOmit
   umpireAssignment?: Prisma.UmpireAssignmentOmit
   certificationQuestion?: Prisma.CertificationQuestionOmit
   certificationQuestionOption?: Prisma.CertificationQuestionOptionOmit

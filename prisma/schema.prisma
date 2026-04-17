@@ -44,6 +44,7 @@ enum UserRole {
   ADMIN
   UMPIRING_COMMITTEE
   WAIVER_COMMITTEE
+  STATS_COMMITTEE
 }
 
 enum UmpiringTrainingResult {
@@ -143,6 +144,7 @@ model UserProfile {
   email                         String
   firstName                     String?
   lastName                      String?
+  contactNumber                 String?
   notificationsEnabled          Boolean                   @default(true)
   newsletterSubscribed          Boolean                   @default(false)
   role                          UserRole                  @default(PLAYER)
@@ -155,6 +157,7 @@ model UserProfile {
   umpiringTraining              UmpiringTraining?
   youth15Registration           Youth15Registration?
   waiverSubmissions             WaiverSubmission[]
+  clubInfoSubmission            ClubInfoSubmission?
   certificationQuestionsCreated CertificationQuestion[]   @relation("CertificationQuestionCreatedBy")
   certificationWindowsStarted   CertificationTestWindow[] @relation("CertificationWindowStartedBy")
   certificationAttempts         CertificationAttempt[]
@@ -238,6 +241,29 @@ model WaiverSubmission {
   @@index([t20TeamCode])
   @@index([secondaryTeamCode])
   @@index([playerName])
+}
+
+model ClubInfoSubmission {
+  id                String      @id @default(uuid())
+  userProfileId     String      @unique
+  accountEmail      String
+  captainName       String
+  cricclubsId       String
+  contactNumber     String
+  t20Division       String?
+  t20TeamCode       String?
+  secondaryDivision String?
+  secondaryTeamCode String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  userProfile       UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([t20Division])
+  @@index([t20TeamCode])
+  @@index([secondaryDivision])
+  @@index([secondaryTeamCode])
+  @@index([captainName])
 }
 
 model UmpireAssignment {

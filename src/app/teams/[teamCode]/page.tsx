@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTeamByCode } from "@/lib/team-queries";
 import { getTeamDivisionLabel, TEAM_FORMAT_LABELS } from "@/lib/team-data";
@@ -233,9 +234,14 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
                     key={player.id}
                     className="rounded-xl border border-border/70 p-4"
                   >
-                    <p className="font-medium text-foreground">
-                      {getPersonName(player)}
-                    </p>
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="font-medium text-foreground">
+                        {getPersonName(player)}
+                      </p>
+                      {team.captain?.id === player.id ? (
+                        <Badge variant="outline">Captain</Badge>
+                      ) : null}
+                    </div>
                     <p className="text-sm text-muted-foreground">
                       Playing role: {getPlayingRoleLabel(player.playingRole)}
                     </p>

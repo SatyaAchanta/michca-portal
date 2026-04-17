@@ -30,6 +30,7 @@ export type UserProfileMinAggregateOutputType = {
   email: string | null
   firstName: string | null
   lastName: string | null
+  contactNumber: string | null
   notificationsEnabled: boolean | null
   newsletterSubscribed: boolean | null
   role: $Enums.UserRole | null
@@ -46,6 +47,7 @@ export type UserProfileMaxAggregateOutputType = {
   email: string | null
   firstName: string | null
   lastName: string | null
+  contactNumber: string | null
   notificationsEnabled: boolean | null
   newsletterSubscribed: boolean | null
   role: $Enums.UserRole | null
@@ -62,6 +64,7 @@ export type UserProfileCountAggregateOutputType = {
   email: number
   firstName: number
   lastName: number
+  contactNumber: number
   notificationsEnabled: number
   newsletterSubscribed: number
   role: number
@@ -80,6 +83,7 @@ export type UserProfileMinAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  contactNumber?: true
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
@@ -96,6 +100,7 @@ export type UserProfileMaxAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  contactNumber?: true
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
@@ -112,6 +117,7 @@ export type UserProfileCountAggregateInputType = {
   email?: true
   firstName?: true
   lastName?: true
+  contactNumber?: true
   notificationsEnabled?: true
   newsletterSubscribed?: true
   role?: true
@@ -201,6 +207,7 @@ export type UserProfileGroupByOutputType = {
   email: string
   firstName: string | null
   lastName: string | null
+  contactNumber: string | null
   notificationsEnabled: boolean
   newsletterSubscribed: boolean
   role: $Enums.UserRole
@@ -238,6 +245,7 @@ export type UserProfileWhereInput = {
   email?: Prisma.StringFilter<"UserProfile"> | string
   firstName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   lastName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  contactNumber?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   notificationsEnabled?: Prisma.BoolFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleFilter<"UserProfile"> | $Enums.UserRole
@@ -250,6 +258,7 @@ export type UserProfileWhereInput = {
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
   youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
   waiverSubmissions?: Prisma.WaiverSubmissionListRelationFilter
+  clubInfoSubmission?: Prisma.XOR<Prisma.ClubInfoSubmissionNullableScalarRelationFilter, Prisma.ClubInfoSubmissionWhereInput> | null
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -263,6 +272,7 @@ export type UserProfileOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -275,6 +285,7 @@ export type UserProfileOrderByWithRelationInput = {
   umpiringTraining?: Prisma.UmpiringTrainingOrderByWithRelationInput
   youth15Registration?: Prisma.Youth15RegistrationOrderByWithRelationInput
   waiverSubmissions?: Prisma.WaiverSubmissionOrderByRelationAggregateInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionOrderByWithRelationInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionOrderByRelationAggregateInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowOrderByRelationAggregateInput
   certificationAttempts?: Prisma.CertificationAttemptOrderByRelationAggregateInput
@@ -291,6 +302,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"UserProfile"> | string
   firstName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   lastName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  contactNumber?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   notificationsEnabled?: Prisma.BoolFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleFilter<"UserProfile"> | $Enums.UserRole
@@ -303,6 +315,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   umpiringTraining?: Prisma.XOR<Prisma.UmpiringTrainingNullableScalarRelationFilter, Prisma.UmpiringTrainingWhereInput> | null
   youth15Registration?: Prisma.XOR<Prisma.Youth15RegistrationNullableScalarRelationFilter, Prisma.Youth15RegistrationWhereInput> | null
   waiverSubmissions?: Prisma.WaiverSubmissionListRelationFilter
+  clubInfoSubmission?: Prisma.XOR<Prisma.ClubInfoSubmissionNullableScalarRelationFilter, Prisma.ClubInfoSubmissionWhereInput> | null
   certificationQuestionsCreated?: Prisma.CertificationQuestionListRelationFilter
   certificationWindowsStarted?: Prisma.CertificationTestWindowListRelationFilter
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
@@ -316,6 +329,7 @@ export type UserProfileOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -338,6 +352,7 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"UserProfile"> | string
   firstName?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+  contactNumber?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   notificationsEnabled?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
   newsletterSubscribed?: Prisma.BoolWithAggregatesFilter<"UserProfile"> | boolean
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"UserProfile"> | $Enums.UserRole
@@ -354,6 +369,7 @@ export type UserProfileCreateInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -366,6 +382,7 @@ export type UserProfileCreateInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -379,6 +396,7 @@ export type UserProfileUncheckedCreateInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -391,6 +409,7 @@ export type UserProfileUncheckedCreateInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -404,6 +423,7 @@ export type UserProfileUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -416,6 +436,7 @@ export type UserProfileUpdateInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -429,6 +450,7 @@ export type UserProfileUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -441,6 +463,7 @@ export type UserProfileUncheckedUpdateInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -454,6 +477,7 @@ export type UserProfileCreateManyInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -470,6 +494,7 @@ export type UserProfileUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -486,6 +511,7 @@ export type UserProfileUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -507,6 +533,7 @@ export type UserProfileCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -523,6 +550,7 @@ export type UserProfileMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -539,6 +567,7 @@ export type UserProfileMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  contactNumber?: Prisma.SortOrder
   notificationsEnabled?: Prisma.SortOrder
   newsletterSubscribed?: Prisma.SortOrder
   role?: Prisma.SortOrder
@@ -632,6 +661,20 @@ export type UserProfileUpdateOneRequiredWithoutWaiverSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutWaiverSubmissionsInput, Prisma.UserProfileUpdateWithoutWaiverSubmissionsInput>, Prisma.UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput>
 }
 
+export type UserProfileCreateNestedOneWithoutClubInfoSubmissionInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedCreateWithoutClubInfoSubmissionInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutClubInfoSubmissionInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutClubInfoSubmissionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedCreateWithoutClubInfoSubmissionInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutClubInfoSubmissionInput
+  upsert?: Prisma.UserProfileUpsertWithoutClubInfoSubmissionInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutClubInfoSubmissionInput, Prisma.UserProfileUpdateWithoutClubInfoSubmissionInput>, Prisma.UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput>
+}
+
 export type UserProfileCreateNestedOneWithoutUmpireAssignmentsInput = {
   create?: Prisma.XOR<Prisma.UserProfileCreateWithoutUmpireAssignmentsInput, Prisma.UserProfileUncheckedCreateWithoutUmpireAssignmentsInput>
   connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutUmpireAssignmentsInput
@@ -694,6 +737,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -706,6 +750,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -718,6 +763,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -730,6 +776,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -747,6 +794,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -759,6 +807,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -771,6 +820,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -783,6 +833,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -811,6 +862,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -823,6 +875,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -835,6 +888,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -847,6 +901,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -870,6 +925,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -882,6 +938,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -894,6 +951,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -906,6 +964,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -918,6 +977,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -929,6 +989,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -942,6 +1003,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -953,6 +1015,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -982,6 +1045,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -993,6 +1057,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -1006,6 +1071,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1017,6 +1083,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -1030,6 +1097,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1041,6 +1109,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -1054,6 +1123,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1065,6 +1135,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -1094,6 +1165,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1105,6 +1177,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -1118,6 +1191,7 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1129,6 +1203,7 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -1142,6 +1217,7 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1153,6 +1229,7 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -1166,6 +1243,7 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1177,6 +1255,7 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -1206,6 +1285,7 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1217,6 +1297,7 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -1230,6 +1311,7 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1241,6 +1323,127 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+}
+
+export type UserProfileCreateWithoutClubInfoSubmissionInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileCreateOrConnectWithoutClubInfoSubmissionInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedCreateWithoutClubInfoSubmissionInput>
+}
+
+export type UserProfileUpsertWithoutClubInfoSubmissionInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedCreateWithoutClubInfoSubmissionInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutClubInfoSubmissionInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutClubInfoSubmissionInput, Prisma.UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput>
+}
+
+export type UserProfileUpdateWithoutClubInfoSubmissionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -1254,6 +1457,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1265,6 +1469,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
@@ -1278,6 +1483,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1289,6 +1495,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
@@ -1318,6 +1525,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1329,6 +1537,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
@@ -1342,6 +1551,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1353,6 +1563,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
@@ -1366,6 +1577,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1378,6 +1590,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1390,6 +1603,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1402,6 +1616,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1430,6 +1645,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1442,6 +1658,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1454,6 +1671,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1466,6 +1684,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1478,6 +1697,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1490,6 +1710,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1502,6 +1723,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1514,6 +1736,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1542,6 +1765,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1554,6 +1778,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1566,6 +1791,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1578,6 +1804,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1590,6 +1817,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1602,6 +1830,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
@@ -1614,6 +1843,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  contactNumber?: string | null
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: $Enums.UserRole
@@ -1626,6 +1856,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
@@ -1654,6 +1885,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1666,6 +1898,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
@@ -1678,6 +1911,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -1690,6 +1924,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
   youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
   waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
@@ -1787,6 +2022,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  contactNumber?: boolean
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
@@ -1799,6 +2035,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
   youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
   waiverSubmissions?: boolean | Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>
+  clubInfoSubmission?: boolean | Prisma.UserProfile$clubInfoSubmissionArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1813,6 +2050,7 @@ export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  contactNumber?: boolean
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
@@ -1829,6 +2067,7 @@ export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  contactNumber?: boolean
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
@@ -1845,6 +2084,7 @@ export type UserProfileSelectScalar = {
   email?: boolean
   firstName?: boolean
   lastName?: boolean
+  contactNumber?: boolean
   notificationsEnabled?: boolean
   newsletterSubscribed?: boolean
   role?: boolean
@@ -1855,12 +2095,13 @@ export type UserProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "t20TeamCode" | "secondaryTeamCode" | "playingRole" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
+export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "contactNumber" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "t20TeamCode" | "secondaryTeamCode" | "playingRole" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
   youth15Registration?: boolean | Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>
   waiverSubmissions?: boolean | Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>
+  clubInfoSubmission?: boolean | Prisma.UserProfile$clubInfoSubmissionArgs<ExtArgs>
   certificationQuestionsCreated?: boolean | Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>
   certificationWindowsStarted?: boolean | Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
@@ -1878,6 +2119,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     umpiringTraining: Prisma.$UmpiringTrainingPayload<ExtArgs> | null
     youth15Registration: Prisma.$Youth15RegistrationPayload<ExtArgs> | null
     waiverSubmissions: Prisma.$WaiverSubmissionPayload<ExtArgs>[]
+    clubInfoSubmission: Prisma.$ClubInfoSubmissionPayload<ExtArgs> | null
     certificationQuestionsCreated: Prisma.$CertificationQuestionPayload<ExtArgs>[]
     certificationWindowsStarted: Prisma.$CertificationTestWindowPayload<ExtArgs>[]
     certificationAttempts: Prisma.$CertificationAttemptPayload<ExtArgs>[]
@@ -1890,6 +2132,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     email: string
     firstName: string | null
     lastName: string | null
+    contactNumber: string | null
     notificationsEnabled: boolean
     newsletterSubscribed: boolean
     role: $Enums.UserRole
@@ -2296,6 +2539,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   umpiringTraining<T extends Prisma.UserProfile$umpiringTrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>>): Prisma.Prisma__UmpiringTrainingClient<runtime.Types.Result.GetResult<Prisma.$UmpiringTrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   youth15Registration<T extends Prisma.UserProfile$youth15RegistrationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$youth15RegistrationArgs<ExtArgs>>): Prisma.Prisma__Youth15RegistrationClient<runtime.Types.Result.GetResult<Prisma.$Youth15RegistrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   waiverSubmissions<T extends Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$waiverSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WaiverSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubInfoSubmission<T extends Prisma.UserProfile$clubInfoSubmissionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$clubInfoSubmissionArgs<ExtArgs>>): Prisma.Prisma__ClubInfoSubmissionClient<runtime.Types.Result.GetResult<Prisma.$ClubInfoSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   certificationQuestionsCreated<T extends Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationQuestionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationWindowsStarted<T extends Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationWindowsStartedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationTestWindowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificationAttempts<T extends Prisma.UserProfile$certificationAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2335,6 +2579,7 @@ export interface UserProfileFieldRefs {
   readonly email: Prisma.FieldRef<"UserProfile", 'String'>
   readonly firstName: Prisma.FieldRef<"UserProfile", 'String'>
   readonly lastName: Prisma.FieldRef<"UserProfile", 'String'>
+  readonly contactNumber: Prisma.FieldRef<"UserProfile", 'String'>
   readonly notificationsEnabled: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly newsletterSubscribed: Prisma.FieldRef<"UserProfile", 'Boolean'>
   readonly role: Prisma.FieldRef<"UserProfile", 'UserRole'>
@@ -2819,6 +3064,25 @@ export type UserProfile$waiverSubmissionsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.WaiverSubmissionScalarFieldEnum | Prisma.WaiverSubmissionScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.clubInfoSubmission
+ */
+export type UserProfile$clubInfoSubmissionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubInfoSubmission
+   */
+  select?: Prisma.ClubInfoSubmissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubInfoSubmission
+   */
+  omit?: Prisma.ClubInfoSubmissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubInfoSubmissionInclude<ExtArgs> | null
+  where?: Prisma.ClubInfoSubmissionWhereInput
 }
 
 /**

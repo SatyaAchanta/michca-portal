@@ -22,6 +22,12 @@ const Account = async () => {
     division: string;
     format: string;
   }> = [];
+  let captainedTeams: Array<{
+    teamCode: string;
+    teamName: string;
+    division: string;
+    format: string;
+  }> = [];
 
   try {
     profile = await prisma.userProfile.findUnique({
@@ -35,6 +41,7 @@ const Account = async () => {
         notificationsEnabled: true,
         newsletterSubscribed: true,
         role: true,
+        contactNumber: true,
         t20TeamCode: true,
         secondaryTeamCode: true,
         playingRole: true,
@@ -44,7 +51,7 @@ const Account = async () => {
     });
 
     if (profile) {
-      const [registration, waiver, teamOptions] = await Promise.all([
+      const [registration, waiver, teamOptions, teamsCaptained] = await Promise.all([
         prisma.umpiringTraining.findUnique({
           where: { userProfileId: profile.id },
           select: { result: true },
@@ -68,11 +75,22 @@ const Account = async () => {
           },
         }),
         getWaiverTeamOptions(),
+        prisma.team.findMany({
+          where: { captainId: profile.id },
+          orderBy: [{ format: "asc" }, { division: "asc" }, { teamName: "asc" }],
+          select: {
+            teamCode: true,
+            teamName: true,
+            division: true,
+            format: true,
+          },
+        }),
       ]);
 
       umpiringResult = registration?.result ?? null;
       waiverSubmission = waiver;
       teams = teamOptions;
+      captainedTeams = teamsCaptained;
     }
   } catch (error) {
     console.log("Error fetching user profile:", error);
@@ -86,6 +104,7 @@ const Account = async () => {
         profile={profile ?? null}
         umpiringResult={umpiringResult}
         teams={teams}
+        captainedTeams={captainedTeams}
         waiverSubmission={
           waiverSubmission
             ? {
