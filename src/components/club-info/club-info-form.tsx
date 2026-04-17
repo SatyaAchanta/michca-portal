@@ -87,7 +87,9 @@ export function ClubInfoForm({
   const t20Teams = useMemo(
     () =>
       t20Division && t20Division !== "N/A"
-        ? teams.filter((team) => team.format === "T20" && team.division === t20Division)
+        ? teams.filter(
+            (team) => team.format === "T20" && team.division === t20Division,
+          )
         : [],
     [teams, t20Division],
   );
@@ -103,28 +105,38 @@ export function ClubInfoForm({
     return (
       <Card className="space-y-4 p-6">
         <div className="space-y-2">
-          <h2 className="text-2xl font-semibold tracking-tight">Club Info Submitted</h2>
-          <p className="text-sm text-muted-foreground">
-            This declaration is locked after submission. If you need to make a change, contact
-            the Stats Committee from the committees page.
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Club Info Submitted
+          </h2>
+          <p className="text-sm text-destructive">
+            This declaration is locked after submission. If you need to make a
+            change, contact the Stats Committee.
           </p>
         </div>
         <div className="grid gap-4 text-sm md:grid-cols-2">
           <div>
             <p className="text-muted-foreground">Account Email</p>
-            <p className="font-medium text-foreground">{submission.accountEmail}</p>
+            <p className="font-medium text-foreground">
+              {submission.accountEmail}
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">Captain Name</p>
-            <p className="font-medium text-foreground">{submission.captainName}</p>
+            <p className="font-medium text-foreground">
+              {submission.captainName}
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">CricClubs ID</p>
-            <p className="font-medium text-foreground">{submission.cricclubsId}</p>
+            <p className="font-medium text-foreground">
+              {submission.cricclubsId}
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">Contact Number</p>
-            <p className="font-medium text-foreground">{submission.contactNumber}</p>
+            <p className="font-medium text-foreground">
+              {submission.contactNumber}
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">T20 Team</p>
@@ -140,9 +152,14 @@ export function ClubInfoForm({
           </div>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="outline">
-            <Link href="/committees">Contact Stats Committee</Link>
-          </Button>
+          <p className="text-sm text-muted-foreground">
+            You submitted this form on{" "}
+            {new Date(submission.createdAt).toLocaleString(undefined, {
+              dateStyle: "long",
+              timeStyle: "short",
+            })}
+            . If you need to make changes, please contact the Stats Committee.
+          </p>
         </div>
       </Card>
     );
@@ -250,7 +267,11 @@ export function ClubInfoForm({
 
           <div className="space-y-2">
             <label className="text-sm font-medium">F40 or T30 Division</label>
-            <input type="hidden" name="secondaryDivision" value={secondaryDivision} />
+            <input
+              type="hidden"
+              name="secondaryDivision"
+              value={secondaryDivision}
+            />
             <Select
               value={secondaryDivision}
               onValueChange={(value) => {
@@ -272,7 +293,11 @@ export function ClubInfoForm({
 
           <div className="space-y-2">
             <label className="text-sm font-medium">F40 or T30 Team</label>
-            <input type="hidden" name="secondaryTeamCode" value={secondaryTeamCode} />
+            <input
+              type="hidden"
+              name="secondaryTeamCode"
+              value={secondaryTeamCode}
+            />
             <Select
               value={secondaryTeamCode}
               onValueChange={setSecondaryTeamCode}
@@ -299,7 +324,9 @@ export function ClubInfoForm({
         {state.message ? (
           <p
             className={`text-sm ${
-              state.status === "success" ? "text-green-700 dark:text-green-300" : "text-destructive"
+              state.status === "success"
+                ? "text-green-700 dark:text-green-300"
+                : "text-destructive"
             }`}
           >
             {state.message}
