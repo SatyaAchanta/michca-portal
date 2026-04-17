@@ -4,6 +4,7 @@ import { Download } from "lucide-react";
 import { getAdminRegistrations } from "@/app/admin/actions";
 import { ClubInfoFilters } from "@/components/admin/club-info-filters";
 import { AdminSectionSelect } from "@/components/admin/admin-section-select";
+import { DeleteClubInfoButton } from "@/components/admin/delete-club-info-button";
 import { DeleteWaiverButton } from "@/components/admin/delete-waiver-button";
 import { WaiverFilters } from "@/components/admin/waiver-filters";
 import { AdminFilters } from "@/components/umpiring-training/admin-filters";
@@ -776,6 +777,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           <th className="px-4 py-3 font-medium">F40/T30 Team</th>
                           <th className="px-4 py-3 font-medium">Submitted</th>
                           <th className="px-4 py-3 font-medium">Updated</th>
+                          <th className="px-4 py-3 font-medium">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -802,6 +804,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             </td>
                             <td className="px-4 py-3 whitespace-nowrap">
                               {formatSubmittedDate(submission.updatedAt)}
+                            </td>
+                            <td className="px-4 py-3">
+                              <DeleteClubInfoButton submissionId={submission.id} />
                             </td>
                           </tr>
                         ))}
@@ -865,6 +870,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">Submitted</span>
                                   <span>{formatSubmittedDate(submission.createdAt)}</span>
+                                </div>
+                                <div className="pt-2">
+                                  <DeleteClubInfoButton submissionId={submission.id} />
                                 </div>
                               </div>
                             </AccordionContent>
