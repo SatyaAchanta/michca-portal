@@ -18,6 +18,7 @@ const SECTION_OPTIONS = [
   { value: "youth15", label: "Youth 15" },
   { value: "umpiring", label: "Umpiring" },
   { value: "waiver", label: "Waiver Status" },
+  { value: "clubInfo", label: "Club Info" },
   { value: "teams", label: "Teams" },
 ];
 

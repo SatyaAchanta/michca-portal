@@ -57,6 +57,7 @@ export const ModelName = {
   UmpiringTraining: 'UmpiringTraining',
   Youth15Registration: 'Youth15Registration',
   WaiverSubmission: 'WaiverSubmission',
+  ClubInfoSubmission: 'ClubInfoSubmission',
   UmpireAssignment: 'UmpireAssignment',
   CertificationQuestion: 'CertificationQuestion',
   CertificationQuestionOption: 'CertificationQuestionOption',
@@ -127,9 +128,13 @@ export const UserProfileScalarFieldEnum = {
   email: 'email',
   firstName: 'firstName',
   lastName: 'lastName',
+  contactNumber: 'contactNumber',
   notificationsEnabled: 'notificationsEnabled',
   newsletterSubscribed: 'newsletterSubscribed',
   role: 'role',
+  t20TeamCode: 't20TeamCode',
+  secondaryTeamCode: 'secondaryTeamCode',
+  playingRole: 'playingRole',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -180,6 +185,7 @@ export const WaiverSubmissionScalarFieldEnum = {
   userProfileId: 'userProfileId',
   playerName: 'playerName',
   cricclubsId: 'cricclubsId',
+  state: 'state',
   city: 'city',
   address: 'address',
   t20Division: 't20Division',
@@ -188,6 +194,7 @@ export const WaiverSubmissionScalarFieldEnum = {
   secondaryTeamCode: 'secondaryTeamCode',
   signatureName: 'signatureName',
   acknowledgedSubmitText: 'acknowledgedSubmitText',
+  acknowledgedRulebookText: 'acknowledgedRulebookText',
   year: 'year',
   submittedAt: 'submittedAt',
   createdAt: 'createdAt',
@@ -195,6 +202,24 @@ export const WaiverSubmissionScalarFieldEnum = {
 } as const
 
 export type WaiverSubmissionScalarFieldEnum = (typeof WaiverSubmissionScalarFieldEnum)[keyof typeof WaiverSubmissionScalarFieldEnum]
+
+
+export const ClubInfoSubmissionScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  accountEmail: 'accountEmail',
+  captainName: 'captainName',
+  cricclubsId: 'cricclubsId',
+  contactNumber: 'contactNumber',
+  t20Division: 't20Division',
+  t20TeamCode: 't20TeamCode',
+  secondaryDivision: 'secondaryDivision',
+  secondaryTeamCode: 'secondaryTeamCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubInfoSubmissionScalarFieldEnum = (typeof ClubInfoSubmissionScalarFieldEnum)[keyof typeof ClubInfoSubmissionScalarFieldEnum]
 
 
 export const UmpireAssignmentScalarFieldEnum = {

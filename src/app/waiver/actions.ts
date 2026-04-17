@@ -11,6 +11,7 @@ import {
 } from "@/lib/user-profile";
 import {
   getCurrentWaiverYear,
+  WAIVER_RULEBOOK_ACKNOWLEDGEMENT_TEXT,
   WAIVER_PRIMARY_DIVISIONS,
   WAIVER_SUBMIT_TEXT,
 } from "@/lib/waiver-constants";
@@ -107,22 +108,34 @@ export async function submitMyWaiver(
 
   const submittedAt = new Date();
 
-  await prisma.waiverSubmission.create({
-    data: {
-      userProfileId: profile.id,
-      playerName: data.playerName,
-      cricclubsId: data.cricclubsId,
-      city: data.city,
-      address: data.address,
-      t20Division: data.t20Division,
-      t20TeamCode: data.t20TeamCode,
-      secondaryDivision: data.secondaryDivision,
-      secondaryTeamCode: data.secondaryTeamCode,
-      signatureName: data.signatureName,
-      acknowledgedSubmitText: WAIVER_SUBMIT_TEXT,
-      year,
-      submittedAt,
-    },
+  await prisma.$transaction(async (tx) => {
+    await tx.waiverSubmission.create({
+      data: {
+        userProfileId: profile.id,
+        playerName: data.playerName,
+        cricclubsId: data.cricclubsId,
+        state: data.state,
+        city: data.city,
+        address: data.address,
+        t20Division: data.t20Division,
+        t20TeamCode: data.t20TeamCode,
+        secondaryDivision: data.secondaryDivision,
+        secondaryTeamCode: data.secondaryTeamCode,
+        signatureName: data.signatureName,
+        acknowledgedSubmitText: WAIVER_SUBMIT_TEXT,
+        acknowledgedRulebookText: WAIVER_RULEBOOK_ACKNOWLEDGEMENT_TEXT,
+        year,
+        submittedAt,
+      },
+    });
+
+    await tx.userProfile.update({
+      where: { id: profile.id },
+      data: {
+        t20TeamCode: data.t20TeamCode,
+        secondaryTeamCode: data.secondaryTeamCode,
+      },
+    });
   });
 
   revalidatePath("/");

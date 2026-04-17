@@ -22,14 +22,30 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
+type NavLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
   { label: "Forms", href: "/forms" },
 ];
 
+const mobileNavLinks: NavLink[] = [
+  ...navLinks,
+  {
+    label: "Fantasy",
+    href: "https://www.fantasyleaguemichca.org",
+    external: true,
+  },
+];
+
 const publicMoreLinks = [
   { label: "Grounds", href: "/grounds" },
+  { label: "Leadership", href: "/committees" },
   { label: "About", href: "/about" },
   {
     label: "Fantasy",
@@ -137,20 +153,6 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     >
                       Admin
                     </Link>
-                    <Link
-                      href="/admin/certification-questions"
-                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                      onClick={() => setMoreOpen(false)}
-                    >
-                      Cert Questions
-                    </Link>
-                    <Link
-                      href="/admin/certification-windows"
-                      className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
-                      onClick={() => setMoreOpen(false)}
-                    >
-                      Cert Windows
-                    </Link>
                   </>
                 ) : null}
               </PopoverContent>
@@ -199,18 +201,7 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     <UserButton />
                   </div>
                 </SignedIn>
-                {navLinks.map((link) => (
-                  <Button
-                    key={link.href}
-                    asChild
-                    variant="ghost"
-                    className="justify-start"
-                    onClick={() => setOpen(false)}
-                  >
-                    <Link href={link.href}>{link.label}</Link>
-                  </Button>
-                ))}
-                {publicMoreLinks.map((link) => (
+                {mobileNavLinks.map((link) => (
                   <Button
                     key={link.href}
                     asChild
@@ -227,67 +218,15 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     </Link>
                   </Button>
                 ))}
-                <SignedIn>
-                  <>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/account">Account</Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/umpiring-training">Umpiring</Link>
-                    </Button>
-                    {/* <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/umpiring-certification">
-                        Umpiring Certification
-                      </Link>
-                    </Button> */}
-                  </>
-                </SignedIn>
                 {isAdmin ? (
-                  <>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin">Admin</Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin/certification-questions">
-                        Cert Questions
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Link href="/admin/certification-windows">
-                        Cert Windows
-                      </Link>
-                    </Button>
-                  </>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="justify-start"
+                    onClick={() => setOpen(false)}
+                  >
+                    <Link href="/admin">Admin</Link>
+                  </Button>
                 ) : null}
               </div>
             </SheetContent>

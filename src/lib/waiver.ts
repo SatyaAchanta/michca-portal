@@ -96,6 +96,7 @@ export async function getWaiverAdminData(filters?: {
       id: true,
       playerName: true,
       cricclubsId: true,
+      state: true,
       city: true,
       address: true,
       t20Division: true,

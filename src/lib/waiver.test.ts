@@ -61,6 +61,7 @@ describe("getWaiverAdminData", () => {
         id: "w1",
         playerName: "Rohan Patel",
         cricclubsId: "123",
+        state: "Michigan",
         city: "Troy",
         address: "123 Main St",
         t20Division: "Premier",
@@ -101,6 +102,7 @@ describe("getWaiverAdminData", () => {
       })
     );
     expect(result.count).toBe(1);
+    expect(result.rows[0]?.state).toBe("Michigan");
     expect(result.rows[0]?.t20Team?.teamName).toBe("Michigan OCC");
     expect(result.rows[0]?.secondaryTeam?.teamName).toBe("Michigan OCC T30");
   });

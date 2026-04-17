@@ -39,6 +39,7 @@ export type WaiverSubmissionMinAggregateOutputType = {
   userProfileId: string | null
   playerName: string | null
   cricclubsId: string | null
+  state: string | null
   city: string | null
   address: string | null
   t20Division: string | null
@@ -47,6 +48,7 @@ export type WaiverSubmissionMinAggregateOutputType = {
   secondaryTeamCode: string | null
   signatureName: string | null
   acknowledgedSubmitText: string | null
+  acknowledgedRulebookText: string | null
   year: number | null
   submittedAt: Date | null
   createdAt: Date | null
@@ -58,6 +60,7 @@ export type WaiverSubmissionMaxAggregateOutputType = {
   userProfileId: string | null
   playerName: string | null
   cricclubsId: string | null
+  state: string | null
   city: string | null
   address: string | null
   t20Division: string | null
@@ -66,6 +69,7 @@ export type WaiverSubmissionMaxAggregateOutputType = {
   secondaryTeamCode: string | null
   signatureName: string | null
   acknowledgedSubmitText: string | null
+  acknowledgedRulebookText: string | null
   year: number | null
   submittedAt: Date | null
   createdAt: Date | null
@@ -77,6 +81,7 @@ export type WaiverSubmissionCountAggregateOutputType = {
   userProfileId: number
   playerName: number
   cricclubsId: number
+  state: number
   city: number
   address: number
   t20Division: number
@@ -85,6 +90,7 @@ export type WaiverSubmissionCountAggregateOutputType = {
   secondaryTeamCode: number
   signatureName: number
   acknowledgedSubmitText: number
+  acknowledgedRulebookText: number
   year: number
   submittedAt: number
   createdAt: number
@@ -106,6 +112,7 @@ export type WaiverSubmissionMinAggregateInputType = {
   userProfileId?: true
   playerName?: true
   cricclubsId?: true
+  state?: true
   city?: true
   address?: true
   t20Division?: true
@@ -114,6 +121,7 @@ export type WaiverSubmissionMinAggregateInputType = {
   secondaryTeamCode?: true
   signatureName?: true
   acknowledgedSubmitText?: true
+  acknowledgedRulebookText?: true
   year?: true
   submittedAt?: true
   createdAt?: true
@@ -125,6 +133,7 @@ export type WaiverSubmissionMaxAggregateInputType = {
   userProfileId?: true
   playerName?: true
   cricclubsId?: true
+  state?: true
   city?: true
   address?: true
   t20Division?: true
@@ -133,6 +142,7 @@ export type WaiverSubmissionMaxAggregateInputType = {
   secondaryTeamCode?: true
   signatureName?: true
   acknowledgedSubmitText?: true
+  acknowledgedRulebookText?: true
   year?: true
   submittedAt?: true
   createdAt?: true
@@ -144,6 +154,7 @@ export type WaiverSubmissionCountAggregateInputType = {
   userProfileId?: true
   playerName?: true
   cricclubsId?: true
+  state?: true
   city?: true
   address?: true
   t20Division?: true
@@ -152,6 +163,7 @@ export type WaiverSubmissionCountAggregateInputType = {
   secondaryTeamCode?: true
   signatureName?: true
   acknowledgedSubmitText?: true
+  acknowledgedRulebookText?: true
   year?: true
   submittedAt?: true
   createdAt?: true
@@ -250,6 +262,7 @@ export type WaiverSubmissionGroupByOutputType = {
   userProfileId: string
   playerName: string
   cricclubsId: string
+  state: string | null
   city: string
   address: string | null
   t20Division: string | null
@@ -258,6 +271,7 @@ export type WaiverSubmissionGroupByOutputType = {
   secondaryTeamCode: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText: string | null
   year: number
   submittedAt: Date
   createdAt: Date
@@ -292,6 +306,7 @@ export type WaiverSubmissionWhereInput = {
   userProfileId?: Prisma.StringFilter<"WaiverSubmission"> | string
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
+  state?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -300,6 +315,7 @@ export type WaiverSubmissionWhereInput = {
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
+  acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
   submittedAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
@@ -312,6 +328,7 @@ export type WaiverSubmissionOrderByWithRelationInput = {
   userProfileId?: Prisma.SortOrder
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,6 +337,7 @@ export type WaiverSubmissionOrderByWithRelationInput = {
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
+  acknowledgedRulebookText?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -336,6 +354,7 @@ export type WaiverSubmissionWhereUniqueInput = Prisma.AtLeast<{
   userProfileId?: Prisma.StringFilter<"WaiverSubmission"> | string
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
+  state?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -344,6 +363,7 @@ export type WaiverSubmissionWhereUniqueInput = Prisma.AtLeast<{
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
+  acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
   submittedAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
@@ -356,6 +376,7 @@ export type WaiverSubmissionOrderByWithAggregationInput = {
   userProfileId?: Prisma.SortOrder
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -364,6 +385,7 @@ export type WaiverSubmissionOrderByWithAggregationInput = {
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
+  acknowledgedRulebookText?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -383,6 +405,7 @@ export type WaiverSubmissionScalarWhereWithAggregatesInput = {
   userProfileId?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   playerName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
+  state?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   city?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   address?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
@@ -391,6 +414,7 @@ export type WaiverSubmissionScalarWhereWithAggregatesInput = {
   secondaryTeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
+  acknowledgedRulebookText?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   year?: Prisma.IntWithAggregatesFilter<"WaiverSubmission"> | number
   submittedAt?: Prisma.DateTimeWithAggregatesFilter<"WaiverSubmission"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WaiverSubmission"> | Date | string
@@ -401,6 +425,7 @@ export type WaiverSubmissionCreateInput = {
   id?: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -409,6 +434,7 @@ export type WaiverSubmissionCreateInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -421,6 +447,7 @@ export type WaiverSubmissionUncheckedCreateInput = {
   userProfileId: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -429,6 +456,7 @@ export type WaiverSubmissionUncheckedCreateInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -439,6 +467,7 @@ export type WaiverSubmissionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -447,6 +476,7 @@ export type WaiverSubmissionUpdateInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -459,6 +489,7 @@ export type WaiverSubmissionUncheckedUpdateInput = {
   userProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -467,6 +498,7 @@ export type WaiverSubmissionUncheckedUpdateInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,6 +510,7 @@ export type WaiverSubmissionCreateManyInput = {
   userProfileId: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -486,6 +519,7 @@ export type WaiverSubmissionCreateManyInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -496,6 +530,7 @@ export type WaiverSubmissionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -504,6 +539,7 @@ export type WaiverSubmissionUpdateManyMutationInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -515,6 +551,7 @@ export type WaiverSubmissionUncheckedUpdateManyInput = {
   userProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -523,6 +560,7 @@ export type WaiverSubmissionUncheckedUpdateManyInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -549,6 +587,7 @@ export type WaiverSubmissionCountOrderByAggregateInput = {
   userProfileId?: Prisma.SortOrder
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   city?: Prisma.SortOrder
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
@@ -557,6 +596,7 @@ export type WaiverSubmissionCountOrderByAggregateInput = {
   secondaryTeamCode?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
+  acknowledgedRulebookText?: Prisma.SortOrder
   year?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -572,6 +612,7 @@ export type WaiverSubmissionMaxOrderByAggregateInput = {
   userProfileId?: Prisma.SortOrder
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   city?: Prisma.SortOrder
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
@@ -580,6 +621,7 @@ export type WaiverSubmissionMaxOrderByAggregateInput = {
   secondaryTeamCode?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
+  acknowledgedRulebookText?: Prisma.SortOrder
   year?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -591,6 +633,7 @@ export type WaiverSubmissionMinOrderByAggregateInput = {
   userProfileId?: Prisma.SortOrder
   playerName?: Prisma.SortOrder
   cricclubsId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   city?: Prisma.SortOrder
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
@@ -599,6 +642,7 @@ export type WaiverSubmissionMinOrderByAggregateInput = {
   secondaryTeamCode?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
+  acknowledgedRulebookText?: Prisma.SortOrder
   year?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -663,6 +707,7 @@ export type WaiverSubmissionCreateWithoutUserProfileInput = {
   id?: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -671,6 +716,7 @@ export type WaiverSubmissionCreateWithoutUserProfileInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -681,6 +727,7 @@ export type WaiverSubmissionUncheckedCreateWithoutUserProfileInput = {
   id?: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -689,6 +736,7 @@ export type WaiverSubmissionUncheckedCreateWithoutUserProfileInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -729,6 +777,7 @@ export type WaiverSubmissionScalarWhereInput = {
   userProfileId?: Prisma.StringFilter<"WaiverSubmission"> | string
   playerName?: Prisma.StringFilter<"WaiverSubmission"> | string
   cricclubsId?: Prisma.StringFilter<"WaiverSubmission"> | string
+  state?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   city?: Prisma.StringFilter<"WaiverSubmission"> | string
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -737,6 +786,7 @@ export type WaiverSubmissionScalarWhereInput = {
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
+  acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   year?: Prisma.IntFilter<"WaiverSubmission"> | number
   submittedAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"WaiverSubmission"> | Date | string
@@ -747,6 +797,7 @@ export type WaiverSubmissionCreateManyUserProfileInput = {
   id?: string
   playerName: string
   cricclubsId: string
+  state?: string | null
   city: string
   address?: string | null
   t20Division?: string | null
@@ -755,6 +806,7 @@ export type WaiverSubmissionCreateManyUserProfileInput = {
   secondaryTeamCode?: string | null
   signatureName: string
   acknowledgedSubmitText: string
+  acknowledgedRulebookText?: string | null
   year: number
   submittedAt: Date | string
   createdAt?: Date | string
@@ -765,6 +817,7 @@ export type WaiverSubmissionUpdateWithoutUserProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -773,6 +826,7 @@ export type WaiverSubmissionUpdateWithoutUserProfileInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -783,6 +837,7 @@ export type WaiverSubmissionUncheckedUpdateWithoutUserProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -791,6 +846,7 @@ export type WaiverSubmissionUncheckedUpdateWithoutUserProfileInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -801,6 +857,7 @@ export type WaiverSubmissionUncheckedUpdateManyWithoutUserProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerName?: Prisma.StringFieldUpdateOperationsInput | string
   cricclubsId?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -809,6 +866,7 @@ export type WaiverSubmissionUncheckedUpdateManyWithoutUserProfileInput = {
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
+  acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -822,6 +880,7 @@ export type WaiverSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   userProfileId?: boolean
   playerName?: boolean
   cricclubsId?: boolean
+  state?: boolean
   city?: boolean
   address?: boolean
   t20Division?: boolean
@@ -830,6 +889,7 @@ export type WaiverSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   secondaryTeamCode?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
+  acknowledgedRulebookText?: boolean
   year?: boolean
   submittedAt?: boolean
   createdAt?: boolean
@@ -842,6 +902,7 @@ export type WaiverSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   userProfileId?: boolean
   playerName?: boolean
   cricclubsId?: boolean
+  state?: boolean
   city?: boolean
   address?: boolean
   t20Division?: boolean
@@ -850,6 +911,7 @@ export type WaiverSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   secondaryTeamCode?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
+  acknowledgedRulebookText?: boolean
   year?: boolean
   submittedAt?: boolean
   createdAt?: boolean
@@ -862,6 +924,7 @@ export type WaiverSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   userProfileId?: boolean
   playerName?: boolean
   cricclubsId?: boolean
+  state?: boolean
   city?: boolean
   address?: boolean
   t20Division?: boolean
@@ -870,6 +933,7 @@ export type WaiverSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   secondaryTeamCode?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
+  acknowledgedRulebookText?: boolean
   year?: boolean
   submittedAt?: boolean
   createdAt?: boolean
@@ -882,6 +946,7 @@ export type WaiverSubmissionSelectScalar = {
   userProfileId?: boolean
   playerName?: boolean
   cricclubsId?: boolean
+  state?: boolean
   city?: boolean
   address?: boolean
   t20Division?: boolean
@@ -890,13 +955,14 @@ export type WaiverSubmissionSelectScalar = {
   secondaryTeamCode?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
+  acknowledgedRulebookText?: boolean
   year?: boolean
   submittedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "city" | "address" | "t20Division" | "t20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "signatureName" | "acknowledgedSubmitText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
+export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "state" | "city" | "address" | "t20Division" | "t20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "signatureName" | "acknowledgedSubmitText" | "acknowledgedRulebookText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
 export type WaiverSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -917,6 +983,7 @@ export type $WaiverSubmissionPayload<ExtArgs extends runtime.Types.Extensions.In
     userProfileId: string
     playerName: string
     cricclubsId: string
+    state: string | null
     city: string
     address: string | null
     t20Division: string | null
@@ -925,6 +992,7 @@ export type $WaiverSubmissionPayload<ExtArgs extends runtime.Types.Extensions.In
     secondaryTeamCode: string | null
     signatureName: string
     acknowledgedSubmitText: string
+    acknowledgedRulebookText: string | null
     year: number
     submittedAt: Date
     createdAt: Date
@@ -1357,6 +1425,7 @@ export interface WaiverSubmissionFieldRefs {
   readonly userProfileId: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly playerName: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly cricclubsId: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly state: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly city: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly address: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly t20Division: Prisma.FieldRef<"WaiverSubmission", 'String'>
@@ -1365,6 +1434,7 @@ export interface WaiverSubmissionFieldRefs {
   readonly secondaryTeamCode: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly signatureName: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly acknowledgedSubmitText: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly acknowledgedRulebookText: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly year: Prisma.FieldRef<"WaiverSubmission", 'Int'>
   readonly submittedAt: Prisma.FieldRef<"WaiverSubmission", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"WaiverSubmission", 'DateTime'>

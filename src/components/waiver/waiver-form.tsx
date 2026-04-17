@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 
 import { submitMyWaiver } from "@/app/waiver/actions";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,11 @@ import {
   type SecondaryDivisionValue,
   type WaiverFormState,
 } from "@/components/waiver/validation";
-import { WAIVER_SUBMIT_TEXT } from "@/lib/waiver-constants";
+import {
+  WAIVER_RULEBOOK_URL,
+  WAIVER_US_STATES,
+  WAIVER_SUBMIT_TEXT,
+} from "@/lib/waiver-constants";
 
 type TeamOption = {
   teamCode: string;
@@ -40,6 +45,7 @@ type TeamOption = {
 type WaiverSnapshot = {
   playerName: string;
   cricclubsId: string;
+  state: string | null;
   city: string;
   address: string | null;
   t20Division: string | null;
@@ -65,7 +71,7 @@ function FieldError({ message }: { message?: string }) {
 }
 
 export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
-  const [state, formAction] = useActionState<WaiverFormState, FormData>(
+  const [formState, formAction] = useActionState<WaiverFormState, FormData>(
     submitMyWaiver,
     INITIAL_WAIVER_FORM_STATE,
   );
@@ -73,6 +79,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [playerName, setPlayerName] = useState(waiver?.playerName ?? "");
   const [cricclubsId, setCricclubsId] = useState(waiver?.cricclubsId ?? "");
+  const [playerState, setPlayerState] = useState(waiver?.state ?? "");
   const [city, setCity] = useState(waiver?.city ?? "");
   const [address, setAddress] = useState(waiver?.address ?? "");
   const [signatureName, setSignatureName] = useState(
@@ -93,6 +100,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
     waiver?.secondaryTeamCode ?? "",
   );
   const [submitAcknowledgement, setSubmitAcknowledgement] = useState(false);
+  const [rulebookAcknowledgement, setRulebookAcknowledgement] = useState(false);
 
   const t20Teams = useMemo(
     () =>
@@ -125,7 +133,12 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
-    if (!submitAcknowledgement || showNameMismatch || waiver) {
+    if (
+      !submitAcknowledgement ||
+      !rulebookAcknowledgement ||
+      showNameMismatch ||
+      waiver
+    ) {
       return;
     }
 
@@ -173,7 +186,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 required
                 disabled={Boolean(waiver)}
               />
-              <FieldError message={state.fieldErrors.playerName} />
+              <FieldError message={formState.fieldErrors.playerName} />
             </div>
             <div className="space-y-2">
               <label htmlFor="cricclubsId" className="text-sm font-medium">
@@ -187,21 +200,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 required
                 disabled={Boolean(waiver)}
               />
-              <FieldError message={state.fieldErrors.cricclubsId} />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="city" className="text-sm font-medium">
-                City
-              </label>
-              <Input
-                id="city"
-                name="city"
-                value={city}
-                onChange={(event) => setCity(event.target.value)}
-                required
-                disabled={Boolean(waiver)}
-              />
-              <FieldError message={state.fieldErrors.city} />
+              <FieldError message={formState.fieldErrors.cricclubsId} />
             </div>
             <div className="space-y-2">
               <label htmlFor="address" className="text-sm font-medium">
@@ -216,7 +215,42 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 placeholder="Street address"
                 disabled={Boolean(waiver)}
               />
-              <FieldError message={state.fieldErrors.address} />
+              <FieldError message={formState.fieldErrors.address} />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="city" className="text-sm font-medium">
+                City
+              </label>
+              <Input
+                id="city"
+                name="city"
+                value={city}
+                onChange={(event) => setCity(event.target.value)}
+                required
+                disabled={Boolean(waiver)}
+              />
+              <FieldError message={formState.fieldErrors.city} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">State</label>
+              <input type="hidden" name="state" value={playerState} />
+              <Select
+                value={playerState}
+                onValueChange={setPlayerState}
+                disabled={Boolean(waiver)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select state" />
+                </SelectTrigger>
+                <SelectContent>
+                  {WAIVER_US_STATES.map((stateOption) => (
+                    <SelectItem key={stateOption} value={stateOption}>
+                      {stateOption}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FieldError message={formState.fieldErrors.state} />
             </div>
           </div>
 
@@ -244,7 +278,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                   <SelectItem value="N/A">N/A (does not play T20)</SelectItem>
                 </SelectContent>
               </Select>
-              <FieldError message={state.fieldErrors.t20Division} />
+              <FieldError message={formState.fieldErrors.t20Division} />
             </div>
 
             {t20Division && t20Division !== "N/A" ? (
@@ -269,7 +303,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
-                <FieldError message={state.fieldErrors.t20TeamCode} />
+                <FieldError message={formState.fieldErrors.t20TeamCode} />
               </div>
             ) : null}
 
@@ -302,7 +336,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <FieldError message={state.fieldErrors.secondaryDivision} />
+              <FieldError message={formState.fieldErrors.secondaryDivision} />
             </div>
 
             {secondaryDivision && secondaryDivision !== "N/A" ? (
@@ -331,9 +365,10 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
-                <FieldError message={state.fieldErrors.secondaryTeamCode} />
+                <FieldError message={formState.fieldErrors.secondaryTeamCode} />
               </div>
             ) : null}
+
           </div>
 
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
@@ -353,7 +388,7 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 message={
                   showNameMismatch
                     ? "Signature full name must exactly match the player name."
-                    : state.fieldErrors.signatureName
+                    : formState.fieldErrors.signatureName
                 }
               />
             </div>
@@ -384,37 +419,75 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 the current year.
               </span>
             </label>
-            <FieldError message={state.fieldErrors.submitAcknowledgement} />
+            <FieldError message={formState.fieldErrors.submitAcknowledgement} />
+          </div>
+
+          <div className="space-y-3 rounded-lg border border-border/70 bg-muted/20 p-4">
+            <input
+              type="hidden"
+              name="rulebookAcknowledgement"
+              value={rulebookAcknowledgement ? "yes" : "no"}
+            />
+            <label className="flex items-center gap-3 text-sm leading-6">
+              <Checkbox
+                checked={rulebookAcknowledgement}
+                onCheckedChange={(value) =>
+                  setRulebookAcknowledgement(value === true)
+                }
+                disabled={Boolean(waiver)}
+              />
+              <span className="flex-1">
+                I have read the{" "}
+                <Link
+                  href={WAIVER_RULEBOOK_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  2026 Mich-CA rulebook
+                </Link>{" "}
+                and understand all the conditions.
+              </span>
+            </label>
+            <FieldError
+              message={formState.fieldErrors.rulebookAcknowledgement}
+            />
           </div>
         </Card>
 
-        {state.fieldErrors.form ? (
-          <p className="text-sm text-destructive">{state.fieldErrors.form}</p>
+        {formState.fieldErrors.form ? (
+          <p className="text-sm text-destructive">
+            {formState.fieldErrors.form}
+          </p>
         ) : null}
-        {state.message ? (
+        {formState.message ? (
           <p
             className={`text-sm ${
-              state.status === "success"
+              formState.status === "success"
                 ? "text-green-700 dark:text-green-300"
                 : "text-destructive"
             }`}
           >
-            {state.message}
+            {formState.message}
           </p>
         ) : null}
 
         {waiver ? (
           <Card className="border-amber-500/30 bg-amber-500/5 p-4">
             <p className="text-sm text-muted-foreground">
-              You have already submitted waiver, to reset contact Stats
-              Committee.
+              You have already submitted waiver. If you need to re-submit with
+              updated acknowledgments, contact Waiver Committee to reset it.
             </p>
           </Card>
         ) : (
           <Button
             type="button"
             onClick={handleOpenConfirmation}
-            disabled={!submitAcknowledgement || showNameMismatch}
+            disabled={
+              !submitAcknowledgement ||
+              !rulebookAcknowledgement ||
+              showNameMismatch
+            }
           >
             Review & Submit Waiver
           </Button>

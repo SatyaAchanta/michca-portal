@@ -55,7 +55,7 @@ export async function getTeams(filters?: {
 }
 
 export async function getTeamByCode(teamCode: string) {
-  return prisma.team.findUnique({
+  const team = await prisma.team.findUnique({
     where: { teamCode },
     include: {
       captain: {
@@ -100,6 +100,30 @@ export async function getTeamByCode(teamCode: string) {
       },
     },
   });
+
+  if (!team) {
+    return null;
+  }
+
+  const players = await prisma.userProfile.findMany({
+    where:
+      team.format === "T20"
+        ? { t20TeamCode: team.teamCode }
+        : { secondaryTeamCode: team.teamCode },
+    orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      playingRole: true,
+    },
+  });
+
+  return {
+    ...team,
+    players,
+  };
 }
 
 export async function getTeamAdminOptions() {

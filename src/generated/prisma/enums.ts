@@ -57,7 +57,8 @@ export const UserRole = {
   UMPIRE: 'UMPIRE',
   ADMIN: 'ADMIN',
   UMPIRING_COMMITTEE: 'UMPIRING_COMMITTEE',
-  WAIVER_COMMITTEE: 'WAIVER_COMMITTEE'
+  WAIVER_COMMITTEE: 'WAIVER_COMMITTEE',
+  STATS_COMMITTEE: 'STATS_COMMITTEE'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]

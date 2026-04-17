@@ -12,6 +12,7 @@ import {
   parseDateFilterParam,
   parseLocationFilterParam,
 } from "@/components/umpiring-training/admin-formatters";
+import { getClubInfoAdminData, parseClubInfoAdminSearch } from "@/lib/club-info";
 import { getWaiverAdminData, parseWaiverAdminSearch } from "@/lib/waiver";
 
 type GetAdminRegistrationsArgs = {
@@ -20,6 +21,8 @@ type GetAdminRegistrationsArgs = {
   waiverDivisionParam?: string;
   waiverTeamParam?: string;
   waiverPlayerParam?: string;
+  clubInfoTeamParam?: string;
+  clubInfoDivisionParam?: string;
 };
 
 export async function getAdminRegistrations({
@@ -28,6 +31,8 @@ export async function getAdminRegistrations({
   waiverDivisionParam,
   waiverTeamParam,
   waiverPlayerParam,
+  clubInfoTeamParam,
+  clubInfoDivisionParam,
 }: GetAdminRegistrationsArgs) {
   const { userId } = await auth();
   if (!userId) {
@@ -52,6 +57,8 @@ export async function getAdminRegistrations({
   const selectedWaiverDivision = waiverDivisionParam?.trim() ?? "";
   const selectedWaiverTeamCode = waiverTeamParam?.trim() ?? "";
   const selectedWaiverPlayerName = parseWaiverAdminSearch(waiverPlayerParam);
+  const selectedClubInfoTeamName = parseClubInfoAdminSearch(clubInfoTeamParam);
+  const selectedClubInfoDivision = clubInfoDivisionParam?.trim() ?? "";
 
   const where: Prisma.UmpiringTrainingWhereInput = {};
   if (selectedDates.length > 0) {
@@ -61,7 +68,7 @@ export async function getAdminRegistrations({
     where.preferredLocation = { in: selectedLocations };
   }
 
-  const [registrations, youth15Registrations, waiverData] = await Promise.all([
+  const [registrations, youth15Registrations, waiverData, clubInfoData] = await Promise.all([
     prisma.umpiringTraining.findMany({
       where,
       orderBy: { createdAt: "desc" },
@@ -106,17 +113,24 @@ export async function getAdminRegistrations({
       teamCode: selectedWaiverTeamCode || undefined,
       playerName: selectedWaiverPlayerName || undefined,
     }),
+    getClubInfoAdminData({
+      teamName: selectedClubInfoTeamName || undefined,
+      division: selectedClubInfoDivision || undefined,
+    }),
   ]);
 
   return {
     registrations,
     youth15Registrations,
     waiverData,
+    clubInfoData,
     selectedDates,
     selectedLocations,
     selectedWaiverDivision,
     selectedWaiverTeamCode,
     selectedWaiverPlayerName,
+    selectedClubInfoTeamName,
+    selectedClubInfoDivision,
     userRole: userProfile.role,
   };
 }

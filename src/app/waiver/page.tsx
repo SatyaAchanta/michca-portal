@@ -103,6 +103,7 @@ const waiverContent = (
 type WaiverPageSubmission = {
   playerName: string;
   cricclubsId: string;
+  state: string | null;
   city: string;
   address: string | null;
   t20Division: string | null;
@@ -142,6 +143,7 @@ export default async function WaiverPage() {
       select: {
         playerName: true,
         cricclubsId: true,
+        state: true,
         city: true,
         address: true,
         t20Division: true,
@@ -165,6 +167,7 @@ export default async function WaiverPage() {
     ? {
         playerName: waiver.playerName,
         cricclubsId: waiver.cricclubsId,
+        state: waiver.state,
         city: waiver.city,
         address: waiver.address,
         t20Division: waiver.t20Division,

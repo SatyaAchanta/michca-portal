@@ -48,6 +48,11 @@ export type Youth15Registration = Prisma.Youth15RegistrationModel
  */
 export type WaiverSubmission = Prisma.WaiverSubmissionModel
 /**
+ * Model ClubInfoSubmission
+ * 
+ */
+export type ClubInfoSubmission = Prisma.ClubInfoSubmissionModel
+/**
  * Model UmpireAssignment
  * 
  */

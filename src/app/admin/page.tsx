@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Download } from "lucide-react";
 
 import { getAdminRegistrations } from "@/app/admin/actions";
+import { ClubInfoFilters } from "@/components/admin/club-info-filters";
 import { AdminSectionSelect } from "@/components/admin/admin-section-select";
+import { DeleteClubInfoButton } from "@/components/admin/delete-club-info-button";
 import { DeleteWaiverButton } from "@/components/admin/delete-waiver-button";
 import { WaiverFilters } from "@/components/admin/waiver-filters";
 import { AdminFilters } from "@/components/umpiring-training/admin-filters";
@@ -36,13 +38,20 @@ type AdminPageProps = {
     division?: string;
     team?: string;
     player?: string;
+    club?: string;
+    clubDivision?: string;
   }>;
 };
 
-type AdminSection = "youth15" | "umpiring" | "waiver" | "teams";
+type AdminSection = "youth15" | "umpiring" | "waiver" | "clubInfo" | "teams";
 
 function normalizeSection(input?: string): AdminSection {
-  if (input === "umpiring" || input === "teams" || input === "waiver") {
+  if (
+    input === "umpiring" ||
+    input === "teams" ||
+    input === "waiver" ||
+    input === "clubInfo"
+  ) {
     return input;
   }
 
@@ -57,11 +66,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       registrations,
       youth15Registrations,
       waiverData,
+      clubInfoData,
       selectedDates,
       selectedLocations,
       selectedWaiverDivision,
       selectedWaiverTeamCode,
       selectedWaiverPlayerName,
+      selectedClubInfoTeamName,
+      selectedClubInfoDivision,
       userRole,
     },
     { teams },
@@ -72,6 +84,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       waiverDivisionParam: resolvedParams?.division,
       waiverTeamParam: resolvedParams?.team,
       waiverPlayerParam: resolvedParams?.player,
+      clubInfoTeamParam: resolvedParams?.club,
+      clubInfoDivisionParam: resolvedParams?.clubDivision,
     }),
     getTeamAdminOptions(),
   ]);
@@ -110,6 +124,27 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   if (selectedWaiverPlayerName) {
     waiverExportParams.set("player", selectedWaiverPlayerName);
   }
+  const clubInfoExportParams = new URLSearchParams({ section: "clubInfo" });
+  if (selectedClubInfoTeamName) {
+    clubInfoExportParams.set("club", selectedClubInfoTeamName);
+  }
+  if (selectedClubInfoDivision) {
+    clubInfoExportParams.set("clubDivision", selectedClubInfoDivision);
+  }
+  const clubInfoDivisions = Array.from(
+    new Set(
+      teams
+        .filter((team) => ["T20", "F40", "T30"].includes(team.format))
+        .map((team) => team.division),
+    ),
+  );
+  const clubInfoTeams = teams
+    .filter((team) => ["T20", "F40", "T30"].includes(team.format))
+    .map((team) => ({
+      teamCode: team.teamCode,
+      teamName: team.teamName,
+      division: team.division,
+    }));
 
   return (
     <div className="bg-background py-12">
@@ -528,6 +563,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           <th className="px-4 py-3 font-medium">
                             CricClubs ID
                           </th>
+                          <th className="px-4 py-3 font-medium">State</th>
                           <th className="px-4 py-3 font-medium">City</th>
                           <th className="px-4 py-3 font-medium">Address</th>
                           <th className="px-4 py-3 font-medium">
@@ -556,6 +592,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {waiver.userProfile.email}
                             </td>
                             <td className="px-4 py-3">{waiver.cricclubsId}</td>
+                            <td className="px-4 py-3">{waiver.state ?? "N/A"}</td>
                             <td className="px-4 py-3">{waiver.city}</td>
                             <td className="px-4 py-3">{waiver.address}</td>
                             <td className="px-4 py-3">
@@ -623,6 +660,12 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">
+                                    State
+                                  </span>
+                                  <span>{waiver.state ?? "N/A"}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
                                     City
                                   </span>
                                   <span>{waiver.city}</span>
@@ -663,6 +706,173 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 </div>
                                 <div className="pt-2">
                                   <DeleteWaiverButton waiverId={waiver.id} />
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </Card>
+                  </div>
+                </>
+              )}
+            </section>
+          )
+        ) : null}
+
+        {section === "clubInfo" ? (
+          !canAccessAdminSection(userRole, "clubInfo") ? (
+            <Card className="p-6">
+              <p className="text-sm text-muted-foreground">
+                You do not have enough permissions to see this page
+              </p>
+            </Card>
+          ) : (
+            <section className="space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-semibold tracking-tight">Club Info</h2>
+                <p className="text-sm text-muted-foreground">
+                  Captain declarations submitted through the Club Info form.
+                </p>
+              </div>
+
+              <ClubInfoFilters
+                initialDivision={selectedClubInfoDivision}
+                initialTeamName={selectedClubInfoTeamName}
+                divisions={clubInfoDivisions}
+                teams={clubInfoTeams}
+              />
+
+              <Card className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Showing {clubInfoData.count} club info submission
+                  {clubInfoData.count === 1 ? "" : "s"}
+                </p>
+                <Button asChild size="sm" variant="outline">
+                  <Link href={`/admin/club-info/export?${clubInfoExportParams.toString()}`}>
+                    <Download className="h-4 w-4" />
+                    Export Excel
+                  </Link>
+                </Button>
+              </Card>
+
+              {clubInfoData.rows.length === 0 ? (
+                <Card className="p-6">
+                  <p className="text-sm text-muted-foreground">
+                    No club info submissions found.
+                  </p>
+                </Card>
+              ) : (
+                <>
+                  <Card className="hidden overflow-x-auto p-0 md:block">
+                    <table className="w-full min-w-[1200px] text-sm">
+                      <thead className="bg-muted/60 text-left">
+                        <tr>
+                          <th className="px-4 py-3 font-medium">Captain</th>
+                          <th className="px-4 py-3 font-medium">Account Email</th>
+                          <th className="px-4 py-3 font-medium">Profile Email</th>
+                          <th className="px-4 py-3 font-medium">Contact Number</th>
+                          <th className="px-4 py-3 font-medium">CricClubs ID</th>
+                          <th className="px-4 py-3 font-medium">T20 Team</th>
+                          <th className="px-4 py-3 font-medium">F40/T30 Team</th>
+                          <th className="px-4 py-3 font-medium">Submitted</th>
+                          <th className="px-4 py-3 font-medium">Updated</th>
+                          <th className="px-4 py-3 font-medium">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {clubInfoData.rows.map((submission) => (
+                          <tr
+                            key={submission.id}
+                            className="border-t border-border align-top odd:bg-background even:bg-muted/20"
+                          >
+                            <td className="px-4 py-3 font-medium">{submission.captainName}</td>
+                            <td className="px-4 py-3">{submission.accountEmail}</td>
+                            <td className="px-4 py-3">{submission.userProfile.email}</td>
+                            <td className="px-4 py-3">{submission.contactNumber}</td>
+                            <td className="px-4 py-3">{submission.cricclubsId}</td>
+                            <td className="px-4 py-3">
+                              {submission.t20Team?.teamName ?? submission.t20TeamCode ?? "N/A"}
+                            </td>
+                            <td className="px-4 py-3">
+                              {submission.secondaryTeam?.teamName ??
+                                submission.secondaryTeamCode ??
+                                "N/A"}
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              {formatSubmittedDate(submission.createdAt)}
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              {formatSubmittedDate(submission.updatedAt)}
+                            </td>
+                            <td className="px-4 py-3">
+                              <DeleteClubInfoButton submissionId={submission.id} />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </Card>
+
+                  <div className="md:hidden">
+                    <Card className="p-0">
+                      <Accordion type="single" collapsible className="w-full">
+                        {clubInfoData.rows.map((submission) => (
+                          <AccordionItem
+                            key={submission.id}
+                            value={`club-${submission.id}`}
+                            className="px-4"
+                          >
+                            <AccordionTrigger className="text-left">
+                              <div>
+                                <p className="text-sm font-medium">{submission.captainName}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {submission.t20Team?.teamName ??
+                                    submission.secondaryTeam?.teamName ??
+                                    "No team"}
+                                </p>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="space-y-3 pb-2 text-sm">
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">Account email</span>
+                                  <span>{submission.accountEmail}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">Profile email</span>
+                                  <span>{submission.userProfile.email}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">Contact</span>
+                                  <span>{submission.contactNumber}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">CricClubs ID</span>
+                                  <span>{submission.cricclubsId}</span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">T20 Team</span>
+                                  <span>
+                                    {submission.t20Team?.teamName ??
+                                      submission.t20TeamCode ??
+                                      "N/A"}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">F40/T30 Team</span>
+                                  <span>
+                                    {submission.secondaryTeam?.teamName ??
+                                      submission.secondaryTeamCode ??
+                                      "N/A"}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">Submitted</span>
+                                  <span>{formatSubmittedDate(submission.createdAt)}</span>
+                                </div>
+                                <div className="pt-2">
+                                  <DeleteClubInfoButton submissionId={submission.id} />
                                 </div>
                               </div>
                             </AccordionContent>

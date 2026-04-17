@@ -40,6 +40,7 @@ export async function GET(request: Request) {
     "Player Name": waiver.playerName,
     "Account Email": waiver.userProfile.email,
     "CricClubs ID": waiver.cricclubsId,
+    State: waiver.state,
     City: waiver.city,
     Address: waiver.address,
     "T20 Division": waiver.t20Division,

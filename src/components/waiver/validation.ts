@@ -1,3 +1,8 @@
+import {
+  WAIVER_US_STATES,
+  type WaiverUsStateValue,
+} from "@/lib/waiver-constants";
+
 export const WAIVER_SECONDARY_DIVISION_OPTIONS = [
   { value: "F40", label: "F40" },
   { value: "T30", label: "T30" },
@@ -10,6 +15,7 @@ export type WaiverFieldErrors = Partial<
   Record<
     | "playerName"
     | "cricclubsId"
+    | "state"
     | "city"
     | "address"
     | "t20Division"
@@ -18,6 +24,7 @@ export type WaiverFieldErrors = Partial<
     | "secondaryTeamCode"
     | "signatureName"
     | "submitAcknowledgement"
+    | "rulebookAcknowledgement"
     | "form",
     string
   >
@@ -37,6 +44,7 @@ export const INITIAL_WAIVER_FORM_STATE: WaiverFormState = {
 export type ParsedWaiverInput = {
   playerName: string;
   cricclubsId: string;
+  state: WaiverUsStateValue;
   city: string;
   address: string;
   t20Division: string | null;
@@ -45,6 +53,7 @@ export type ParsedWaiverInput = {
   secondaryTeamCode: string | null;
   signatureName: string;
   submitAcknowledgement: true;
+  rulebookAcknowledgement: true;
 };
 
 function namesMatch(left: string, right: string) {
@@ -73,6 +82,7 @@ export function parseWaiverForm(formData: FormData): {
 
   const playerName = normalizeRequiredText(formData.get("playerName"), fieldErrors, "playerName", "Player name");
   const cricclubsId = normalizeRequiredText(formData.get("cricclubsId"), fieldErrors, "cricclubsId", "CricClubs ID");
+  const stateRaw = normalizeRequiredText(formData.get("state"), fieldErrors, "state", "State");
   const city = normalizeRequiredText(formData.get("city"), fieldErrors, "city", "City");
   const address = normalizeRequiredText(formData.get("address"), fieldErrors, "address", "Address");
   const signatureName = normalizeRequiredText(
@@ -82,6 +92,16 @@ export function parseWaiverForm(formData: FormData): {
     "Signature name"
   );
   const submitAcknowledgement = formData.get("submitAcknowledgement");
+  const rulebookAcknowledgement = formData.get("rulebookAcknowledgement");
+
+  let state: WaiverUsStateValue | null = null;
+  if (stateRaw) {
+    if (WAIVER_US_STATES.includes(stateRaw as WaiverUsStateValue)) {
+      state = stateRaw as WaiverUsStateValue;
+    } else {
+      fieldErrors.state = "Select a valid U.S. state.";
+    }
+  }
 
   // T20 division — "N/A" means null, otherwise required non-empty string
   const t20DivisionRaw = formData.get("t20Division");
@@ -134,6 +154,9 @@ export function parseWaiverForm(formData: FormData): {
   if (submitAcknowledgement !== "yes") {
     fieldErrors.submitAcknowledgement = "You must acknowledge the waiver before submitting.";
   }
+  if (rulebookAcknowledgement !== "yes") {
+    fieldErrors.rulebookAcknowledgement = "You must acknowledge the Mich-CA rulebook before submitting.";
+  }
 
   if (playerName && signatureName && !namesMatch(playerName, signatureName)) {
     fieldErrors.signatureName = "Signature full name must exactly match the player name.";
@@ -148,6 +171,7 @@ export function parseWaiverForm(formData: FormData): {
     data: {
       playerName: playerName as string,
       cricclubsId: cricclubsId as string,
+      state: state as WaiverUsStateValue,
       city: city as string,
       address: address as string,
       t20Division,
@@ -156,6 +180,7 @@ export function parseWaiverForm(formData: FormData): {
       secondaryTeamCode,
       signatureName: signatureName as string,
       submitAcknowledgement: true,
+      rulebookAcknowledgement: true,
     },
   };
 }

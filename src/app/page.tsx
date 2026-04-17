@@ -32,6 +32,14 @@ import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
 import { sponsors } from "@/lib/sponsors";
 
+const quickLinks = [
+  { label: "Account", href: "/account" },
+  { label: "Grounds", href: "/grounds" },
+  { label: "Leadership", href: "/committees" },
+  { label: "About Mich-CA", href: "/about" },
+  { label: "Umpiring", href: "/umpiring-training" },
+];
+
 export default function HomePage() {
   const [authentikkaSponsor, lincodeSponsor, djSponsor] = sponsors;
   const featuredSponsors = [authentikkaSponsor, lincodeSponsor];
@@ -46,11 +54,25 @@ export default function HomePage() {
     <>
       <div className="bg-background">
         {/* Homepage Banner */}
-        {/* <PageContainer className="pt-6">
+        <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
-            <RegistrationBanner />
+            <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm md:hidden">
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                  Quick Links
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {quickLinks.map((link) => (
+                    <Button key={link.href} asChild variant="outline" size="sm">
+                      <Link href={link.href}>{link.label}</Link>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </Card>
+            {/* <RegistrationBanner /> */}
           </div>
-        </PageContainer> */}
+        </PageContainer>
 
         {/* Sponsor Section */}
         <div className="relative bg-gradient-to-b from-background via-primary/5 to-primary/10 py-20">
