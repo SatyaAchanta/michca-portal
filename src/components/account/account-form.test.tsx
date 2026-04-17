@@ -1,12 +1,19 @@
 import { render, screen } from "@testing-library/react";
 
 import { AccountForm } from "@/components/account/account-form";
+import { documents } from "@/lib/data";
 import { WAIVER_ROLE_OPTIONS } from "@/lib/waiver-constants";
 import { UserRole } from "@/generated/prisma/client";
 
 vi.mock("@/app/account/actions", () => ({
   updateProfile: vi.fn(),
   deleteAccount: vi.fn(),
+}));
+
+vi.mock("@clerk/nextjs", () => ({
+  SignOutButton: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="sign-out-button">{children}</div>
+  ),
 }));
 
 class ResizeObserverMock {
@@ -112,5 +119,46 @@ describe("AccountForm", () => {
     expect(screen.getByText("No umpiring result yet.")).toBeInTheDocument();
     expect(screen.getByText("Waiver")).toBeInTheDocument();
     expect(screen.getByText("Waiver not submitted yet.")).toBeInTheDocument();
+  });
+
+  it("renders a logout control", () => {
+    render(
+      <AccountForm
+        profile={{
+          id: "profile-1",
+          clerkUserId: "clerk-1",
+          email: "rohan@example.com",
+          firstName: "Rohan",
+          lastName: "Patel",
+          notificationsEnabled: true,
+          newsletterSubscribed: false,
+          role: UserRole.PLAYER,
+          t20TeamCode: null,
+          secondaryTeamCode: null,
+          playingRole: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }}
+        umpiringResult={null}
+        teams={[]}
+        waiverSubmission={null}
+      />
+    );
+
+    expect(screen.getByTestId("sign-out-button")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /log out/i })
+    ).toBeInTheDocument();
+  });
+
+  it("includes the club info form in the shared forms catalog", () => {
+    expect(
+      documents.find((document) => document.url === "/club-info")
+    ).toMatchObject({
+      title: "Club Info Form",
+      category: "Registration",
+      fileType: "FORM",
+      isExternal: false,
+    });
   });
 });

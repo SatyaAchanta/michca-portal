@@ -57,6 +57,16 @@ export const documents: DocumentItem[] = [
   //   isExternal: true,
   // },
   {
+    id: "doc-club-info",
+    title: "Club Info Form",
+    description: "Captain declaration form for club and team assignment details.",
+    category: "Registration",
+    fileType: "FORM",
+    url: "/club-info",
+    isDownloadable: false,
+    isExternal: false,
+  },
+  {
     id: "doc-2",
     title: "Player Waiver Form",
     description: "Required waiver for all participating players.",
