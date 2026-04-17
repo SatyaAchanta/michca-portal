@@ -33,6 +33,7 @@ import { RegistrationBanner } from "@/components/registration-banner";
 import { sponsors } from "@/lib/sponsors";
 
 const quickLinks = [
+  { label: "Account", href: "/account" },
   { label: "Grounds", href: "/grounds" },
   { label: "Leadership", href: "/committees" },
   { label: "About Mich-CA", href: "/about" },
