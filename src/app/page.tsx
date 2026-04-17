@@ -56,16 +56,11 @@ export default function HomePage() {
         {/* Homepage Banner */}
         <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
-            <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-                    Quick Links
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Secondary destinations moved out of the mobile navigation.
-                  </p>
-                </div>
+            <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm md:hidden">
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                  Quick Links
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {quickLinks.map((link) => (
                     <Button key={link.href} asChild variant="outline" size="sm">
