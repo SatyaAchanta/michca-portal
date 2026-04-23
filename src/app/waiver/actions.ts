@@ -121,6 +121,8 @@ export async function submitMyWaiver(
         t20TeamCode: data.t20TeamCode,
         secondaryDivision: data.secondaryDivision,
         secondaryTeamCode: data.secondaryTeamCode,
+        isUnder18: data.isUnder18,
+        parentName: data.parentName,
         signatureName: data.signatureName,
         acknowledgedSubmitText: WAIVER_SUBMIT_TEXT,
         acknowledgedRulebookText: WAIVER_RULEBOOK_ACKNOWLEDGEMENT_TEXT,

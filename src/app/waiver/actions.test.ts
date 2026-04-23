@@ -55,6 +55,7 @@ function createValidWaiverFormData() {
   formData.set("t20TeamCode", "T20-MOCC");
   formData.set("secondaryDivision", "T30");
   formData.set("secondaryTeamCode", "T30-MOCC");
+  formData.set("isUnder18", "no");
   formData.set("signatureName", "Rohan Patel");
   formData.set("submitAcknowledgement", "yes");
   formData.set("rulebookAcknowledgement", "yes");
@@ -95,6 +96,14 @@ describe("submitMyWaiver", () => {
     );
 
     expect(create).toHaveBeenCalled();
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          isUnder18: false,
+          parentName: "",
+        }),
+      })
+    );
     expect(update).toHaveBeenCalledWith({
       where: { id: "profile-1" },
       data: {
@@ -118,5 +127,22 @@ describe("submitMyWaiver", () => {
     expect(result.fieldErrors.form).toContain("signed in");
     expect(create).not.toHaveBeenCalled();
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it("persists under-18 waiver parent details", async () => {
+    const formData = createValidWaiverFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+
+    await submitMyWaiver({ status: "idle", fieldErrors: {} }, formData);
+
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          isUnder18: true,
+          parentName: "Priya Patel",
+        }),
+      })
+    );
   });
 });

@@ -69,6 +69,8 @@ type AccountFormProps = {
     secondaryDivision: string | null;
     t20TeamCode: string | null;
     secondaryTeamCode: string | null;
+    isUnder18: boolean;
+    parentName: string;
   } | null;
 };
 
@@ -341,6 +343,20 @@ function WaiverStatus({
               : "N/A"}
           </span>
         </p>
+        <p>
+          Under 18:{" "}
+          <span className="font-medium text-foreground">
+            {waiverSubmission.isUnder18 ? "Yes" : "No"}
+          </span>
+        </p>
+        {waiverSubmission.isUnder18 ? (
+          <p>
+            Parent&apos;s name:{" "}
+            <span className="font-medium text-foreground">
+              {waiverSubmission.parentName}
+            </span>
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   );

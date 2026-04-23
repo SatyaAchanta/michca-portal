@@ -1,0 +1,3 @@
+ALTER TABLE "WaiverSubmission"
+ADD COLUMN "isUnder18" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN "parentName" TEXT NOT NULL DEFAULT '';

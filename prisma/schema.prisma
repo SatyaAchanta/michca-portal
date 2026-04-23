@@ -224,6 +224,8 @@ model WaiverSubmission {
   t20TeamCode            String?
   secondaryDivision      String?
   secondaryTeamCode      String?
+  isUnder18              Boolean     @default(false)
+  parentName             String      @default("")
   signatureName          String
   acknowledgedSubmitText String
   acknowledgedRulebookText String?

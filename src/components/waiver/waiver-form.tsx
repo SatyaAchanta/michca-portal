@@ -52,6 +52,8 @@ type WaiverSnapshot = {
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
+  isUnder18: boolean;
+  parentName: string;
   signatureName: string;
   submittedAt: string;
 };
@@ -99,6 +101,8 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
   const [secondaryTeamCode, setSecondaryTeamCode] = useState(
     waiver?.secondaryTeamCode ?? "",
   );
+  const [isUnder18, setIsUnder18] = useState(waiver?.isUnder18 ?? false);
+  const [parentName, setParentName] = useState(waiver?.parentName ?? "");
   const [submitAcknowledgement, setSubmitAcknowledgement] = useState(false);
   const [rulebookAcknowledgement, setRulebookAcknowledgement] = useState(false);
 
@@ -368,7 +372,6 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 <FieldError message={formState.fieldErrors.secondaryTeamCode} />
               </div>
             ) : null}
-
           </div>
 
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
@@ -397,6 +400,51 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
                 Current year submission on{" "}
                 {new Date(waiver.submittedAt).toLocaleString("en-US")}
               </p>
+            ) : null}
+          </div>
+
+          <div className="space-y-4 rounded-lg border border-border/70 bg-muted/20 p-4">
+            <input
+              type="hidden"
+              name="isUnder18"
+              value={isUnder18 ? "yes" : "no"}
+            />
+            <p className="text-sm font-medium">
+              Are you born after September 1, 2008 ?
+            </p>
+            <label className="flex items-center gap-3 text-sm leading-6">
+              <Checkbox
+                checked={isUnder18}
+                onCheckedChange={(value) => {
+                  const nextValue = value === true;
+                  setIsUnder18(nextValue);
+                  if (!nextValue) {
+                    setParentName("");
+                  }
+                }}
+                disabled={Boolean(waiver)}
+              />
+              <span className="flex-1">Yes</span>
+            </label>
+
+            {isUnder18 ? (
+              <div className="space-y-2">
+                <label htmlFor="parentName" className="text-sm font-medium">
+                  Parent&apos;s Name
+                </label>
+                <Input
+                  id="parentName"
+                  name="parentName"
+                  value={parentName}
+                  onChange={(event) => setParentName(event.target.value)}
+                  required={isUnder18}
+                  disabled={Boolean(waiver)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Should be filled by parent only
+                </p>
+                <FieldError message={formState.fieldErrors.parentName} />
+              </div>
             ) : null}
           </div>
 
@@ -505,6 +553,9 @@ export function WaiverForm({ waiver, t20Divisions, teams }: WaiverFormProps) {
           </DialogHeader>
           <div className="space-y-4 px-6 py-5 text-sm leading-7 text-muted-foreground">
             <p>{WAIVER_SUBMIT_TEXT}</p>
+            {isUnder18 ? (
+              <p>I agree that my Parents entered their details.</p>
+            ) : null}
             <p>
               Submission date:{" "}
               <span className="font-medium text-foreground">

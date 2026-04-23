@@ -36,7 +36,12 @@ describe("WaiverForm", () => {
     const reviewButton = screen.getByRole("button", {
       name: /review & submit waiver/i,
     });
-    const [waiverCheckbox, rulebookCheckbox] = screen.getAllByRole("checkbox");
+    const waiverCheckbox = screen.getByRole("checkbox", {
+      name: /i have read the waiver text and agree to submit this form for the current year/i,
+    });
+    const rulebookCheckbox = screen.getByRole("checkbox", {
+      name: /i have read the 2026 mich-ca rulebook and understand all the conditions/i,
+    });
 
     expect(reviewButton).toBeDisabled();
 
@@ -58,5 +63,55 @@ describe("WaiverForm", () => {
 
     expect(labels.indexOf("Address")).toBeLessThan(labels.indexOf("City"));
     expect(labels.indexOf("City")).toBeLessThan(labels.indexOf("State"));
+  });
+
+  it("reveals the parent name field for under-18 submissions", () => {
+    render(<WaiverForm waiver={null} t20Divisions={[]} teams={[]} />);
+
+    expect(screen.queryByLabelText(/parent's name/i)).not.toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: /born after september 1 2008/i,
+      }),
+    );
+
+    expect(screen.getByLabelText(/parent's name/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/should be filled by parent only/i),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the extra under-18 acknowledgement in confirmation dialog", () => {
+    render(<WaiverForm waiver={null} t20Divisions={[]} teams={[]} />);
+
+    fireEvent.change(screen.getByLabelText(/player name as in cricclubs/i), {
+      target: { value: "Rohan Patel" },
+    });
+    fireEvent.change(screen.getByLabelText(/player cricclubs id/i), {
+      target: { value: "CC-12345" },
+    });
+    fireEvent.change(screen.getByLabelText(/address/i), {
+      target: { value: "123 Main St" },
+    });
+    fireEvent.change(screen.getByLabelText(/city/i), {
+      target: { value: "Troy" },
+    });
+    fireEvent.change(screen.getByLabelText(/signature full name/i), {
+      target: { value: "Rohan Patel" },
+    });
+
+    const checkboxes = screen.getAllByRole("checkbox");
+    fireEvent.click(checkboxes[0]);
+    fireEvent.change(screen.getByLabelText(/parent's name/i), {
+      target: { value: "Priya Patel" },
+    });
+    fireEvent.click(checkboxes[1]);
+    fireEvent.click(checkboxes[2]);
+    fireEvent.click(screen.getByRole("button", { name: /review & submit waiver/i }));
+
+    expect(
+      screen.getByText(/i agree that my parents entered their details\./i),
+    ).toBeInTheDocument();
   });
 });

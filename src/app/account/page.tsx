@@ -72,6 +72,8 @@ const Account = async () => {
             secondaryDivision: true,
             t20TeamCode: true,
             secondaryTeamCode: true,
+            isUnder18: true,
+            parentName: true,
           },
         }),
         getWaiverTeamOptions(),

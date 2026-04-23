@@ -22,6 +22,7 @@ export type WaiverFieldErrors = Partial<
     | "t20TeamCode"
     | "secondaryDivision"
     | "secondaryTeamCode"
+    | "parentName"
     | "signatureName"
     | "submitAcknowledgement"
     | "rulebookAcknowledgement"
@@ -51,6 +52,8 @@ export type ParsedWaiverInput = {
   t20TeamCode: string | null;
   secondaryDivision: SecondaryDivisionValue | null;
   secondaryTeamCode: string | null;
+  isUnder18: boolean;
+  parentName: string;
   signatureName: string;
   submitAcknowledgement: true;
   rulebookAcknowledgement: true;
@@ -151,6 +154,18 @@ export function parseWaiverForm(formData: FormData): {
     fieldErrors.form = "At least one of T20 or F40/T30 division must be selected.";
   }
 
+  const isUnder18 = formData.get("isUnder18") === "yes";
+  let parentName = "";
+  if (isUnder18) {
+    const parsedParentName = normalizeRequiredText(
+      formData.get("parentName"),
+      fieldErrors,
+      "parentName",
+      "Parent's name"
+    );
+    parentName = parsedParentName ?? "";
+  }
+
   if (submitAcknowledgement !== "yes") {
     fieldErrors.submitAcknowledgement = "You must acknowledge the waiver before submitting.";
   }
@@ -178,6 +193,8 @@ export function parseWaiverForm(formData: FormData): {
       t20TeamCode,
       secondaryDivision,
       secondaryTeamCode,
+      isUnder18,
+      parentName,
       signatureName: signatureName as string,
       submitAcknowledgement: true,
       rulebookAcknowledgement: true,

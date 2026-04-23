@@ -33,6 +33,8 @@ describe("parseWaiverForm", () => {
       t20TeamCode: "T20-MOCC",
       secondaryDivision: "T30",
       secondaryTeamCode: "T30-MOCC",
+      isUnder18: false,
+      parentName: "",
       signatureName: "Rohan Patel",
       submitAcknowledgement: true,
       rulebookAcknowledgement: true,
@@ -117,5 +119,40 @@ describe("parseWaiverForm", () => {
     expect(result.data).toBeUndefined();
     expect(result.fieldErrors.submitAcknowledgement).toBeTruthy();
     expect(result.fieldErrors.rulebookAcknowledgement).toBeTruthy();
+  });
+
+  it("requires parent name for under-18 submissions", () => {
+    const formData = createValidFormData();
+    formData.set("isUnder18", "yes");
+
+    const result = parseWaiverForm(formData);
+
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.parentName).toContain("Parent's name is required");
+  });
+
+  it("parses parent name for valid under-18 submissions", () => {
+    const formData = createValidFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+
+    const result = parseWaiverForm(formData);
+
+    expect(result.fieldErrors).toEqual({});
+    expect(result.data?.isUnder18).toBe(true);
+    expect(result.data?.parentName).toBe("Priya Patel");
+    expect(result.data?.signatureName).toBe("Rohan Patel");
+  });
+
+  it("still requires the player signature name for under-18 submissions", () => {
+    const formData = createValidFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+    formData.set("signatureName", "Priya Patel");
+
+    const result = parseWaiverForm(formData);
+
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.signatureName).toContain("must exactly match the player name");
   });
 });

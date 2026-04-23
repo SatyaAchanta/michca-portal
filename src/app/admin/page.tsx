@@ -698,6 +698,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">
+                                    Under 18
+                                  </span>
+                                  <span>{waiver.isUnder18 ? "Yes" : "No"}</span>
+                                </div>
+                                {waiver.isUnder18 ? (
+                                  <div className="flex items-center justify-between gap-3">
+                                    <span className="text-muted-foreground">
+                                      Parent&apos;s name
+                                    </span>
+                                    <span>{waiver.parentName}</span>
+                                  </div>
+                                ) : null}
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
                                     Submitted
                                   </span>
                                   <span>
