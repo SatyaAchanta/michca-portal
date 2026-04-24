@@ -31,6 +31,8 @@ describe("parseWaiverForm", () => {
       address: "123 Main St",
       t20Division: "Premier",
       t20TeamCode: "T20-MOCC",
+      additionalT20Division: null,
+      additionalT20TeamCode: null,
       secondaryDivision: "T30",
       secondaryTeamCode: "T30-MOCC",
       isUnder18: false,
@@ -135,12 +137,18 @@ describe("parseWaiverForm", () => {
     const formData = createValidFormData();
     formData.set("isUnder18", "yes");
     formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
 
     const result = parseWaiverForm(formData);
 
     expect(result.fieldErrors).toEqual({});
     expect(result.data?.isUnder18).toBe(true);
     expect(result.data?.parentName).toBe("Priya Patel");
+    expect(result.data?.t20TeamCode).toBe("T20-MOCC");
+    expect(result.data?.additionalT20TeamCode).toBeNull();
     expect(result.data?.signatureName).toBe("Rohan Patel");
   });
 
@@ -148,11 +156,49 @@ describe("parseWaiverForm", () => {
     const formData = createValidFormData();
     formData.set("isUnder18", "yes");
     formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
     formData.set("signatureName", "Priya Patel");
 
     const result = parseWaiverForm(formData);
 
     expect(result.data).toBeUndefined();
     expect(result.fieldErrors.signatureName).toContain("must exactly match the player name");
+  });
+
+  it("requires a primary selection when under-18 chooses two T20 teams", () => {
+    const formData = createValidFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
+    formData.set("under18T20TeamCode2", "T20-CCC");
+
+    const result = parseWaiverForm(formData);
+
+    expect(result.data).toBeUndefined();
+    expect(result.fieldErrors.primaryT20TeamCode).toContain("Choose the primary T20 team");
+  });
+
+  it("maps two under-18 T20 teams into primary and additional fields", () => {
+    const formData = createValidFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
+    formData.set("under18T20TeamCode2", "T20-CCC");
+    formData.set("primaryT20TeamCode", "T20-CCC");
+
+    const result = parseWaiverForm(formData);
+
+    expect(result.fieldErrors).toEqual({});
+    expect(result.data?.t20TeamCode).toBe("T20-CCC");
+    expect(result.data?.additionalT20TeamCode).toBe("T20-MOCC");
   });
 });

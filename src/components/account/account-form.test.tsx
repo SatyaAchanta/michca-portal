@@ -126,8 +126,10 @@ describe("AccountForm", () => {
           city: "Troy",
           address: "123 Main St",
           t20Division: "Premier",
+          additionalT20Division: "Division-1",
           secondaryDivision: "T30",
           t20TeamCode: "T20-MOCC",
+          additionalT20TeamCode: "T20-CCC",
           secondaryTeamCode: "T30-MOCC",
           isUnder18: true,
           parentName: "Priya Patel",
@@ -141,5 +143,7 @@ describe("AccountForm", () => {
     expect(screen.getByText(/under 18:/i)).toBeInTheDocument();
     expect(screen.getByText(/parent's name:/i)).toBeInTheDocument();
     expect(screen.getByText("Priya Patel")).toBeInTheDocument();
+    expect(screen.getByText(/additional t20:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Division-1 \(T20-CCC\)/)).toBeInTheDocument();
   });
 });

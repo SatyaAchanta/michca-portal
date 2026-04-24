@@ -222,6 +222,8 @@ model WaiverSubmission {
   address                String?
   t20Division            String?
   t20TeamCode            String?
+  additionalT20Division  String?
+  additionalT20TeamCode  String?
   secondaryDivision      String?
   secondaryTeamCode      String?
   isUnder18              Boolean     @default(false)
@@ -241,6 +243,8 @@ model WaiverSubmission {
   @@index([t20Division])
   @@index([secondaryDivision])
   @@index([t20TeamCode])
+  @@index([additionalT20Division])
+  @@index([additionalT20TeamCode])
   @@index([secondaryTeamCode])
   @@index([playerName])
 }

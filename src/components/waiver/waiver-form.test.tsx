@@ -65,6 +65,17 @@ describe("WaiverForm", () => {
     expect(labels.indexOf("City")).toBeLessThan(labels.indexOf("State"));
   });
 
+  it("asks the under-18 question before the T20 section", () => {
+    const { container } = render(
+      <WaiverForm waiver={null} t20Divisions={["Premier"]} teams={[]} />,
+    );
+
+    const content = container.textContent ?? "";
+    expect(content.indexOf("Are you born after September 1, 2008 ?")).toBeLessThan(
+      content.indexOf("T20 Division"),
+    );
+  });
+
   it("reveals the parent name field for under-18 submissions", () => {
     render(<WaiverForm waiver={null} t20Divisions={[]} teams={[]} />);
 
@@ -72,7 +83,7 @@ describe("WaiverForm", () => {
 
     fireEvent.click(
       screen.getByRole("checkbox", {
-        name: /born after september 1 2008/i,
+        name: /yes/i,
       }),
     );
 
@@ -80,6 +91,37 @@ describe("WaiverForm", () => {
     expect(
       screen.getByText(/should be filled by parent only/i),
     ).toBeInTheDocument();
+  });
+
+  it("switches under-18 players to the two-team T20 selector flow", () => {
+    render(
+      <WaiverForm
+        waiver={null}
+        t20Divisions={["Premier", "Division-1"]}
+        teams={[
+          {
+            teamCode: "T20-MOCC",
+            teamName: "Michigan OCC",
+            division: "Premier",
+            format: "T20",
+          },
+          {
+            teamCode: "T20-CCC",
+            teamName: "Canton CC",
+            division: "Division-1",
+            format: "T20",
+          },
+        ]}
+      />,
+    );
+
+    expect(screen.getAllByText(/t20 division/i).length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole("checkbox", { name: /yes/i }));
+
+    expect(screen.queryByText(/^T20 Division$/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/t20 team 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/t20 team 2/i)).toBeInTheDocument();
   });
 
   it("shows the extra under-18 acknowledgement in confirmation dialog", () => {
@@ -101,13 +143,20 @@ describe("WaiverForm", () => {
       target: { value: "Rohan Patel" },
     });
 
-    const checkboxes = screen.getAllByRole("checkbox");
-    fireEvent.click(checkboxes[0]);
+    fireEvent.click(screen.getByRole("checkbox", { name: /yes/i }));
     fireEvent.change(screen.getByLabelText(/parent's name/i), {
       target: { value: "Priya Patel" },
     });
-    fireEvent.click(checkboxes[1]);
-    fireEvent.click(checkboxes[2]);
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: /i have read the waiver text and agree to submit this form for the current year/i,
+      }),
+    );
+    fireEvent.click(
+      screen.getByRole("checkbox", {
+        name: /i have read the 2026 mich-ca rulebook and understand all the conditions/i,
+      }),
+    );
     fireEvent.click(screen.getByRole("button", { name: /review & submit waiver/i }));
 
     expect(

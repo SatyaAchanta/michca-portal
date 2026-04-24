@@ -190,6 +190,8 @@ export const WaiverSubmissionScalarFieldEnum = {
   address: 'address',
   t20Division: 't20Division',
   t20TeamCode: 't20TeamCode',
+  additionalT20Division: 'additionalT20Division',
+  additionalT20TeamCode: 'additionalT20TeamCode',
   secondaryDivision: 'secondaryDivision',
   secondaryTeamCode: 'secondaryTeamCode',
   isUnder18: 'isUnder18',

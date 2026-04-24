@@ -71,6 +71,8 @@ const Account = async () => {
             t20Division: true,
             secondaryDivision: true,
             t20TeamCode: true,
+            additionalT20Division: true,
+            additionalT20TeamCode: true,
             secondaryTeamCode: true,
             isUnder18: true,
             parentName: true,

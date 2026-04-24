@@ -49,6 +49,9 @@ describe("waiver export route", () => {
           t20Division: "Premier",
           t20TeamCode: "T20-MOCC",
           t20Team: { teamName: "Michigan OCC" },
+          additionalT20Division: "Division-1",
+          additionalT20TeamCode: "T20-CCC",
+          additionalT20Team: { teamName: "Canton CC" },
           secondaryDivision: null,
           secondaryTeamCode: null,
           secondaryTeam: null,
@@ -80,6 +83,8 @@ describe("waiver export route", () => {
     expect(response.headers.get("Content-Disposition")).toContain("waiver-status-2026.xlsx");
     expect(rows[0]?.["Under 18"]).toBe("Yes");
     expect(rows[0]?.["Parent Name"]).toBe("Priya Patel");
+    expect(rows[0]?.["Additional T20 Division"]).toBe("Division-1");
+    expect(rows[0]?.["Additional T20 Team"]).toBe("Canton CC");
   });
 
   it("redirects unauthorized users", async () => {

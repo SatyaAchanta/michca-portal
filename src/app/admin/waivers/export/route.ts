@@ -45,6 +45,9 @@ export async function GET(request: Request) {
     Address: waiver.address,
     "T20 Division": waiver.t20Division,
     "T20 Team": waiver.t20Team?.teamName ?? waiver.t20TeamCode,
+    "Additional T20 Division": waiver.additionalT20Division,
+    "Additional T20 Team":
+      waiver.additionalT20Team?.teamName ?? waiver.additionalT20TeamCode,
     "F40/T30 Division": waiver.secondaryDivision,
     "F40/T30 Team": waiver.secondaryTeam?.teamName ?? waiver.secondaryTeamCode,
     "Under 18": waiver.isUnder18 ? "Yes" : "No",

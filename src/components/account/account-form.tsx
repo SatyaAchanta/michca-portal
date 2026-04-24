@@ -68,6 +68,8 @@ type AccountFormProps = {
     t20Division: string | null;
     secondaryDivision: string | null;
     t20TeamCode: string | null;
+    additionalT20Division: string | null;
+    additionalT20TeamCode: string | null;
     secondaryTeamCode: string | null;
     isUnder18: boolean;
     parentName: string;
@@ -331,10 +333,19 @@ function WaiverStatus({
           T20:{" "}
           <span className="font-medium text-foreground">
             {waiverSubmission.t20Division
-              ? `${waiverSubmission.t20Division} (${waiverSubmission.t20TeamCode})`
+              ? `${waiverSubmission.t20Division} (${waiverSubmission.t20TeamCode})${waiverSubmission.isUnder18 ? " - Primary" : ""}`
               : "N/A"}
           </span>
         </p>
+        {waiverSubmission.additionalT20Division &&
+        waiverSubmission.additionalT20TeamCode ? (
+          <p>
+            Additional T20:{" "}
+            <span className="font-medium text-foreground">
+              {`${waiverSubmission.additionalT20Division} (${waiverSubmission.additionalT20TeamCode})`}
+            </span>
+          </p>
+        ) : null}
         <p>
           Secondary:{" "}
           <span className="font-medium text-foreground">
