@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-const logoUrl = new URL("../../public/michca.png", import.meta.url);
+import { ImageResponse } from "next/og";
 
 export const socialImageSize = {
   width: 1200,
@@ -11,7 +12,16 @@ export const socialImageSize = {
 export const socialImageAlt = "MichCA - Michigan Cricket Association";
 export const socialImageContentType = "image/png";
 
-export function createSocialPreviewImage() {
+async function getLogoDataUrl() {
+  const logoPath = path.join(process.cwd(), "public", "michca.png");
+  const logoBuffer = await readFile(logoPath);
+
+  return `data:image/png;base64,${logoBuffer.toString("base64")}`;
+}
+
+export async function createSocialPreviewImage() {
+  const logoUrl = await getLogoDataUrl();
+
   return new ImageResponse(
     (
       <div
@@ -130,7 +140,7 @@ export function createSocialPreviewImage() {
           >
             <img
               alt="MichCA logo"
-              src={logoUrl.toString()}
+              src={logoUrl}
               style={{
                 width: "100%",
                 height: "100%",

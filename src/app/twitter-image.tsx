@@ -9,6 +9,6 @@ export const alt = socialImageAlt;
 export const size = socialImageSize;
 export const contentType = socialImageContentType;
 
-export default function TwitterImage() {
+export default async function TwitterImage() {
   return createSocialPreviewImage();
 }
