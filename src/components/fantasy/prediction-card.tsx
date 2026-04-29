@@ -93,6 +93,7 @@ export function PredictionCard({
     existing ? "saved" : "idle",
   );
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [currentTime] = useState(() => Date.now());
 
   // Lock if already scored, game is not SCHEDULED, or within 1 hour of kickoff
   const kickoffLock = new Date(game.date).getTime() - 60 * 60 * 1000;
@@ -100,7 +101,7 @@ export function PredictionCard({
     existing?.isScored ||
     game.status === "COMPLETED" ||
     game.status === "CANCELLED" ||
-    Date.now() >= kickoffLock;
+    currentTime >= kickoffLock;
 
   function save(newSelected: string | null | undefined, newBoosted: boolean) {
     if (newSelected === undefined) return;
@@ -266,14 +267,20 @@ export function PredictionCard({
           {canBoost ? (
             <button
               type="button"
-              disabled={selected === undefined || isPending}
+              disabled={
+                selected === undefined ||
+                isPending ||
+                (!boosted && boostersRemaining <= 0)
+              }
               onClick={handleBoostToggle}
               className={cn(
                 "flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-all",
                 boosted
                   ? "border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-600"
                   : "border-border text-muted-foreground hover:border-amber-400",
-                (selected === undefined || isPending) &&
+                (selected === undefined ||
+                  isPending ||
+                  (!boosted && boostersRemaining <= 0)) &&
                   "opacity-50 cursor-default",
               )}
             >
@@ -282,7 +289,7 @@ export function PredictionCard({
             </button>
           ) : (
             <span className="text-xs text-muted-foreground">
-              Reach Level 1 to unlock boosters
+              Complete 2 full prediction weeks to unlock boosters
             </span>
           )}
 

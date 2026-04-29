@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowLeft,
-  BadgeHelp,
   CircleDollarSign,
+  Clock3,
   ListChecks,
   Medal,
   Sparkles,
@@ -14,26 +14,13 @@ import {
 import { PageContainer } from "@/components/page-container";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  MAX_FANTASY_LEVEL,
-  WEEKS_PER_FANTASY_LEVEL,
-  getLevelBonusPoints,
-} from "@/lib/fantasy";
+import { FULL_WEEKS_FOR_BOOSTERS, SEASON_BOOSTER_COUNT } from "@/lib/fantasy";
 
 export const metadata: Metadata = {
   title: "Fantasy Rules",
   description:
-    "Learn how MichCA Fantasy predictions, points, boosters, and levels work.",
+    "Learn how MichCA Fantasy predictions, points, boosters, and full-week participation work.",
 };
-
-const levelRows = Array.from({ length: MAX_FANTASY_LEVEL }, (_, index) => {
-  const level = index + 1;
-  return {
-    level,
-    weeks: level * WEEKS_PER_FANTASY_LEVEL,
-    bonus: getLevelBonusPoints(level),
-  };
-});
 
 export default function FantasyRulesPage() {
   return (
@@ -54,7 +41,7 @@ export default function FantasyRulesPage() {
               </h1>
               <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
                 Make picks before games lock, earn points for correct results,
-                unlock boosters through league-week participation, and climb the
+                unlock boosters through full-week participation, and climb the
                 leaderboard.
               </p>
             </div>
@@ -103,14 +90,33 @@ export default function FantasyRulesPage() {
           <Card className="p-5">
             <div className="flex items-start gap-3">
               <div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
+                <Clock3 className="h-5 w-5" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Deadline</h2>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Predictions lock 1 hour before each game&apos;s scheduled
+                  start time. Saturday games lock 1 hour before their Saturday
+                  kickoff, and Sunday games lock 1 hour before their Sunday
+                  kickoff.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-5">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
                 <Zap className="h-5 w-5" />
               </div>
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold">Boosters</h2>
                 <p className="text-sm leading-6 text-muted-foreground">
-                  Boosters unlock at Level 1.{" "}
+                  Boosters unlock after {FULL_WEEKS_FOR_BOOSTERS} full league
+                  prediction weeks.{" "}
                   <strong className="text-red-300 dark:text-red-300">
-                    Each player receives 10 boosters for the season.
+                    Each player receives {SEASON_BOOSTER_COUNT} boosters for
+                    the season.
                   </strong>{" "}
                   A boosted correct prediction earns 3x points; a boosted
                   incorrect prediction still earns 0.
@@ -125,60 +131,16 @@ export default function FantasyRulesPage() {
                 <Sparkles className="h-5 w-5" />
               </div>
               <div className="space-y-2">
-                <h2 className="text-lg font-semibold">Levels</h2>
+                <h2 className="text-lg font-semibold">Full Weeks</h2>
                 <p className="text-sm leading-6 text-muted-foreground">
-                  Every 2 full league game weeks gives 1 level, up to Level 8.
-                  Playoff predictions still score points, but playoff games do
-                  not count toward level progress.
+                  A full week means predicting every league game in that game
+                  week. Full weeks unlock boosters, but there are no fantasy
+                  levels or level bonus points.
                 </p>
               </div>
             </div>
           </Card>
         </div>
-
-        <Card className="overflow-hidden">
-          <div className="border-b bg-muted/50 p-5">
-            <div className="flex items-center gap-2">
-              <BadgeHelp className="h-5 w-5 text-primary" />
-              <h2 className="text-lg font-semibold">Level Bonuses</h2>
-            </div>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Bonus points are awarded once when a level is reached.
-            </p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full table-fixed text-sm">
-              <thead>
-                <tr className="border-b text-muted-foreground">
-                  <th className="w-1/3 px-5 py-3 text-left font-medium">
-                    Level
-                  </th>
-                  <th className="w-1/3 px-5 py-3 text-left font-medium">
-                    Full League Weeks
-                  </th>
-                  <th className="w-1/3 px-5 py-3 text-right font-medium">
-                    Bonus Points
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {levelRows.map((row) => (
-                  <tr key={row.level}>
-                    <td className="px-5 py-3 font-semibold">
-                      Level {row.level}
-                    </td>
-                    <td className="px-5 py-3 text-muted-foreground">
-                      {row.weeks}
-                    </td>
-                    <td className="px-5 py-3 text-right font-semibold">
-                      +{row.bonus}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
 
         <Card className="overflow-hidden border-amber-200 bg-gradient-to-br from-amber-50 via-background to-emerald-50 shadow-sm dark:border-amber-900/60 dark:from-amber-950/30 dark:via-background dark:to-emerald-950/20">
           <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between">

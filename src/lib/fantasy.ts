@@ -9,22 +9,14 @@ const POINTS = {
   BOOSTER_MULTIPLIER: 3,
 } as const;
 
-// ─── Level system ─────────────────────────────────────────────────────────────
-// Level is earned by fully participating (predicting every game) in game-weeks.
-// Every 2 full league weeks = +1 level, capped at 8.
+// ─── Booster eligibility ─────────────────────────────────────────────────────
+// Boosters unlock after 2 full league weeks of predictions.
 
-export const WEEKS_PER_FANTASY_LEVEL = 2;
-export const MAX_FANTASY_LEVEL = 8;
+export const FULL_WEEKS_FOR_BOOSTERS = 2;
+export const SEASON_BOOSTER_COUNT = 10;
 
-export function getLevelBonusPoints(level: number): number {
-  return level >= 1 && level <= MAX_FANTASY_LEVEL ? level * 2 : 0;
-}
-
-export function getLevelFromWeeks(weeks: number): number {
-  return Math.min(
-    Math.floor(weeks / WEEKS_PER_FANTASY_LEVEL),
-    MAX_FANTASY_LEVEL,
-  );
+export function canUseBoosters(fullParticipationWeeks: number): boolean {
+  return fullParticipationWeeks >= FULL_WEEKS_FOR_BOOSTERS;
 }
 
 // ─── Game week key ────────────────────────────────────────────────────────────
@@ -151,15 +143,13 @@ export async function scoreGameWeekPredictions(
     }
   }
 
-  // Load current user profile data for level/booster calculations
+  // Load current user profile data for participation and booster calculations
   const profiles = await prisma.userProfile.findMany({
     where: { id: { in: affectedUserIds } },
     select: {
       id: true,
       fantasyPoints: true,
       fullParticipationWeeks: true,
-      levelBonusesAwarded: true,
-      fantasyLevel: true,
       boostersRemaining: true,
     },
   });
@@ -181,48 +171,30 @@ export async function scoreGameWeekPredictions(
       totalPointsAwarded += update.pointsEarned;
     }
 
-    // 2. Update each user's points, level, and boosters
+    // 2. Update each user's points, participation count, and boosters
     for (const profile of profiles) {
       const earnedPoints = userPointsMap.get(profile.id) ?? 0;
       const isFullParticipant = fullParticipants.has(profile.id);
 
       const newFullWeeks = profile.fullParticipationWeeks + (isFullParticipant ? 1 : 0);
-      const newLevel = getLevelFromWeeks(newFullWeeks);
-      const levelIncreased = newLevel > profile.levelBonusesAwarded;
-
-      let bonusPoints = 0;
-      let newLevelBonusesAwarded = profile.levelBonusesAwarded;
       let newBoostersRemaining = profile.boostersRemaining;
 
-      if (levelIncreased) {
-        // Award bonus points for each new level reached
-        for (
-          let lvl = profile.levelBonusesAwarded + 1;
-          lvl <= newLevel;
-          lvl++
-        ) {
-          bonusPoints += getLevelBonusPoints(lvl);
-        }
-        newLevelBonusesAwarded = newLevel;
-
-        // Unlock boosters when first reaching Level 1
-        if (profile.levelBonusesAwarded < 1 && newLevel >= 1) {
-          newBoostersRemaining = 10;
-        }
+      if (
+        !canUseBoosters(profile.fullParticipationWeeks) &&
+        canUseBoosters(newFullWeeks)
+      ) {
+        newBoostersRemaining = SEASON_BOOSTER_COUNT;
       }
 
       await tx.userProfile.update({
         where: { id: profile.id },
         data: {
-          fantasyPoints: { increment: earnedPoints + bonusPoints },
+          fantasyPoints: { increment: earnedPoints },
           fullParticipationWeeks: newFullWeeks,
-          fantasyLevel: newLevel,
-          levelBonusesAwarded: newLevelBonusesAwarded,
           boostersRemaining: newBoostersRemaining,
         },
       });
 
-      totalPointsAwarded += bonusPoints;
     }
   });
 

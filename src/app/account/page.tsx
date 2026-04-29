@@ -5,8 +5,8 @@ import { Trophy, Zap } from "lucide-react";
 
 import { AccountForm } from "@/components/account/account-form";
 import { Card } from "@/components/ui/card";
-import { LevelBadge } from "@/components/fantasy/level-badge";
 import { prisma } from "@/lib/prisma";
+import { canUseBoosters } from "@/lib/fantasy";
 import { getWaiverTeamOptions } from "@/lib/team-queries";
 import { getCurrentWaiverYear } from "@/lib/waiver-constants";
 
@@ -132,7 +132,7 @@ const Account = async () => {
               Leaderboard
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             <Card className="p-4 space-y-1">
               <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
                 Points
@@ -140,14 +140,6 @@ const Account = async () => {
               <p className="text-2xl font-bold text-foreground">
                 {profile.fantasyPoints}
               </p>
-            </Card>
-            <Card className="p-4 space-y-1">
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
-                Level
-              </p>
-              <div className="pt-0.5">
-                <LevelBadge level={profile.fantasyLevel} />
-              </div>
             </Card>
             <Card className="p-4 space-y-1">
               <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
@@ -164,7 +156,9 @@ const Account = async () => {
               <div className="flex items-center gap-1.5">
                 <Zap className="h-4 w-4 text-amber-500" />
                 <p className="text-2xl font-bold text-foreground">
-                  {profile.fantasyLevel >= 1 ? profile.boostersRemaining : "—"}
+                  {canUseBoosters(profile.fullParticipationWeeks)
+                    ? profile.boostersRemaining
+                    : "—"}
                 </p>
               </div>
             </Card>

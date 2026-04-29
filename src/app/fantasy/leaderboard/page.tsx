@@ -5,7 +5,6 @@ import { ArrowLeft, Medal } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
-import { LevelBadge } from "@/components/fantasy/level-badge";
 import { getLeaderboard } from "@/lib/actions/fantasy";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
@@ -77,9 +76,6 @@ export default async function LeaderboardPage() {
                       Rank
                     </th>
                     <th className="px-4 py-3 text-left font-medium">Player</th>
-                    <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">
-                      Level
-                    </th>
                     <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
                       Full Weeks
                     </th>
@@ -132,9 +128,6 @@ export default async function LeaderboardPage() {
                               </span>
                             )}
                           </div>
-                        </td>
-                        <td className="px-4 py-3 hidden sm:table-cell">
-                          <LevelBadge level={entry.fantasyLevel} size="sm" />
                         </td>
                         <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
                           {entry.fullParticipationWeeks}

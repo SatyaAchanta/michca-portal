@@ -35,34 +35,21 @@ vi.mock("@/lib/prisma", () => ({
 }));
 
 import {
-  MAX_FANTASY_LEVEL,
-  WEEKS_PER_FANTASY_LEVEL,
-  getLevelBonusPoints,
-  getLevelFromWeeks,
+  FULL_WEEKS_FOR_BOOSTERS,
+  SEASON_BOOSTER_COUNT,
+  canUseBoosters,
   getPointsForGame,
   scoreGameWeekPredictions,
 } from "@/lib/fantasy";
 
-describe("fantasy level helpers", () => {
-  it("levels up every 2 full league weeks and caps at Level 8", () => {
-    expect(WEEKS_PER_FANTASY_LEVEL).toBe(2);
-    expect(MAX_FANTASY_LEVEL).toBe(8);
-    expect(getLevelFromWeeks(0)).toBe(0);
-    expect(getLevelFromWeeks(1)).toBe(0);
-    expect(getLevelFromWeeks(2)).toBe(1);
-    expect(getLevelFromWeeks(3)).toBe(1);
-    expect(getLevelFromWeeks(4)).toBe(2);
-    expect(getLevelFromWeeks(5)).toBe(2);
-    expect(getLevelFromWeeks(16)).toBe(8);
-    expect(getLevelFromWeeks(20)).toBe(8);
-  });
-
-  it("awards bonus points as level times 2", () => {
-    expect(getLevelBonusPoints(0)).toBe(0);
-    expect(getLevelBonusPoints(1)).toBe(2);
-    expect(getLevelBonusPoints(5)).toBe(10);
-    expect(getLevelBonusPoints(8)).toBe(16);
-    expect(getLevelBonusPoints(9)).toBe(0);
+describe("fantasy booster eligibility helpers", () => {
+  it("unlocks boosters after 2 full league weeks", () => {
+    expect(FULL_WEEKS_FOR_BOOSTERS).toBe(2);
+    expect(SEASON_BOOSTER_COUNT).toBe(10);
+    expect(canUseBoosters(0)).toBe(false);
+    expect(canUseBoosters(1)).toBe(false);
+    expect(canUseBoosters(2)).toBe(true);
+    expect(canUseBoosters(3)).toBe(true);
   });
 });
 
@@ -86,7 +73,7 @@ describe("scoreGameWeekPredictions", () => {
     );
   });
 
-  it("increments level progress from full league-week participation", async () => {
+  it("increments full-week participation and unlocks boosters after 2 full weeks", async () => {
     gameFindManyMock.mockResolvedValue([
       {
         id: "league-1",
@@ -109,28 +96,24 @@ describe("scoreGameWeekPredictions", () => {
         id: "user-1",
         fantasyPoints: 0,
         fullParticipationWeeks: 1,
-        levelBonusesAwarded: 0,
-        fantasyLevel: 0,
         boostersRemaining: 0,
       },
     ]);
 
     const result = await scoreGameWeekPredictions("2026-W18");
 
-    expect(result).toEqual({ usersScored: 1, totalPointsAwarded: 3 });
+    expect(result).toEqual({ usersScored: 1, totalPointsAwarded: 1 });
     expect(userProfileUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: {
-        fantasyPoints: { increment: 3 },
+        fantasyPoints: { increment: 1 },
         fullParticipationWeeks: 2,
-        fantasyLevel: 1,
-        levelBonusesAwarded: 1,
         boostersRemaining: 10,
       },
     });
   });
 
-  it("scores playoff-only weeks without level progress", async () => {
+  it("scores playoff-only weeks without full-week progress", async () => {
     gameFindManyMock.mockResolvedValue([
       {
         id: "playoff-1",
@@ -153,8 +136,6 @@ describe("scoreGameWeekPredictions", () => {
         id: "user-1",
         fantasyPoints: 20,
         fullParticipationWeeks: 6,
-        levelBonusesAwarded: 3,
-        fantasyLevel: 3,
         boostersRemaining: 4,
       },
     ]);
@@ -167,14 +148,12 @@ describe("scoreGameWeekPredictions", () => {
       data: {
         fantasyPoints: { increment: 9 },
         fullParticipationWeeks: 6,
-        fantasyLevel: 3,
-        levelBonusesAwarded: 3,
         boostersRemaining: 4,
       },
     });
   });
 
-  it("requires all league games in a mixed week for level progress", async () => {
+  it("requires all league games in a mixed week for full-week progress", async () => {
     gameFindManyMock.mockResolvedValue([
       {
         id: "league-1",
@@ -220,8 +199,6 @@ describe("scoreGameWeekPredictions", () => {
         id: "user-1",
         fantasyPoints: 10,
         fullParticipationWeeks: 3,
-        levelBonusesAwarded: 1,
-        fantasyLevel: 1,
         boostersRemaining: 8,
       },
     ]);
@@ -234,8 +211,6 @@ describe("scoreGameWeekPredictions", () => {
       data: {
         fantasyPoints: { increment: 4 },
         fullParticipationWeeks: 3,
-        fantasyLevel: 1,
-        levelBonusesAwarded: 1,
         boostersRemaining: 8,
       },
     });

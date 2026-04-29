@@ -7,14 +7,13 @@ import { BookOpen, Trophy, Zap } from "lucide-react";
 import { PageContainer } from "@/components/page-container";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { LevelBadge } from "@/components/fantasy/level-badge";
 import { FantasyClient } from "@/components/fantasy/fantasy-client";
 import {
   getUserFantasyData,
   getUpcomingGamesForPrediction,
   getGamePredictionCounts,
 } from "@/lib/actions/fantasy";
-import { MAX_FANTASY_LEVEL, WEEKS_PER_FANTASY_LEVEL } from "@/lib/fantasy";
+import { FULL_WEEKS_FOR_BOOSTERS, canUseBoosters } from "@/lib/fantasy";
 
 export const metadata: Metadata = {
   title: "Fantasy Predictions",
@@ -65,13 +64,11 @@ export default async function FantasyPage() {
       ? Math.round((correctPredictions.length / scoredPredictions.length) * 100)
       : null;
 
-  const canBoost = userData.fantasyLevel >= 1;
-  const nextLevelWeeks =
-    (userData.fantasyLevel + 1) * WEEKS_PER_FANTASY_LEVEL;
-  const weeksToNextLevel =
-    userData.fantasyLevel < MAX_FANTASY_LEVEL
-      ? nextLevelWeeks - userData.fullParticipationWeeks
-      : 0;
+  const canBoost = canUseBoosters(userData.fullParticipationWeeks);
+  const fullWeeksToBoosters = Math.max(
+    FULL_WEEKS_FOR_BOOSTERS - userData.fullParticipationWeeks,
+    0,
+  );
 
   return (
     <div className="bg-background py-12">
@@ -83,8 +80,9 @@ export default async function FantasyPage() {
               Fantasy Predictions
             </h1>
             <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
-              Pick the winner of each upcoming game. Earn points, level up, and
-              compete on the leaderboard.
+              Pick the winner of each upcoming game. Earn points, unlock
+              boosters through full-week participation, and compete on the
+              leaderboard.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -150,29 +148,23 @@ export default async function FantasyPage() {
           </Card>
         </div>
 
-        {/* Progress to next level */}
-        {userData.fantasyLevel < MAX_FANTASY_LEVEL && (
+        {!canBoost && (
           <Card className="p-4">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-medium text-foreground">
-                  Progress to{" "}
-                  <LevelBadge
-                    level={userData.fantasyLevel + 1}
-                    size="sm"
-                    className="ml-1"
-                  />
+                  Booster progress
                 </p>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Predict all games in{" "}
-                  {weeksToNextLevel === 1
+                  Predict all league games in{" "}
+                  {fullWeeksToBoosters === 1
                     ? "1 more week"
-                    : `${weeksToNextLevel} more weeks`}{" "}
-                  to level up
+                    : `${fullWeeksToBoosters} more weeks`}{" "}
+                  to unlock boosters.
                 </p>
               </div>
               <div className="text-right text-sm text-muted-foreground">
-                {userData.fullParticipationWeeks} / {nextLevelWeeks} weeks
+                {userData.fullParticipationWeeks} / {FULL_WEEKS_FOR_BOOSTERS} weeks
               </div>
             </div>
             <div className="mt-3 h-2 w-full rounded-full bg-muted overflow-hidden">
@@ -180,7 +172,7 @@ export default async function FantasyPage() {
                 className="h-full rounded-full bg-primary transition-all"
                 style={{
                   width: `${Math.min(
-                    (userData.fullParticipationWeeks / nextLevelWeeks) * 100,
+                    (userData.fullParticipationWeeks / FULL_WEEKS_FOR_BOOSTERS) * 100,
                     100,
                   )}%`,
                 }}

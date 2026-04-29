@@ -16,27 +16,21 @@
 ## Booster Rules
 
 - 10 boosters per season
-- Only unlocked after achieving Level 1
+- Only unlocked after completing 2 full league prediction weeks
 
-## Level System (participation-based)
+## Full-Week Participation
 
-- Level 1: fully predicted all league games in 2 game-weeks → +2 bonus pts
-- Level 2: 4 league game-weeks → +4 bonus pts
-- Level 3: 6 league game-weeks → +6 bonus pts
-- Level 4: 8 league game-weeks → +8 bonus pts
-- Level 5: 10 league game-weeks → +10 bonus pts
-- Level 6: 12 league game-weeks → +12 bonus pts
-- Level 7: 14 league game-weeks → +14 bonus pts
-- Level 8: 16 league game-weeks → +16 bonus pts
-- Playoff games score points but do not count toward level progress
-- Level bonuses are one-time (tracked to avoid re-awarding)
+- A full week means the participant predicted all league games in that game-week.
+- Playoff games score points but do not count toward full-week participation.
+- There are no fantasy levels or level bonus points.
+- Completing 2 full league prediction weeks unlocks the season's 10 boosters.
 
 ## Scoring Trigger (Admin-controlled)
 
 - Admin marks games COMPLETED (existing flow)
 - Admin goes to /admin/fantasy, sees completed-but-unscored games grouped by game-week
 - Admin clicks "Calculate Points" for a game-week batch
-- System scores all predictions for that batch, updates user totals + levels
+- System scores all predictions for that batch and updates user totals, full-week participation, and boosters
 
 ## What is a game week and how is it important ?
 
@@ -61,10 +55,8 @@
    - @@unique([userProfileId, gameId])
 2. Add to UserProfile:
    - fantasyPoints Int @default(0)
-   - boostersRemaining Int @default(0) — set to 10 on Level 1 achievement
-   - fantasyLevel Int @default(0)
+   - boostersRemaining Int @default(0) — set to 10 after 2 full league prediction weeks
    - fullParticipationWeeks Int @default(0) — tracks full-participation weeks count
-   - levelBonusesAwarded Int @default(0) — tracks highest level bonus awarded (0-5)
 3. Add `predictions` relation to Game model
 4. New Prisma migration: `20260429_add_fantasy`
 
@@ -78,11 +70,8 @@
      - Update Prediction (isScored, isCorrect, pointsEarned)
      - Batch-update UserProfile (fantasyPoints += earned)
      - Check full-participation: did user predict ALL league games in that week? If yes, increment fullParticipationWeeks
-     - Recalculate level: every 2 full league weeks = +1 level (capped at 8)
-     - Award level bonus points if level increased (use levelBonusesAwarded to prevent double-award)
-     - If new level = 1, set boostersRemaining = 10
+     - If fullParticipationWeeks reaches 2, set boostersRemaining = 10
    - `getGameWeekKey(date: Date): string` — returns ISO week string like "2026-W18"
-   - `getLevelFromWeeks(weeks: number): number` — pure function: floor(weeks/2), capped at 8
 
 ### Phase 3: /fantasy Prediction Page (~1 hour)
 
@@ -90,21 +79,20 @@
    - Auth guard: redirect to /sign-in if not logged in
    - Show upcoming/scheduled games grouped by game-week
    - For each game: team cards with radio picker (Team A | Draw | Team B)
-   - Booster toggle per game (only if user has boosters remaining AND Level 1+)
+   - Booster toggle per game (only if user has boosters remaining and at least 2 full league prediction weeks)
    - Submit prediction server action (locked once game is LIVE/COMPLETED)
    - Show user's existing predictions if already submitted
-   - Display user's stats: total points, level badge, boosters remaining
+   - Display user's stats: total points, full weeks, boosters remaining
 7. Create `src/lib/actions/fantasy.ts` with server actions:
    - `submitPrediction(gameId, predictedWinnerCode, isBoosted)` — validates lock state, upserts Prediction
-   - `getUserFantasyStats(userProfileId)` — returns points, level, boosters, predictions
+   - `getUserFantasyStats(userProfileId)` — returns points, full weeks, boosters, predictions
 
 ### Phase 4: Leaderboard (~45 min)
 
 8. Create `src/app/fantasy/leaderboard/page.tsx`:
    - Fetch all UserProfiles with fantasyPoints > 0, ordered by points desc
-   - Show rank, name, team, points, level badge
+   - Show rank, name, team, points, full weeks
    - Highlight current user's row
-9. Create reusable `src/components/fantasy/level-badge.tsx` — displays level number + color/icon
 
 ### Phase 5: Admin Calculate Page (~45 min)
 
@@ -119,7 +107,7 @@
 ### Phase 6: Wiring & Polish (~30 min)
 
 12. Update `src/components/fantasy-banner.tsx`: change href from `NEXT_PUBLIC_FANTASY_URL` to `/fantasy`
-13. Add fantasy stats section to `/account` profile page (points, level, predictions history)
+13. Add fantasy stats section to `/account` profile page (points, full weeks, predictions history)
 14. Add `/fantasy` to navbar/header navigation
 
 ---
@@ -138,10 +126,10 @@
 ## Decisions
 
 - Game weeks derived from ISO week of game date (no new DB field needed)
-- Predictions locked when game.status = LIVE or COMPLETED
+- Predictions lock 1 hour before each game's scheduled start time, and also lock when the game is COMPLETED or CANCELLED.
 - Draw prediction: predictedWinnerCode = null (Game's isDraw flag used for scoring)
-- Booster unlocked at Level 1 (fullParticipationWeeks >= 2), 10/season
-- Level bonuses one-time; tracked via levelBonusesAwarded field
+- Boosters unlock after 2 full league prediction weeks, 10/season
+- Fantasy levels and level bonus points are removed from the user experience.
 - No real-time updates — page refresh only (v1 scope)
 - /fantasy replaces external fantasy link
 

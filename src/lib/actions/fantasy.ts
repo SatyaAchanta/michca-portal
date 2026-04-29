@@ -22,7 +22,7 @@ export async function submitPrediction(
     where: { clerkUserId: userId },
     select: {
       id: true,
-      fantasyLevel: true,
+      fullParticipationWeeks: true,
       boostersRemaining: true,
     },
   });
@@ -64,8 +64,11 @@ export async function submitPrediction(
 
   // Validate booster eligibility
   if (isBoosted) {
-    if (profile.fantasyLevel < 1) {
-      return { success: false, error: "Boosters are unlocked at Level 1" };
+    if (profile.fullParticipationWeeks < 2) {
+      return {
+        success: false,
+        error: "Boosters unlock after 2 full prediction weeks",
+      };
     }
     // Check if they already have a booster on a different prediction this week;
     // also enforce the boostersRemaining limit only on NEW boosted predictions.
@@ -130,7 +133,6 @@ export async function getUserFantasyData() {
     select: {
       id: true,
       fantasyPoints: true,
-      fantasyLevel: true,
       boostersRemaining: true,
       fullParticipationWeeks: true,
       predictions: {
@@ -215,7 +217,6 @@ export async function getLeaderboard() {
       lastName: true,
       email: true,
       fantasyPoints: true,
-      fantasyLevel: true,
       fullParticipationWeeks: true,
       t20TeamCode: true,
     },
