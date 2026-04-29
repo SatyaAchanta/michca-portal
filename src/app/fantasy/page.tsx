@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Trophy, Zap } from "lucide-react";
+import { BookOpen, Trophy, Zap } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import {
   getUpcomingGamesForPrediction,
   getGamePredictionCounts,
 } from "@/lib/actions/fantasy";
-import { getLevelFromWeeks } from "@/lib/fantasy";
+import { MAX_FANTASY_LEVEL, WEEKS_PER_FANTASY_LEVEL } from "@/lib/fantasy";
 
 export const metadata: Metadata = {
   title: "Fantasy Predictions",
@@ -60,9 +60,11 @@ export default async function FantasyPage() {
   const predictionMap = new Map(userData.predictions.map((p) => [p.gameId, p]));
 
   const canBoost = userData.fantasyLevel >= 1;
+  const nextLevelWeeks =
+    (userData.fantasyLevel + 1) * WEEKS_PER_FANTASY_LEVEL;
   const weeksToNextLevel =
-    userData.fantasyLevel < 5
-      ? (userData.fantasyLevel + 1) * 3 - userData.fullParticipationWeeks
+    userData.fantasyLevel < MAX_FANTASY_LEVEL
+      ? nextLevelWeeks - userData.fullParticipationWeeks
       : 0;
 
   return (
@@ -79,12 +81,20 @@ export default async function FantasyPage() {
               compete on the leaderboard.
             </p>
           </div>
-          <Button asChild variant="outline">
-            <Link href="/fantasy/leaderboard">
-              <Trophy className="h-4 w-4" />
-              Leaderboard
-            </Link>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="outline">
+              <Link href="/fantasy/rules">
+                <BookOpen className="h-4 w-4" />
+                Rules
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/fantasy/leaderboard">
+                <Trophy className="h-4 w-4" />
+                Leaderboard
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Stats bar */}
@@ -123,11 +133,14 @@ export default async function FantasyPage() {
                 {canBoost ? userData.boostersRemaining : "—"}
               </p>
             </div>
+            <p className="text-xs text-muted-foreground">
+              10 boosters for the whole season
+            </p>
           </Card>
         </div>
 
         {/* Progress to next level */}
-        {userData.fantasyLevel < 5 && (
+        {userData.fantasyLevel < MAX_FANTASY_LEVEL && (
           <Card className="p-4">
             <div className="flex items-center justify-between gap-4">
               <div>
@@ -148,8 +161,7 @@ export default async function FantasyPage() {
                 </p>
               </div>
               <div className="text-right text-sm text-muted-foreground">
-                {userData.fullParticipationWeeks} /{" "}
-                {(userData.fantasyLevel + 1) * 3} weeks
+                {userData.fullParticipationWeeks} / {nextLevelWeeks} weeks
               </div>
             </div>
             <div className="mt-3 h-2 w-full rounded-full bg-muted overflow-hidden">
@@ -157,9 +169,7 @@ export default async function FantasyPage() {
                 className="h-full rounded-full bg-primary transition-all"
                 style={{
                   width: `${Math.min(
-                    (userData.fullParticipationWeeks /
-                      ((userData.fantasyLevel + 1) * 3)) *
-                      100,
+                    (userData.fullParticipationWeeks / nextLevelWeeks) * 100,
                     100,
                   )}%`,
                 }}

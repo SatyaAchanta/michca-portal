@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { GameStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { getGameWeekKey, scoreGameWeekPredictions } from "@/lib/fantasy";
+import { scoreGameWeekPredictions } from "@/lib/fantasy";
 
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
@@ -33,7 +33,7 @@ export async function submitPrediction(
   // Validate the game exists and is still open for predictions
   const game = await prisma.game.findUnique({
     where: { id: gameId },
-    select: { id: true, status: true, team1Code: true, team2Code: true },
+    select: { id: true, status: true, team1Code: true, team2Code: true, date: true },
   });
 
   if (!game) {

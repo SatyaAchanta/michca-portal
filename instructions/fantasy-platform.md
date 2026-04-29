@@ -20,11 +20,15 @@
 
 ## Level System (participation-based)
 
-- Level 1: fully predicted all games in 3 game-weeks → +5 bonus pts
-- Level 2: 6 game-weeks → +10 bonus pts
-- Level 3: 9 game-weeks → +15 bonus pts
-- Level 4: 12 game-weeks → +20 bonus pts
-- Level 5: 15 game-weeks → +25 bonus pts
+- Level 1: fully predicted all league games in 2 game-weeks → +2 bonus pts
+- Level 2: 4 league game-weeks → +4 bonus pts
+- Level 3: 6 league game-weeks → +6 bonus pts
+- Level 4: 8 league game-weeks → +8 bonus pts
+- Level 5: 10 league game-weeks → +10 bonus pts
+- Level 6: 12 league game-weeks → +12 bonus pts
+- Level 7: 14 league game-weeks → +14 bonus pts
+- Level 8: 16 league game-weeks → +16 bonus pts
+- Playoff games score points but do not count toward level progress
 - Level bonuses are one-time (tracked to avoid re-awarding)
 
 ## Scoring Trigger (Admin-controlled)
@@ -73,12 +77,12 @@
      - For each prediction: check correctness, compute points
      - Update Prediction (isScored, isCorrect, pointsEarned)
      - Batch-update UserProfile (fantasyPoints += earned)
-     - Check full-participation: did user predict ALL games in that week? If yes, increment fullParticipationWeeks
-     - Recalculate level: every 3 full weeks = +1 level (capped at 5)
+     - Check full-participation: did user predict ALL league games in that week? If yes, increment fullParticipationWeeks
+     - Recalculate level: every 2 full league weeks = +1 level (capped at 8)
      - Award level bonus points if level increased (use levelBonusesAwarded to prevent double-award)
      - If new level = 1, set boostersRemaining = 10
    - `getGameWeekKey(date: Date): string` — returns ISO week string like "2026-W18"
-   - `getLevelFromWeeks(weeks: number): number` — pure function: floor(weeks/3), capped at 5
+   - `getLevelFromWeeks(weeks: number): number` — pure function: floor(weeks/2), capped at 8
 
 ### Phase 3: /fantasy Prediction Page (~1 hour)
 
@@ -136,7 +140,7 @@
 - Game weeks derived from ISO week of game date (no new DB field needed)
 - Predictions locked when game.status = LIVE or COMPLETED
 - Draw prediction: predictedWinnerCode = null (Game's isDraw flag used for scoring)
-- Booster unlocked at Level 1 (fullParticipationWeeks >= 3), 10/season
+- Booster unlocked at Level 1 (fullParticipationWeeks >= 2), 10/season
 - Level bonuses one-time; tracked via levelBonusesAwarded field
 - No real-time updates — page refresh only (v1 scope)
 - /fantasy replaces external fantasy link

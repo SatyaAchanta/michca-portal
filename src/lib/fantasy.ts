@@ -11,18 +11,20 @@ const POINTS = {
 
 // ─── Level system ─────────────────────────────────────────────────────────────
 // Level is earned by fully participating (predicting every game) in game-weeks.
-// Every 3 full weeks = +1 level, capped at 5.
+// Every 2 full league weeks = +1 level, capped at 8.
 
-const LEVEL_BONUS_POINTS: Record<number, number> = {
-  1: 5,
-  2: 10,
-  3: 15,
-  4: 20,
-  5: 25,
-};
+export const WEEKS_PER_FANTASY_LEVEL = 2;
+export const MAX_FANTASY_LEVEL = 8;
+
+export function getLevelBonusPoints(level: number): number {
+  return level >= 1 && level <= MAX_FANTASY_LEVEL ? level * 2 : 0;
+}
 
 export function getLevelFromWeeks(weeks: number): number {
-  return Math.min(Math.floor(weeks / 3), 5);
+  return Math.min(
+    Math.floor(weeks / WEEKS_PER_FANTASY_LEVEL),
+    MAX_FANTASY_LEVEL,
+  );
 }
 
 // ─── Game week key ────────────────────────────────────────────────────────────
@@ -86,7 +88,8 @@ export async function scoreGameWeekPredictions(
     return { usersScored: 0, totalPointsAwarded: 0 };
   }
 
-  const gameIds = weekGames.map((g) => g.id);
+  const leagueGames = weekGames.filter((g) => g.gameType === GameType.LEAGUE);
+  const leagueGameIds = new Set(leagueGames.map((g) => g.id));
 
   // Collect all unscored predictions across all users for this week
   const allPredictions = weekGames.flatMap((g) =>
@@ -135,14 +138,16 @@ export async function scoreGameWeekPredictions(
     ...new Set(allPredictions.map((p) => p.userProfileId)),
   ];
 
-  // For each user, check full participation (predicted every game this week)
+  // For each user, check full participation in league games only.
   const fullParticipants = new Set<string>();
-  for (const userId of affectedUserIds) {
-    const userPredCountThisWeek = allPredictions.filter(
-      (p) => p.userProfileId === userId
-    ).length;
-    if (userPredCountThisWeek === weekGames.length) {
-      fullParticipants.add(userId);
+  if (leagueGames.length > 0) {
+    for (const userId of affectedUserIds) {
+      const userLeaguePredCountThisWeek = allPredictions.filter(
+        (p) => p.userProfileId === userId && leagueGameIds.has(p.game.id),
+      ).length;
+      if (userLeaguePredCountThisWeek === leagueGames.length) {
+        fullParticipants.add(userId);
+      }
     }
   }
 
@@ -196,7 +201,7 @@ export async function scoreGameWeekPredictions(
           lvl <= newLevel;
           lvl++
         ) {
-          bonusPoints += LEVEL_BONUS_POINTS[lvl] ?? 0;
+          bonusPoints += getLevelBonusPoints(lvl);
         }
         newLevelBonusesAwarded = newLevel;
 

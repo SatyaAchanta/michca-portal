@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Trophy } from "lucide-react";
+import { BookOpen, Trophy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,6 +21,12 @@ export function FantasyBanner() {
           <Link href="/fantasy/leaderboard">
             <Trophy className="h-4 w-4" />
             Leaderboard
+          </Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/fantasy/rules">
+            <BookOpen className="h-4 w-4" />
+            Rules
           </Link>
         </Button>
       </div>

@@ -11,7 +11,8 @@ const footerLinks = {
     { label: "Authentikka Wixom", href: "https://authentikkawixom.com", external: true },
     { label: "Lincode", href: "https://www.lincode.ai", external: true },
     { label: "Shiznay Events", href: "https://shiznayevents.com/", external: true },
-    { label: "Fantasy League", href: "https://www.fantasyleaguemichca.org", external: true },
+    { label: "Fantasy League", href: "/fantasy" },
+    { label: "Fantasy Rules", href: "/fantasy/rules" },
   ],
   contact: [
     { icon: MapPin, label: "Detroit, Michigan 48212, USA" },

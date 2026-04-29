@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
+  BookOpen,
   Calendar,
   Gamepad2,
   MapPin,
-  Sparkles,
   Trophy,
   Users,
 } from "lucide-react";
@@ -175,20 +175,44 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                <Card className="border border-border/70 bg-card p-6 shadow-md">
-                  <div className="space-y-5">
+                <Card className="relative overflow-hidden border border-border/70 bg-card p-6 shadow-md">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none" />
+                  <div className="relative space-y-5">
                     <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Sparkles className="h-6 w-6" />
+                      <Gamepad2 className="h-6 w-6" />
                     </div>
                     <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                        Fantasy League · 2026
+                      </p>
                       <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-                        Follow every matchday from one place
+                        Think you know cricket? Prove it.
                       </h2>
                       <p className="text-sm leading-7 text-muted-foreground">
-                        The schedule, team pages, grounds directory, and season
-                        history are connected so players and fans can move from
-                        fixture details to club context quickly.
+                        Pick winners every weekend, rack up points, and battle
+                        for the top of the leaderboard. The 2026 season is live
+                        — don&apos;t miss a matchday.
                       </p>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <Button asChild size="sm">
+                        <Link href="/fantasy">
+                          Make Predictions
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
+                      <Button asChild size="sm" variant="outline">
+                        <Link href="/fantasy/leaderboard">
+                          <Trophy className="h-3.5 w-3.5" />
+                          Leaderboard
+                        </Link>
+                      </Button>
+                      <Button asChild size="sm" variant="outline">
+                        <Link href="/fantasy/rules">
+                          <BookOpen className="h-3.5 w-3.5" />
+                          Rules
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 </Card>

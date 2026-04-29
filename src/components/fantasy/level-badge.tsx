@@ -26,9 +26,24 @@ const LEVEL_CONFIG: Record<number, { label: string; className: string }> = {
       "bg-orange-100 text-orange-800 border-orange-300 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-700",
   },
   5: {
-    label: "Level 5 ★",
+    label: "Level 5",
     className:
       "bg-red-100 text-red-800 border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700",
+  },
+  6: {
+    label: "Level 6",
+    className:
+      "bg-cyan-100 text-cyan-800 border-cyan-300 dark:bg-cyan-900/30 dark:text-cyan-400 dark:border-cyan-700",
+  },
+  7: {
+    label: "Level 7",
+    className:
+      "bg-pink-100 text-pink-800 border-pink-300 dark:bg-pink-900/30 dark:text-pink-400 dark:border-pink-700",
+  },
+  8: {
+    label: "Level 8 ★",
+    className:
+      "bg-yellow-100 text-yellow-900 border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
   },
 };
 
