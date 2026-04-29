@@ -181,7 +181,7 @@ export const grounds: Ground[] = [
   },
   {
     id: "ground-10",
-    name: "Millennium Park (Northville)",
+    name: "Millennium Park",
     shortName: "Northville",
     address: "45769 Six Mile Rd, Northville, MI 48168",
   },
@@ -205,8 +205,14 @@ export const grounds: Ground[] = [
   },
   {
     id: "ground-14",
-    name: "Winterfield Park (Toledo)",
+    name: "Winterfield Park",
     shortName: "Toledo",
     address: "4565 Hill Ave, Toledo, OH 43615",
   },
+  {
+  id: "ground-15",
+  name: "Boulan Park, Troy",
+  shortName: "Boulan",
+  address: "1898 Boulan Park Dr, Troy, MI 48084",
+  }
 ];

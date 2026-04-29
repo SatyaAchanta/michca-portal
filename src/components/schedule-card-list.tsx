@@ -1,4 +1,5 @@
 import { Check, Clock3, MapPin } from "lucide-react";
+import Link from "next/link";
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -62,7 +63,12 @@ export function ScheduleCardList({ games }: ScheduleCardListProps) {
                   )}
                 >
                   {isHomeWinner ? <Check className="h-4 w-4" /> : <span className="h-4 w-4" />}
-                  {game.homeTeam}
+                  <Link
+                    href={`/teams/${game.homeTeamCode}`}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {game.homeTeam}
+                  </Link>
                 </p>
                 <p
                   className={cn(
@@ -71,7 +77,12 @@ export function ScheduleCardList({ games }: ScheduleCardListProps) {
                   )}
                 >
                   {isAwayWinner ? <Check className="h-4 w-4" /> : <span className="h-4 w-4" />}
-                  {game.awayTeam}
+                  <Link
+                    href={`/teams/${game.awayTeamCode}`}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {game.awayTeam}
+                  </Link>
                 </p>
               </div>
             </div>

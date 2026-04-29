@@ -49,7 +49,9 @@ export type ScheduleGameListItem = {
   gameType: "LEAGUE" | "PLAYOFF";
   status: ScheduleGameStatus;
   venue: string;
+  homeTeamCode: string;
   homeTeam: string;
+  awayTeamCode: string;
   awayTeam: string;
   winnerTeamName?: string;
   isDraw: boolean;

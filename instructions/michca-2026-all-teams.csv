@@ -1,10 +1,10 @@
 Format,Division,TeamShortCode,TeamName
 T20,Division-1,DARI,Dark Invaders CC DARI
 T20,Division-1,DCCC,Detroit Challengers CC DCCC
-T20,Division-1,DSKS,Detroit Super Kings CC Sharks DSKS
+T20,Division-1,DSKB,Detroit Super Kings CC Bulls DSKB
 T20,Division-1,FCXI,Farmington CC Kings XI FCXI
 T20,Division-1,GRSM,MIGR Single Malt GRSM
-T20,Division-1,MIGR,MIGR Old Monks MIGR
+T20,Division-1,GROM,MIGR Old Monk GROM
 T20,Division-1,HTCC,Hamtramck CC HTCC
 T20,Division-1,KECC,Karnataka Eagles CC KECC
 T20,Division-1,MACO,Macomb CC Olympians MACO
@@ -27,7 +27,7 @@ T20,Division-2,ADCC,Aadukalam CC Cheavliers ADCC
 T20,Division-2,BLAK,Big League Arena CCKnights BLAK
 T20,Division-2,DDCC,Detroit Dynos CC DDCC
 T20,Division-2,DEDR,Detroit Dragons DEDR
-T20,Division-2,FBCC,Farmington Blazers CC FBCC
+T20,Division-2,LCC,Lions Cricket Club LCC
 T20,Division-2,KLCA,Killers Acadamy CC KLCA
 T20,Division-2,MBCW,Michigan Bengals CC Warriors MBCW
 T20,Division-2,MCC,Motor City Chargers Cricket Club MCC
@@ -47,27 +47,27 @@ T20,Division-2,SIXC,Sixers Cricket Club SIXC
 T20,Division-2,SLCA,South Lyon Cricket Club Avengers SLCA
 T20,Division-2,TCAS,Troy CA Stars TCAS
 T20,Division-2,TSXI,The Squad Cricket Club TSXI
-T20,Divison-3,ADCB,Aadukalam CC Chembians ADCB
-T20,Divison-3,CRWN,Crowned Strikers CRWN
-T20,Divison-3,DEEG,Detroit Eagles Cricket Club DEEG
-T20,Divison-3,DICE,DETROIT ICE DICE
-T20,Divison-3,DTCC,Deccan Tigers Cricket Club DTCC
-T20,Divison-3,FAFL,Farmington CC Falcons FAFL
-T20,Divison-3,FSCC,Farmington Stars FSCC
-T20,Divison-3,MACH,MACHI CC MACH
-T20,Divison-3,FCCB,Farmington Cricket Club Broncos FCCB
-T20,Divison-3,MELC,Michigan Elite CC MELC
-T20,Divison-3,MICF,Michigan International CA Firebirds MICF
-T20,Divison-3,MRSC,Michigan Rising Stars CC MRSC
-T20,Divison-3,MYCA,MYCA Elite MYCA
-T20,Divison-3,NLCR,Northville Cricket Club Risers NLCR
-T20,Divison-3,NVVK,Novi Vikings NVVK
-T20,Divison-3,ODCT,Odia CA Titans ODCT
-T20,Divison-3,PRSD,Prime Strikers PRSD
-T20,Divison-3,RRCC,Royal Risers Cricket Club RRCC
-T20,Divison-3,SHEP,Sylhet Express SHEP
-T20,Divison-3,SPCA,South Peninsula Cricket Association SPCA
-T20,Divison-3,SPCC,Sparks CC SPCC
+T20,Division-3,ADCB,Aadukalam CC Chembians ADCB
+T20,Division-3,CRWN,Crowned Strikers CRWN
+T20,Division-3,DEEG,Detroit Eagles Cricket Club DEEG
+T20,Division-3,DICE,DETROIT ICE DICE
+T20,Division-3,DTCC,Deccan Tigers Cricket Club DTCC
+T20,Division-3,FAFL,Farmington CC Falcons FAFL
+T20,Division-3,FSCC,Farmington Stars FSCC
+T20,Division-3,MACH,MACHI CC MACH
+T20,Division-3,FCCB,Farmington Cricket Club Broncos FCCB
+T20,Division-3,MELC,Michigan Elite CC MELC
+T20,Division-3,MIFB,Michigan International CA Firebirds MIFB
+T20,Division-3,MRSC,Michigan Rising Stars CC MRSC
+T20,Division-3,MYCA,MYCA Elite MYCA
+T20,Division-3,NLCR,Northville Cricket Club Risers NLCR
+T20,Division-3,NVVK,Novi Vikings NVVK
+T20,Division-3,ODCT,Odia CA Titans ODCT
+T20,Division-3,PRSD,Prime Strikers PRSD
+T20,Division-3,RRCC,Royal Risers Cricket Club RRCC
+T20,Division-3,SHEP,Sylhet Express SHEP
+T20,Division-3,SPCA,South Peninsula Cricket Association SPCA
+T20,Division-3,SPCC,Sparks CC SPCC
 T20,Premier,BBNC,Become Better Novi Cardinals BBNC
 T20,Premier,BSCC,Brownstown Nirvana CC BSCC
 T20,Premier,CHWA,Chargers Warriors Association CHWA
