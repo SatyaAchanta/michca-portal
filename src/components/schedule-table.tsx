@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 import { formatMatchDateTime } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -53,9 +54,15 @@ export function ScheduleTable({ games }: ScheduleTableProps) {
                       >
                         {isHomeWinner ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : null}
                       </span>
-                      <span className={cn("text-foreground", isHomeWinner && "font-semibold")}>
+                      <Link
+                        href={`/teams/${game.homeTeamCode}`}
+                        className={cn(
+                          "text-foreground underline-offset-4 hover:underline",
+                          isHomeWinner && "font-semibold"
+                        )}
+                      >
                         {game.homeTeam}
-                      </span>
+                      </Link>
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -70,9 +77,15 @@ export function ScheduleTable({ games }: ScheduleTableProps) {
                       >
                         {isAwayWinner ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : null}
                       </span>
-                      <span className={cn("text-foreground", isAwayWinner && "font-semibold")}>
+                      <Link
+                        href={`/teams/${game.awayTeamCode}`}
+                        className={cn(
+                          "text-foreground underline-offset-4 hover:underline",
+                          isAwayWinner && "font-semibold"
+                        )}
+                      >
                         {game.awayTeam}
-                      </span>
+                      </Link>
                     </div>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{game.venue}</td>

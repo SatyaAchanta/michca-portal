@@ -1,8 +1,9 @@
 import { getTeamByCode, getTeams } from "@/lib/team-queries";
 
-const { findManyMock, findUniqueMock, userFindManyMock } = vi.hoisted(() => ({
+const { findManyMock, findUniqueMock, gameFindManyMock, userFindManyMock } = vi.hoisted(() => ({
   findManyMock: vi.fn(),
   findUniqueMock: vi.fn(),
+  gameFindManyMock: vi.fn(),
   userFindManyMock: vi.fn(),
 }));
 
@@ -16,6 +17,9 @@ vi.mock("@/lib/prisma", () => ({
     },
     userProfile: {
       findMany: userFindManyMock,
+    },
+    game: {
+      findMany: gameFindManyMock,
     },
   },
 }));
@@ -114,8 +118,6 @@ describe("getTeamByCode", () => {
       description: null,
       captain: null,
       viceCaptain: null,
-      gamesAsTeam1: [],
-      gamesAsTeam2: [],
     });
     userFindManyMock.mockResolvedValue([
       {
@@ -126,6 +128,7 @@ describe("getTeamByCode", () => {
         playingRole: "Bowler",
       },
     ]);
+    gameFindManyMock.mockResolvedValue([]);
 
     const result = await getTeamByCode("T20-MOCC");
 
@@ -149,6 +152,8 @@ describe("getTeamByCode", () => {
         playingRole: "Bowler",
       },
     ]);
+    expect(result?.upcomingGames).toEqual([]);
+    expect(result?.recentGames).toEqual([]);
   });
 
   it("loads secondary-format roster players from current user profiles", async () => {
@@ -161,10 +166,9 @@ describe("getTeamByCode", () => {
       description: null,
       captain: null,
       viceCaptain: null,
-      gamesAsTeam1: [],
-      gamesAsTeam2: [],
     });
     userFindManyMock.mockResolvedValue([]);
+    gameFindManyMock.mockResolvedValue([]);
 
     await getTeamByCode("T30-MOCC");
 

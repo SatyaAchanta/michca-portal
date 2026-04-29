@@ -38,6 +38,21 @@ function getPlayingRoleLabel(playingRole: string | null) {
   return playingRole?.trim().length ? playingRole : "Not specified";
 }
 
+function getTeamGameSummary(
+  game: NonNullable<Awaited<ReturnType<typeof getTeamByCode>>>["upcomingGames"][number],
+  teamCode: string
+) {
+  const opponent = game.team1.teamCode === teamCode ? game.team2 : game.team1;
+
+  return {
+    id: game.id,
+    date: game.date,
+    venue: game.venue,
+    opponentName: opponent.teamName,
+    opponentCode: opponent.teamCode,
+  };
+}
+
 export async function generateMetadata({
   params,
 }: TeamDetailPageProps): Promise<Metadata> {
@@ -64,24 +79,14 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
     notFound();
   }
 
-  const recentGames = [
-    ...team.gamesAsTeam1.map((game) => ({
-      id: game.id,
-      date: game.date,
-      opponentName: game.team2.teamName,
-      opponentCode: game.team2.teamCode,
-      isHome: true,
-    })),
-    ...team.gamesAsTeam2.map((game) => ({
-      id: game.id,
-      date: game.date,
-      opponentName: game.team1.teamName,
-      opponentCode: game.team1.teamCode,
-      isHome: false,
-    })),
-  ]
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .slice(0, 5);
+  const upcomingGames = team.upcomingGames.map((game) =>
+    getTeamGameSummary(game, team.teamCode)
+  );
+  const recentGames = team.recentGames.map((game) =>
+    getTeamGameSummary(game, team.teamCode)
+  );
+  const gameSectionTitle = upcomingGames.length > 0 ? "Upcoming Games" : "Recent Games";
+  const displayedGames = upcomingGames.length > 0 ? upcomingGames : recentGames;
 
   return (
     <div className="bg-background py-12">
@@ -185,29 +190,36 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Recent Games</CardTitle>
+              <CardTitle>{gameSectionTitle}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {recentGames.length > 0 ? (
-                recentGames.map((game) => (
+              {displayedGames.length > 0 ? (
+                displayedGames.map((game) => (
                   <div
                     key={game.id}
-                    className="rounded-xl border border-border/70 p-4"
+                    className="space-y-3 rounded-xl border border-border/70 p-4"
                   >
-                    <p className="text-sm font-medium text-foreground">
-                      vs {game.opponentName}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {game.date.toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}{" "}
-                      • {game.isHome ? "Listed as Team 1" : "Listed as Team 2"}
-                    </p>
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-foreground">
+                        vs {game.opponentName}
+                      </p>
+                      <div className="flex flex-col gap-1 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+                        <span>
+                          {game.date.toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </span>
+                        <span className="hidden sm:inline" aria-hidden="true">
+                          •
+                        </span>
+                        <span>{game.venue ?? "Venue TBD"}</span>
+                      </div>
+                    </div>
                     <Link
                       href={`/teams/${game.opponentCode}`}
-                      className="mt-2 inline-flex text-sm text-foreground underline underline-offset-4"
+                      className="inline-flex text-sm text-foreground underline underline-offset-4"
                     >
                       View opponent
                     </Link>
@@ -215,7 +227,7 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
                 ))
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  No recent games are available for this team yet.
+                  No games are available for this team yet.
                 </p>
               )}
             </CardContent>

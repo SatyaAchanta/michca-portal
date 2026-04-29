@@ -55,6 +55,7 @@ export async function getTeams(filters?: {
 }
 
 export async function getTeamByCode(teamCode: string) {
+  const now = new Date();
   const team = await prisma.team.findUnique({
     where: { teamCode },
     include: {
@@ -74,30 +75,6 @@ export async function getTeamByCode(teamCode: string) {
           email: true,
         },
       },
-      gamesAsTeam1: {
-        orderBy: { date: "desc" },
-        take: 5,
-        include: {
-          team2: {
-            select: {
-              teamCode: true,
-              teamName: true,
-            },
-          },
-        },
-      },
-      gamesAsTeam2: {
-        orderBy: { date: "desc" },
-        take: 5,
-        include: {
-          team1: {
-            select: {
-              teamCode: true,
-              teamName: true,
-            },
-          },
-        },
-      },
     },
   });
 
@@ -105,23 +82,60 @@ export async function getTeamByCode(teamCode: string) {
     return null;
   }
 
-  const players = await prisma.userProfile.findMany({
-    where:
-      team.format === "T20"
-        ? { t20TeamCode: team.teamCode }
-        : { secondaryTeamCode: team.teamCode },
-    orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      playingRole: true,
+  const gameInclude = {
+    team1: {
+      select: {
+        teamCode: true,
+        teamName: true,
+      },
     },
-  });
+    team2: {
+      select: {
+        teamCode: true,
+        teamName: true,
+      },
+    },
+  };
+
+  const [players, upcomingGames, recentGames] = await Promise.all([
+    prisma.userProfile.findMany({
+      where:
+        team.format === "T20"
+          ? { t20TeamCode: team.teamCode }
+          : { secondaryTeamCode: team.teamCode },
+      orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        playingRole: true,
+      },
+    }),
+    prisma.game.findMany({
+      where: {
+        date: { gte: now },
+        OR: [{ team1Code: team.teamCode }, { team2Code: team.teamCode }],
+      },
+      orderBy: { date: "asc" },
+      take: 5,
+      include: gameInclude,
+    }),
+    prisma.game.findMany({
+      where: {
+        date: { lt: now },
+        OR: [{ team1Code: team.teamCode }, { team2Code: team.teamCode }],
+      },
+      orderBy: { date: "desc" },
+      take: 5,
+      include: gameInclude,
+    }),
+  ]);
 
   return {
     ...team,
+    upcomingGames,
+    recentGames,
     players,
   };
 }

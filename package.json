@@ -11,6 +11,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "schedule:dry-run": "jiti scripts/import-2026-schedule.ts",
+    "schedule:import": "jiti scripts/import-2026-schedule.ts --apply",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
