@@ -289,16 +289,19 @@ export function PredictionCard({
             </button>
           ) : (
             <span className="text-xs text-muted-foreground">
-              Complete 2 full prediction weeks to unlock boosters
+              2 full weeks predictions unlock boosters
             </span>
           )}
 
-          <div className="flex items-center gap-1.5 text-xs">
+          <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
             {isPending && (
               <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
             )}
             {!isPending && status === "saved" && (
-              <span className="text-muted-foreground">Saved ✓</span>
+              <span className="flex items-center gap-1 text-muted-foreground">
+                Saved
+                <CheckCircle2 className="h-3 w-3" />
+              </span>
             )}
             {!isPending && status === "error" && (
               <span className="text-destructive">{errorMsg}</span>
