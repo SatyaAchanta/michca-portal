@@ -177,7 +177,7 @@ export function PredictionCard({
           onClick={() => handleSelect(game.team1Code)}
         />
 
-        {/* Draw */}
+        {/* Tie */}
         <button
           type="button"
           disabled={!!isLocked || isPending}
@@ -194,7 +194,7 @@ export function PredictionCard({
             {selected === null && (
               <CheckCircle2 className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" />
             )}
-            <span>Draw</span>
+            <span>Tie</span>
           </div>
           {drawPct !== null && (
             <span className="tabular-nums text-xs">{drawPct}%</span>
