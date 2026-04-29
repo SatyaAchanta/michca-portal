@@ -91,3 +91,19 @@ By signing below, I am acknowledging that an inherent risk of exposure to COVID-
 
 7. Add waiver form to list of forms in the /forms page
 8. Add link to waiver form in place of umpiring training appreciation. So that users can find it easily.
+
+## Revision 1
+
+### Under 18 Instructions
+
+So far above we added waiver form and it all works well. Now I want to enhance this to players who are under 18 because they need to get thier parents' consent to play. So lets plan for that
+
+### Instructions
+
+- Current form works as is. But at the end we want to ask players for `Are you born after September 1 2008 ?`
+  - If they select the checkbox, form should be prompted to enter their Parent's name and should have little note under that field saying `Should be filled by parent only`
+- Now, there is a mix of players who are under 18 or not, so when adding these fields , the existing records should be defaulted to `No` for `is Under 18` and parent name should be empty
+- Moving forward anyone who fills under 18 should be entering these details and parents name is mandatory. Everything else should stay same.
+- For Under 18, when they submit the form and in the confirmation dialog also adds little text saying that I agree that my Parents entered their details.
+- These details should also be exported in Excel sheet
+- Also bring back registration banner in homepage to waiver form

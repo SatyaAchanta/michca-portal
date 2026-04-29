@@ -64,6 +64,7 @@ export async function getWaiverAdminData(filters?: {
       ? {
           OR: [
             { t20Division: filters.division },
+            { additionalT20Division: filters.division },
             { secondaryDivision: filters.division },
           ],
         }
@@ -74,6 +75,7 @@ export async function getWaiverAdminData(filters?: {
             {
               OR: [
                 { t20TeamCode: filters.teamCode },
+                { additionalT20TeamCode: filters.teamCode },
                 { secondaryTeamCode: filters.teamCode },
               ],
             },
@@ -100,7 +102,10 @@ export async function getWaiverAdminData(filters?: {
       city: true,
       address: true,
       t20Division: true,
+      additionalT20Division: true,
       secondaryDivision: true,
+      isUnder18: true,
+      parentName: true,
       year: true,
       submittedAt: true,
       userProfile: {
@@ -109,6 +114,7 @@ export async function getWaiverAdminData(filters?: {
         },
       },
       t20TeamCode: true,
+      additionalT20TeamCode: true,
       secondaryTeamCode: true,
     },
   });
@@ -116,7 +122,11 @@ export async function getWaiverAdminData(filters?: {
   const teamCodes = Array.from(
     new Set(
       waivers.flatMap((waiver) =>
-        [waiver.t20TeamCode, waiver.secondaryTeamCode].filter(
+        [
+          waiver.t20TeamCode,
+          waiver.additionalT20TeamCode,
+          waiver.secondaryTeamCode,
+        ].filter(
           (code): code is string => code !== null,
         )
       )
@@ -139,6 +149,9 @@ export async function getWaiverAdminData(filters?: {
     .map((waiver) => ({
       ...waiver,
       t20Team: waiver.t20TeamCode ? (teamMap.get(waiver.t20TeamCode) ?? null) : null,
+      additionalT20Team: waiver.additionalT20TeamCode
+        ? (teamMap.get(waiver.additionalT20TeamCode) ?? null)
+        : null,
       secondaryTeam: waiver.secondaryTeamCode ? (teamMap.get(waiver.secondaryTeamCode) ?? null) : null,
     }))
     .sort(compareWaiverRows);

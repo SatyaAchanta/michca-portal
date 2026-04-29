@@ -55,6 +55,7 @@ function createValidWaiverFormData() {
   formData.set("t20TeamCode", "T20-MOCC");
   formData.set("secondaryDivision", "T30");
   formData.set("secondaryTeamCode", "T30-MOCC");
+  formData.set("isUnder18", "no");
   formData.set("signatureName", "Rohan Patel");
   formData.set("submitAcknowledgement", "yes");
   formData.set("rulebookAcknowledgement", "yes");
@@ -78,6 +79,12 @@ describe("submitMyWaiver", () => {
         division: "T30",
         format: "T30",
       },
+      {
+        teamCode: "T20-CCC",
+        teamName: "Canton CC",
+        division: "Division-1",
+        format: "T20",
+      },
     ]);
     findUnique.mockResolvedValue(null);
     transaction.mockImplementation(async (callback: (tx: unknown) => Promise<void>) =>
@@ -95,6 +102,15 @@ describe("submitMyWaiver", () => {
     );
 
     expect(create).toHaveBeenCalled();
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          isUnder18: false,
+          parentName: "",
+          additionalT20TeamCode: null,
+        }),
+      })
+    );
     expect(update).toHaveBeenCalledWith({
       where: { id: "profile-1" },
       data: {
@@ -118,5 +134,60 @@ describe("submitMyWaiver", () => {
     expect(result.fieldErrors.form).toContain("signed in");
     expect(create).not.toHaveBeenCalled();
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it("persists under-18 waiver parent details", async () => {
+    const formData = createValidWaiverFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
+
+    await submitMyWaiver({ status: "idle", fieldErrors: {} }, formData);
+
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          isUnder18: true,
+          parentName: "Priya Patel",
+          t20Division: "Premier",
+          additionalT20TeamCode: null,
+        }),
+      })
+    );
+  });
+
+  it("stores two under-18 T20 teams and syncs only the primary one", async () => {
+    const formData = createValidWaiverFormData();
+    formData.set("isUnder18", "yes");
+    formData.set("parentName", "Priya Patel");
+    formData.delete("t20Division");
+    formData.set("secondaryDivision", "N/A");
+    formData.delete("secondaryTeamCode");
+    formData.set("under18T20TeamCode1", "T20-MOCC");
+    formData.set("under18T20TeamCode2", "T20-CCC");
+    formData.set("primaryT20TeamCode", "T20-CCC");
+
+    await submitMyWaiver({ status: "idle", fieldErrors: {} }, formData);
+
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          t20TeamCode: "T20-CCC",
+          t20Division: "Division-1",
+          additionalT20TeamCode: "T20-MOCC",
+          additionalT20Division: "Premier",
+        }),
+      })
+    );
+    expect(update).toHaveBeenCalledWith({
+      where: { id: "profile-1" },
+      data: {
+        t20TeamCode: "T20-CCC",
+        secondaryTeamCode: null,
+      },
+    });
   });
 });

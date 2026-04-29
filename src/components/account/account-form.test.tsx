@@ -113,4 +113,37 @@ describe("AccountForm", () => {
     expect(screen.getByText("Waiver")).toBeInTheDocument();
     expect(screen.getByText("Waiver not submitted yet.")).toBeInTheDocument();
   });
+
+  it("shows under-18 parent details in the waiver summary", () => {
+    render(
+      <AccountForm
+        profile={null}
+        umpiringResult={null}
+        teams={[]}
+        waiverSubmission={{
+          submittedAt: "2026-04-23T10:00:00.000Z",
+          state: "Michigan",
+          city: "Troy",
+          address: "123 Main St",
+          t20Division: "Premier",
+          additionalT20Division: "Division-1",
+          secondaryDivision: "T30",
+          t20TeamCode: "T20-MOCC",
+          additionalT20TeamCode: "T20-CCC",
+          secondaryTeamCode: "T30-MOCC",
+          isUnder18: true,
+          parentName: "Priya Patel",
+        }}
+      />
+    );
+
+    expect(
+      screen.getByRole("heading", { name: /waiver submitted/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/under 18:/i)).toBeInTheDocument();
+    expect(screen.getByText(/parent's name:/i)).toBeInTheDocument();
+    expect(screen.getByText("Priya Patel")).toBeInTheDocument();
+    expect(screen.getByText(/additional t20:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Division-1 \(T20-CCC\)/)).toBeInTheDocument();
+  });
 });

@@ -65,16 +65,19 @@ describe("getWaiverAdminData", () => {
         city: "Troy",
         address: "123 Main St",
         t20Division: "Premier",
+        additionalT20Division: "Division-1",
         secondaryDivision: "T30",
         year: new Date().getFullYear(),
         submittedAt: new Date("2026-04-12T10:00:00.000Z"),
         userProfile: { email: "rohan@example.com" },
         t20TeamCode: "T20-MOCC",
+        additionalT20TeamCode: "T20-CCC",
         secondaryTeamCode: "T30-MOCC",
       },
     ]);
     findManyTeamMock.mockResolvedValue([
       { teamCode: "T20-MOCC", teamName: "Michigan OCC" },
+      { teamCode: "T20-CCC", teamName: "Canton CC" },
       { teamCode: "T30-MOCC", teamName: "Michigan OCC T30" },
     ]);
 
@@ -88,10 +91,18 @@ describe("getWaiverAdminData", () => {
       expect.objectContaining({
         where: expect.objectContaining({
           year: new Date().getFullYear(),
-          OR: [{ t20Division: "Premier" }, { secondaryDivision: "Premier" }],
+          OR: [
+            { t20Division: "Premier" },
+            { additionalT20Division: "Premier" },
+            { secondaryDivision: "Premier" },
+          ],
           AND: [
             {
-              OR: [{ t20TeamCode: "T20-MOCC" }, { secondaryTeamCode: "T20-MOCC" }],
+              OR: [
+                { t20TeamCode: "T20-MOCC" },
+                { additionalT20TeamCode: "T20-MOCC" },
+                { secondaryTeamCode: "T20-MOCC" },
+              ],
             },
           ],
           playerName: {
@@ -104,6 +115,7 @@ describe("getWaiverAdminData", () => {
     expect(result.count).toBe(1);
     expect(result.rows[0]?.state).toBe("Michigan");
     expect(result.rows[0]?.t20Team?.teamName).toBe("Michigan OCC");
+    expect(result.rows[0]?.additionalT20Team?.teamName).toBe("Canton CC");
     expect(result.rows[0]?.secondaryTeam?.teamName).toBe("Michigan OCC T30");
   });
 });

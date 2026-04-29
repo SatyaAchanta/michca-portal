@@ -28,6 +28,29 @@ export const metadata: Metadata = {
   },
   description:
     "Official website of Michigan Cricket Association (Mich-CA). View leagues, schedules, teams, umpires, and cricket news across Michigan.",
+  openGraph: {
+    title: "MichCA - Michigan Cricket Association",
+    description:
+      "Official website of Michigan Cricket Association (Mich-CA). View leagues, schedules, teams, umpires, and cricket news across Michigan.",
+    url: "https://www.michcausa.org",
+    siteName: "MichCA",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "MichCA - Michigan Cricket Association",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MichCA - Michigan Cricket Association",
+    description:
+      "Official website of Michigan Cricket Association (Mich-CA). View leagues, schedules, teams, umpires, and cricket news across Michigan.",
+    images: ["/twitter-image"],
+  },
   icons: {
     icon: "/michca.png",
     shortcut: "/michca.png",

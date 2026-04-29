@@ -52,18 +52,47 @@ export async function submitMyWaiver(
   }
 
   const teams = await getWaiverTeamOptions();
-  const t20Team = data.t20TeamCode
+  const primaryT20Team = data.t20TeamCode
     ? teams.find((team) => team.teamCode === data.t20TeamCode)
+    : null;
+  const additionalT20Team = data.additionalT20TeamCode
+    ? teams.find((team) => team.teamCode === data.additionalT20TeamCode)
     : null;
   const secondaryTeam = data.secondaryTeamCode
     ? teams.find((team) => team.teamCode === data.secondaryTeamCode)
     : null;
 
   const nextErrors = { ...fieldErrors };
-  if (data.t20Division !== null) {
+  if (data.isUnder18) {
+    if (data.t20TeamCode !== null) {
+      if (!primaryT20Team || primaryT20Team.format !== "T20") {
+        nextErrors.t20TeamCode = "Select a valid primary T20 team.";
+      } else {
+        data.t20Division = primaryT20Team.division;
+      }
+    }
+
+    if (data.additionalT20TeamCode !== null) {
+      if (!additionalT20Team || additionalT20Team.format !== "T20") {
+        nextErrors.additionalT20TeamCode = "Select a valid second T20 team.";
+      } else {
+        data.additionalT20Division = additionalT20Team.division;
+      }
+    }
+
+    if (primaryT20Team && additionalT20Team) {
+      if (primaryT20Team.teamCode === additionalT20Team.teamCode) {
+        nextErrors.additionalT20TeamCode =
+          "Under-18 players must choose two different T20 teams.";
+      } else if (primaryT20Team.division === additionalT20Team.division) {
+        nextErrors.additionalT20TeamCode =
+          "Under-18 T20 teams must come from different divisions.";
+      }
+    }
+  } else if (data.t20Division !== null) {
     if (!WAIVER_PRIMARY_DIVISIONS.includes(data.t20Division as (typeof WAIVER_PRIMARY_DIVISIONS)[number])) {
       nextErrors.t20Division = "T20 division must be Premier, Division-1, Division-2, or Division-3.";
-    } else if (!t20Team || t20Team.format !== "T20" || t20Team.division !== data.t20Division) {
+    } else if (!primaryT20Team || primaryT20Team.format !== "T20" || primaryT20Team.division !== data.t20Division) {
       nextErrors.t20TeamCode = "Select a valid T20 team for the chosen division.";
     }
   }
@@ -119,8 +148,12 @@ export async function submitMyWaiver(
         address: data.address,
         t20Division: data.t20Division,
         t20TeamCode: data.t20TeamCode,
+        additionalT20Division: data.additionalT20Division,
+        additionalT20TeamCode: data.additionalT20TeamCode,
         secondaryDivision: data.secondaryDivision,
         secondaryTeamCode: data.secondaryTeamCode,
+        isUnder18: data.isUnder18,
+        parentName: data.parentName,
         signatureName: data.signatureName,
         acknowledgedSubmitText: WAIVER_SUBMIT_TEXT,
         acknowledgedRulebookText: WAIVER_RULEBOOK_ACKNOWLEDGEMENT_TEXT,

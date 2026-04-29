@@ -24,6 +24,21 @@ export const metadata: Metadata = {
     url: "https://www.michcausa.org",
     siteName: "MichCA",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "MichCA - Michigan Cricket Association",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MichCA - Michigan Cricket Association | Official Website",
+    description:
+      "Official website of MichCA (Michigan Cricket Association). League schedules, teams, umpires, grounds, and cricket news across Michigan.",
+    images: ["/twitter-image"],
   },
 };
 import { Card } from "@/components/ui/card";
@@ -70,7 +85,7 @@ export default function HomePage() {
                 </div>
               </div>
             </Card>
-            {/* <RegistrationBanner /> */}
+            <RegistrationBanner />
           </div>
         </PageContainer>
 

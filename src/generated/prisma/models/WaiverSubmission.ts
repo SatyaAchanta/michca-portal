@@ -44,8 +44,12 @@ export type WaiverSubmissionMinAggregateOutputType = {
   address: string | null
   t20Division: string | null
   t20TeamCode: string | null
+  additionalT20Division: string | null
+  additionalT20TeamCode: string | null
   secondaryDivision: string | null
   secondaryTeamCode: string | null
+  isUnder18: boolean | null
+  parentName: string | null
   signatureName: string | null
   acknowledgedSubmitText: string | null
   acknowledgedRulebookText: string | null
@@ -65,8 +69,12 @@ export type WaiverSubmissionMaxAggregateOutputType = {
   address: string | null
   t20Division: string | null
   t20TeamCode: string | null
+  additionalT20Division: string | null
+  additionalT20TeamCode: string | null
   secondaryDivision: string | null
   secondaryTeamCode: string | null
+  isUnder18: boolean | null
+  parentName: string | null
   signatureName: string | null
   acknowledgedSubmitText: string | null
   acknowledgedRulebookText: string | null
@@ -86,8 +94,12 @@ export type WaiverSubmissionCountAggregateOutputType = {
   address: number
   t20Division: number
   t20TeamCode: number
+  additionalT20Division: number
+  additionalT20TeamCode: number
   secondaryDivision: number
   secondaryTeamCode: number
+  isUnder18: number
+  parentName: number
   signatureName: number
   acknowledgedSubmitText: number
   acknowledgedRulebookText: number
@@ -117,8 +129,12 @@ export type WaiverSubmissionMinAggregateInputType = {
   address?: true
   t20Division?: true
   t20TeamCode?: true
+  additionalT20Division?: true
+  additionalT20TeamCode?: true
   secondaryDivision?: true
   secondaryTeamCode?: true
+  isUnder18?: true
+  parentName?: true
   signatureName?: true
   acknowledgedSubmitText?: true
   acknowledgedRulebookText?: true
@@ -138,8 +154,12 @@ export type WaiverSubmissionMaxAggregateInputType = {
   address?: true
   t20Division?: true
   t20TeamCode?: true
+  additionalT20Division?: true
+  additionalT20TeamCode?: true
   secondaryDivision?: true
   secondaryTeamCode?: true
+  isUnder18?: true
+  parentName?: true
   signatureName?: true
   acknowledgedSubmitText?: true
   acknowledgedRulebookText?: true
@@ -159,8 +179,12 @@ export type WaiverSubmissionCountAggregateInputType = {
   address?: true
   t20Division?: true
   t20TeamCode?: true
+  additionalT20Division?: true
+  additionalT20TeamCode?: true
   secondaryDivision?: true
   secondaryTeamCode?: true
+  isUnder18?: true
+  parentName?: true
   signatureName?: true
   acknowledgedSubmitText?: true
   acknowledgedRulebookText?: true
@@ -267,8 +291,12 @@ export type WaiverSubmissionGroupByOutputType = {
   address: string | null
   t20Division: string | null
   t20TeamCode: string | null
+  additionalT20Division: string | null
+  additionalT20TeamCode: string | null
   secondaryDivision: string | null
   secondaryTeamCode: string | null
+  isUnder18: boolean
+  parentName: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText: string | null
@@ -311,8 +339,12 @@ export type WaiverSubmissionWhereInput = {
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  isUnder18?: Prisma.BoolFilter<"WaiverSubmission"> | boolean
+  parentName?: Prisma.StringFilter<"WaiverSubmission"> | string
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -333,8 +365,12 @@ export type WaiverSubmissionOrderByWithRelationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalT20Division?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalT20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isUnder18?: Prisma.SortOrder
+  parentName?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   acknowledgedRulebookText?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -359,8 +395,12 @@ export type WaiverSubmissionWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  isUnder18?: Prisma.BoolFilter<"WaiverSubmission"> | boolean
+  parentName?: Prisma.StringFilter<"WaiverSubmission"> | string
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -381,8 +421,12 @@ export type WaiverSubmissionOrderByWithAggregationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   t20Division?: Prisma.SortOrderInput | Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalT20Division?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalT20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isUnder18?: Prisma.SortOrder
+  parentName?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   acknowledgedRulebookText?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -410,8 +454,12 @@ export type WaiverSubmissionScalarWhereWithAggregatesInput = {
   address?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   t20TeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  additionalT20Division?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  additionalT20TeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   secondaryDivision?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
   secondaryTeamCode?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
+  isUnder18?: Prisma.BoolWithAggregatesFilter<"WaiverSubmission"> | boolean
+  parentName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   signatureName?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringWithAggregatesFilter<"WaiverSubmission"> | string
   acknowledgedRulebookText?: Prisma.StringNullableWithAggregatesFilter<"WaiverSubmission"> | string | null
@@ -430,8 +478,12 @@ export type WaiverSubmissionCreateInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -452,8 +504,12 @@ export type WaiverSubmissionUncheckedCreateInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -472,8 +528,12 @@ export type WaiverSubmissionUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -494,8 +554,12 @@ export type WaiverSubmissionUncheckedUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -515,8 +579,12 @@ export type WaiverSubmissionCreateManyInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -535,8 +603,12 @@ export type WaiverSubmissionUpdateManyMutationInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -556,8 +628,12 @@ export type WaiverSubmissionUncheckedUpdateManyInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -592,8 +668,12 @@ export type WaiverSubmissionCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
+  additionalT20Division?: Prisma.SortOrder
+  additionalT20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
+  isUnder18?: Prisma.SortOrder
+  parentName?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   acknowledgedRulebookText?: Prisma.SortOrder
@@ -617,8 +697,12 @@ export type WaiverSubmissionMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
+  additionalT20Division?: Prisma.SortOrder
+  additionalT20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
+  isUnder18?: Prisma.SortOrder
+  parentName?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   acknowledgedRulebookText?: Prisma.SortOrder
@@ -638,8 +722,12 @@ export type WaiverSubmissionMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   t20Division?: Prisma.SortOrder
   t20TeamCode?: Prisma.SortOrder
+  additionalT20Division?: Prisma.SortOrder
+  additionalT20TeamCode?: Prisma.SortOrder
   secondaryDivision?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
+  isUnder18?: Prisma.SortOrder
+  parentName?: Prisma.SortOrder
   signatureName?: Prisma.SortOrder
   acknowledgedSubmitText?: Prisma.SortOrder
   acknowledgedRulebookText?: Prisma.SortOrder
@@ -712,8 +800,12 @@ export type WaiverSubmissionCreateWithoutUserProfileInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -732,8 +824,12 @@ export type WaiverSubmissionUncheckedCreateWithoutUserProfileInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -782,8 +878,12 @@ export type WaiverSubmissionScalarWhereInput = {
   address?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   t20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20Division?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  additionalT20TeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryDivision?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
   secondaryTeamCode?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
+  isUnder18?: Prisma.BoolFilter<"WaiverSubmission"> | boolean
+  parentName?: Prisma.StringFilter<"WaiverSubmission"> | string
   signatureName?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedSubmitText?: Prisma.StringFilter<"WaiverSubmission"> | string
   acknowledgedRulebookText?: Prisma.StringNullableFilter<"WaiverSubmission"> | string | null
@@ -802,8 +902,12 @@ export type WaiverSubmissionCreateManyUserProfileInput = {
   address?: string | null
   t20Division?: string | null
   t20TeamCode?: string | null
+  additionalT20Division?: string | null
+  additionalT20TeamCode?: string | null
   secondaryDivision?: string | null
   secondaryTeamCode?: string | null
+  isUnder18?: boolean
+  parentName?: string
   signatureName: string
   acknowledgedSubmitText: string
   acknowledgedRulebookText?: string | null
@@ -822,8 +926,12 @@ export type WaiverSubmissionUpdateWithoutUserProfileInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -842,8 +950,12 @@ export type WaiverSubmissionUncheckedUpdateWithoutUserProfileInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -862,8 +974,12 @@ export type WaiverSubmissionUncheckedUpdateManyWithoutUserProfileInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20Division?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalT20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryDivision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isUnder18?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parentName?: Prisma.StringFieldUpdateOperationsInput | string
   signatureName?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedSubmitText?: Prisma.StringFieldUpdateOperationsInput | string
   acknowledgedRulebookText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -885,8 +1001,12 @@ export type WaiverSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
+  additionalT20Division?: boolean
+  additionalT20TeamCode?: boolean
   secondaryDivision?: boolean
   secondaryTeamCode?: boolean
+  isUnder18?: boolean
+  parentName?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
   acknowledgedRulebookText?: boolean
@@ -907,8 +1027,12 @@ export type WaiverSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
+  additionalT20Division?: boolean
+  additionalT20TeamCode?: boolean
   secondaryDivision?: boolean
   secondaryTeamCode?: boolean
+  isUnder18?: boolean
+  parentName?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
   acknowledgedRulebookText?: boolean
@@ -929,8 +1053,12 @@ export type WaiverSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
+  additionalT20Division?: boolean
+  additionalT20TeamCode?: boolean
   secondaryDivision?: boolean
   secondaryTeamCode?: boolean
+  isUnder18?: boolean
+  parentName?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
   acknowledgedRulebookText?: boolean
@@ -951,8 +1079,12 @@ export type WaiverSubmissionSelectScalar = {
   address?: boolean
   t20Division?: boolean
   t20TeamCode?: boolean
+  additionalT20Division?: boolean
+  additionalT20TeamCode?: boolean
   secondaryDivision?: boolean
   secondaryTeamCode?: boolean
+  isUnder18?: boolean
+  parentName?: boolean
   signatureName?: boolean
   acknowledgedSubmitText?: boolean
   acknowledgedRulebookText?: boolean
@@ -962,7 +1094,7 @@ export type WaiverSubmissionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "state" | "city" | "address" | "t20Division" | "t20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "signatureName" | "acknowledgedSubmitText" | "acknowledgedRulebookText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
+export type WaiverSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userProfileId" | "playerName" | "cricclubsId" | "state" | "city" | "address" | "t20Division" | "t20TeamCode" | "additionalT20Division" | "additionalT20TeamCode" | "secondaryDivision" | "secondaryTeamCode" | "isUnder18" | "parentName" | "signatureName" | "acknowledgedSubmitText" | "acknowledgedRulebookText" | "year" | "submittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["waiverSubmission"]>
 export type WaiverSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
 }
@@ -988,8 +1120,12 @@ export type $WaiverSubmissionPayload<ExtArgs extends runtime.Types.Extensions.In
     address: string | null
     t20Division: string | null
     t20TeamCode: string | null
+    additionalT20Division: string | null
+    additionalT20TeamCode: string | null
     secondaryDivision: string | null
     secondaryTeamCode: string | null
+    isUnder18: boolean
+    parentName: string
     signatureName: string
     acknowledgedSubmitText: string
     acknowledgedRulebookText: string | null
@@ -1430,8 +1566,12 @@ export interface WaiverSubmissionFieldRefs {
   readonly address: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly t20Division: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly t20TeamCode: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly additionalT20Division: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly additionalT20TeamCode: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly secondaryDivision: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly secondaryTeamCode: Prisma.FieldRef<"WaiverSubmission", 'String'>
+  readonly isUnder18: Prisma.FieldRef<"WaiverSubmission", 'Boolean'>
+  readonly parentName: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly signatureName: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly acknowledgedSubmitText: Prisma.FieldRef<"WaiverSubmission", 'String'>
   readonly acknowledgedRulebookText: Prisma.FieldRef<"WaiverSubmission", 'String'>

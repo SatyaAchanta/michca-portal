@@ -570,6 +570,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             T20 Division
                           </th>
                           <th className="px-4 py-3 font-medium">T20 Team</th>
+                          <th className="px-4 py-3 font-medium">
+                            Additional T20
+                          </th>
                           <th className="px-4 py-3 font-medium">F40/T30</th>
                           <th className="px-4 py-3 font-medium">
                             F40/T30 Team
@@ -602,6 +605,14 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {waiver.t20Team?.teamName ??
                                 waiver.t20TeamCode ??
                                 "N/A"}
+                            </td>
+                            <td className="px-4 py-3">
+                              {waiver.additionalT20Division &&
+                              (waiver.additionalT20Team?.teamName ??
+                                waiver.additionalT20TeamCode)
+                                ? `${waiver.additionalT20Division} (${waiver.additionalT20Team?.teamName ??
+                                    waiver.additionalT20TeamCode})`
+                                : "N/A"}
                             </td>
                             <td className="px-4 py-3">
                               {waiver.secondaryDivision ?? "N/A"}
@@ -688,6 +699,19 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">
+                                    Additional T20
+                                  </span>
+                                  <span>
+                                    {waiver.additionalT20Division &&
+                                    (waiver.additionalT20Team?.teamName ??
+                                      waiver.additionalT20TeamCode)
+                                      ? `${waiver.additionalT20Division} (${waiver.additionalT20Team?.teamName ??
+                                          waiver.additionalT20TeamCode})`
+                                      : "N/A"}
+                                  </span>
+                                </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
                                     F40/T30 team
                                   </span>
                                   <span>
@@ -696,6 +720,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                       "N/A"}
                                   </span>
                                 </div>
+                                <div className="flex items-center justify-between gap-3">
+                                  <span className="text-muted-foreground">
+                                    Under 18
+                                  </span>
+                                  <span>{waiver.isUnder18 ? "Yes" : "No"}</span>
+                                </div>
+                                {waiver.isUnder18 ? (
+                                  <div className="flex items-center justify-between gap-3">
+                                    <span className="text-muted-foreground">
+                                      Parent&apos;s name
+                                    </span>
+                                    <span>{waiver.parentName}</span>
+                                  </div>
+                                ) : null}
                                 <div className="flex items-center justify-between gap-3">
                                   <span className="text-muted-foreground">
                                     Submitted
