@@ -146,7 +146,19 @@ export async function getUserFantasyData() {
     },
   });
 
-  return profile;
+  if (!profile) return null;
+
+  const fantasyRank =
+    profile.fantasyPoints > 0
+      ? (await prisma.userProfile.count({
+          where: { fantasyPoints: { gt: profile.fantasyPoints } },
+        })) + 1
+      : null;
+
+  return {
+    ...profile,
+    fantasyRank,
+  };
 }
 
 // ─── Get upcoming games for prediction ───────────────────────────────────────

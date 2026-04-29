@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ChevronDown, LogOut, Menu } from "lucide-react";
+import { SignedIn, SignedOut, UserButton, useClerk } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -32,16 +32,19 @@ const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
   { label: "Fantasy", href: "/fantasy" },
-  { label: "Forms", href: "/forms" },
 ];
 
-const mobileNavLinks: NavLink[] = [...navLinks];
-
 const publicMoreLinks: NavLink[] = [
+  { label: "Forms", href: "/forms" },
   { label: "Grounds", href: "/grounds" },
   { label: "Leadership", href: "/committees" },
   { label: "About", href: "/about" },
 ];
+
+const mobileQuickLinkHrefs = new Set(["/account", "/schedule", "/fantasy"]);
+const mobileNavLinks: NavLink[] = [...navLinks, ...publicMoreLinks].filter(
+  (link) => !mobileQuickLinkHrefs.has(link.href),
+);
 
 type SiteHeaderProps = {
   isAdmin?: boolean;
@@ -50,6 +53,7 @@ type SiteHeaderProps = {
 export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const { signOut } = useClerk();
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
@@ -183,11 +187,25 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                   </Button>
                 </SignedOut>
                 <SignedIn>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">
-                      Signed in
-                    </span>
-                    <UserButton />
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">
+                        Signed in
+                      </span>
+                      <UserButton />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setOpen(false);
+                        void signOut({ redirectUrl: "/" });
+                      }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
                   </div>
                 </SignedIn>
                 {mobileNavLinks.map((link) => (

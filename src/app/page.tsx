@@ -58,10 +58,8 @@ export const metadata: Metadata = {
 
 const quickLinks = [
   { label: "Account", href: "/account" },
-  { label: "Grounds", href: "/grounds" },
-  { label: "Leadership", href: "/committees" },
-  { label: "About Mich-CA", href: "/about" },
-  { label: "Umpiring", href: "/umpiring-training" },
+  { label: "Schedule", href: "/schedule" },
+  { label: "Fantasy", href: "/fantasy" },
 ];
 
 function getCurrentYear() {

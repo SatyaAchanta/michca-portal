@@ -58,6 +58,12 @@ export default async function FantasyPage() {
   );
 
   const predictionMap = new Map(userData.predictions.map((p) => [p.gameId, p]));
+  const scoredPredictions = userData.predictions.filter((p) => p.isScored);
+  const correctPredictions = scoredPredictions.filter((p) => p.isCorrect);
+  const accuracy =
+    scoredPredictions.length > 0
+      ? Math.round((correctPredictions.length / scoredPredictions.length) * 100)
+      : null;
 
   const canBoost = userData.fantasyLevel >= 1;
   const nextLevelWeeks =
@@ -109,18 +115,23 @@ export default async function FantasyPage() {
           </Card>
           <Card className="p-4 space-y-1">
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
-              Level
+              Rank
             </p>
-            <div className="pt-0.5">
-              <LevelBadge level={userData.fantasyLevel} />
-            </div>
+            <p className="text-2xl font-bold text-foreground">
+              {userData.fantasyRank ? `#${userData.fantasyRank}` : "—"}
+            </p>
           </Card>
           <Card className="p-4 space-y-1">
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
-              Full Weeks
+              Accuracy
             </p>
             <p className="text-2xl font-bold text-foreground">
-              {userData.fullParticipationWeeks}
+              {accuracy !== null ? `${accuracy}%` : "—"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {scoredPredictions.length > 0
+                ? `${correctPredictions.length}/${scoredPredictions.length} correct`
+                : "No scored picks yet"}
             </p>
           </Card>
           <Card className="p-4 space-y-1">

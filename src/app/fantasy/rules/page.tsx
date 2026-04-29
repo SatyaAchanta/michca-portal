@@ -109,11 +109,11 @@ export default function FantasyRulesPage() {
                 <h2 className="text-lg font-semibold">Boosters</h2>
                 <p className="text-sm leading-6 text-muted-foreground">
                   Boosters unlock at Level 1.{" "}
-                  <strong className="inline-flex rounded-md bg-red-50 px-1.5 py-0.5 font-semibold text-red-700 ring-1 ring-red-200 dark:bg-red-950/40 dark:text-red-300 dark:ring-red-800">
-                    Each player receives 10 boosters
+                  <strong className="text-red-300 dark:text-red-300">
+                    Each player receives 10 boosters for the season.
                   </strong>{" "}
-                  for the season. A boosted correct prediction earns 3x points;
-                  a boosted incorrect prediction still earns 0.
+                  A boosted correct prediction earns 3x points; a boosted
+                  incorrect prediction still earns 0.
                 </p>
               </div>
             </div>
@@ -147,14 +147,16 @@ export default function FantasyRulesPage() {
             </p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full table-fixed text-sm">
               <thead>
                 <tr className="border-b text-muted-foreground">
-                  <th className="px-5 py-3 text-left font-medium">Level</th>
-                  <th className="px-5 py-3 text-left font-medium">
+                  <th className="w-1/3 px-5 py-3 text-left font-medium">
+                    Level
+                  </th>
+                  <th className="w-1/3 px-5 py-3 text-left font-medium">
                     Full League Weeks
                   </th>
-                  <th className="px-5 py-3 text-right font-medium">
+                  <th className="w-1/3 px-5 py-3 text-right font-medium">
                     Bonus Points
                   </th>
                 </tr>
@@ -178,17 +180,78 @@ export default function FantasyRulesPage() {
           </div>
         </Card>
 
-        <Card className="p-5">
-          <div className="flex items-start gap-3">
-            <div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
-              <CircleDollarSign className="h-5 w-5" />
+        <Card className="overflow-hidden border-amber-200 bg-gradient-to-br from-amber-50 via-background to-emerald-50 shadow-sm dark:border-amber-900/60 dark:from-amber-950/30 dark:via-background dark:to-emerald-950/20">
+          <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 rounded-md bg-amber-100 p-2 text-amber-700 ring-1 ring-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:ring-amber-800">
+                <CircleDollarSign className="h-5 w-5" />
+              </div>
+              <div className="space-y-1.5">
+                <h2 className="text-xl font-semibold">Prize Money</h2>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Weekly winners earn cash, and the season leaderboard pays out
+                  through the top 10 finishers.
+                </p>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Prize Money</h2>
-              <p className="text-sm leading-6 text-muted-foreground">
-                Prize details will be announced later.
+            <div className="rounded-lg border border-amber-200 bg-white/75 px-4 py-3 text-right shadow-sm dark:border-amber-900/70 dark:bg-background/70">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Prize Pool
+              </p>
+              <p className="text-3xl font-bold text-amber-700 dark:text-amber-300">
+                Up to $1,500
               </p>
             </div>
+          </div>
+
+          <div className="grid gap-3 border-t border-amber-200/80 bg-white/60 p-5 dark:border-amber-900/60 dark:bg-background/50 sm:grid-cols-2 lg:grid-cols-6">
+            <div className="rounded-lg border border-emerald-200 bg-background p-4 shadow-sm dark:border-emerald-900/70">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Weekly Winner
+              </p>
+              <p className="mt-1 text-2xl font-bold text-emerald-700 dark:text-emerald-300">
+                $25
+              </p>
+              <p className="text-xs text-muted-foreground">each week</p>
+            </div>
+            <div className="rounded-lg border border-amber-200 bg-background p-4 shadow-sm dark:border-amber-900/70">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Season Winner
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">$200</p>
+            </div>
+            <div className="rounded-lg border bg-background p-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Runner-up
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">$150</p>
+            </div>
+            <div className="rounded-lg border bg-background p-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Third Place
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">$100</p>
+            </div>
+            <div className="rounded-lg border bg-background p-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                4th &amp; 5th
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">$75</p>
+              <p className="text-xs text-muted-foreground">each</p>
+            </div>
+            <div className="rounded-lg border bg-background p-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                6th-10th
+              </p>
+              <p className="mt-1 text-2xl font-bold text-foreground">$50</p>
+              <p className="text-xs text-muted-foreground">each</p>
+            </div>
+          </div>
+
+          <div className="border-t border-amber-200/80 px-5 py-3 text-xs leading-5 text-muted-foreground dark:border-amber-900/60">
+            Season leaderboard prizes total $850. Weekly $25 prizes bring the
+            full fantasy prize pool to roughly $1,450-$1,475, rounded up and
+            promoted as up to $1,500.
           </div>
         </Card>
       </PageContainer>

@@ -87,8 +87,11 @@ export default async function LeaderboardPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {entries.map((entry, index) => {
-                    const rank = index + 1;
+                  {entries.map((entry) => {
+                    const rank =
+                      entries.filter(
+                        (other) => other.fantasyPoints > entry.fantasyPoints,
+                      ).length + 1;
                     const isCurrentUser = entry.id === currentUserId;
                     const displayName =
                       entry.firstName && entry.lastName

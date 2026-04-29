@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 const LEVEL_CONFIG: Record<number, { label: string; className: string }> = {
   0: {
-    label: "Newcomer",
+    label: "Level 0",
     className: "bg-muted text-muted-foreground border-border",
   },
   1: {
@@ -41,7 +41,7 @@ const LEVEL_CONFIG: Record<number, { label: string; className: string }> = {
       "bg-pink-100 text-pink-800 border-pink-300 dark:bg-pink-900/30 dark:text-pink-400 dark:border-pink-700",
   },
   8: {
-    label: "Level 8 ★",
+    label: "Level 8",
     className:
       "bg-yellow-100 text-yellow-900 border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700",
   },
