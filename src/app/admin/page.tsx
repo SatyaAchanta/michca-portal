@@ -162,6 +162,20 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <AdminSectionSelect value={section} />
         </Card>
 
+        {canAccessAdminSection(userRole, "fantasy") && (
+          <Link href="/admin/fantasy">
+            <Card className="flex items-center justify-between p-4 transition-colors hover:bg-accent cursor-pointer">
+              <div>
+                <p className="font-semibold text-foreground">Fantasy Scoring</p>
+                <p className="text-sm text-muted-foreground">
+                  Set game results and calculate fantasy prediction points
+                </p>
+              </div>
+              <span className="text-muted-foreground text-lg">→</span>
+            </Card>
+          </Link>
+        )}
+
         {section === "youth15" ? (
           !canAccessAdminSection(userRole, "youth15") ? (
             <Card className="p-6">
@@ -595,7 +609,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {waiver.userProfile.email}
                             </td>
                             <td className="px-4 py-3">{waiver.cricclubsId}</td>
-                            <td className="px-4 py-3">{waiver.state ?? "N/A"}</td>
+                            <td className="px-4 py-3">
+                              {waiver.state ?? "N/A"}
+                            </td>
                             <td className="px-4 py-3">{waiver.city}</td>
                             <td className="px-4 py-3">{waiver.address}</td>
                             <td className="px-4 py-3">
@@ -610,8 +626,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {waiver.additionalT20Division &&
                               (waiver.additionalT20Team?.teamName ??
                                 waiver.additionalT20TeamCode)
-                                ? `${waiver.additionalT20Division} (${waiver.additionalT20Team?.teamName ??
-                                    waiver.additionalT20TeamCode})`
+                                ? `${waiver.additionalT20Division} (${
+                                    waiver.additionalT20Team?.teamName ??
+                                    waiver.additionalT20TeamCode
+                                  })`
                                 : "N/A"}
                             </td>
                             <td className="px-4 py-3">
@@ -705,8 +723,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                     {waiver.additionalT20Division &&
                                     (waiver.additionalT20Team?.teamName ??
                                       waiver.additionalT20TeamCode)
-                                      ? `${waiver.additionalT20Division} (${waiver.additionalT20Team?.teamName ??
-                                          waiver.additionalT20TeamCode})`
+                                      ? `${waiver.additionalT20Division} (${
+                                          waiver.additionalT20Team?.teamName ??
+                                          waiver.additionalT20TeamCode
+                                        })`
                                       : "N/A"}
                                   </span>
                                 </div>
@@ -768,7 +788,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           ) : (
             <section className="space-y-4">
               <div className="space-y-1">
-                <h2 className="text-2xl font-semibold tracking-tight">Club Info</h2>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  Club Info
+                </h2>
                 <p className="text-sm text-muted-foreground">
                   Captain declarations submitted through the Club Info form.
                 </p>
@@ -787,7 +809,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   {clubInfoData.count === 1 ? "" : "s"}
                 </p>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/admin/club-info/export?${clubInfoExportParams.toString()}`}>
+                  <Link
+                    href={`/admin/club-info/export?${clubInfoExportParams.toString()}`}
+                  >
                     <Download className="h-4 w-4" />
                     Export Excel
                   </Link>
@@ -807,12 +831,22 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       <thead className="bg-muted/60 text-left">
                         <tr>
                           <th className="px-4 py-3 font-medium">Captain</th>
-                          <th className="px-4 py-3 font-medium">Account Email</th>
-                          <th className="px-4 py-3 font-medium">Profile Email</th>
-                          <th className="px-4 py-3 font-medium">Contact Number</th>
-                          <th className="px-4 py-3 font-medium">CricClubs ID</th>
+                          <th className="px-4 py-3 font-medium">
+                            Account Email
+                          </th>
+                          <th className="px-4 py-3 font-medium">
+                            Profile Email
+                          </th>
+                          <th className="px-4 py-3 font-medium">
+                            Contact Number
+                          </th>
+                          <th className="px-4 py-3 font-medium">
+                            CricClubs ID
+                          </th>
                           <th className="px-4 py-3 font-medium">T20 Team</th>
-                          <th className="px-4 py-3 font-medium">F40/T30 Team</th>
+                          <th className="px-4 py-3 font-medium">
+                            F40/T30 Team
+                          </th>
                           <th className="px-4 py-3 font-medium">Submitted</th>
                           <th className="px-4 py-3 font-medium">Updated</th>
                           <th className="px-4 py-3 font-medium">Actions</th>
@@ -824,13 +858,25 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             key={submission.id}
                             className="border-t border-border align-top odd:bg-background even:bg-muted/20"
                           >
-                            <td className="px-4 py-3 font-medium">{submission.captainName}</td>
-                            <td className="px-4 py-3">{submission.accountEmail}</td>
-                            <td className="px-4 py-3">{submission.userProfile.email}</td>
-                            <td className="px-4 py-3">{submission.contactNumber}</td>
-                            <td className="px-4 py-3">{submission.cricclubsId}</td>
+                            <td className="px-4 py-3 font-medium">
+                              {submission.captainName}
+                            </td>
                             <td className="px-4 py-3">
-                              {submission.t20Team?.teamName ?? submission.t20TeamCode ?? "N/A"}
+                              {submission.accountEmail}
+                            </td>
+                            <td className="px-4 py-3">
+                              {submission.userProfile.email}
+                            </td>
+                            <td className="px-4 py-3">
+                              {submission.contactNumber}
+                            </td>
+                            <td className="px-4 py-3">
+                              {submission.cricclubsId}
+                            </td>
+                            <td className="px-4 py-3">
+                              {submission.t20Team?.teamName ??
+                                submission.t20TeamCode ??
+                                "N/A"}
                             </td>
                             <td className="px-4 py-3">
                               {submission.secondaryTeam?.teamName ??
@@ -844,7 +890,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                               {formatSubmittedDate(submission.updatedAt)}
                             </td>
                             <td className="px-4 py-3">
-                              <DeleteClubInfoButton submissionId={submission.id} />
+                              <DeleteClubInfoButton
+                                submissionId={submission.id}
+                              />
                             </td>
                           </tr>
                         ))}
@@ -863,7 +911,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                           >
                             <AccordionTrigger className="text-left">
                               <div>
-                                <p className="text-sm font-medium">{submission.captainName}</p>
+                                <p className="text-sm font-medium">
+                                  {submission.captainName}
+                                </p>
                                 <p className="text-xs text-muted-foreground">
                                   {submission.t20Team?.teamName ??
                                     submission.secondaryTeam?.teamName ??
@@ -874,23 +924,33 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                             <AccordionContent>
                               <div className="space-y-3 pb-2 text-sm">
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">Account email</span>
+                                  <span className="text-muted-foreground">
+                                    Account email
+                                  </span>
                                   <span>{submission.accountEmail}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">Profile email</span>
+                                  <span className="text-muted-foreground">
+                                    Profile email
+                                  </span>
                                   <span>{submission.userProfile.email}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">Contact</span>
+                                  <span className="text-muted-foreground">
+                                    Contact
+                                  </span>
                                   <span>{submission.contactNumber}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">CricClubs ID</span>
+                                  <span className="text-muted-foreground">
+                                    CricClubs ID
+                                  </span>
                                   <span>{submission.cricclubsId}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">T20 Team</span>
+                                  <span className="text-muted-foreground">
+                                    T20 Team
+                                  </span>
                                   <span>
                                     {submission.t20Team?.teamName ??
                                       submission.t20TeamCode ??
@@ -898,7 +958,9 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                   </span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">F40/T30 Team</span>
+                                  <span className="text-muted-foreground">
+                                    F40/T30 Team
+                                  </span>
                                   <span>
                                     {submission.secondaryTeam?.teamName ??
                                       submission.secondaryTeamCode ??
@@ -906,11 +968,17 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                                   </span>
                                 </div>
                                 <div className="flex items-center justify-between gap-3">
-                                  <span className="text-muted-foreground">Submitted</span>
-                                  <span>{formatSubmittedDate(submission.createdAt)}</span>
+                                  <span className="text-muted-foreground">
+                                    Submitted
+                                  </span>
+                                  <span>
+                                    {formatSubmittedDate(submission.createdAt)}
+                                  </span>
                                 </div>
                                 <div className="pt-2">
-                                  <DeleteClubInfoButton submissionId={submission.id} />
+                                  <DeleteClubInfoButton
+                                    submissionId={submission.id}
+                                  />
                                 </div>
                               </div>
                             </AccordionContent>

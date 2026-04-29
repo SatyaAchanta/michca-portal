@@ -783,14 +783,6 @@ export type WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput = {
   deleteMany?: Prisma.WaiverSubmissionScalarWhereInput | Prisma.WaiverSubmissionScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type WaiverSubmissionCreateWithoutUserProfileInput = {
   id?: string
   playerName: string

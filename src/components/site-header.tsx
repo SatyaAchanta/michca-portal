@@ -31,27 +31,16 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
+  { label: "Fantasy", href: "/fantasy" },
   { label: "Forms", href: "/forms" },
 ];
 
-const mobileNavLinks: NavLink[] = [
-  ...navLinks,
-  {
-    label: "Fantasy",
-    href: "https://www.fantasyleaguemichca.org",
-    external: true,
-  },
-];
+const mobileNavLinks: NavLink[] = [...navLinks];
 
-const publicMoreLinks = [
+const publicMoreLinks: NavLink[] = [
   { label: "Grounds", href: "/grounds" },
   { label: "Leadership", href: "/committees" },
   { label: "About", href: "/about" },
-  {
-    label: "Fantasy",
-    href: "https://www.fantasyleaguemichca.org",
-    external: true,
-  },
 ];
 
 type SiteHeaderProps = {

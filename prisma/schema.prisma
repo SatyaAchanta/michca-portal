@@ -45,6 +45,7 @@ enum UserRole {
   UMPIRING_COMMITTEE
   WAIVER_COMMITTEE
   STATS_COMMITTEE
+  FANTASY_ADMIN
 }
 
 enum UmpiringTrainingResult {
@@ -130,6 +131,7 @@ model Game {
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   umpireAssignments UmpireAssignment[]
+  predictions       Prediction[]
 
   @@index([date])
   @@index([status])
@@ -151,6 +153,11 @@ model UserProfile {
   t20TeamCode                   String?
   secondaryTeamCode             String?
   playingRole                   String?
+  fantasyPoints                 Int                       @default(0)
+  boostersRemaining             Int                       @default(0)
+  fantasyLevel                  Int                       @default(0)
+  fullParticipationWeeks        Int                       @default(0)
+  levelBonusesAwarded           Int                       @default(0)
   createdAt                     DateTime                  @default(now())
   updatedAt                     DateTime                  @updatedAt
   umpireAssignments             UmpireAssignment[]
@@ -163,6 +170,7 @@ model UserProfile {
   certificationAttempts         CertificationAttempt[]
   teamsCaptained                Team[]                    @relation("TeamCaptain")
   teamsViceCaptained            Team[]                    @relation("TeamViceCaptain")
+  predictions                   Prediction[]
 
   @@index([email])
   @@index([role])
@@ -213,29 +221,29 @@ model Youth15Registration {
 }
 
 model WaiverSubmission {
-  id                     String      @id @default(uuid())
-  userProfileId          String
-  playerName             String
-  cricclubsId            String
-  state                  String?
-  city                   String
-  address                String?
-  t20Division            String?
-  t20TeamCode            String?
-  additionalT20Division  String?
-  additionalT20TeamCode  String?
-  secondaryDivision      String?
-  secondaryTeamCode      String?
-  isUnder18              Boolean     @default(false)
-  parentName             String      @default("")
-  signatureName          String
-  acknowledgedSubmitText String
+  id                       String      @id @default(uuid())
+  userProfileId            String
+  playerName               String
+  cricclubsId              String
+  state                    String?
+  city                     String
+  address                  String?
+  t20Division              String?
+  t20TeamCode              String?
+  additionalT20Division    String?
+  additionalT20TeamCode    String?
+  secondaryDivision        String?
+  secondaryTeamCode        String?
+  isUnder18                Boolean     @default(false)
+  parentName               String      @default("")
+  signatureName            String
+  acknowledgedSubmitText   String
   acknowledgedRulebookText String?
-  year                   Int
-  submittedAt            DateTime
-  createdAt              DateTime    @default(now())
-  updatedAt              DateTime    @updatedAt
-  userProfile            UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  year                     Int
+  submittedAt              DateTime
+  createdAt                DateTime    @default(now())
+  updatedAt                DateTime    @updatedAt
+  userProfile              UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   @@unique([userProfileId, year])
   @@index([year])
@@ -375,4 +383,24 @@ model CertificationAttemptQuestion {
 
   @@unique([attemptId, displayOrder])
   @@index([attemptId])
+}
+
+model Prediction {
+  id                  String      @id @default(uuid())
+  userProfileId       String
+  gameId              String
+  predictedWinnerCode String?
+  isBoosted           Boolean     @default(false)
+  isScored            Boolean     @default(false)
+  isCorrect           Boolean?
+  pointsEarned        Int?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  userProfile         UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  game                Game        @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userProfileId, gameId])
+  @@index([gameId])
+  @@index([userProfileId])
+  @@index([isScored])
 }

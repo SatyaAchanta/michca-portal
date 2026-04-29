@@ -106,3 +106,8 @@ export type CertificationAttempt = Prisma.CertificationAttemptModel
  * 
  */
 export type CertificationAttemptQuestion = Prisma.CertificationAttemptQuestionModel
+/**
+ * Model Prediction
+ * 
+ */
+export type Prediction = Prisma.PredictionModel

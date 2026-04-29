@@ -33,12 +33,18 @@ describe("AccountForm", () => {
           email: "rohan@example.com",
           firstName: "Rohan",
           lastName: "Patel",
+          contactNumber: null,
           notificationsEnabled: true,
           newsletterSubscribed: false,
           role: UserRole.PLAYER,
           t20TeamCode: "T20-MOCC",
           secondaryTeamCode: "T30-MOCC",
           playingRole: "Bowler",
+          fantasyPoints: 0,
+          fantasyLevel: 0,
+          boostersRemaining: 0,
+          fullParticipationWeeks: 0,
+          levelBonusesAwarded: 0,
           createdAt: new Date(),
           updatedAt: new Date(),
         }}
@@ -58,7 +64,7 @@ describe("AccountForm", () => {
           },
         ]}
         waiverSubmission={null}
-      />
+      />,
     );
 
     expect(screen.getByText(/current t20 team/i)).toBeInTheDocument();
@@ -66,16 +72,22 @@ describe("AccountForm", () => {
     expect(screen.getByText(/playing role/i)).toBeInTheDocument();
 
     const hiddenInputs = Array.from(
-      container.querySelectorAll("input[type='hidden']")
-    );
-    expect(hiddenInputs.find((input) => input.getAttribute("name") === "t20TeamCode")).toHaveValue(
-      "T20-MOCC"
+      container.querySelectorAll("input[type='hidden']"),
     );
     expect(
-      hiddenInputs.find((input) => input.getAttribute("name") === "secondaryTeamCode")
+      hiddenInputs.find(
+        (input) => input.getAttribute("name") === "t20TeamCode",
+      ),
+    ).toHaveValue("T20-MOCC");
+    expect(
+      hiddenInputs.find(
+        (input) => input.getAttribute("name") === "secondaryTeamCode",
+      ),
     ).toHaveValue("T30-MOCC");
     expect(
-      hiddenInputs.find((input) => input.getAttribute("name") === "playingRole")
+      hiddenInputs.find(
+        (input) => input.getAttribute("name") === "playingRole",
+      ),
     ).toHaveValue("Bowler");
   });
 
@@ -86,13 +98,13 @@ describe("AccountForm", () => {
         umpiringResult={null}
         teams={[]}
         waiverSubmission={null}
-      />
+      />,
     );
 
     const selects = Array.from(container.querySelectorAll("select"));
     const roleSelect = selects.at(-1);
     const roleOptions = Array.from(
-      roleSelect?.querySelectorAll("option") ?? []
+      roleSelect?.querySelectorAll("option") ?? [],
     ).map((option) => option.textContent);
 
     expect(roleOptions).toEqual(["N/A", ...WAIVER_ROLE_OPTIONS]);
@@ -105,7 +117,7 @@ describe("AccountForm", () => {
         umpiringResult={null}
         teams={[]}
         waiverSubmission={null}
-      />
+      />,
     );
 
     expect(screen.getByText("Umpiring")).toBeInTheDocument();
@@ -134,7 +146,7 @@ describe("AccountForm", () => {
           isUnder18: true,
           parentName: "Priya Patel",
         }}
-      />
+      />,
     );
 
     expect(
