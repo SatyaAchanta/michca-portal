@@ -65,7 +65,10 @@ function toSaturdayKey(date: Date): string {
   const day = d.getDay(); // 0=Sun,6=Sat
   const diffToSat = day === 0 ? -1 : 6 - day;
   d.setDate(d.getDate() + diffToSat);
-  return d.toISOString().slice(0, 10);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const dayOfMonth = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${dayOfMonth}`;
 }
 
 function formatWeekendLabel(satKey: string): string {
