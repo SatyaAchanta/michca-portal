@@ -42,8 +42,7 @@ export default async function AdminFantasyPage() {
             Fantasy Scoring
           </h1>
           <p className="text-sm text-muted-foreground sm:text-base">
-            Set game results to mark them as completed, then calculate points
-            for each week.
+            Set game results, then calculate points for each week.
           </p>
         </div>
 

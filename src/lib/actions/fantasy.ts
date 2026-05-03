@@ -282,6 +282,10 @@ export async function adminSetGameResult(
     return { success: false, error: "Game is already completed" };
   }
 
+  if (game.status === GameStatus.CANCELLED) {
+    return { success: false, error: "Game is already canceled" };
+  }
+
   await prisma.game.update({
     where: { id: gameId },
     data: {
@@ -295,6 +299,7 @@ export async function adminSetGameResult(
   revalidatePath("/admin/fantasy");
   return { success: true };
 }
+
 
 // ─── Admin: get upcoming scheduled games ─────────────────────────────────────
 

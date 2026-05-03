@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ClipboardList,
   Gamepad2,
+  CalendarPlus2,
   ShieldCheck,
   Users,
   FileText,
@@ -46,6 +47,13 @@ const ADMIN_SECTIONS = [
     description: "Captain declarations submitted through the Club Info form.",
     href: "/admin/club-info",
     icon: ClipboardList,
+  },
+  {
+    key: "games" as const,
+    label: "Games",
+    description: "Create scheduled games and cancel games when fixtures change.",
+    href: "/admin/games",
+    icon: CalendarPlus2,
   },
   {
     key: "teams" as const,

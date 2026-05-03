@@ -14,10 +14,11 @@ export function hasRoleAtLeast(current: UserRole, required: UserRole) {
   return ROLE_RANK[current] >= ROLE_RANK[required];
 }
 
-export type AdminSection = "youth15" | "umpiring" | "waiver" | "clubInfo" | "teams" | "fantasy";
+export type AdminSection = "youth15" | "umpiring" | "waiver" | "clubInfo" | "teams" | "fantasy" | "games";
 
 const SECTION_ALLOWED_ROLES: Record<AdminSection, UserRole[]> = {
   youth15: [UserRole.ADMIN],
+  games: [UserRole.ADMIN],
   teams: [UserRole.ADMIN],
   umpiring: [UserRole.ADMIN, UserRole.UMPIRING_COMMITTEE],
   waiver: [UserRole.ADMIN, UserRole.WAIVER_COMMITTEE],

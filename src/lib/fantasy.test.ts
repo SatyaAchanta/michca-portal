@@ -215,4 +215,79 @@ describe("scoreGameWeekPredictions", () => {
       },
     });
   });
+
+  it("ignores canceled league games when counting full-week participation", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-08-22T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        winnerCode: "A",
+        isDraw: false,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: "A",
+            isBoosted: false,
+          },
+        ],
+      },
+      {
+        id: "league-2",
+        date: new Date("2026-08-22T18:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        winnerCode: "C",
+        isDraw: false,
+        predictions: [
+          {
+            id: "pred-2",
+            userProfileId: "user-1",
+            predictedWinnerCode: "C",
+            isBoosted: false,
+          },
+          {
+            id: "pred-3",
+            userProfileId: "user-2",
+            predictedWinnerCode: "D",
+            isBoosted: false,
+          },
+        ],
+      },
+    ]);
+    userProfileFindManyMock.mockResolvedValue([
+      {
+        id: "user-1",
+        fantasyPoints: 1,
+        fullParticipationWeeks: 1,
+        boostersRemaining: 0,
+      },
+      {
+        id: "user-2",
+        fantasyPoints: 0,
+        fullParticipationWeeks: 1,
+        boostersRemaining: 0,
+      },
+    ]);
+
+    const result = await scoreGameWeekPredictions("2026-W34");
+
+    expect(result).toEqual({ usersScored: 2, totalPointsAwarded: 2 });
+    expect(userProfileUpdateMock).toHaveBeenNthCalledWith(1, {
+      where: { id: "user-1" },
+      data: {
+        fantasyPoints: { increment: 2 },
+        fullParticipationWeeks: 2,
+        boostersRemaining: 10,
+      },
+    });
+    expect(userProfileUpdateMock).toHaveBeenNthCalledWith(2, {
+      where: { id: "user-2" },
+      data: {
+        fantasyPoints: { increment: 0 },
+        fullParticipationWeeks: 1,
+        boostersRemaining: 0,
+      },
+    });
+  });
 });
