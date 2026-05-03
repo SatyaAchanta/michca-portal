@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CheckCircle2, Loader2, Zap } from "lucide-react";
+import { CheckCircle2, Loader2, Lock, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { submitPrediction } from "@/lib/actions/fantasy";
@@ -150,6 +150,15 @@ export function PredictionCard({
           {formatGameDateTime(game.date)}
         </p>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
+          {isLocked && (
+            <Badge
+              variant="outline"
+              className="gap-1 border-amber-500/40 bg-amber-50 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-300"
+            >
+              <Lock className="h-3 w-3" />
+              Game locked
+            </Badge>
+          )}
           {game.gameType === "PLAYOFF" && (
             <Badge className="bg-red-600 text-white text-xs">
               Playoff · 3pts
@@ -258,6 +267,18 @@ export function PredictionCard({
           {existing.isCorrect
             ? `Correct! +${existing.pointsEarned} pts${existing.isBoosted ? " (boosted)" : ""}`
             : "Incorrect — 0 pts"}
+        </div>
+      )}
+
+      {isLocked && !existing?.isScored && (
+        <div className="flex items-center justify-between gap-3 min-h-[28px]">
+          <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+            <Lock className="h-3 w-3" />
+            Game locked
+          </span>
+          {!isPending && status === "error" && (
+            <span className="text-xs text-destructive">{errorMsg}</span>
+          )}
         </div>
       )}
 
