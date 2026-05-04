@@ -38,7 +38,7 @@ export type LeaderboardParticipantPredictionResponse = {
     id: string;
     displayName: string;
   };
-  weeks?: Array<{
+  weeks: Array<{
     weekKey: string;
     label: string;
     predictions: Array<{
@@ -279,7 +279,7 @@ export async function getLeaderboardParticipantPredictions(
   userProfileId: string,
 ): Promise<LeaderboardParticipantPredictionResponse> {
   const { userId } = await auth();
-  if (!userId) return { success: false, error: "Not authenticated" };
+  if (!userId) return { success: false, weeks: [], error: "Not authenticated" };
 
   const participant = await prisma.userProfile.findUnique({
     where: { id: userProfileId },
@@ -292,7 +292,7 @@ export async function getLeaderboardParticipantPredictions(
   });
 
   if (!participant) {
-    return { success: false, error: "Participant not found" };
+    return { success: false, weeks: [], error: "Participant not found" };
   }
 
   const predictions = await prisma.prediction.findMany({

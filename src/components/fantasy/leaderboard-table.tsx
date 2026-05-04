@@ -88,17 +88,18 @@ export function LeaderboardTable({
   useEffect(() => {
     if (!openUserId || detailsByUser[openUserId]) return;
 
+    const userId = openUserId;
     let isCancelled = false;
 
     async function loadPredictions() {
       setIsLoading(true);
       setError(null);
 
-      const result = await getLeaderboardParticipantPredictions(openUserId);
+      const result = await getLeaderboardParticipantPredictions(userId);
       if (isCancelled) return;
 
       if (result.success) {
-        setDetailsByUser((current) => ({ ...current, [openUserId]: result }));
+        setDetailsByUser((current) => ({ ...current, [userId]: result }));
       } else {
         setError(result.error ?? "Failed to load picks");
       }

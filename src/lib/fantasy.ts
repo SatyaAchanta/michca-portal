@@ -297,12 +297,7 @@ export async function scoreGameWeekPredictions(
     });
   });
 
-  await prisma.$transaction(
-    [...predictionOperations, ...profileOperations],
-    {
-      timeout: 20_000,
-    },
-  );
+  await prisma.$transaction([...predictionOperations, ...profileOperations]);
 
   return { usersScored: affectedUserIds.length, totalPointsAwarded };
 }
