@@ -3,8 +3,60 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { GameStatus } from "@/generated/prisma/client";
+import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { prisma } from "@/lib/prisma";
-import { scoreGameWeekPredictions } from "@/lib/fantasy";
+import { previewGameWeekScoring, scoreGameWeekPredictions } from "@/lib/fantasy";
+
+function getDisplayName(profile: {
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+}) {
+  return profile.firstName && profile.lastName
+    ? `${profile.firstName} ${profile.lastName}`
+    : (profile.firstName ?? profile.email.split("@")[0]);
+}
+
+function getTeamLabel(
+  code: string | null,
+  teams: {
+    team1Code: string;
+    team2Code: string;
+    team1: { teamName: string; teamShortCode: string };
+    team2: { teamName: string; teamShortCode: string };
+  },
+) {
+  if (code === null) return "Tie";
+  if (code === teams.team1Code) return teams.team1.teamShortCode || teams.team1.teamName;
+  if (code === teams.team2Code) return teams.team2.teamShortCode || teams.team2.teamName;
+  return code;
+}
+
+export type LeaderboardParticipantPredictionResponse = {
+  success: boolean;
+  participant?: {
+    id: string;
+    displayName: string;
+  };
+  weeks?: Array<{
+    weekKey: string;
+    label: string;
+    predictions: Array<{
+      id: string;
+      gameId: string;
+      date: Date;
+      division: string;
+      gameType: "LEAGUE" | "PLAYOFF";
+      matchupLabel: string;
+      pickLabel: string;
+      resultLabel: string;
+      isBoosted: boolean;
+      isCorrect: boolean;
+      pointsEarned: number;
+    }>;
+  }>;
+  error?: string;
+};
 
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
@@ -163,11 +215,10 @@ export async function getUserFantasyData() {
   };
 }
 
-// ─── Get upcoming games for prediction ───────────────────────────────────────
+// ─── Get fantasy games for prediction/history ────────────────────────────────
 
-export async function getUpcomingGamesForPrediction() {
+export async function getFantasyGames() {
   const games = await prisma.game.findMany({
-    where: { status: GameStatus.SCHEDULED },
     orderBy: { date: "asc" },
     select: {
       id: true,
@@ -210,7 +261,7 @@ export async function getGamePredictionCounts(gameIds: string[]) {
 export async function getLeaderboard() {
   return prisma.userProfile.findMany({
     where: { fantasyPoints: { gt: 0 } },
-    orderBy: { fantasyPoints: "desc" },
+    orderBy: [{ fantasyPoints: "desc" }, { email: "asc" }],
     select: {
       id: true,
       firstName: true,
@@ -222,6 +273,118 @@ export async function getLeaderboard() {
     },
     take: 100,
   });
+}
+
+export async function getLeaderboardParticipantPredictions(
+  userProfileId: string,
+): Promise<LeaderboardParticipantPredictionResponse> {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
+
+  const participant = await prisma.userProfile.findUnique({
+    where: { id: userProfileId },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+    },
+  });
+
+  if (!participant) {
+    return { success: false, error: "Participant not found" };
+  }
+
+  const predictions = await prisma.prediction.findMany({
+    where: {
+      userProfileId,
+      isScored: true,
+      game: {
+        status: GameStatus.COMPLETED,
+      },
+    },
+    select: {
+      id: true,
+      gameId: true,
+      predictedWinnerCode: true,
+      isBoosted: true,
+      isCorrect: true,
+      pointsEarned: true,
+      game: {
+        select: {
+          id: true,
+          date: true,
+          division: true,
+          gameType: true,
+          team1Code: true,
+          team2Code: true,
+          winnerCode: true,
+          isDraw: true,
+          team1: {
+            select: {
+              teamName: true,
+              teamShortCode: true,
+            },
+          },
+          team2: {
+            select: {
+              teamName: true,
+              teamShortCode: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const sortedPredictions = [...predictions].sort(
+    (a, b) => new Date(a.game.date).getTime() - new Date(b.game.date).getTime(),
+  );
+
+  const grouped = new Map<
+    string,
+    LeaderboardParticipantPredictionResponse["weeks"][number]
+  >();
+
+  for (const prediction of sortedPredictions) {
+    const weekKey = toSaturdayKey(new Date(prediction.game.date));
+    const existingWeek = grouped.get(weekKey) ?? {
+      weekKey,
+      label: formatWeekendLabel(weekKey),
+      predictions: [],
+    };
+
+    existingWeek.predictions.push({
+      id: prediction.id,
+      gameId: prediction.gameId,
+      date: prediction.game.date,
+      division: prediction.game.division,
+      gameType: prediction.game.gameType,
+      matchupLabel: `${prediction.game.team1.teamShortCode} vs ${prediction.game.team2.teamShortCode}`,
+      pickLabel: getTeamLabel(prediction.predictedWinnerCode, prediction.game),
+      resultLabel: prediction.game.isDraw
+        ? "Tie"
+        : getTeamLabel(prediction.game.winnerCode, prediction.game),
+      isBoosted: prediction.isBoosted,
+      isCorrect: prediction.isCorrect ?? false,
+      pointsEarned: prediction.pointsEarned ?? 0,
+    });
+
+    grouped.set(weekKey, existingWeek);
+  }
+
+  const weeks = Array.from(grouped.values()).sort((a, b) =>
+    b.weekKey.localeCompare(a.weekKey),
+  );
+
+  return {
+    success: true,
+    participant: {
+      id: participant.id,
+      displayName: getDisplayName(participant),
+    },
+    weeks,
+  };
 }
 
 // ─── Admin: calculate points for a game week ─────────────────────────────────
@@ -249,6 +412,71 @@ export async function adminScoreGameWeek(
   } catch (err) {
     console.error("scoreGameWeekPredictions failed:", err);
     return { success: false, error: "Scoring failed. Please try again." };
+  }
+}
+
+export async function adminPreviewGameWeek(
+  gameWeekKey: string,
+): Promise<{
+  success: boolean;
+  usersScored?: number;
+  totalPointsAwarded?: number;
+  rankings?: Array<{
+    userProfileId: string;
+    displayName: string;
+    weeklyPoints: number;
+    correctPredictions: number;
+    totalPredictions: number;
+  }>;
+  error?: string;
+}> {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
+
+  const profile = await prisma.userProfile.findUnique({
+    where: { clerkUserId: userId },
+    select: { role: true },
+  });
+
+  if (!["ADMIN", "FANTASY_ADMIN"].includes(profile?.role ?? "")) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  try {
+    const preview = await previewGameWeekScoring(gameWeekKey);
+
+    if (preview.rankings.length === 0) {
+      return { success: true, usersScored: 0, totalPointsAwarded: 0, rankings: [] };
+    }
+
+    const profiles = await prisma.userProfile.findMany({
+      where: { id: { in: preview.rankings.map((entry) => entry.userProfileId) } },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+      },
+    });
+
+    const profileMap = new Map(
+      profiles.map((entry) => {
+        return [entry.id, getDisplayName(entry)] as const;
+      }),
+    );
+
+    return {
+      success: true,
+      usersScored: preview.usersScored,
+      totalPointsAwarded: preview.totalPointsAwarded,
+      rankings: preview.rankings.slice(0, 10).map((entry) => ({
+        ...entry,
+        displayName: profileMap.get(entry.userProfileId) ?? "Unknown player",
+      })),
+    };
+  } catch (err) {
+    console.error("previewGameWeekScoring failed:", err);
+    return { success: false, error: "Preview failed. Please try again." };
   }
 }
 

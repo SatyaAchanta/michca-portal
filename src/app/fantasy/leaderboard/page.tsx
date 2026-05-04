@@ -1,30 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import { ArrowLeft, Medal } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
+import { LeaderboardTable } from "@/components/fantasy/leaderboard-table";
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { getLeaderboard } from "@/lib/actions/fantasy";
 import { prisma } from "@/lib/prisma";
-import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Fantasy Leaderboard",
   description: "See the top MichCA Fantasy predictors for the 2026 season.",
 };
-
-function getRankStyle(rank: number) {
-  if (rank === 1) return "text-amber-500";
-  if (rank === 2) return "text-slate-400";
-  if (rank === 3) return "text-amber-700";
-  return "text-muted-foreground";
-}
-
-function getMedalIcon(rank: number) {
-  if (rank <= 3) return <Medal className={cn("h-4 w-4", getRankStyle(rank))} />;
-  return null;
-}
 
 export default async function LeaderboardPage() {
   const { userId } = await auth();
@@ -67,81 +55,11 @@ export default async function LeaderboardPage() {
             No scores yet — be the first to make a prediction!
           </Card>
         ) : (
-          <Card className="overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b bg-muted/50 text-muted-foreground">
-                    <th className="px-4 py-3 text-left font-medium w-12">
-                      Rank
-                    </th>
-                    <th className="px-4 py-3 text-left font-medium">Player</th>
-                    <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
-                      Full Weeks
-                    </th>
-                    <th className="px-4 py-3 text-right font-medium">Points</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {entries.map((entry) => {
-                    const rank =
-                      entries.filter(
-                        (other) => other.fantasyPoints > entry.fantasyPoints,
-                      ).length + 1;
-                    const isCurrentUser = entry.id === currentUserId;
-                    const displayName =
-                      entry.firstName && entry.lastName
-                        ? `${entry.firstName} ${entry.lastName}`
-                        : (entry.firstName ?? entry.email.split("@")[0]);
-
-                    return (
-                      <tr
-                        key={entry.id}
-                        className={cn(
-                          "transition-colors",
-                          isCurrentUser
-                            ? "bg-primary/5 font-medium"
-                            : "hover:bg-muted/50",
-                        )}
-                      >
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-1">
-                            {getMedalIcon(rank)}
-                            <span
-                              className={cn(
-                                "font-semibold",
-                                getRankStyle(rank),
-                              )}
-                            >
-                              {rank}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <span className="text-foreground">
-                              {displayName}
-                            </span>
-                            {isCurrentUser && (
-                              <span className="text-xs text-primary font-medium">
-                                (you)
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
-                          {entry.fullParticipationWeeks}
-                        </td>
-                        <td className="px-4 py-3 text-right font-bold text-foreground">
-                          {entry.fantasyPoints}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </Card>
+          <LeaderboardTable
+            entries={entries}
+            currentUserId={currentUserId}
+            canViewPredictions={Boolean(userId)}
+          />
         )}
       </PageContainer>
     </div>

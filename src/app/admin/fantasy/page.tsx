@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
 import { AdminFantasyClient } from "@/components/fantasy/admin-fantasy-client";
-import { getUnscoredGameWeeks } from "@/lib/fantasy";
+import { getAdminGameWeeks } from "@/lib/fantasy";
 import { getScheduledGamesForAdmin } from "@/lib/actions/fantasy";
 import { prisma } from "@/lib/prisma";
 import { canAccessAdminSection } from "@/lib/roles";
@@ -28,9 +28,9 @@ export default async function AdminFantasyPage() {
     redirect("/");
   }
 
-  const [scheduledGames, unscoredWeeks] = await Promise.all([
+  const [scheduledGames, gameWeeks] = await Promise.all([
     getScheduledGamesForAdmin(),
-    getUnscoredGameWeeks(),
+    getAdminGameWeeks(),
   ]);
 
   return (
@@ -48,7 +48,7 @@ export default async function AdminFantasyPage() {
 
         <AdminFantasyClient
           scheduledGames={scheduledGames}
-          unscoredWeeks={unscoredWeeks}
+          gameWeeks={gameWeeks}
         />
       </PageContainer>
     </div>

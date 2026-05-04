@@ -3,8 +3,14 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PreviewWeekButton } from "@/components/fantasy/preview-week-button";
 import { ScoreWeekButton } from "@/components/fantasy/score-week-button";
 import { SetResultButton } from "@/components/fantasy/set-result-button";
+import {
+  formatWeekLabel,
+  formatWeekendLabel,
+  toSaturdayKey,
+} from "@/lib/fantasy-dates";
 import { cn } from "@/lib/utils";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -24,12 +30,13 @@ type ScheduledGame = {
 type UnscoredWeek = {
   weekKey: string;
   gameCount: number;
+  completedGameCount: number;
   predictionCount: number;
 };
 
 type AdminFantasyClientProps = {
   scheduledGames: ScheduledGame[];
-  unscoredWeeks: UnscoredWeek[];
+  gameWeeks: UnscoredWeek[];
 };
 
 // ─── Division labels ─────────────────────────────────────────────────────────
@@ -56,75 +63,16 @@ const GAME_DATE_FMT = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Detroit",
 });
 
-// ─── Weekend helpers ──────────────────────────────────────────────────────────
-
-/** Returns the ISO date string (YYYY-MM-DD) of the Saturday of the weekend
- *  the given date falls in. Saturday stays as-is, Sunday goes back 1 day. */
-function toSaturdayKey(date: Date): string {
-  const d = new Date(date);
-  const day = d.getDay(); // 0=Sun,6=Sat
-  const diffToSat = day === 0 ? -1 : 6 - day;
-  d.setDate(d.getDate() + diffToSat);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const dayOfMonth = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${dayOfMonth}`;
-}
-
-function formatWeekendLabel(satKey: string): string {
-  const sat = new Date(satKey + "T12:00:00Z");
-  const sun = new Date(sat);
-  sun.setUTCDate(sat.getUTCDate() + 1);
-  const fmt = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-  return `${fmt.format(sat)} – ${fmt.format(sun)}`;
-}
-
 function getUpcomingWeekendKey(keys: string[]): string | null {
   const todaySatKey = toSaturdayKey(new Date());
   return keys.find((k) => k >= todaySatKey) ?? keys[0] ?? null;
-}
-
-/** Returns the ISO week key (YYYY-Www) for a given date. */
-function toWeekKey(date: Date): string {
-  const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
-  );
-  const day = d.getUTCDay() || 7; // 1=Mon … 7=Sun
-  d.setUTCDate(d.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNum = Math.ceil(
-    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
-  );
-  return `${d.getUTCFullYear()}-W${String(weekNum).padStart(2, "0")}`;
-}
-
-function formatWeekLabel(weekKey: string): string {
-  const [yearStr, wStr] = weekKey.split("-W");
-  const year = parseInt(yearStr, 10);
-  const week = parseInt(wStr, 10);
-  const jan4 = new Date(year, 0, 4);
-  const startOfWeek1 = new Date(jan4);
-  startOfWeek1.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7));
-  const weekStart = new Date(startOfWeek1);
-  weekStart.setDate(startOfWeek1.getDate() + (week - 1) * 7);
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekStart.getDate() + 6);
-  const fmt = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    timeZone: "America/Detroit",
-  });
-  return `${fmt.format(weekStart)} – ${fmt.format(weekEnd)}`;
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export function AdminFantasyClient({
   scheduledGames,
-  unscoredWeeks,
+  gameWeeks,
 }: AdminFantasyClientProps) {
   // Derive available weekends from scheduled games
   const allGamesForWeekends = scheduledGames;
@@ -159,19 +107,6 @@ export function AdminFantasyClient({
     const matchDiv =
       selectedDivision === null || g.division === selectedDivision;
     return matchWeek && matchDiv;
-  });
-
-  // Filter unscored weeks: if a weekend is selected, keep only weeks whose
-  // Saturday falls within that weekend (i.e. the week key covers that Saturday).
-  // A simpler approach: a week "matches" the selected weekend if its ISO week
-  // contains the selected Saturday date.
-  const filteredWeeks = unscoredWeeks.filter((w) => {
-    if (selectedWeek === null) return true;
-    // The Saturday key represents a date — compute its ISO week key
-    const sat = new Date(selectedWeek + "T12:00:00Z");
-    const sun = new Date(sat);
-    sun.setUTCDate(sat.getUTCDate() + 1);
-    return w.weekKey === toWeekKey(sat) || w.weekKey === toWeekKey(sun);
   });
 
   const showFilters = weekendKeys.length > 1 || availableDivisions.length > 1;
@@ -366,17 +301,13 @@ export function AdminFantasyClient({
           </p>
         </div>
 
-        {unscoredWeeks.length === 0 ? (
+        {gameWeeks.length === 0 ? (
           <Card className="p-8 text-center text-muted-foreground">
-            No pending game weeks — all predictions are scored.
-          </Card>
-        ) : filteredWeeks.length === 0 ? (
-          <Card className="p-8 text-center text-muted-foreground">
-            No pending weeks for the selected weekend.
+            No game weeks available.
           </Card>
         ) : (
           <div className="space-y-3">
-            {filteredWeeks.map((week) => (
+            {gameWeeks.map((week) => (
               <Card key={week.weekKey} className="p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-1">
@@ -389,18 +320,36 @@ export function AdminFantasyClient({
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {week.gameCount} completed game
-                      {week.gameCount !== 1 ? "s" : ""} · {week.predictionCount}{" "}
+                      {week.completedGameCount} completed game
+                      {week.completedGameCount !== 1 ? "s" : ""} of{" "}
+                      {week.gameCount} total · {week.predictionCount}{" "}
                       unscored prediction
                       {week.predictionCount !== 1 ? "s" : ""}
                     </p>
+                    {week.predictionCount === 0 && (
+                      <p className="text-xs text-muted-foreground">
+                        No pending scoring for this week.
+                      </p>
+                    )}
                   </div>
-                  <ScoreWeekButton
-                    weekKey={week.weekKey}
-                    weekLabel={formatWeekLabel(week.weekKey)}
-                    gameCount={week.gameCount}
-                    predictionCount={week.predictionCount}
-                  />
+                  <div className="w-full max-w-xl space-y-3 sm:w-auto sm:min-w-[320px]">
+                    <PreviewWeekButton
+                      weekKey={week.weekKey}
+                      weekLabel={formatWeekLabel(week.weekKey)}
+                    />
+                    {week.predictionCount > 0 ? (
+                      <ScoreWeekButton
+                        weekKey={week.weekKey}
+                        weekLabel={formatWeekLabel(week.weekKey)}
+                        gameCount={week.completedGameCount}
+                        predictionCount={week.predictionCount}
+                      />
+                    ) : (
+                      <div className="text-sm text-muted-foreground">
+                        Already scored or no predictions to process.
+                      </div>
+                    )}
+                  </div>
                 </div>
               </Card>
             ))}

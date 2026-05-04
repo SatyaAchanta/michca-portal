@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { PredictionCard } from "@/components/fantasy/prediction-card";
+import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { cn } from "@/lib/utils";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -56,33 +57,6 @@ const DIVISION_LABELS: Record<string, string> = {
   U15: "U15",
   GLT: "GLT",
 };
-
-// ─── Weekend key helpers ────────────────────────────────────────────────────
-
-/** Returns the ISO date string of the Saturday on-or-before the given date. */
-function toSaturdayKey(date: Date): string {
-  const d = new Date(date);
-  // getDay(): 0=Sun, 1=Mon, ..., 6=Sat
-  const day = d.getDay();
-  const diffToSat = day === 0 ? -1 : 6 - day; // Sunday → go back 1; others → forward to Sat
-  d.setDate(d.getDate() + diffToSat);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const dayOfMonth = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${dayOfMonth}`; // "2026-05-02"
-}
-
-/** Format a Saturday date as "Sat May 2 – Sun May 3" */
-function formatWeekendLabel(satKey: string): string {
-  const sat = new Date(satKey + "T12:00:00Z");
-  const sun = new Date(sat);
-  sun.setUTCDate(sat.getUTCDate() + 1);
-  const fmt = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-  });
-  return `${fmt.format(sat)} – ${fmt.format(sun)}`;
-}
 
 /** Returns the upcoming (or current) weekend's Saturday key relative to today. */
 function getUpcomingWeekendKey(weekendKeys: string[]): string | null {

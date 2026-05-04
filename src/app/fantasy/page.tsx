@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card";
 import { FantasyClient } from "@/components/fantasy/fantasy-client";
 import {
   getUserFantasyData,
-  getUpcomingGamesForPrediction,
+  getFantasyGames,
   getGamePredictionCounts,
 } from "@/lib/actions/fantasy";
 import { FULL_WEEKS_FOR_BOOSTERS, canUseBoosters } from "@/lib/fantasy";
@@ -27,7 +27,7 @@ export default async function FantasyPage() {
 
   const [userData, games] = await Promise.all([
     getUserFantasyData(),
-    getUpcomingGamesForPrediction(),
+    getFantasyGames(),
   ]);
 
   if (!userData) redirect("/sign-in");
@@ -80,7 +80,7 @@ export default async function FantasyPage() {
               Fantasy Predictions
             </h1>
             <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
-              Pick the winner of each upcoming game. Earn points, unlock
+              Pick the winner of each game before lock, track past results, unlock
               boosters through full-week participation, and compete on the
               leaderboard.
             </p>
@@ -181,11 +181,10 @@ export default async function FantasyPage() {
           </Card>
         )}
 
-        {/* Upcoming games */}
+        {/* Games */}
         {games.length === 0 ? (
           <Card className="p-10 text-center text-muted-foreground">
-            No upcoming games available for prediction right now. Check back
-            soon!
+            No fantasy games available right now.
           </Card>
         ) : (
           <FantasyClient

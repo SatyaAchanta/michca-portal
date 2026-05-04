@@ -2,24 +2,19 @@ import { GameType } from "@/generated/prisma/client";
 
 const {
   gameFindManyMock,
-  predictionUpdateMock,
+  predictionUpdateManyMock,
   userProfileFindManyMock,
   userProfileUpdateMock,
   transactionMock,
 } = vi.hoisted(() => {
   const gameFindManyMock = vi.fn();
-  const predictionUpdateMock = vi.fn();
+  const predictionUpdateManyMock = vi.fn();
   const userProfileFindManyMock = vi.fn();
   const userProfileUpdateMock = vi.fn();
-  const transactionMock = vi.fn(async (callback) =>
-    callback({
-      prediction: { update: predictionUpdateMock },
-      userProfile: { update: userProfileUpdateMock },
-    }),
-  );
+  const transactionMock = vi.fn(async (operations) => Promise.all(operations));
   return {
     gameFindManyMock,
-    predictionUpdateMock,
+    predictionUpdateManyMock,
     userProfileFindManyMock,
     userProfileUpdateMock,
     transactionMock,
@@ -29,7 +24,11 @@ const {
 vi.mock("@/lib/prisma", () => ({
   prisma: {
     game: { findMany: gameFindManyMock },
-    userProfile: { findMany: userProfileFindManyMock },
+    prediction: { updateMany: predictionUpdateManyMock },
+    userProfile: {
+      findMany: userProfileFindManyMock,
+      update: userProfileUpdateMock,
+    },
     $transaction: transactionMock,
   },
 }));
@@ -39,6 +38,7 @@ import {
   SEASON_BOOSTER_COUNT,
   canUseBoosters,
   getPointsForGame,
+  previewGameWeekScoring,
   scoreGameWeekPredictions,
 } from "@/lib/fantasy";
 
@@ -65,11 +65,10 @@ describe("fantasy points helpers", () => {
 describe("scoreGameWeekPredictions", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    transactionMock.mockImplementation(async (callback) =>
-      callback({
-        prediction: { update: predictionUpdateMock },
-        userProfile: { update: userProfileUpdateMock },
-      }),
+    predictionUpdateManyMock.mockResolvedValue({ count: 1 });
+    userProfileUpdateMock.mockResolvedValue({});
+    transactionMock.mockImplementation(async (operations) =>
+      Promise.all(operations),
     );
   });
 
@@ -289,5 +288,69 @@ describe("scoreGameWeekPredictions", () => {
         boostersRemaining: 0,
       },
     });
+  });
+
+  it("previews weekly rankings without writing prediction or profile updates", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-05-02T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        winnerCode: "A",
+        isDraw: false,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: "A",
+            isBoosted: true,
+          },
+          {
+            id: "pred-2",
+            userProfileId: "user-2",
+            predictedWinnerCode: "B",
+            isBoosted: false,
+          },
+        ],
+      },
+      {
+        id: "playoff-1",
+        date: new Date("2026-05-03T18:00:00.000Z"),
+        gameType: GameType.PLAYOFF,
+        winnerCode: "C",
+        isDraw: false,
+        predictions: [
+          {
+            id: "pred-3",
+            userProfileId: "user-1",
+            predictedWinnerCode: "C",
+            isBoosted: false,
+          },
+        ],
+      },
+    ]);
+
+    const result = await previewGameWeekScoring("2026-W18");
+
+    expect(result).toEqual({
+      usersScored: 2,
+      totalPointsAwarded: 6,
+      rankings: [
+        {
+          userProfileId: "user-1",
+          weeklyPoints: 6,
+          correctPredictions: 2,
+          totalPredictions: 2,
+        },
+        {
+          userProfileId: "user-2",
+          weeklyPoints: 0,
+          correctPredictions: 0,
+          totalPredictions: 1,
+        },
+      ],
+    });
+    expect(predictionUpdateManyMock).not.toHaveBeenCalled();
+    expect(userProfileUpdateMock).not.toHaveBeenCalled();
   });
 });
