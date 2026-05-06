@@ -76,7 +76,7 @@ function getDisplayedRank(
   entries: LeaderboardEntry[],
   index: number,
   mode: "season" | "weekly",
-) {
+): string {
   if (index === 0) return "1";
 
   const current = entries[index];
