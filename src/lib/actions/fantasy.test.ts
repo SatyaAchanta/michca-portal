@@ -65,6 +65,7 @@ describe("getLeaderboardParticipantPredictions", () => {
 
     expect(result).toEqual({
       success: false,
+      weeks: [],
       error: "Not authenticated",
     });
     expect(userProfileFindUnique).not.toHaveBeenCalled();

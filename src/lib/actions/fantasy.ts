@@ -58,6 +58,31 @@ export type LeaderboardParticipantPredictionResponse = {
   error?: string;
 };
 
+export type PublicLeaderboardEntry = {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  t20TeamCode: string | null;
+};
+
+export type SeasonLeaderboardEntry = PublicLeaderboardEntry & {
+  fantasyPoints: number;
+  fullParticipationWeeks: number;
+};
+
+export type WeeklyLeaderboardEntry = PublicLeaderboardEntry & {
+  weeklyPoints: number;
+  correctPredictions: number;
+  totalPredictions: number;
+};
+
+export type WeeklyLeaderboardWeek = {
+  weekKey: string;
+  label: string;
+  entries: WeeklyLeaderboardEntry[];
+};
+
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
 export async function submitPrediction(
@@ -273,6 +298,121 @@ export async function getLeaderboard() {
     },
     take: 100,
   });
+}
+
+export async function getWeeklyLeaderboards(): Promise<WeeklyLeaderboardWeek[]> {
+  const completedGames = await prisma.game.findMany({
+    where: { status: GameStatus.COMPLETED },
+    orderBy: { date: "desc" },
+    select: {
+      id: true,
+      date: true,
+      predictions: {
+        select: {
+          isScored: true,
+          isCorrect: true,
+          pointsEarned: true,
+          userProfile: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true,
+              t20TeamCode: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const weeks = new Map<
+    string,
+    {
+      label: string;
+      hasUnscoredPredictions: boolean;
+      entries: Map<
+        string,
+        {
+          id: string;
+          firstName: string | null;
+          lastName: string | null;
+          email: string;
+          t20TeamCode: string | null;
+          weeklyPoints: number;
+          correctPredictions: number;
+          totalPredictions: number;
+        }
+      >;
+    }
+  >();
+
+  for (const game of completedGames) {
+    const weekKey = toSaturdayKey(new Date(game.date));
+    const week =
+      weeks.get(weekKey) ??
+      {
+        label: formatWeekendLabel(weekKey),
+        hasUnscoredPredictions: false,
+        entries: new Map(),
+      };
+
+    if (game.predictions.some((prediction) => !prediction.isScored)) {
+      week.hasUnscoredPredictions = true;
+    }
+
+    for (const prediction of game.predictions) {
+      if (!prediction.isScored) continue;
+
+      const current =
+        week.entries.get(prediction.userProfile.id) ??
+        {
+          id: prediction.userProfile.id,
+          firstName: prediction.userProfile.firstName,
+          lastName: prediction.userProfile.lastName,
+          email: prediction.userProfile.email,
+          t20TeamCode: prediction.userProfile.t20TeamCode,
+          weeklyPoints: 0,
+          correctPredictions: 0,
+          totalPredictions: 0,
+        };
+
+      current.weeklyPoints += prediction.pointsEarned;
+      current.correctPredictions += prediction.isCorrect ? 1 : 0;
+      current.totalPredictions += 1;
+
+      week.entries.set(prediction.userProfile.id, current);
+    }
+
+    weeks.set(weekKey, week);
+  }
+
+  return Array.from(weeks.entries())
+    .sort(([weekKeyA], [weekKeyB]) => weekKeyB.localeCompare(weekKeyA))
+    .flatMap(([weekKey, week]) => {
+      if (week.hasUnscoredPredictions || week.entries.size === 0) {
+        return [];
+      }
+
+      return [
+        {
+          weekKey,
+          label: week.label,
+          entries: Array.from(week.entries.values()).sort((a, b) => {
+            if (b.weeklyPoints !== a.weeklyPoints) {
+              return b.weeklyPoints - a.weeklyPoints;
+            }
+            if (b.correctPredictions !== a.correctPredictions) {
+              return b.correctPredictions - a.correctPredictions;
+            }
+            if (b.totalPredictions !== a.totalPredictions) {
+              return b.totalPredictions - a.totalPredictions;
+            }
+            return a.email.localeCompare(b.email);
+          }),
+        },
+      ];
+    });
 }
 
 export async function getLeaderboardParticipantPredictions(

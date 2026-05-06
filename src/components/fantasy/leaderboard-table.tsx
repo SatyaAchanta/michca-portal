@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Eye, Loader2, Medal, Zap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, Loader2, Medal, Zap } from "lucide-react";
 
 import {
   getLeaderboardParticipantPredictions,
   type LeaderboardParticipantPredictionResponse,
+  type SeasonLeaderboardEntry,
+  type WeeklyLeaderboardEntry,
 } from "@/lib/actions/fantasy";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -20,23 +22,17 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-type LeaderboardEntry = {
-  id: string;
-  firstName: string | null;
-  lastName: string | null;
-  email: string;
-  fantasyPoints: number;
-  fullParticipationWeeks: number;
-  t20TeamCode: string | null;
-};
+type LeaderboardEntry = SeasonLeaderboardEntry | WeeklyLeaderboardEntry;
 
 type LeaderboardTableProps = {
   entries: LeaderboardEntry[];
   currentUserId: string | null;
   canViewPredictions: boolean;
+  mode?: "season" | "weekly";
 };
 
 const DETROIT_TZ = "America/Detroit";
+const PAGE_SIZE = 10;
 
 function getRankStyle(rank: number) {
   if (rank === 1) return "text-amber-500";
@@ -68,22 +64,80 @@ function getDisplayName(entry: LeaderboardEntry) {
     : (entry.firstName ?? entry.email.split("@")[0]);
 }
 
+function isSeasonEntry(entry: LeaderboardEntry): entry is SeasonLeaderboardEntry {
+  return "fantasyPoints" in entry;
+}
+
+function isWeeklyEntry(entry: LeaderboardEntry): entry is WeeklyLeaderboardEntry {
+  return "weeklyPoints" in entry;
+}
+
+function getDisplayedRank(
+  entries: LeaderboardEntry[],
+  index: number,
+  mode: "season" | "weekly",
+) {
+  if (index === 0) return "1";
+
+  const current = entries[index];
+  const previous = entries[index - 1];
+
+  if (mode === "season") {
+    const sameScore =
+      isSeasonEntry(current) &&
+      isSeasonEntry(previous) &&
+      current.fantasyPoints === previous.fantasyPoints;
+    return sameScore ? getDisplayedRank(entries, index - 1, mode) : String(index + 1);
+  }
+
+  const sameScore =
+    isWeeklyEntry(current) &&
+    isWeeklyEntry(previous) &&
+    current.weeklyPoints === previous.weeklyPoints;
+  const sameCorrect =
+    isWeeklyEntry(current) &&
+    isWeeklyEntry(previous) &&
+    current.correctPredictions === previous.correctPredictions;
+  const sameTotal =
+    isWeeklyEntry(current) &&
+    isWeeklyEntry(previous) &&
+    current.totalPredictions === previous.totalPredictions;
+
+  return sameScore && sameCorrect && sameTotal
+    ? getDisplayedRank(entries, index - 1, mode)
+    : String(index + 1);
+}
+
 export function LeaderboardTable({
   entries,
   currentUserId,
   canViewPredictions,
+  mode = "season",
 }: LeaderboardTableProps) {
   const [openUserId, setOpenUserId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
   const [detailsByUser, setDetailsByUser] = useState<
     Record<string, LeaderboardParticipantPredictionResponse>
   >({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const showPicks = mode === "weekly";
 
   const openEntry = useMemo(
     () => entries.find((entry) => entry.id === openUserId) ?? null,
     [entries, openUserId],
   );
+  const totalPages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const paginatedEntries = entries.slice(pageStart, pageStart + PAGE_SIZE);
+  const currentUserIndex = currentUserId
+    ? entries.findIndex((entry) => entry.id === currentUserId)
+    : -1;
+  const currentUserRank =
+    currentUserIndex >= 0
+      ? getDisplayedRank(entries, currentUserIndex, mode)
+      : null;
 
   useEffect(() => {
     if (!openUserId || detailsByUser[openUserId]) return;
@@ -115,26 +169,119 @@ export function LeaderboardTable({
   }, [detailsByUser, openUserId]);
 
   const openDetails = openUserId ? detailsByUser[openUserId] : undefined;
-  const dialogTitle = openDetails?.participant?.displayName ?? (openEntry ? getDisplayName(openEntry) : "Participant");
+  const dialogTitle =
+    openDetails?.participant?.displayName ??
+    (openEntry ? getDisplayName(openEntry) : "Participant");
   const weeks = openDetails?.weeks ?? [];
+
+  function renderPagination(compact = false) {
+    if (totalPages <= 1) return null;
+
+    return (
+      <div
+        className={cn(
+          "flex items-center justify-between gap-3 px-4 py-3",
+          compact ? "border-b sm:hidden" : "border-t hidden sm:flex",
+        )}
+      >
+        <p className="text-xs text-muted-foreground sm:text-sm">
+          Showing {pageStart + 1}-{Math.min(pageStart + PAGE_SIZE, entries.length)} of{" "}
+          {entries.length}
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={currentPage === 1}
+            onClick={() => setPage((value) => Math.max(1, value - 1))}
+            className="sm:hidden"
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={currentPage === 1}
+            onClick={() => setPage((value) => Math.max(1, value - 1))}
+            className="hidden sm:inline-flex"
+          >
+            Previous
+          </Button>
+          <span className="text-xs text-muted-foreground sm:text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={currentPage === totalPages}
+            onClick={() => setPage((value) => Math.min(totalPages, value + 1))}
+            className="sm:hidden"
+            aria-label="Next page"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={currentPage === totalPages}
+            onClick={() => setPage((value) => Math.min(totalPages, value + 1))}
+            className="hidden sm:inline-flex"
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <Card className="overflow-hidden">
+        {currentUserRank ? (
+          <div className="border-b px-4 py-3">
+            <p className="text-sm text-muted-foreground">
+              Your current position:{" "}
+              <span className="font-semibold text-foreground">#{currentUserRank}</span>
+            </p>
+          </div>
+        ) : null}
+        {renderPagination(true)}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/50 text-muted-foreground">
-                <th className="w-12 px-4 py-3 text-left font-medium">Rank</th>
+                <th className="w-14 px-4 py-3 text-left font-medium">Rank</th>
                 <th className="px-4 py-3 text-left font-medium">Player</th>
-                <th className="px-4 py-3 text-center font-medium">Points</th>
-                <th className="px-4 py-3 text-center font-medium">Picks</th>
+                <th className="px-4 py-3 text-center font-medium">
+                  {mode === "weekly" ? "Weekly Pts" : "Points"}
+                </th>
+                {mode === "weekly" ? (
+                  <th className="hidden px-4 py-3 text-center font-medium sm:table-cell">
+                    Correct Picks
+                  </th>
+                ) : null}
+                {showPicks ? (
+                  <th className="px-4 py-3 text-center font-medium">Picks</th>
+                ) : null}
               </tr>
             </thead>
             <tbody className="divide-y">
-              {entries.map((entry, index) => {
-                const rank = index + 1;
+              {paginatedEntries.map((entry, index) => {
+                const entryIndex = pageStart + index;
+                const rank = entryIndex + 1;
+                const displayedRank = getDisplayedRank(entries, entryIndex, mode);
                 const isCurrentUser = entry.id === currentUserId;
+                const points =
+                  mode === "weekly" && isWeeklyEntry(entry)
+                    ? entry.weeklyPoints
+                    : isSeasonEntry(entry)
+                      ? entry.fantasyPoints
+                      : 0;
 
                 return (
                   <tr
@@ -150,57 +297,72 @@ export function LeaderboardTable({
                       <div className="flex items-center gap-1">
                         {getMedalIcon(rank)}
                         <span className={cn("font-semibold", getRankStyle(rank))}>
-                          {rank}
+                          {displayedRank}
                         </span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-foreground">{getDisplayName(entry)}</span>
-                        {isCurrentUser && (
-                          <span className="text-xs font-medium text-primary">
-                            (you)
-                          </span>
-                        )}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-foreground">{getDisplayName(entry)}</span>
+                          {isCurrentUser ? (
+                            <span className="text-xs font-medium text-primary">
+                              (you)
+                            </span>
+                          ) : null}
+                        </div>
+                        {mode === "weekly" && isWeeklyEntry(entry) ? (
+                          <p className="text-xs text-muted-foreground sm:hidden">
+                            {entry.correctPredictions}/{entry.totalPredictions} correct
+                          </p>
+                        ) : null}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center font-bold text-foreground">
-                      {entry.fantasyPoints}
+                      {points}
                     </td>
-                    <td className="px-4 py-3 text-center">
-                      {canViewPredictions ? (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9"
-                          onClick={() => {
-                            setOpenUserId(entry.id);
-                            setError(null);
-                          }}
-                          aria-label={`View picks for ${getDisplayName(entry)}`}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      ) : (
-                        <Button
-                          asChild
-                          variant="outline"
-                          size="icon"
-                          className="h-9 w-9"
-                        >
-                          <Link href="/sign-in" aria-label="Sign in to view picks">
+                    {mode === "weekly" && isWeeklyEntry(entry) ? (
+                      <td className="hidden px-4 py-3 text-center text-muted-foreground sm:table-cell">
+                        {entry.correctPredictions}/{entry.totalPredictions}
+                      </td>
+                    ) : null}
+                    {showPicks ? (
+                      <td className="px-4 py-3 text-center">
+                        {canViewPredictions ? (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={() => {
+                              setOpenUserId(entry.id);
+                              setError(null);
+                            }}
+                            aria-label={`View picks for ${getDisplayName(entry)}`}
+                          >
                             <Eye className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      )}
-                    </td>
+                          </Button>
+                        ) : (
+                          <Button
+                            asChild
+                            variant="outline"
+                            size="icon"
+                            className="h-9 w-9"
+                          >
+                            <Link href="/sign-in" aria-label="Sign in to view picks">
+                              <Eye className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        )}
+                      </td>
+                    ) : null}
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
+        {renderPagination(false)}
       </Card>
 
       <Dialog
@@ -258,10 +420,10 @@ export function LeaderboardTable({
                               <Badge variant="outline" className="text-[11px]">
                                 {prediction.division.replace(/_/g, " ")}
                               </Badge>
-                              {prediction.gameType === "PLAYOFF" && (
+                              {prediction.gameType === "PLAYOFF" ? (
                                 <Badge className="text-[11px]">Playoff</Badge>
-                              )}
-                              {prediction.isBoosted && (
+                              ) : null}
+                              {prediction.isBoosted ? (
                                 <Badge
                                   variant="outline"
                                   className="gap-1 border-amber-500/40 bg-amber-50 text-amber-800"
@@ -269,7 +431,7 @@ export function LeaderboardTable({
                                   <Zap className="h-3 w-3" />
                                   Boosted
                                 </Badge>
-                              )}
+                              ) : null}
                             </div>
                             <p className="text-xs text-muted-foreground">
                               {formatGameDateTime(prediction.date)}
