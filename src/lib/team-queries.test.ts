@@ -132,6 +132,7 @@ describe("getTeamByCode", () => {
         lastName: "Patel",
         email: "rohan@example.com",
         playingRole: "Bowler",
+        waiverSubmissions: [{ playerName: "Rohan Kumar Patel" }],
       },
     ]);
     gameFindManyMock.mockResolvedValue([]);
@@ -157,6 +158,19 @@ describe("getTeamByCode", () => {
         lastName: true,
         email: true,
         playingRole: true,
+        waiverSubmissions: {
+          where: {
+            year: 2026,
+            OR: [
+              { t20TeamCode: "T20-MOCC" },
+              { additionalT20TeamCode: "T20-MOCC" },
+            ],
+          },
+          select: {
+            playerName: true,
+          },
+          take: 1,
+        },
       },
     });
     expect(result?.players).toEqual([
@@ -166,6 +180,7 @@ describe("getTeamByCode", () => {
         lastName: "Patel",
         email: "rohan@example.com",
         playingRole: "Bowler",
+        waiverPlayerName: "Rohan Kumar Patel",
       },
     ]);
     expect(result?.upcomingGames).toEqual([]);
@@ -204,6 +219,16 @@ describe("getTeamByCode", () => {
         lastName: true,
         email: true,
         playingRole: true,
+        waiverSubmissions: {
+          where: {
+            year: 2026,
+            secondaryTeamCode: "T30-MOCC",
+          },
+          select: {
+            playerName: true,
+          },
+          take: 1,
+        },
       },
     });
   });

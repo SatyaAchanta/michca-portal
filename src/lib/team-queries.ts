@@ -129,6 +129,25 @@ export async function getTeamByCode(teamCode: string) {
         lastName: true,
         email: true,
         playingRole: true,
+        waiverSubmissions: {
+          where:
+            team.format === "T20"
+              ? {
+                  year: waiverYear,
+                  OR: [
+                    { t20TeamCode: team.teamCode },
+                    { additionalT20TeamCode: team.teamCode },
+                  ],
+                }
+              : {
+                  year: waiverYear,
+                  secondaryTeamCode: team.teamCode,
+                },
+          select: {
+            playerName: true,
+          },
+          take: 1,
+        },
       },
     }),
     prisma.game.findMany({
@@ -155,7 +174,14 @@ export async function getTeamByCode(teamCode: string) {
     ...team,
     upcomingGames,
     recentGames,
-    players,
+    players: players.map((player) => ({
+      id: player.id,
+      firstName: player.firstName,
+      lastName: player.lastName,
+      email: player.email,
+      playingRole: player.playingRole,
+      waiverPlayerName: player.waiverSubmissions[0]?.playerName ?? null,
+    })),
   };
 }
 
