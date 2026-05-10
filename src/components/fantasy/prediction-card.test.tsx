@@ -66,4 +66,46 @@ describe("PredictionCard", () => {
     expect(screen.queryByText(/game locked/i)).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /boost/i })).toBeInTheDocument();
   });
+
+  it("renders labeled form chips with latest emphasis when form exists", () => {
+    render(
+      <PredictionCard
+        game={{
+          ...baseGame,
+          team1Form: ["W", "L", "D"],
+          team2Form: ["L", "W"],
+        }}
+        canBoost
+        boostersRemaining={3}
+      />,
+    );
+
+    const formRows = screen.getAllByTestId("team-form");
+    expect(formRows).toHaveLength(2);
+
+    const winChip = screen.getAllByLabelText("Win")[0];
+    const lossChip = screen.getAllByLabelText("Loss")[0];
+    const drawChip = screen.getByLabelText("Draw");
+
+    expect(winChip).toHaveTextContent("W");
+    expect(winChip.className).toContain("bg-emerald-100");
+    expect(lossChip).toHaveTextContent("L");
+    expect(lossChip.className).toContain("bg-red-100");
+    expect(drawChip).toHaveTextContent("-");
+    expect(drawChip.className).toContain("bg-slate-200");
+    expect(drawChip).toHaveAttribute("data-latest", "true");
+    expect(drawChip.className).toContain("ring-1");
+  });
+
+  it("does not render a form row when team form is absent", () => {
+    render(
+      <PredictionCard
+        game={baseGame}
+        canBoost
+        boostersRemaining={3}
+      />,
+    );
+
+    expect(screen.queryByTestId("team-form")).not.toBeInTheDocument();
+  });
 });

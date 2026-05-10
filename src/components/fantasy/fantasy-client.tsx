@@ -19,6 +19,8 @@ type Game = {
   team2Code: string;
   team1: { teamName: string; teamShortCode: string; logo: string | null };
   team2: { teamName: string; teamShortCode: string; logo: string | null };
+  team1Form?: ("W" | "L" | "D")[];
+  team2Form?: ("W" | "L" | "D")[];
 };
 
 type ExistingPrediction = {

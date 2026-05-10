@@ -83,6 +83,18 @@ export type WeeklyLeaderboardWeek = {
   entries: WeeklyLeaderboardEntry[];
 };
 
+type TeamFormResult = "W" | "L" | "D";
+
+function getTeamFormResult(game: {
+  team1Code: string;
+  team2Code: string;
+  winnerCode: string | null;
+  isDraw: boolean;
+}, teamCode: string): TeamFormResult {
+  if (game.isDraw) return "D";
+  return game.winnerCode === teamCode ? "W" : "L";
+}
+
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
 export async function submitPrediction(
@@ -260,7 +272,48 @@ export async function getFantasyGames() {
     },
   });
 
-  return games;
+  const teamCodes = Array.from(
+    new Set(games.flatMap((game) => [game.team1Code, game.team2Code])),
+  );
+
+  if (teamCodes.length === 0) {
+    return games;
+  }
+
+  const completedGames = await prisma.game.findMany({
+    where: {
+      status: GameStatus.COMPLETED,
+      OR: [
+        { team1Code: { in: teamCodes } },
+        { team2Code: { in: teamCodes } },
+      ],
+    },
+    orderBy: { date: "desc" },
+    select: {
+      date: true,
+      team1Code: true,
+      team2Code: true,
+      winnerCode: true,
+      isDraw: true,
+    },
+  });
+
+  const formMap = new Map<string, TeamFormResult[]>();
+  for (const game of completedGames) {
+    for (const teamCode of [game.team1Code, game.team2Code]) {
+      const existing = formMap.get(teamCode) ?? [];
+      if (existing.length >= 5) continue;
+
+      existing.push(getTeamFormResult(game, teamCode));
+      formMap.set(teamCode, existing);
+    }
+  }
+
+  return games.map((game) => ({
+    ...game,
+    team1Form: formMap.get(game.team1Code)?.slice().reverse(),
+    team2Form: formMap.get(game.team2Code)?.slice().reverse(),
+  }));
 }
 
 // ─── Get community prediction counts per game ────────────────────────────────

@@ -84,6 +84,7 @@ describe("admin games actions", () => {
       }),
     });
     expect(revalidatePath).toHaveBeenCalledWith("/admin/games");
+    expect(revalidatePath).toHaveBeenCalledWith("/schedule");
   });
 
   it("rejects teams that do not match the selected division", async () => {
@@ -139,5 +140,6 @@ describe("admin games actions", () => {
         isCancelled: true,
       },
     });
+    expect(revalidatePath).toHaveBeenCalledWith("/schedule");
   });
 });

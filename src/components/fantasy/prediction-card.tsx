@@ -19,7 +19,6 @@ type Game = {
   team2Code: string;
   team1: { teamName: string; teamShortCode: string; logo: string | null };
   team2: { teamName: string; teamShortCode: string; logo: string | null };
-  // Scaffolded for future team-form feature
   team1Form?: ("W" | "L" | "D")[];
   team2Form?: ("W" | "L" | "D")[];
 };
@@ -55,22 +54,52 @@ function formatGameDateTime(date: Date) {
   }).format(date);
 }
 
-/** Colored dots for team form: W=green, L=red, D=gray */
-function FormDots({ form }: { form: ("W" | "L" | "D")[] }) {
+function FormChips({ form }: { form: ("W" | "L" | "D")[] }) {
   return (
-    <div className="flex items-center gap-[3px]" aria-hidden>
-      {form.slice(-5).map((r, i) => (
-        <span
-          key={i}
-          className={cn(
-            "inline-block h-2 w-2 rounded-full",
-            r === "W" && "bg-emerald-500",
-            r === "L" && "bg-red-400",
-            r === "D" && "bg-muted-foreground/40",
-          )}
-          title={r === "W" ? "Win" : r === "L" ? "Loss" : "Draw"}
-        />
-      ))}
+    <div
+      className="flex items-center gap-1"
+      aria-label="Recent form"
+      data-testid="team-form"
+    >
+      {form.map((result, index) => {
+        const isLatest = index === form.length - 1;
+        const label =
+          result === "W" ? "Win" : result === "L" ? "Loss" : "Draw";
+        return (
+          <span
+            key={`${result}-${index}`}
+            aria-label={label}
+            data-latest={isLatest ? "true" : undefined}
+            data-result={result}
+            className={cn(
+              "inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-semibold leading-none",
+              result === "W" &&
+                "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+              result === "L" &&
+                "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
+              result === "D" &&
+                "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+              isLatest && "ring-1 ring-current/35",
+            )}
+            title={label}
+          >
+            {result === "D" ? "-" : result}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function getFormSummary(form: ("W" | "L" | "D")[]) {
+  return `Form: ${form.map((result) => (result === "D" ? "-" : result)).join(" ")}`;
+}
+
+function TeamForm({ form }: { form: ("W" | "L" | "D")[] }) {
+  return (
+    <div className="mt-1.5">
+      <p className="sr-only">{getFormSummary(form)}</p>
+      <FormChips form={form} />
     </div>
   );
 }
@@ -397,11 +426,8 @@ function TeamRow({
               {name}
             </span>
           </p>
-          {/* Form dots — shown when team form data is available */}
           {form && form.length > 0 && (
-            <div className="mt-1">
-              <FormDots form={form} />
-            </div>
+            <TeamForm form={form} />
           )}
         </div>
       </div>

@@ -87,6 +87,7 @@ function revalidateGameAdminPages() {
   revalidatePath("/admin/games");
   revalidatePath("/admin/fantasy");
   revalidatePath("/fantasy");
+  revalidatePath("/schedule");
 }
 
 export async function createAdminGame(

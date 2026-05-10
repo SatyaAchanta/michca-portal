@@ -6,6 +6,7 @@ const {
   userProfileFindUnique,
   userProfileFindMany,
   predictionFindMany,
+  gameFindMany,
   gameFindUnique,
   gameUpdate,
   scoreGameWeekPredictions,
@@ -16,6 +17,7 @@ const {
   userProfileFindUnique: vi.fn(),
   userProfileFindMany: vi.fn(),
   predictionFindMany: vi.fn(),
+  gameFindMany: vi.fn(),
   gameFindUnique: vi.fn(),
   gameUpdate: vi.fn(),
   scoreGameWeekPredictions: vi.fn(),
@@ -40,6 +42,7 @@ vi.mock("@/lib/prisma", () => ({
       findMany: predictionFindMany,
     },
     game: {
+      findMany: gameFindMany,
       findUnique: gameFindUnique,
       update: gameUpdate,
     },
@@ -51,7 +54,161 @@ vi.mock("@/lib/fantasy", () => ({
   previewGameWeekScoring,
 }));
 
-import { getLeaderboardParticipantPredictions } from "@/lib/actions/fantasy";
+import {
+  getFantasyGames,
+  getLeaderboardParticipantPredictions,
+} from "@/lib/actions/fantasy";
+
+describe("getFantasyGames", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("attaches up to five completed results per team in oldest-to-newest order", async () => {
+    gameFindMany
+      .mockResolvedValueOnce([
+        {
+          id: "upcoming-1",
+          date: new Date("2026-05-16T14:00:00.000Z"),
+          division: "PREMIER_T20",
+          league: "MichCA",
+          gameType: "LEAGUE",
+          status: "SCHEDULED",
+          venue: "Ground A",
+          team1Code: "AAA",
+          team2Code: "BBB",
+          team1: { teamName: "Alpha CC", teamShortCode: "ALP", logo: null },
+          team2: { teamName: "Beta CC", teamShortCode: "BET", logo: null },
+        },
+        {
+          id: "upcoming-2",
+          date: new Date("2026-05-17T14:00:00.000Z"),
+          division: "DIV1_T20",
+          league: "MichCA",
+          gameType: "LEAGUE",
+          status: "SCHEDULED",
+          venue: "Ground B",
+          team1Code: "CCC",
+          team2Code: "AAA",
+          team1: { teamName: "Central CC", teamShortCode: "CEN", logo: null },
+          team2: { teamName: "Alpha CC", teamShortCode: "ALP", logo: null },
+        },
+      ])
+      .mockResolvedValueOnce([
+        {
+          date: new Date("2026-05-12T14:00:00.000Z"),
+          team1Code: "AAA",
+          team2Code: "GGG",
+          winnerCode: "AAA",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-11T14:00:00.000Z"),
+          team1Code: "HHH",
+          team2Code: "AAA",
+          winnerCode: "HHH",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-10T14:00:00.000Z"),
+          team1Code: "AAA",
+          team2Code: "III",
+          winnerCode: null,
+          isDraw: true,
+        },
+        {
+          date: new Date("2026-05-09T14:00:00.000Z"),
+          team1Code: "JJJ",
+          team2Code: "AAA",
+          winnerCode: "AAA",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-08T14:00:00.000Z"),
+          team1Code: "AAA",
+          team2Code: "KKK",
+          winnerCode: "KKK",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-07T14:00:00.000Z"),
+          team1Code: "AAA",
+          team2Code: "LLL",
+          winnerCode: "AAA",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-06T14:00:00.000Z"),
+          team1Code: "BBB",
+          team2Code: "MMM",
+          winnerCode: "BBB",
+          isDraw: false,
+        },
+        {
+          date: new Date("2026-05-05T14:00:00.000Z"),
+          team1Code: "NNN",
+          team2Code: "BBB",
+          winnerCode: null,
+          isDraw: true,
+        },
+        {
+          date: new Date("2026-05-04T14:00:00.000Z"),
+          team1Code: "CCC",
+          team2Code: "OOO",
+          winnerCode: "OOO",
+          isDraw: false,
+        },
+      ]);
+
+    const result = await getFantasyGames();
+
+    expect(gameFindMany).toHaveBeenNthCalledWith(1, {
+      orderBy: { date: "asc" },
+      select: {
+        id: true,
+        date: true,
+        division: true,
+        league: true,
+        gameType: true,
+        status: true,
+        venue: true,
+        team1Code: true,
+        team2Code: true,
+        team1: { select: { teamName: true, teamShortCode: true, logo: true } },
+        team2: { select: { teamName: true, teamShortCode: true, logo: true } },
+      },
+    });
+    expect(gameFindMany).toHaveBeenNthCalledWith(2, {
+      where: {
+        status: GameStatus.COMPLETED,
+        OR: [
+          { team1Code: { in: ["AAA", "BBB", "CCC"] } },
+          { team2Code: { in: ["AAA", "BBB", "CCC"] } },
+        ],
+      },
+      orderBy: { date: "desc" },
+      select: {
+        date: true,
+        team1Code: true,
+        team2Code: true,
+        winnerCode: true,
+        isDraw: true,
+      },
+    });
+    expect(result).toEqual([
+      expect.objectContaining({
+        id: "upcoming-1",
+        team1Form: ["L", "W", "D", "L", "W"],
+        team2Form: ["D", "W"],
+      }),
+      expect.objectContaining({
+        id: "upcoming-2",
+        team1Form: ["L"],
+        team2Form: ["L", "W", "D", "L", "W"],
+      }),
+    ]);
+  });
+});
 
 describe("getLeaderboardParticipantPredictions", () => {
   beforeEach(() => {
