@@ -5,6 +5,7 @@ import type { TeamFormat } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import type { TeamDivision } from "@/lib/team-data";
 import {
+  getCurrentWaiverYear,
   WAIVER_PRIMARY_DIVISIONS,
   WAIVER_SECONDARY_DIVISIONS,
 } from "@/lib/waiver-constants";
@@ -56,6 +57,7 @@ export async function getTeams(filters?: {
 
 export async function getTeamByCode(teamCode: string) {
   const now = new Date();
+  const waiverYear = getCurrentWaiverYear();
   const team = await prisma.team.findUnique({
     where: { teamCode },
     include: {
@@ -101,8 +103,25 @@ export async function getTeamByCode(teamCode: string) {
     prisma.userProfile.findMany({
       where:
         team.format === "T20"
-          ? { t20TeamCode: team.teamCode }
-          : { secondaryTeamCode: team.teamCode },
+          ? {
+              waiverSubmissions: {
+                some: {
+                  year: waiverYear,
+                  OR: [
+                    { t20TeamCode: team.teamCode },
+                    { additionalT20TeamCode: team.teamCode },
+                  ],
+                },
+              },
+            }
+          : {
+              waiverSubmissions: {
+                some: {
+                  year: waiverYear,
+                  secondaryTeamCode: team.teamCode,
+                },
+              },
+            },
       orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
       select: {
         id: true,

@@ -106,9 +106,15 @@ describe("getTeams", () => {
 describe("getTeamByCode", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-05-09T12:00:00Z"));
   });
 
-  it("loads T20 roster players from current user profiles", async () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("loads T20 roster players from current-year waiver submissions", async () => {
     findUniqueMock.mockResolvedValue({
       teamCode: "T20-MOCC",
       format: "T20",
@@ -133,7 +139,17 @@ describe("getTeamByCode", () => {
     const result = await getTeamByCode("T20-MOCC");
 
     expect(userFindManyMock).toHaveBeenCalledWith({
-      where: { t20TeamCode: "T20-MOCC" },
+      where: {
+        waiverSubmissions: {
+          some: {
+            year: 2026,
+            OR: [
+              { t20TeamCode: "T20-MOCC" },
+              { additionalT20TeamCode: "T20-MOCC" },
+            ],
+          },
+        },
+      },
       orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
       select: {
         id: true,
@@ -156,7 +172,7 @@ describe("getTeamByCode", () => {
     expect(result?.recentGames).toEqual([]);
   });
 
-  it("loads secondary-format roster players from current user profiles", async () => {
+  it("loads secondary-format roster players from current-year waiver submissions", async () => {
     findUniqueMock.mockResolvedValue({
       teamCode: "T30-MOCC",
       format: "T30",
@@ -173,7 +189,14 @@ describe("getTeamByCode", () => {
     await getTeamByCode("T30-MOCC");
 
     expect(userFindManyMock).toHaveBeenCalledWith({
-      where: { secondaryTeamCode: "T30-MOCC" },
+      where: {
+        waiverSubmissions: {
+          some: {
+            year: 2026,
+            secondaryTeamCode: "T30-MOCC",
+          },
+        },
+      },
       orderBy: [{ firstName: "asc" }, { lastName: "asc" }, { email: "asc" }],
       select: {
         id: true,
