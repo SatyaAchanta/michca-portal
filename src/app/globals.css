@@ -83,6 +83,13 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-poppins), "Helvetica Neue", sans-serif;
 }

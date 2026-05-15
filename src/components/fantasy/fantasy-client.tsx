@@ -137,12 +137,12 @@ export function FantasyClient({
   const filteredRemaining = filteredTotal - filteredPredicted;
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-full space-y-6 overflow-x-hidden">
       {/* ── Filters ── */}
       {(weekendKeys.length > 1 || availableDivisions.length > 1) && (
         <div className="space-y-3">
           {/* ── Mobile: native selects ── */}
-          <div className="flex gap-3 md:hidden">
+          <div className="flex max-w-full gap-3 md:hidden">
             {weekendKeys.length > 1 && (
               <div className="flex-1 min-w-0">
                 <label className="sr-only">Game Week</label>
@@ -263,20 +263,20 @@ export function FantasyClient({
       {/* ── Prediction progress ── */}
       {filteredTotal > 0 && (
         <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+            <span className="min-w-0 text-muted-foreground">
               {selectedDivision
                 ? `${DIVISION_LABELS[selectedDivision] ?? selectedDivision} predictions`
                 : "Predictions"}
             </span>
-            <span className="font-medium text-foreground">
+            <span className="max-w-full text-right font-medium text-foreground">
               {filteredPredicted}/{filteredTotal}{" "}
               {filteredRemaining > 0 ? (
-                <span className="text-muted-foreground font-normal">
+                <span className="font-normal text-muted-foreground">
                   ({filteredRemaining} remaining)
                 </span>
               ) : (
-                <span className="text-emerald-600 font-normal">All done!</span>
+                <span className="font-normal text-emerald-600">All done!</span>
               )}
             </span>
           </div>
@@ -300,7 +300,7 @@ export function FantasyClient({
         <div className="space-y-10">
           {weekGroups.map(({ satKey, label, games: wGames }) => (
             <div key={satKey} className="space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <h2 className="text-lg font-semibold text-foreground">
                   {label}
                 </h2>

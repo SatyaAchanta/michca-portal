@@ -71,12 +71,12 @@ export default async function FantasyPage() {
   );
 
   return (
-    <div className="bg-background py-12">
-      <PageContainer className="space-y-10">
+    <div className="overflow-x-hidden bg-background py-8 sm:py-12">
+      <PageContainer className="space-y-8 sm:space-y-10">
         {/* Page header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          <div className="min-w-0 space-y-2">
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
               Fantasy Predictions
             </h1>
             <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
@@ -85,7 +85,7 @@ export default async function FantasyPage() {
               leaderboard.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex max-w-full flex-wrap gap-2">
             <Button asChild variant="outline">
               <Link href="/fantasy/rules">
                 <BookOpen className="h-4 w-4" />
@@ -149,9 +149,9 @@ export default async function FantasyPage() {
         </div>
 
         {!canBoost && (
-          <Card className="p-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
+          <Card className="overflow-hidden p-4">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-foreground">
                   Booster progress
                 </p>
@@ -163,7 +163,7 @@ export default async function FantasyPage() {
                   to unlock boosters.
                 </p>
               </div>
-              <div className="text-right text-sm text-muted-foreground">
+              <div className="shrink-0 text-right text-sm text-muted-foreground">
                 {userData.fullParticipationWeeks} / {FULL_WEEKS_FOR_BOOSTERS} weeks
               </div>
             </div>

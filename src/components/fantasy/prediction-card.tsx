@@ -172,13 +172,18 @@ export function PredictionCard({
   const team2Pct = pct(picks?.team2Count ?? 0);
 
   return (
-    <Card className={cn("p-4 space-y-3", isLocked && "opacity-80")}>
+    <Card
+      className={cn(
+        "max-w-full overflow-hidden p-3 sm:p-4 space-y-3",
+        isLocked && "opacity-80",
+      )}
+    >
       {/* ── Header ── */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-muted-foreground">
+      <div className="flex max-w-full flex-wrap items-center justify-between gap-2">
+        <p className="min-w-0 text-sm text-muted-foreground">
           {formatGameDateTime(game.date)}
         </p>
-        <div className="flex items-center gap-1.5 flex-wrap justify-end">
+        <div className="flex max-w-full items-center justify-end gap-1.5 flex-wrap">
           {isLocked && (
             <Badge
               variant="outline"
@@ -221,7 +226,7 @@ export function PredictionCard({
           disabled={!!isLocked || isPending}
           onClick={() => handleSelect(null)}
           className={cn(
-            "flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-medium transition-all",
+            "flex max-w-full items-center justify-between rounded-xl border-2 px-3 py-2.5 sm:px-4 text-sm font-medium transition-all",
             selected === null
               ? "border-slate-400 bg-slate-100 text-slate-700 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-100"
               : "border-border text-muted-foreground hover:border-primary/30",
@@ -300,7 +305,7 @@ export function PredictionCard({
       )}
 
       {isLocked && !existing?.isScored && (
-        <div className="flex items-center justify-between gap-3 min-h-[28px]">
+        <div className="flex min-h-[28px] flex-wrap items-center justify-between gap-2">
           <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
             <Lock className="h-3 w-3" />
             Game locked
@@ -313,7 +318,7 @@ export function PredictionCard({
 
       {/* ── Booster + status row ── */}
       {!isLocked && (
-        <div className="flex items-center justify-between gap-3 min-h-[28px]">
+        <div className="flex min-h-[28px] flex-wrap items-center justify-between gap-2">
           {canBoost ? (
             <button
               type="button"
@@ -343,7 +348,7 @@ export function PredictionCard({
             </span>
           )}
 
-          <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
+          <div className="flex max-w-full items-center gap-1.5 text-xs sm:whitespace-nowrap">
             {isPending && (
               <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
             )}
@@ -354,7 +359,7 @@ export function PredictionCard({
               </span>
             )}
             {!isPending && status === "error" && (
-              <span className="text-destructive">{errorMsg}</span>
+              <span className="break-words text-destructive">{errorMsg}</span>
             )}
           </div>
         </div>
@@ -400,7 +405,7 @@ function TeamRow({
       disabled={isLocked || isPending}
       onClick={onClick}
       className={cn(
-        "flex w-full items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all",
+        "flex w-full max-w-full items-center justify-between rounded-xl border-2 px-3 py-3 sm:px-4 text-left transition-all",
         isSelected
           ? selectedStyles
           : "border-border text-foreground hover:border-primary/30",
@@ -408,7 +413,7 @@ function TeamRow({
       )}
     >
       {/* Left: check + name */}
-      <div className="flex items-center gap-2.5 min-w-0">
+      <div className="flex min-w-0 items-center gap-2.5">
         {isSelected ? (
           <CheckCircle2
             className={cn(
@@ -420,9 +425,9 @@ function TeamRow({
           <span className="h-4 w-4 shrink-0 rounded-full border-2 border-muted-foreground/30" />
         )}
         <div className="min-w-0">
-          <p className="font-semibold text-sm leading-snug truncate">
-            {shortCode}
-            <span className="ml-1.5 font-normal opacity-70 text-xs">
+          <p className="truncate text-sm font-semibold leading-snug">
+            <span className="shrink-0">{shortCode}</span>
+            <span className="ml-1.5 text-xs font-normal opacity-70">
               {name}
             </span>
           </p>
