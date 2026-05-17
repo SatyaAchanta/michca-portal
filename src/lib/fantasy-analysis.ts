@@ -460,6 +460,54 @@ function getOpenAIClient() {
   return new OpenAI({ apiKey });
 }
 
+function summarizeResponseOutput(output: unknown) {
+  if (!Array.isArray(output)) {
+    return [];
+  }
+
+  return output.map((item) => {
+    if (!item || typeof item !== "object") {
+      return { type: "unknown" };
+    }
+
+    const candidate = item as {
+      type?: string;
+      role?: string;
+      content?: Array<{ type?: string }>;
+    };
+
+    return {
+      type: candidate.type ?? "unknown",
+      role: candidate.role ?? null,
+      contentTypes: Array.isArray(candidate.content)
+        ? candidate.content.map((entry) => entry?.type ?? "unknown")
+        : [],
+    };
+  });
+}
+
+function extractResponseRefusal(response: {
+  output?: Array<{
+    content?: Array<{ type?: string; refusal?: string }>;
+  }>;
+}) {
+  if (!Array.isArray(response.output)) {
+    return null;
+  }
+
+  for (const item of response.output) {
+    if (!Array.isArray(item?.content)) continue;
+
+    for (const contentItem of item.content) {
+      if (contentItem?.type === "refusal" && typeof contentItem.refusal === "string") {
+        return contentItem.refusal;
+      }
+    }
+  }
+
+  return null;
+}
+
 async function generateFantasyAnalysisReport(
   promptPayload: Record<string, unknown>,
   modelName: string,
@@ -531,13 +579,48 @@ async function generateFantasyAnalysisReport(
     },
   });
 
+  const refusal = extractResponseRefusal(response);
+  if (refusal) {
+    console.error("OpenAI refused fantasy AI analysis request:", {
+      modelName,
+      refusal,
+      status: response.status,
+      responseId: response.id,
+    });
+    throw new Error("OpenAI refused to generate fantasy analysis.");
+  }
+
+  if (response.status === "incomplete") {
+    console.error("OpenAI returned incomplete fantasy AI analysis:", {
+      modelName,
+      responseId: response.id,
+      incompleteDetails: response.incomplete_details,
+      error: response.error,
+      outputSummary: summarizeResponseOutput(response.output),
+    });
+    throw new Error("OpenAI returned an incomplete fantasy analysis response.");
+  }
+
   const content = response.output_text?.trim();
   if (!content) {
-    throw new Error("OpenAI returned an empty response.");
+    console.error("OpenAI returned empty fantasy AI analysis output:", {
+      modelName,
+      responseId: response.id,
+      status: response.status,
+      error: response.error,
+      incompleteDetails: response.incomplete_details,
+      outputSummary: summarizeResponseOutput(response.output),
+    });
+    throw new Error("OpenAI returned an empty fantasy analysis response.");
   }
 
   const parsed = JSON.parse(content);
   if (!isValidReportPayload(parsed)) {
+    console.error("OpenAI returned invalid fantasy AI analysis payload:", {
+      modelName,
+      responseId: response.id,
+      content,
+    });
     throw new Error("OpenAI returned an invalid fantasy analysis payload.");
   }
 

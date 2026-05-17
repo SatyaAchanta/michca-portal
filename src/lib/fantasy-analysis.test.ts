@@ -158,6 +158,11 @@ describe("getFantasyAnalysisForUser", () => {
     vi.clearAllMocks();
     process.env.OPENAI_API_KEY = "test-key";
     delete process.env.OPENAI_MODEL;
+    vi.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it("returns insufficient data when the user lacks enough scored predictions", async () => {
@@ -257,5 +262,37 @@ describe("getFantasyAnalysisForUser", () => {
     expect(result.report.recommendations).toHaveLength(2);
     expect(responsesCreate).toHaveBeenCalledTimes(1);
     expect(fantasyAnalysisReportUpsert).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns a graceful error when OpenAI responds without output text", async () => {
+    userProfileFindUnique.mockResolvedValue(userProfile);
+    predictionFindMany.mockResolvedValueOnce(userPredictions);
+    predictionFindMany.mockResolvedValueOnce(communityPredictions);
+    userProfileCount.mockResolvedValueOnce(12);
+    userProfileCount.mockResolvedValueOnce(2);
+    fantasyAnalysisReportFindUnique.mockResolvedValue(null);
+    responsesCreate.mockResolvedValue({
+      id: "resp_empty",
+      status: "completed",
+      output_text: "",
+      output: [
+        {
+          type: "message",
+          role: "assistant",
+          content: [],
+        },
+      ],
+      error: null,
+      incomplete_details: null,
+    });
+
+    const result = await getFantasyAnalysisForUser("user-1");
+
+    expect(result).toEqual({
+      status: "error",
+      message: "AI Analysis is unavailable right now. Please try again shortly.",
+    });
+    expect(fantasyAnalysisReportUpsert).not.toHaveBeenCalled();
+    expect(console.error).toHaveBeenCalled();
   });
 });
