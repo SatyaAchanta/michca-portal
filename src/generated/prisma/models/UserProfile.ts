@@ -20,8 +20,26 @@ export type UserProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$Use
 
 export type AggregateUserProfile = {
   _count: UserProfileCountAggregateOutputType | null
+  _avg: UserProfileAvgAggregateOutputType | null
+  _sum: UserProfileSumAggregateOutputType | null
   _min: UserProfileMinAggregateOutputType | null
   _max: UserProfileMaxAggregateOutputType | null
+}
+
+export type UserProfileAvgAggregateOutputType = {
+  fantasyPoints: number | null
+  boostersRemaining: number | null
+  fantasyLevel: number | null
+  fullParticipationWeeks: number | null
+  levelBonusesAwarded: number | null
+}
+
+export type UserProfileSumAggregateOutputType = {
+  fantasyPoints: number | null
+  boostersRemaining: number | null
+  fantasyLevel: number | null
+  fullParticipationWeeks: number | null
+  levelBonusesAwarded: number | null
 }
 
 export type UserProfileMinAggregateOutputType = {
@@ -37,6 +55,11 @@ export type UserProfileMinAggregateOutputType = {
   t20TeamCode: string | null
   secondaryTeamCode: string | null
   playingRole: string | null
+  fantasyPoints: number | null
+  boostersRemaining: number | null
+  fantasyLevel: number | null
+  fullParticipationWeeks: number | null
+  levelBonusesAwarded: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +77,11 @@ export type UserProfileMaxAggregateOutputType = {
   t20TeamCode: string | null
   secondaryTeamCode: string | null
   playingRole: string | null
+  fantasyPoints: number | null
+  boostersRemaining: number | null
+  fantasyLevel: number | null
+  fullParticipationWeeks: number | null
+  levelBonusesAwarded: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,11 +99,32 @@ export type UserProfileCountAggregateOutputType = {
   t20TeamCode: number
   secondaryTeamCode: number
   playingRole: number
+  fantasyPoints: number
+  boostersRemaining: number
+  fantasyLevel: number
+  fullParticipationWeeks: number
+  levelBonusesAwarded: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserProfileAvgAggregateInputType = {
+  fantasyPoints?: true
+  boostersRemaining?: true
+  fantasyLevel?: true
+  fullParticipationWeeks?: true
+  levelBonusesAwarded?: true
+}
+
+export type UserProfileSumAggregateInputType = {
+  fantasyPoints?: true
+  boostersRemaining?: true
+  fantasyLevel?: true
+  fullParticipationWeeks?: true
+  levelBonusesAwarded?: true
+}
 
 export type UserProfileMinAggregateInputType = {
   id?: true
@@ -90,6 +139,11 @@ export type UserProfileMinAggregateInputType = {
   t20TeamCode?: true
   secondaryTeamCode?: true
   playingRole?: true
+  fantasyPoints?: true
+  boostersRemaining?: true
+  fantasyLevel?: true
+  fullParticipationWeeks?: true
+  levelBonusesAwarded?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -107,6 +161,11 @@ export type UserProfileMaxAggregateInputType = {
   t20TeamCode?: true
   secondaryTeamCode?: true
   playingRole?: true
+  fantasyPoints?: true
+  boostersRemaining?: true
+  fantasyLevel?: true
+  fullParticipationWeeks?: true
+  levelBonusesAwarded?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,6 +183,11 @@ export type UserProfileCountAggregateInputType = {
   t20TeamCode?: true
   secondaryTeamCode?: true
   playingRole?: true
+  fantasyPoints?: true
+  boostersRemaining?: true
+  fantasyLevel?: true
+  fullParticipationWeeks?: true
+  levelBonusesAwarded?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -167,6 +231,18 @@ export type UserProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserProfileMinAggregateInputType
@@ -197,6 +273,8 @@ export type UserProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: UserProfileCountAggregateInputType | true
+  _avg?: UserProfileAvgAggregateInputType
+  _sum?: UserProfileSumAggregateInputType
   _min?: UserProfileMinAggregateInputType
   _max?: UserProfileMaxAggregateInputType
 }
@@ -214,9 +292,16 @@ export type UserProfileGroupByOutputType = {
   t20TeamCode: string | null
   secondaryTeamCode: string | null
   playingRole: string | null
+  fantasyPoints: number
+  boostersRemaining: number
+  fantasyLevel: number
+  fullParticipationWeeks: number
+  levelBonusesAwarded: number
   createdAt: Date
   updatedAt: Date
   _count: UserProfileCountAggregateOutputType | null
+  _avg: UserProfileAvgAggregateOutputType | null
+  _sum: UserProfileSumAggregateOutputType | null
   _min: UserProfileMinAggregateOutputType | null
   _max: UserProfileMaxAggregateOutputType | null
 }
@@ -252,6 +337,11 @@ export type UserProfileWhereInput = {
   t20TeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   secondaryTeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   playingRole?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  fantasyPoints?: Prisma.IntFilter<"UserProfile"> | number
+  boostersRemaining?: Prisma.IntFilter<"UserProfile"> | number
+  fantasyLevel?: Prisma.IntFilter<"UserProfile"> | number
+  fullParticipationWeeks?: Prisma.IntFilter<"UserProfile"> | number
+  levelBonusesAwarded?: Prisma.IntFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
@@ -264,6 +354,7 @@ export type UserProfileWhereInput = {
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -279,6 +370,11 @@ export type UserProfileOrderByWithRelationInput = {
   t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   playingRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   umpireAssignments?: Prisma.UmpireAssignmentOrderByRelationAggregateInput
@@ -291,6 +387,7 @@ export type UserProfileOrderByWithRelationInput = {
   certificationAttempts?: Prisma.CertificationAttemptOrderByRelationAggregateInput
   teamsCaptained?: Prisma.TeamOrderByRelationAggregateInput
   teamsViceCaptained?: Prisma.TeamOrderByRelationAggregateInput
+  predictions?: Prisma.PredictionOrderByRelationAggregateInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -309,6 +406,11 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   t20TeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   secondaryTeamCode?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   playingRole?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  fantasyPoints?: Prisma.IntFilter<"UserProfile"> | number
+  boostersRemaining?: Prisma.IntFilter<"UserProfile"> | number
+  fantasyLevel?: Prisma.IntFilter<"UserProfile"> | number
+  fullParticipationWeeks?: Prisma.IntFilter<"UserProfile"> | number
+  levelBonusesAwarded?: Prisma.IntFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentListRelationFilter
@@ -321,6 +423,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   certificationAttempts?: Prisma.CertificationAttemptListRelationFilter
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }, "id" | "clerkUserId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -336,11 +439,18 @@ export type UserProfileOrderByWithAggregationInput = {
   t20TeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrderInput | Prisma.SortOrder
   playingRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserProfileCountOrderByAggregateInput
+  _avg?: Prisma.UserProfileAvgOrderByAggregateInput
   _max?: Prisma.UserProfileMaxOrderByAggregateInput
   _min?: Prisma.UserProfileMinOrderByAggregateInput
+  _sum?: Prisma.UserProfileSumOrderByAggregateInput
 }
 
 export type UserProfileScalarWhereWithAggregatesInput = {
@@ -359,6 +469,11 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   t20TeamCode?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   secondaryTeamCode?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   playingRole?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+  fantasyPoints?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
+  boostersRemaining?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
+  fantasyLevel?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
+  fullParticipationWeeks?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
+  levelBonusesAwarded?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
 }
@@ -376,6 +491,11 @@ export type UserProfileCreateInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -388,6 +508,7 @@ export type UserProfileCreateInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -403,6 +524,11 @@ export type UserProfileUncheckedCreateInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -415,6 +541,7 @@ export type UserProfileUncheckedCreateInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUpdateInput = {
@@ -430,6 +557,11 @@ export type UserProfileUpdateInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -442,6 +574,7 @@ export type UserProfileUpdateInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -457,6 +590,11 @@ export type UserProfileUncheckedUpdateInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -469,6 +607,7 @@ export type UserProfileUncheckedUpdateInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateManyInput = {
@@ -484,6 +623,11 @@ export type UserProfileCreateManyInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -501,6 +645,11 @@ export type UserProfileUpdateManyMutationInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -518,6 +667,11 @@ export type UserProfileUncheckedUpdateManyInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,8 +694,21 @@ export type UserProfileCountOrderByAggregateInput = {
   t20TeamCode?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
   playingRole?: Prisma.SortOrder
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserProfileAvgOrderByAggregateInput = {
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
 }
 
 export type UserProfileMaxOrderByAggregateInput = {
@@ -557,6 +724,11 @@ export type UserProfileMaxOrderByAggregateInput = {
   t20TeamCode?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
   playingRole?: Prisma.SortOrder
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -574,8 +746,21 @@ export type UserProfileMinOrderByAggregateInput = {
   t20TeamCode?: Prisma.SortOrder
   secondaryTeamCode?: Prisma.SortOrder
   playingRole?: Prisma.SortOrder
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserProfileSumOrderByAggregateInput = {
+  fantasyPoints?: Prisma.SortOrder
+  boostersRemaining?: Prisma.SortOrder
+  fantasyLevel?: Prisma.SortOrder
+  fullParticipationWeeks?: Prisma.SortOrder
+  levelBonusesAwarded?: Prisma.SortOrder
 }
 
 export type UserProfileScalarRelationFilter = {
@@ -617,6 +802,14 @@ export type UserProfileUpdateOneWithoutTeamsViceCaptainedNestedInput = {
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserProfileCreateNestedOneWithoutUmpiringTrainingInput = {
@@ -731,6 +924,20 @@ export type UserProfileUpdateOneRequiredWithoutCertificationAttemptsNestedInput 
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutCertificationAttemptsInput, Prisma.UserProfileUpdateWithoutCertificationAttemptsInput>, Prisma.UserProfileUncheckedUpdateWithoutCertificationAttemptsInput>
 }
 
+export type UserProfileCreateNestedOneWithoutPredictionsInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutPredictionsInput, Prisma.UserProfileUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutPredictionsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutPredictionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutPredictionsInput, Prisma.UserProfileUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutPredictionsInput
+  upsert?: Prisma.UserProfileUpsertWithoutPredictionsInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutPredictionsInput, Prisma.UserProfileUpdateWithoutPredictionsInput>, Prisma.UserProfileUncheckedUpdateWithoutPredictionsInput>
+}
+
 export type UserProfileCreateWithoutTeamsCaptainedInput = {
   id?: string
   clerkUserId: string
@@ -744,6 +951,11 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -755,6 +967,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
@@ -770,6 +983,11 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -781,6 +999,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutTeamsCaptainedInput = {
@@ -801,6 +1020,11 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -812,6 +1036,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
@@ -827,6 +1052,11 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -838,6 +1068,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutTeamsViceCaptainedInput = {
@@ -869,6 +1100,11 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -880,6 +1116,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
@@ -895,6 +1132,11 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -906,6 +1148,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUpsertWithoutTeamsViceCaptainedInput = {
@@ -932,6 +1175,11 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -943,6 +1191,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
@@ -958,6 +1207,11 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -969,6 +1223,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpiringTrainingInput = {
@@ -984,6 +1239,11 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -995,6 +1255,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
@@ -1010,6 +1271,11 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1021,6 +1287,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpiringTrainingInput = {
@@ -1052,6 +1319,11 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1063,6 +1335,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
@@ -1078,6 +1351,11 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1089,6 +1367,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutYouth15RegistrationInput = {
@@ -1104,6 +1383,11 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1115,6 +1399,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
@@ -1130,6 +1415,11 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1141,6 +1431,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutYouth15RegistrationInput = {
@@ -1172,6 +1463,11 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1183,6 +1479,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
@@ -1198,6 +1495,11 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1209,6 +1511,7 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutWaiverSubmissionsInput = {
@@ -1224,6 +1527,11 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1235,6 +1543,7 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
@@ -1250,6 +1559,11 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1261,6 +1575,7 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutWaiverSubmissionsInput = {
@@ -1292,6 +1607,11 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1303,6 +1623,7 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
@@ -1318,6 +1639,11 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1329,6 +1655,7 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutClubInfoSubmissionInput = {
@@ -1344,6 +1671,11 @@ export type UserProfileCreateWithoutClubInfoSubmissionInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1355,6 +1687,7 @@ export type UserProfileCreateWithoutClubInfoSubmissionInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
@@ -1370,6 +1703,11 @@ export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1381,6 +1719,7 @@ export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutClubInfoSubmissionInput = {
@@ -1412,6 +1751,11 @@ export type UserProfileUpdateWithoutClubInfoSubmissionInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1423,6 +1767,7 @@ export type UserProfileUpdateWithoutClubInfoSubmissionInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
@@ -1438,6 +1783,11 @@ export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1449,6 +1799,7 @@ export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpireAssignmentsInput = {
@@ -1464,6 +1815,11 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
@@ -1475,6 +1831,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
@@ -1490,6 +1847,11 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
@@ -1501,6 +1863,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpireAssignmentsInput = {
@@ -1532,6 +1895,11 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
@@ -1543,6 +1911,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
@@ -1558,6 +1927,11 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
@@ -1569,6 +1943,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
@@ -1584,6 +1959,11 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1595,6 +1975,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput = {
@@ -1610,6 +1991,11 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1621,6 +2007,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationQuestionsCreatedInput = {
@@ -1652,6 +2039,11 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1663,6 +2055,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput = {
@@ -1678,6 +2071,11 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1689,6 +2087,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
@@ -1704,6 +2103,11 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1715,6 +2119,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = {
@@ -1730,6 +2135,11 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1741,6 +2151,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationWindowsStartedInput = {
@@ -1772,6 +2183,11 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1783,6 +2199,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = {
@@ -1798,6 +2215,11 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1809,6 +2231,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationAttemptsInput = {
@@ -1824,6 +2247,11 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
@@ -1835,6 +2263,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
@@ -1850,6 +2279,11 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   t20TeamCode?: string | null
   secondaryTeamCode?: string | null
   playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
@@ -1861,6 +2295,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationAttemptsInput = {
@@ -1892,6 +2327,11 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
@@ -1903,6 +2343,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
@@ -1918,6 +2359,11 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
@@ -1927,6 +2373,151 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
   certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
   certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutPredictionsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileUncheckedCreateWithoutPredictionsInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+}
+
+export type UserProfileCreateOrConnectWithoutPredictionsInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutPredictionsInput, Prisma.UserProfileUncheckedCreateWithoutPredictionsInput>
+}
+
+export type UserProfileUpsertWithoutPredictionsInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutPredictionsInput, Prisma.UserProfileUncheckedUpdateWithoutPredictionsInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutPredictionsInput, Prisma.UserProfileUncheckedCreateWithoutPredictionsInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutPredictionsInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutPredictionsInput, Prisma.UserProfileUncheckedUpdateWithoutPredictionsInput>
+}
+
+export type UserProfileUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
 }
@@ -1944,6 +2535,7 @@ export type UserProfileCountOutputType = {
   certificationAttempts: number
   teamsCaptained: number
   teamsViceCaptained: number
+  predictions: number
 }
 
 export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1954,6 +2546,7 @@ export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   certificationAttempts?: boolean | UserProfileCountOutputTypeCountCertificationAttemptsArgs
   teamsCaptained?: boolean | UserProfileCountOutputTypeCountTeamsCaptainedArgs
   teamsViceCaptained?: boolean | UserProfileCountOutputTypeCountTeamsViceCaptainedArgs
+  predictions?: boolean | UserProfileCountOutputTypeCountPredictionsArgs
 }
 
 /**
@@ -2015,6 +2608,13 @@ export type UserProfileCountOutputTypeCountTeamsViceCaptainedArgs<ExtArgs extend
   where?: Prisma.TeamWhereInput
 }
 
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountPredictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PredictionWhereInput
+}
+
 
 export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2029,6 +2629,11 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   t20TeamCode?: boolean
   secondaryTeamCode?: boolean
   playingRole?: boolean
+  fantasyPoints?: boolean
+  boostersRemaining?: boolean
+  fantasyLevel?: boolean
+  fullParticipationWeeks?: boolean
+  levelBonusesAwarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
@@ -2041,6 +2646,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
+  predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
@@ -2057,6 +2663,11 @@ export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   t20TeamCode?: boolean
   secondaryTeamCode?: boolean
   playingRole?: boolean
+  fantasyPoints?: boolean
+  boostersRemaining?: boolean
+  fantasyLevel?: boolean
+  fullParticipationWeeks?: boolean
+  levelBonusesAwarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["userProfile"]>
@@ -2074,6 +2685,11 @@ export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   t20TeamCode?: boolean
   secondaryTeamCode?: boolean
   playingRole?: boolean
+  fantasyPoints?: boolean
+  boostersRemaining?: boolean
+  fantasyLevel?: boolean
+  fullParticipationWeeks?: boolean
+  levelBonusesAwarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["userProfile"]>
@@ -2091,11 +2707,16 @@ export type UserProfileSelectScalar = {
   t20TeamCode?: boolean
   secondaryTeamCode?: boolean
   playingRole?: boolean
+  fantasyPoints?: boolean
+  boostersRemaining?: boolean
+  fantasyLevel?: boolean
+  fullParticipationWeeks?: boolean
+  levelBonusesAwarded?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "contactNumber" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "t20TeamCode" | "secondaryTeamCode" | "playingRole" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
+export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "firstName" | "lastName" | "contactNumber" | "notificationsEnabled" | "newsletterSubscribed" | "role" | "t20TeamCode" | "secondaryTeamCode" | "playingRole" | "fantasyPoints" | "boostersRemaining" | "fantasyLevel" | "fullParticipationWeeks" | "levelBonusesAwarded" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umpireAssignments?: boolean | Prisma.UserProfile$umpireAssignmentsArgs<ExtArgs>
   umpiringTraining?: boolean | Prisma.UserProfile$umpiringTrainingArgs<ExtArgs>
@@ -2107,6 +2728,7 @@ export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.Internal
   certificationAttempts?: boolean | Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
+  predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2125,6 +2747,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     certificationAttempts: Prisma.$CertificationAttemptPayload<ExtArgs>[]
     teamsCaptained: Prisma.$TeamPayload<ExtArgs>[]
     teamsViceCaptained: Prisma.$TeamPayload<ExtArgs>[]
+    predictions: Prisma.$PredictionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2139,6 +2762,11 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     t20TeamCode: string | null
     secondaryTeamCode: string | null
     playingRole: string | null
+    fantasyPoints: number
+    boostersRemaining: number
+    fantasyLevel: number
+    fullParticipationWeeks: number
+    levelBonusesAwarded: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userProfile"]>
@@ -2545,6 +3173,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   certificationAttempts<T extends Prisma.UserProfile$certificationAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$certificationAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamsCaptained<T extends Prisma.UserProfile$teamsCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamsViceCaptained<T extends Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  predictions<T extends Prisma.UserProfile$predictionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$predictionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PredictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2586,6 +3215,11 @@ export interface UserProfileFieldRefs {
   readonly t20TeamCode: Prisma.FieldRef<"UserProfile", 'String'>
   readonly secondaryTeamCode: Prisma.FieldRef<"UserProfile", 'String'>
   readonly playingRole: Prisma.FieldRef<"UserProfile", 'String'>
+  readonly fantasyPoints: Prisma.FieldRef<"UserProfile", 'Int'>
+  readonly boostersRemaining: Prisma.FieldRef<"UserProfile", 'Int'>
+  readonly fantasyLevel: Prisma.FieldRef<"UserProfile", 'Int'>
+  readonly fullParticipationWeeks: Prisma.FieldRef<"UserProfile", 'Int'>
+  readonly levelBonusesAwarded: Prisma.FieldRef<"UserProfile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
 }
@@ -3203,6 +3837,30 @@ export type UserProfile$teamsViceCaptainedArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.predictions
+ */
+export type UserProfile$predictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Prediction
+   */
+  select?: Prisma.PredictionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Prediction
+   */
+  omit?: Prisma.PredictionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PredictionInclude<ExtArgs> | null
+  where?: Prisma.PredictionWhereInput
+  orderBy?: Prisma.PredictionOrderByWithRelationInput | Prisma.PredictionOrderByWithRelationInput[]
+  cursor?: Prisma.PredictionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PredictionScalarFieldEnum | Prisma.PredictionScalarFieldEnum[]
 }
 
 /**

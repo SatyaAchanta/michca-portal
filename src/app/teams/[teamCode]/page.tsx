@@ -38,6 +38,17 @@ function getPlayingRoleLabel(playingRole: string | null) {
   return playingRole?.trim().length ? playingRole : "Not specified";
 }
 
+function getRosterPlayerName(
+  player: NonNullable<Awaited<ReturnType<typeof getTeamByCode>>>["players"][number]
+) {
+  const waiverName = player.waiverPlayerName?.trim();
+  if (waiverName) {
+    return waiverName;
+  }
+
+  return getPersonName(player);
+}
+
 function getTeamGameSummary(
   game: NonNullable<Awaited<ReturnType<typeof getTeamByCode>>>["upcomingGames"][number],
   teamCode: string
@@ -248,7 +259,7 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
                   >
                     <div className="flex items-start justify-between gap-3">
                       <p className="font-medium text-foreground">
-                        {getPersonName(player)}
+                        {getRosterPlayerName(player)}
                       </p>
                       {team.captain?.id === player.id ? (
                         <Badge variant="outline">Captain</Badge>

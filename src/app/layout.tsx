@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
@@ -58,6 +58,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -79,7 +84,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${poppins.variable} bg-background text-foreground antialiased`}
+          className={`${poppins.variable} overflow-x-hidden bg-background text-foreground antialiased`}
         >
           <SiteHeader isAdmin={isAdmin} />
           <main className="min-h-screen">{children}</main>

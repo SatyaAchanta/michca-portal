@@ -146,3 +146,11 @@ export async function requireAnyAdminRole(): Promise<UserProfile> {
   }
   return profile;
 }
+
+export async function requireAdminAllowlistedProfile(): Promise<UserProfile> {
+  const profile = await getOrCreateCurrentUserProfile();
+  if (!isAdminAllowlisted(profile.email)) {
+    throw new InsufficientRoleError(profile.role, UserRole.ADMIN);
+  }
+  return profile;
+}

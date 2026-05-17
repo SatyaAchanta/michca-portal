@@ -19,6 +19,7 @@ const SECTION_OPTIONS = [
   { value: "umpiring", label: "Umpiring" },
   { value: "waiver", label: "Waiver Status" },
   { value: "clubInfo", label: "Club Info" },
+  { value: "games", label: "Games" },
   { value: "teams", label: "Teams" },
 ];
 

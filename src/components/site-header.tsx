@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ChevronDown, LogOut, Menu } from "lucide-react";
+import { SignedIn, SignedOut, UserButton, useClerk } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -31,28 +31,20 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
+  { label: "Fantasy", href: "/fantasy" },
+];
+
+const publicMoreLinks: NavLink[] = [
   { label: "Forms", href: "/forms" },
-];
-
-const mobileNavLinks: NavLink[] = [
-  ...navLinks,
-  {
-    label: "Fantasy",
-    href: "https://www.fantasyleaguemichca.org",
-    external: true,
-  },
-];
-
-const publicMoreLinks = [
   { label: "Grounds", href: "/grounds" },
   { label: "Leadership", href: "/committees" },
   { label: "About", href: "/about" },
-  {
-    label: "Fantasy",
-    href: "https://www.fantasyleaguemichca.org",
-    external: true,
-  },
 ];
+
+const mobileQuickLinkHrefs = new Set(["/account", "/schedule", "/fantasy"]);
+const mobileNavLinks: NavLink[] = [...navLinks, ...publicMoreLinks].filter(
+  (link) => !mobileQuickLinkHrefs.has(link.href),
+);
 
 type SiteHeaderProps = {
   isAdmin?: boolean;
@@ -61,21 +53,23 @@ type SiteHeaderProps = {
 export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const { signOut } = useClerk();
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between pl-4 pr-2 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-80"
+          className="flex min-w-0 items-center gap-2 sm:gap-3 transition-opacity duration-200 hover:opacity-80"
         >
           <Image
             src={"/michca.png"}
             alt="Michigan Cricket Association Logo"
             width={40}
             height={40}
+            className="shrink-0"
           />
-          <p className="text-xl font-semibold text-foreground font-display sm:text-2xl">
+          <p className="truncate text-lg font-semibold text-foreground font-display sm:text-2xl">
             <span className="lg:hidden">
               Mich-<span className="text-red-600">CA</span>
             </span>
@@ -84,7 +78,7 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
             </span>
           </p>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="ml-2 flex shrink-0 items-center gap-2">
           <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
             <ThemeToggle />
             {navLinks.map((link) => (
@@ -194,11 +188,25 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                   </Button>
                 </SignedOut>
                 <SignedIn>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">
-                      Signed in
-                    </span>
-                    <UserButton />
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">
+                        Signed in
+                      </span>
+                      <UserButton />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setOpen(false);
+                        void signOut({ redirectUrl: "/" });
+                      }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
                   </div>
                 </SignedIn>
                 {mobileNavLinks.map((link) => (

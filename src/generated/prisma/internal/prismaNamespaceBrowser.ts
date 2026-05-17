@@ -63,7 +63,8 @@ export const ModelName = {
   CertificationQuestionOption: 'CertificationQuestionOption',
   CertificationTestWindow: 'CertificationTestWindow',
   CertificationAttempt: 'CertificationAttempt',
-  CertificationAttemptQuestion: 'CertificationAttemptQuestion'
+  CertificationAttemptQuestion: 'CertificationAttemptQuestion',
+  Prediction: 'Prediction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -135,6 +136,11 @@ export const UserProfileScalarFieldEnum = {
   t20TeamCode: 't20TeamCode',
   secondaryTeamCode: 'secondaryTeamCode',
   playingRole: 'playingRole',
+  fantasyPoints: 'fantasyPoints',
+  boostersRemaining: 'boostersRemaining',
+  fantasyLevel: 'fantasyLevel',
+  fullParticipationWeeks: 'fullParticipationWeeks',
+  levelBonusesAwarded: 'levelBonusesAwarded',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -315,6 +321,22 @@ export const CertificationAttemptQuestionScalarFieldEnum = {
 } as const
 
 export type CertificationAttemptQuestionScalarFieldEnum = (typeof CertificationAttemptQuestionScalarFieldEnum)[keyof typeof CertificationAttemptQuestionScalarFieldEnum]
+
+
+export const PredictionScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  gameId: 'gameId',
+  predictedWinnerCode: 'predictedWinnerCode',
+  isBoosted: 'isBoosted',
+  isScored: 'isScored',
+  isCorrect: 'isCorrect',
+  pointsEarned: 'pointsEarned',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PredictionScalarFieldEnum = (typeof PredictionScalarFieldEnum)[keyof typeof PredictionScalarFieldEnum]
 
 
 export const SortOrder = {
