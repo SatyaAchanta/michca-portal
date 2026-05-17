@@ -486,19 +486,21 @@ function summarizeResponseOutput(output: unknown) {
   });
 }
 
-function extractResponseRefusal(response: {
-  output?: Array<{
-    content?: Array<{ type?: string; refusal?: string }>;
-  }>;
-}) {
-  if (!Array.isArray(response.output)) {
+function extractResponseRefusal(output: unknown) {
+  if (!Array.isArray(output)) {
     return null;
   }
 
-  for (const item of response.output) {
-    if (!Array.isArray(item?.content)) continue;
+  for (const item of output) {
+    if (!item || typeof item !== "object") continue;
 
-    for (const contentItem of item.content) {
+    const candidate = item as {
+      content?: Array<{ type?: string; refusal?: string }>;
+    };
+
+    if (!Array.isArray(candidate.content)) continue;
+
+    for (const contentItem of candidate.content) {
       if (contentItem?.type === "refusal" && typeof contentItem.refusal === "string") {
         return contentItem.refusal;
       }
@@ -579,7 +581,7 @@ async function generateFantasyAnalysisReport(
     },
   });
 
-  const refusal = extractResponseRefusal(response);
+  const refusal = extractResponseRefusal(response.output);
   if (refusal) {
     console.error("OpenAI refused fantasy AI analysis request:", {
       modelName,
