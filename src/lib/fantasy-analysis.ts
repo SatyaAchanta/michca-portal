@@ -517,7 +517,10 @@ async function generateFantasyAnalysisReport(
   const client = getOpenAIClient();
   const response = await client.responses.create({
     model: modelName,
-    max_output_tokens: 700,
+    max_output_tokens: 1500,
+    reasoning: {
+      effort: 'minimal',
+    },
     input: [
       {
         role: "system",

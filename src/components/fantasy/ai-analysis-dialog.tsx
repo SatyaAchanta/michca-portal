@@ -110,12 +110,6 @@ export function AiAnalysisDialog() {
           <p className="text-sm font-medium text-foreground">More scored picks needed</p>
           <p className="mt-1 text-sm text-muted-foreground">{state.data.message}</p>
         </div>
-        <div className="flex items-center justify-between rounded-xl border border-border/70 bg-background px-4 py-3">
-          <span className="text-sm text-muted-foreground">Scored predictions</span>
-          <span className="text-sm font-semibold text-foreground">
-            {state.data.scoredPredictionCount}/{state.data.minimumRequired}
-          </span>
-        </div>
       </div>
     ) : (
       <div className="space-y-5 px-6 py-6">
@@ -205,7 +199,7 @@ export function AiAnalysisDialog() {
 
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3 text-xs text-muted-foreground">
           <span>
-            Based on {state.data.scoredPredictionCount} scored predictions.
+            This analysis includes your predictions for {state.data.scoredPredictionCount} completed games.
           </span>
           <span>
             {state.data.source === "cache" ? "Cached" : "Generated"} • Updated{" "}
@@ -218,7 +212,10 @@ export function AiAnalysisDialog() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button
+          className="border-amber-400/70 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-300 text-slate-950 shadow-[0_10px_30px_-12px_rgba(251,191,36,0.85)] hover:from-amber-200 hover:via-yellow-200 hover:to-orange-200 dark:border-amber-300/40 dark:from-amber-300 dark:via-yellow-200 dark:to-orange-300 dark:text-slate-950 dark:shadow-[0_12px_36px_-14px_rgba(251,191,36,0.65)]"
+          variant="outline"
+        >
           <Sparkles className="h-4 w-4" />
           AI Analysis
         </Button>
@@ -230,7 +227,7 @@ export function AiAnalysisDialog() {
             AI Analysis
           </DialogTitle>
           <DialogDescription>
-            Read-only performance analysis generated from your scored fantasy prediction history.
+            Performance analysis generated from your scored fantasy prediction history. AI can make mistakes, so use it as guidance rather than a guaranteed recommendation.
           </DialogDescription>
         </DialogHeader>
         {content}
