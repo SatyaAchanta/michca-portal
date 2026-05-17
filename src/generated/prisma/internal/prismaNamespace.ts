@@ -397,7 +397,8 @@ export const ModelName = {
   CertificationTestWindow: 'CertificationTestWindow',
   CertificationAttempt: 'CertificationAttempt',
   CertificationAttemptQuestion: 'CertificationAttemptQuestion',
-  Prediction: 'Prediction'
+  Prediction: 'Prediction',
+  FantasyAnalysisReport: 'FantasyAnalysisReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "clubInfoSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion" | "prediction"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "clubInfoSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion" | "prediction" | "fantasyAnalysisReport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1453,6 +1454,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FantasyAnalysisReport: {
+      payload: Prisma.$FantasyAnalysisReportPayload<ExtArgs>
+      fields: Prisma.FantasyAnalysisReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FantasyAnalysisReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FantasyAnalysisReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        findFirst: {
+          args: Prisma.FantasyAnalysisReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FantasyAnalysisReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        findMany: {
+          args: Prisma.FantasyAnalysisReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>[]
+        }
+        create: {
+          args: Prisma.FantasyAnalysisReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        createMany: {
+          args: Prisma.FantasyAnalysisReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FantasyAnalysisReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>[]
+        }
+        delete: {
+          args: Prisma.FantasyAnalysisReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        update: {
+          args: Prisma.FantasyAnalysisReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.FantasyAnalysisReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FantasyAnalysisReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FantasyAnalysisReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.FantasyAnalysisReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FantasyAnalysisReportPayload>
+        }
+        aggregate: {
+          args: Prisma.FantasyAnalysisReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFantasyAnalysisReport>
+        }
+        groupBy: {
+          args: Prisma.FantasyAnalysisReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FantasyAnalysisReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FantasyAnalysisReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FantasyAnalysisReportCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1746,6 +1821,21 @@ export const PredictionScalarFieldEnum = {
 } as const
 
 export type PredictionScalarFieldEnum = (typeof PredictionScalarFieldEnum)[keyof typeof PredictionScalarFieldEnum]
+
+
+export const FantasyAnalysisReportScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  modelName: 'modelName',
+  analyticsFingerprint: 'analyticsFingerprint',
+  reportPayload: 'reportPayload',
+  generatedAt: 'generatedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FantasyAnalysisReportScalarFieldEnum = (typeof FantasyAnalysisReportScalarFieldEnum)[keyof typeof FantasyAnalysisReportScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2133,6 +2223,7 @@ export type GlobalOmitConfig = {
   certificationAttempt?: Prisma.CertificationAttemptOmit
   certificationAttemptQuestion?: Prisma.CertificationAttemptQuestionOmit
   prediction?: Prisma.PredictionOmit
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportOmit
 }
 
 /* Types for Logging */

@@ -355,6 +355,7 @@ export type UserProfileWhereInput = {
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
   predictions?: Prisma.PredictionListRelationFilter
+  fantasyAnalysisReport?: Prisma.XOR<Prisma.FantasyAnalysisReportNullableScalarRelationFilter, Prisma.FantasyAnalysisReportWhereInput> | null
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -388,6 +389,7 @@ export type UserProfileOrderByWithRelationInput = {
   teamsCaptained?: Prisma.TeamOrderByRelationAggregateInput
   teamsViceCaptained?: Prisma.TeamOrderByRelationAggregateInput
   predictions?: Prisma.PredictionOrderByRelationAggregateInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportOrderByWithRelationInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -424,6 +426,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
   predictions?: Prisma.PredictionListRelationFilter
+  fantasyAnalysisReport?: Prisma.XOR<Prisma.FantasyAnalysisReportNullableScalarRelationFilter, Prisma.FantasyAnalysisReportWhereInput> | null
 }, "id" | "clerkUserId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -509,6 +512,7 @@ export type UserProfileCreateInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -542,6 +546,7 @@ export type UserProfileUncheckedCreateInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUpdateInput = {
@@ -575,6 +580,7 @@ export type UserProfileUpdateInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -608,6 +614,7 @@ export type UserProfileUncheckedUpdateInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateManyInput = {
@@ -938,6 +945,20 @@ export type UserProfileUpdateOneRequiredWithoutPredictionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutPredictionsInput, Prisma.UserProfileUpdateWithoutPredictionsInput>, Prisma.UserProfileUncheckedUpdateWithoutPredictionsInput>
 }
 
+export type UserProfileCreateNestedOneWithoutFantasyAnalysisReportInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutFantasyAnalysisReportInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutFantasyAnalysisReportNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutFantasyAnalysisReportInput
+  upsert?: Prisma.UserProfileUpsertWithoutFantasyAnalysisReportInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutFantasyAnalysisReportInput, Prisma.UserProfileUpdateWithoutFantasyAnalysisReportInput>, Prisma.UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput>
+}
+
 export type UserProfileCreateWithoutTeamsCaptainedInput = {
   id?: string
   clerkUserId: string
@@ -968,6 +989,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
@@ -1000,6 +1022,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutTeamsCaptainedInput = {
@@ -1037,6 +1060,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
@@ -1069,6 +1093,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutTeamsViceCaptainedInput = {
@@ -1117,6 +1142,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
@@ -1149,6 +1175,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUpsertWithoutTeamsViceCaptainedInput = {
@@ -1192,6 +1219,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
@@ -1224,6 +1252,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpiringTrainingInput = {
@@ -1256,6 +1285,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
@@ -1288,6 +1318,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpiringTrainingInput = {
@@ -1336,6 +1367,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
@@ -1368,6 +1400,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutYouth15RegistrationInput = {
@@ -1400,6 +1433,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
@@ -1432,6 +1466,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutYouth15RegistrationInput = {
@@ -1480,6 +1515,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
@@ -1512,6 +1548,7 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutWaiverSubmissionsInput = {
@@ -1544,6 +1581,7 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
@@ -1576,6 +1614,7 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutWaiverSubmissionsInput = {
@@ -1624,6 +1663,7 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
@@ -1656,6 +1696,7 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutClubInfoSubmissionInput = {
@@ -1688,6 +1729,7 @@ export type UserProfileCreateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
@@ -1720,6 +1762,7 @@ export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutClubInfoSubmissionInput = {
@@ -1768,6 +1811,7 @@ export type UserProfileUpdateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
@@ -1800,6 +1844,7 @@ export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutUmpireAssignmentsInput = {
@@ -1832,6 +1877,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
@@ -1864,6 +1910,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUmpireAssignmentsInput = {
@@ -1912,6 +1959,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
@@ -1944,6 +1992,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
@@ -1976,6 +2025,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput = {
@@ -2008,6 +2058,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationQuestionsCreatedInput = {
@@ -2056,6 +2107,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput = {
@@ -2088,6 +2140,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
@@ -2120,6 +2173,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = {
@@ -2152,6 +2206,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationWindowsStartedInput = {
@@ -2200,6 +2255,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = {
@@ -2232,6 +2288,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutCertificationAttemptsInput = {
@@ -2264,6 +2321,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
@@ -2296,6 +2354,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutCertificationAttemptsInput = {
@@ -2344,6 +2403,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
@@ -2376,6 +2436,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateWithoutPredictionsInput = {
@@ -2408,6 +2469,7 @@ export type UserProfileCreateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutPredictionsInput = {
@@ -2440,6 +2502,7 @@ export type UserProfileUncheckedCreateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutPredictionsInput = {
@@ -2488,6 +2551,7 @@ export type UserProfileUpdateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutPredictionsInput = {
@@ -2520,6 +2584,155 @@ export type UserProfileUncheckedUpdateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutFantasyAnalysisReportInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutFantasyAnalysisReportInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput>
+}
+
+export type UserProfileUpsertWithoutFantasyAnalysisReportInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutFantasyAnalysisReportInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutFantasyAnalysisReportInput, Prisma.UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput>
+}
+
+export type UserProfileUpdateWithoutFantasyAnalysisReportInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 
@@ -2647,6 +2860,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
   predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
+  fantasyAnalysisReport?: boolean | Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
@@ -2729,6 +2943,7 @@ export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.Internal
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
   predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
+  fantasyAnalysisReport?: boolean | Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2748,6 +2963,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     teamsCaptained: Prisma.$TeamPayload<ExtArgs>[]
     teamsViceCaptained: Prisma.$TeamPayload<ExtArgs>[]
     predictions: Prisma.$PredictionPayload<ExtArgs>[]
+    fantasyAnalysisReport: Prisma.$FantasyAnalysisReportPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3174,6 +3390,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   teamsCaptained<T extends Prisma.UserProfile$teamsCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamsViceCaptained<T extends Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   predictions<T extends Prisma.UserProfile$predictionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$predictionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PredictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  fantasyAnalysisReport<T extends Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>>): Prisma.Prisma__FantasyAnalysisReportClient<runtime.Types.Result.GetResult<Prisma.$FantasyAnalysisReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3861,6 +4078,25 @@ export type UserProfile$predictionsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PredictionScalarFieldEnum | Prisma.PredictionScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.fantasyAnalysisReport
+ */
+export type UserProfile$fantasyAnalysisReportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FantasyAnalysisReport
+   */
+  select?: Prisma.FantasyAnalysisReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FantasyAnalysisReport
+   */
+  omit?: Prisma.FantasyAnalysisReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FantasyAnalysisReportInclude<ExtArgs> | null
+  where?: Prisma.FantasyAnalysisReportWhereInput
 }
 
 /**

@@ -64,7 +64,8 @@ export const ModelName = {
   CertificationTestWindow: 'CertificationTestWindow',
   CertificationAttempt: 'CertificationAttempt',
   CertificationAttemptQuestion: 'CertificationAttemptQuestion',
-  Prediction: 'Prediction'
+  Prediction: 'Prediction',
+  FantasyAnalysisReport: 'FantasyAnalysisReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -337,6 +338,21 @@ export const PredictionScalarFieldEnum = {
 } as const
 
 export type PredictionScalarFieldEnum = (typeof PredictionScalarFieldEnum)[keyof typeof PredictionScalarFieldEnum]
+
+
+export const FantasyAnalysisReportScalarFieldEnum = {
+  id: 'id',
+  userProfileId: 'userProfileId',
+  modelName: 'modelName',
+  analyticsFingerprint: 'analyticsFingerprint',
+  reportPayload: 'reportPayload',
+  generatedAt: 'generatedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FantasyAnalysisReportScalarFieldEnum = (typeof FantasyAnalysisReportScalarFieldEnum)[keyof typeof FantasyAnalysisReportScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -87,3 +87,8 @@ export type CertificationAttemptQuestion = Prisma.CertificationAttemptQuestionMo
  * 
  */
 export type Prediction = Prisma.PredictionModel
+/**
+ * Model FantasyAnalysisReport
+ * 
+ */
+export type FantasyAnalysisReport = Prisma.FantasyAnalysisReportModel
