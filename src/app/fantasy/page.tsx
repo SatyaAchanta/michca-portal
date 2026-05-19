@@ -7,6 +7,7 @@ import { BookOpen, Trophy, Zap } from "lucide-react";
 import { PageContainer } from "@/components/page-container";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AiAnalysisDialog } from "@/components/fantasy/ai-analysis-dialog";
 import { FantasyClient } from "@/components/fantasy/fantasy-client";
 import {
   getUserFantasyData,
@@ -98,6 +99,7 @@ export default async function FantasyPage() {
                 Leaderboard
               </Link>
             </Button>
+            <AiAnalysisDialog />
           </div>
         </div>
 
