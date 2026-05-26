@@ -137,3 +137,23 @@ export function calculateBoostersRemaining(input: {
 
   return Math.max(0, SEASON_BOOSTER_COUNT - input.boostedPredictionCount);
 }
+
+export function calculateBoostersRemainingWithAbandonedRefunds(input: {
+  fullParticipationWeeks: number;
+  boostedPredictionCount: number;
+  refundedBoostedPredictionCount: number;
+}): number {
+  if (!canUseBoosters(input.fullParticipationWeeks)) {
+    return 0;
+  }
+
+  return Math.min(
+    SEASON_BOOSTER_COUNT,
+    Math.max(
+      0,
+      SEASON_BOOSTER_COUNT -
+        input.boostedPredictionCount +
+        input.refundedBoostedPredictionCount,
+    ),
+  );
+}

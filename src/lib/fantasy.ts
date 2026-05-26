@@ -8,7 +8,7 @@ import {
   getPointsForGame,
   isFantasyScorableGame,
 } from "@/lib/fantasy-scoring";
-import { isDrawResult } from "@/lib/game-results";
+import { isAbandonedResult, isDrawResult } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 export { FULL_WEEKS_FOR_BOOSTERS, SEASON_BOOSTER_COUNT, canUseBoosters, getPointsForGame };
 
@@ -23,6 +23,7 @@ type PredictionUpdate = {
 type GameWeekScoringData = {
   predictionUpdates: PredictionUpdate[];
   userPointsMap: Map<string, number>;
+  boosterRefundsByUser: Map<string, number>;
   affectedUserIds: string[];
   fullParticipants: Set<string>;
   totalPointsAwarded: number;
@@ -84,6 +85,7 @@ async function buildGameWeekScoringData(
     return {
       predictionUpdates: [],
       userPointsMap: new Map(),
+      boosterRefundsByUser: new Map(),
       affectedUserIds: [],
       fullParticipants: new Set(),
       totalPointsAwarded: 0,
@@ -102,6 +104,7 @@ async function buildGameWeekScoringData(
     return {
       predictionUpdates: [],
       userPointsMap: new Map(),
+      boosterRefundsByUser: new Map(),
       affectedUserIds: [],
       fullParticipants: new Set(),
       totalPointsAwarded: 0,
@@ -109,6 +112,7 @@ async function buildGameWeekScoringData(
   }
 
   const userPointsMap = new Map<string, number>();
+  const boosterRefundsByUser = new Map<string, number>();
   const predictionUpdates: PredictionUpdate[] = [];
 
   for (const pred of allPredictions) {
@@ -138,6 +142,13 @@ async function buildGameWeekScoringData(
         (userPointsMap.get(pred.userProfileId) ?? 0) + pointsEarned,
       );
     }
+
+    if (pred.isBoosted && isAbandonedResult(game)) {
+      boosterRefundsByUser.set(
+        pred.userProfileId,
+        (boosterRefundsByUser.get(pred.userProfileId) ?? 0) + 1,
+      );
+    }
   }
 
   const affectedUserIds = [
@@ -159,6 +170,7 @@ async function buildGameWeekScoringData(
   return {
     predictionUpdates,
     userPointsMap,
+    boosterRefundsByUser,
     affectedUserIds,
     fullParticipants,
     totalPointsAwarded: predictionUpdates.reduce(
@@ -234,6 +246,7 @@ export async function scoreGameWeekPredictions(
   const {
     predictionUpdates,
     userPointsMap,
+    boosterRefundsByUser,
     affectedUserIds,
     fullParticipants,
     totalPointsAwarded,
@@ -273,6 +286,7 @@ export async function scoreGameWeekPredictions(
       profile.fullParticipationWeeks + (isFullParticipant ? 1 : 0);
 
     let newBoostersRemaining = profile.boostersRemaining;
+    const refundedBoosters = boosterRefundsByUser.get(profile.id) ?? 0;
     if (
       !canUseBoosters(profile.fullParticipationWeeks) &&
       canUseBoosters(newFullWeeks)
@@ -281,6 +295,12 @@ export async function scoreGameWeekPredictions(
         fullParticipationWeeks: newFullWeeks,
         boostedPredictionCount: 0,
       });
+    }
+    if (refundedBoosters > 0) {
+      newBoostersRemaining = Math.min(
+        SEASON_BOOSTER_COUNT,
+        newBoostersRemaining + refundedBoosters,
+      );
     }
 
     return prisma.userProfile.update({

@@ -433,7 +433,174 @@ describe("scoreGameWeekPredictions", () => {
       data: {
         fantasyPoints: { increment: 0 },
         fullParticipationWeeks: 2,
-        boostersRemaining: 6,
+        boostersRemaining: 7,
+      },
+    });
+  });
+
+  it("refunds one booster per boosted abandoned prediction while still scoring zero points", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-05-02T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        resultType: GameResult.ABANDONED,
+        winnerCode: null,
+        isDraw: true,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: "A",
+            isBoosted: true,
+          },
+        ],
+      },
+      {
+        id: "playoff-1",
+        date: new Date("2026-05-03T14:00:00.000Z"),
+        gameType: GameType.PLAYOFF,
+        resultType: GameResult.ABANDONED,
+        winnerCode: null,
+        isDraw: true,
+        predictions: [
+          {
+            id: "pred-2",
+            userProfileId: "user-1",
+            predictedWinnerCode: "B",
+            isBoosted: true,
+          },
+        ],
+      },
+    ]);
+    userProfileFindManyMock.mockResolvedValue([
+      {
+        id: "user-1",
+        fantasyPoints: 4,
+        fullParticipationWeeks: 3,
+        boostersRemaining: 5,
+      },
+    ]);
+
+    const result = await scoreGameWeekPredictions("2026-W18");
+
+    expect(result).toEqual({ usersScored: 1, totalPointsAwarded: 0 });
+    expect(userProfileUpdateMock).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: {
+        fantasyPoints: { increment: 0 },
+        fullParticipationWeeks: 3,
+        boostersRemaining: 7,
+      },
+    });
+  });
+
+  it("applies abandoned refunds without affecting winning-game points in the same week", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-05-02T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
+        winnerCode: "A",
+        isDraw: false,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: "A",
+            isBoosted: true,
+          },
+        ],
+      },
+      {
+        id: "league-2",
+        date: new Date("2026-05-03T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        resultType: GameResult.ABANDONED,
+        winnerCode: null,
+        isDraw: true,
+        predictions: [
+          {
+            id: "pred-2",
+            userProfileId: "user-1",
+            predictedWinnerCode: "B",
+            isBoosted: true,
+          },
+        ],
+      },
+    ]);
+    userProfileFindManyMock.mockResolvedValue([
+      {
+        id: "user-1",
+        fantasyPoints: 2,
+        fullParticipationWeeks: 4,
+        boostersRemaining: 3,
+      },
+    ]);
+
+    const preview = await previewGameWeekScoring("2026-W18");
+    const scored = await scoreGameWeekPredictions("2026-W18");
+
+    expect(preview).toEqual({
+      usersScored: 1,
+      totalPointsAwarded: 3,
+      rankings: [
+        {
+          userProfileId: "user-1",
+          weeklyPoints: 3,
+          correctPredictions: 1,
+          totalPredictions: 1,
+        },
+      ],
+    });
+    expect(scored).toEqual({ usersScored: 1, totalPointsAwarded: 3 });
+    expect(userProfileUpdateMock).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: {
+        fantasyPoints: { increment: 3 },
+        fullParticipationWeeks: 5,
+        boostersRemaining: 4,
+      },
+    });
+  });
+
+  it("caps abandoned refunds at the season booster maximum", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-05-02T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        resultType: GameResult.ABANDONED,
+        winnerCode: null,
+        isDraw: true,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: "A",
+            isBoosted: true,
+          },
+        ],
+      },
+    ]);
+    userProfileFindManyMock.mockResolvedValue([
+      {
+        id: "user-1",
+        fantasyPoints: 10,
+        fullParticipationWeeks: 5,
+        boostersRemaining: 10,
+      },
+    ]);
+
+    await scoreGameWeekPredictions("2026-W18");
+
+    expect(userProfileUpdateMock).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: {
+        fantasyPoints: { increment: 0 },
+        fullParticipationWeeks: 5,
+        boostersRemaining: 10,
       },
     });
   });
