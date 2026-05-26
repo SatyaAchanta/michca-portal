@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { GameResult } from "@/generated/prisma/client";
 import { adminSetGameResult } from "@/lib/actions/fantasy";
 
 type Props = {
@@ -15,6 +14,7 @@ type Props = {
 };
 
 type Status = "idle" | "loading" | "success" | "error";
+type GameResultValue = "WIN" | "DRAW" | "ABANDONED";
 
 export function SetResultButton({
   gameId,
@@ -26,16 +26,16 @@ export function SetResultButton({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
-  async function handleResult(resultType: GameResult, winnerCode: string | null) {
+  async function handleResult(resultType: GameResultValue, winnerCode: string | null) {
     setStatus("loading");
     setMessage("");
     const res = await adminSetGameResult(gameId, resultType, winnerCode);
     if (res.success) {
       setStatus("success");
       setMessage(
-        resultType === GameResult.DRAW
+        resultType === "DRAW"
           ? "Marked as Draw / Tie"
-          : resultType === GameResult.ABANDONED
+          : resultType === "ABANDONED"
             ? "Marked as Abandoned"
             : `Winner: ${winnerCode === team1Code ? team1Name : team2Name}`,
       );
@@ -76,7 +76,7 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(GameResult.WIN, team1Code)}
+        onClick={() => handleResult("WIN", team1Code)}
         className="text-xs"
       >
         {isLoading ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : null}
@@ -86,7 +86,7 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(GameResult.DRAW, null)}
+        onClick={() => handleResult("DRAW", null)}
         className="text-xs"
       >
         Draw / Tie
@@ -95,7 +95,7 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(GameResult.ABANDONED, null)}
+        onClick={() => handleResult("ABANDONED", null)}
         className="text-xs"
       >
         Abandoned
@@ -104,7 +104,7 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(GameResult.WIN, team2Code)}
+        onClick={() => handleResult("WIN", team2Code)}
         className="text-xs"
       >
         {team2Name} Won

@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import "./globals.css";
@@ -7,12 +6,6 @@ import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next";
 import { getOrCreateCurrentUserProfile } from "@/lib/user-profile";
 import { isAnyAdminRole } from "@/lib/roles";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -84,7 +77,13 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${poppins.variable} overflow-x-hidden bg-background text-foreground antialiased`}
+          className="overflow-x-hidden bg-background text-foreground antialiased"
+          style={
+            {
+              "--font-poppins":
+                '"Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif',
+            } as React.CSSProperties
+          }
         >
           <SiteHeader isAdmin={isAdmin} />
           <main className="min-h-screen">{children}</main>
