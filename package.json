@@ -13,6 +13,8 @@
     "test:watch": "vitest",
     "schedule:dry-run": "jiti scripts/import-2026-schedule.ts",
     "schedule:import": "jiti scripts/import-2026-schedule.ts --apply",
+    "games:backfill-abandoned": "jiti scripts/backfill-abandoned-games.ts",
+    "fantasy:repair-ties": "jiti scripts/fantasy-repair-tie-points.ts",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

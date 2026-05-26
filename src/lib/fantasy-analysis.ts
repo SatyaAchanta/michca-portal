@@ -2,8 +2,9 @@ import { createHash } from "node:crypto";
 
 import OpenAI from "openai";
 
-import { GameType, type Division } from "@/generated/prisma/client";
+import { GameResult, GameType, type Division } from "@/generated/prisma/client";
 import { toSaturdayKey } from "@/lib/fantasy-dates";
+import { isAbandonedResult } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 
 export const FANTASY_ANALYSIS_MIN_SCORED_PREDICTIONS = 10;
@@ -101,6 +102,8 @@ type PredictionSnapshot = {
     date: Date;
     division: Division;
     gameType: GameType;
+    resultType: GameResult;
+    isDraw: boolean;
   };
 };
 
@@ -181,7 +184,9 @@ export function computeFantasyAnalysisData(input: {
   const { userProfile, userPredictions, communityPredictions, totalProfiles, higherScoringProfiles } =
     input;
 
-  const scoredPredictionCount = userPredictions.length;
+  const scoredPredictionCount = userPredictions.filter(
+    (prediction) => !isAbandonedResult(prediction.game),
+  ).length;
 
   const distinctLeagueWeeks = new Set(
     communityPredictions.map((prediction) => toSaturdayKey(new Date(prediction.game.date))),
@@ -211,6 +216,10 @@ export function computeFantasyAnalysisData(input: {
   >();
 
   for (const prediction of communityPredictions) {
+    if (isAbandonedResult(prediction.game)) {
+      continue;
+    }
+
     const divisionKey = prediction.game.division;
     const gameTypeKey = prediction.game.gameType;
     const isCorrect = Boolean(prediction.isCorrect);
@@ -250,6 +259,10 @@ export function computeFantasyAnalysisData(input: {
   }
 
   for (const prediction of communityPredictions) {
+    if (isAbandonedResult(prediction.game)) {
+      continue;
+    }
+
     const popularity = gamePickPopularity.get(prediction.game.id);
     const pickKey = prediction.predictedWinnerCode ?? "__DRAW__";
     const isMajorityPick =
@@ -270,6 +283,10 @@ export function computeFantasyAnalysisData(input: {
   }
 
   for (const prediction of userPredictions) {
+    if (isAbandonedResult(prediction.game)) {
+      continue;
+    }
+
     const weekKey = toSaturdayKey(new Date(prediction.game.date));
     const existingWeek = userWeeks.get(weekKey) ?? {
       weekKey,
@@ -656,6 +673,9 @@ export async function getFantasyAnalysisForUser(
           where: {
             userProfileId,
             isScored: true,
+            game: {
+              resultType: { not: GameResult.ABANDONED },
+            },
           },
           orderBy: { game: { date: "asc" } },
           select: {
@@ -670,12 +690,19 @@ export async function getFantasyAnalysisForUser(
                 date: true,
                 division: true,
                 gameType: true,
+                resultType: true,
+                isDraw: true,
               },
             },
           },
         }),
         prisma.prediction.findMany({
-          where: { isScored: true },
+          where: {
+            isScored: true,
+            game: {
+              resultType: { not: GameResult.ABANDONED },
+            },
+          },
           select: {
             userProfileId: true,
             predictedWinnerCode: true,
@@ -688,6 +715,8 @@ export async function getFantasyAnalysisForUser(
                 date: true,
                 division: true,
                 gameType: true,
+                resultType: true,
+                isDraw: true,
               },
             },
           },

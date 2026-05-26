@@ -1,43 +1,23 @@
 import { GameType } from "@/generated/prisma/client";
 import { getGameWeekKey } from "@/lib/fantasy-dates";
+import {
+  FULL_WEEKS_FOR_BOOSTERS,
+  SEASON_BOOSTER_COUNT,
+  calculateBoostersRemaining,
+  canUseBoosters,
+  getPointsForGame,
+  isFantasyScorableGame,
+} from "@/lib/fantasy-scoring";
+import { isDrawResult } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
-
-// ─── Point values ────────────────────────────────────────────────────────────
-
-const POINTS = {
-  LEAGUE_CORRECT: 1,
-  PLAYOFF_CORRECT: 3,
-  BOOSTER_MULTIPLIER: 3,
-} as const;
-
-// ─── Booster eligibility ─────────────────────────────────────────────────────
-// Boosters unlock after 2 full league weeks of predictions.
-
-export const FULL_WEEKS_FOR_BOOSTERS = 2;
-export const SEASON_BOOSTER_COUNT = 10;
-
-export function canUseBoosters(fullParticipationWeeks: number): boolean {
-  return fullParticipationWeeks >= FULL_WEEKS_FOR_BOOSTERS;
-}
-
-// ─── Base points for a game ───────────────────────────────────────────────────
-
-export function getBasePointsForGame(gameType: GameType): number {
-  return gameType === GameType.PLAYOFF
-    ? POINTS.PLAYOFF_CORRECT
-    : POINTS.LEAGUE_CORRECT;
-}
-
-export function getPointsForGame(gameType: GameType, isBoosted: boolean): number {
-  const base = getBasePointsForGame(gameType);
-  return isBoosted ? base * POINTS.BOOSTER_MULTIPLIER : base;
-}
+export { FULL_WEEKS_FOR_BOOSTERS, SEASON_BOOSTER_COUNT, canUseBoosters, getPointsForGame };
 
 type PredictionUpdate = {
   id: string;
   userProfileId: string;
   isCorrect: boolean;
   pointsEarned: number;
+  countsForStandings: boolean;
 };
 
 type GameWeekScoringData = {
@@ -81,6 +61,7 @@ async function buildGameWeekScoringData(
       id: true,
       date: true,
       gameType: true,
+      resultType: true,
       winnerCode: true,
       isDraw: true,
       predictions: {
@@ -110,7 +91,8 @@ async function buildGameWeekScoringData(
   }
 
   const leagueGames = weekGames.filter((g) => g.gameType === GameType.LEAGUE);
-  const leagueGameIds = new Set(leagueGames.map((g) => g.id));
+  const scorableLeagueGames = leagueGames.filter(isFantasyScorableGame);
+  const leagueGameIds = new Set(scorableLeagueGames.map((g) => g.id));
 
   const allPredictions = weekGames.flatMap((g) =>
     g.predictions.map((p) => ({ ...p, game: g })),
@@ -131,20 +113,23 @@ async function buildGameWeekScoringData(
 
   for (const pred of allPredictions) {
     const { game } = pred;
-
-    const isCorrect = game.isDraw
-      ? pred.predictedWinnerCode === null
-      : pred.predictedWinnerCode === game.winnerCode;
-
-    const pointsEarned = isCorrect
-      ? getPointsForGame(game.gameType, pred.isBoosted)
-      : 0;
+    const isScorableGame = isFantasyScorableGame(game);
+    const isCorrect = isScorableGame
+      ? isDrawResult(game)
+        ? pred.predictedWinnerCode === null
+        : pred.predictedWinnerCode === game.winnerCode
+      : false;
+    const pointsEarned =
+      isCorrect && isScorableGame
+        ? getPointsForGame(game.gameType, pred.isBoosted)
+        : 0;
 
     predictionUpdates.push({
       id: pred.id,
       userProfileId: pred.userProfileId,
       isCorrect,
       pointsEarned,
+      countsForStandings: isScorableGame,
     });
 
     if (pointsEarned > 0) {
@@ -160,12 +145,12 @@ async function buildGameWeekScoringData(
   ];
 
   const fullParticipants = new Set<string>();
-  if (leagueGames.length > 0) {
+  if (scorableLeagueGames.length > 0) {
     for (const userId of affectedUserIds) {
       const userLeaguePredCountThisWeek = allPredictions.filter(
         (p) => p.userProfileId === userId && leagueGameIds.has(p.game.id),
       ).length;
-      if (userLeaguePredCountThisWeek === leagueGames.length) {
+      if (userLeaguePredCountThisWeek === scorableLeagueGames.length) {
         fullParticipants.add(userId);
       }
     }
@@ -203,8 +188,15 @@ export async function previewGameWeekScoring(gameWeekKey: string): Promise<{
   const rankings = affectedUserIds
     .map((userProfileId) => {
       const userUpdates = predictionUpdates.filter(
-        (update) => update.userProfileId === userProfileId,
+        (update) =>
+          update.userProfileId === userProfileId &&
+          update.countsForStandings,
       );
+
+      if (userUpdates.length === 0) {
+        return null;
+      }
+
       return {
         userProfileId,
         weeklyPoints: userPointsMap.get(userProfileId) ?? 0,
@@ -213,6 +205,7 @@ export async function previewGameWeekScoring(gameWeekKey: string): Promise<{
         totalPredictions: userUpdates.length,
       };
     })
+    .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
     .sort((a, b) => {
       if (b.weeklyPoints !== a.weeklyPoints) {
         return b.weeklyPoints - a.weeklyPoints;
@@ -227,7 +220,7 @@ export async function previewGameWeekScoring(gameWeekKey: string): Promise<{
     });
 
   return {
-    usersScored: affectedUserIds.length,
+    usersScored: rankings.length,
     totalPointsAwarded,
     rankings,
   };
@@ -284,7 +277,10 @@ export async function scoreGameWeekPredictions(
       !canUseBoosters(profile.fullParticipationWeeks) &&
       canUseBoosters(newFullWeeks)
     ) {
-      newBoostersRemaining = SEASON_BOOSTER_COUNT;
+      newBoostersRemaining = calculateBoostersRemaining({
+        fullParticipationWeeks: newFullWeeks,
+        boostedPredictionCount: 0,
+      });
     }
 
     return prisma.userProfile.update({

@@ -52,6 +52,17 @@ export const GameStatus = {
 export type GameStatus = (typeof GameStatus)[keyof typeof GameStatus]
 
 
+export const GameResult = {
+  PENDING: 'PENDING',
+  WIN: 'WIN',
+  DRAW: 'DRAW',
+  ABANDONED: 'ABANDONED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type GameResult = (typeof GameResult)[keyof typeof GameResult]
+
+
 export const UserRole = {
   PLAYER: 'PLAYER',
   UMPIRE: 'UMPIRE',

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { getGameResultLabel, hasWinningResult } from "@/lib/game-results";
 import type { ScheduleGameListItem } from "@/app/schedule/types";
 
 type ScheduleCardListProps = {
@@ -11,13 +12,8 @@ type ScheduleCardListProps = {
 };
 
 function getOutcomeBadge(game: ScheduleGameListItem) {
-  if (game.isCancelled) {
-    return <Badge variant="outline">Cancelled</Badge>;
-  }
-  if (game.isDraw) {
-    return <Badge variant="outline">Draw</Badge>;
-  }
-  return null;
+  const label = getGameResultLabel(game);
+  return label ? <Badge variant="outline">{label}</Badge> : null;
 }
 
 function getGameTypeLabel(gameType: ScheduleGameListItem["gameType"]) {
@@ -30,7 +26,7 @@ export function ScheduleCardList({ games }: ScheduleCardListProps) {
       {games.map((game) => {
         const isHomeWinner = game.winnerTeamName === game.homeTeam;
         const isAwayWinner = game.winnerTeamName === game.awayTeam;
-        const hasWinner = Boolean(game.winnerTeamName) && !game.isDraw && !game.isCancelled;
+        const hasWinner = Boolean(game.winnerTeamName) && hasWinningResult(game);
 
         return (
           <Card

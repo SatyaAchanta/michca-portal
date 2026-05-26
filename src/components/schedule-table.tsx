@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import Link from "next/link";
 
 import { formatMatchDateTime } from "@/lib/formatters";
+import { hasWinningResult } from "@/lib/game-results";
 import { cn } from "@/lib/utils";
 import type { ScheduleGameListItem } from "@/app/schedule/types";
 
@@ -25,7 +26,7 @@ export function ScheduleTable({ games }: ScheduleTableProps) {
           </thead>
           <tbody>
             {games.map((game, index) => {
-              const hasWinner = Boolean(game.winnerTeamName) && !game.isCancelled && !game.isDraw;
+              const hasWinner = Boolean(game.winnerTeamName) && hasWinningResult(game);
               const isHomeWinner = game.winnerTeamName === game.homeTeam;
               const isAwayWinner = game.winnerTeamName === game.awayTeam;
 

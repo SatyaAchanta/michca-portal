@@ -198,6 +198,7 @@ export async function getScheduleGames(
       ),
       division: DIVISION_LABELS[game.division],
       gameType: game.gameType,
+      resultType: game.resultType,
       status: game.status,
       venue: game.venue ?? "Venue TBD",
       homeTeamCode: game.team1.teamCode,

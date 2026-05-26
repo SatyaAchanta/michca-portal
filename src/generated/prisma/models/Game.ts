@@ -46,6 +46,7 @@ export type GameMinAggregateOutputType = {
   team1Code: string | null
   team2Code: string | null
   gameType: $Enums.GameType | null
+  resultType: $Enums.GameResult | null
   winnerCode: string | null
   isDraw: boolean | null
   isCancelled: boolean | null
@@ -66,6 +67,7 @@ export type GameMaxAggregateOutputType = {
   team1Code: string | null
   team2Code: string | null
   gameType: $Enums.GameType | null
+  resultType: $Enums.GameResult | null
   winnerCode: string | null
   isDraw: boolean | null
   isCancelled: boolean | null
@@ -86,6 +88,7 @@ export type GameCountAggregateOutputType = {
   team1Code: number
   team2Code: number
   gameType: number
+  resultType: number
   winnerCode: number
   isDraw: number
   isCancelled: number
@@ -118,6 +121,7 @@ export type GameMinAggregateInputType = {
   team1Code?: true
   team2Code?: true
   gameType?: true
+  resultType?: true
   winnerCode?: true
   isDraw?: true
   isCancelled?: true
@@ -138,6 +142,7 @@ export type GameMaxAggregateInputType = {
   team1Code?: true
   team2Code?: true
   gameType?: true
+  resultType?: true
   winnerCode?: true
   isDraw?: true
   isCancelled?: true
@@ -158,6 +163,7 @@ export type GameCountAggregateInputType = {
   team1Code?: true
   team2Code?: true
   gameType?: true
+  resultType?: true
   winnerCode?: true
   isDraw?: true
   isCancelled?: true
@@ -265,6 +271,7 @@ export type GameGroupByOutputType = {
   team1Code: string
   team2Code: string
   gameType: $Enums.GameType
+  resultType: $Enums.GameResult
   winnerCode: string | null
   isDraw: boolean
   isCancelled: boolean
@@ -308,6 +315,7 @@ export type GameWhereInput = {
   team1Code?: Prisma.StringFilter<"Game"> | string
   team2Code?: Prisma.StringFilter<"Game"> | string
   gameType?: Prisma.EnumGameTypeFilter<"Game"> | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFilter<"Game"> | $Enums.GameResult
   winnerCode?: Prisma.StringNullableFilter<"Game"> | string | null
   isDraw?: Prisma.BoolFilter<"Game"> | boolean
   isCancelled?: Prisma.BoolFilter<"Game"> | boolean
@@ -333,6 +341,7 @@ export type GameOrderByWithRelationInput = {
   team1Code?: Prisma.SortOrder
   team2Code?: Prisma.SortOrder
   gameType?: Prisma.SortOrder
+  resultType?: Prisma.SortOrder
   winnerCode?: Prisma.SortOrderInput | Prisma.SortOrder
   isDraw?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
@@ -361,6 +370,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   team1Code?: Prisma.StringFilter<"Game"> | string
   team2Code?: Prisma.StringFilter<"Game"> | string
   gameType?: Prisma.EnumGameTypeFilter<"Game"> | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFilter<"Game"> | $Enums.GameResult
   winnerCode?: Prisma.StringNullableFilter<"Game"> | string | null
   isDraw?: Prisma.BoolFilter<"Game"> | boolean
   isCancelled?: Prisma.BoolFilter<"Game"> | boolean
@@ -386,6 +396,7 @@ export type GameOrderByWithAggregationInput = {
   team1Code?: Prisma.SortOrder
   team2Code?: Prisma.SortOrder
   gameType?: Prisma.SortOrder
+  resultType?: Prisma.SortOrder
   winnerCode?: Prisma.SortOrderInput | Prisma.SortOrder
   isDraw?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
@@ -414,6 +425,7 @@ export type GameScalarWhereWithAggregatesInput = {
   team1Code?: Prisma.StringWithAggregatesFilter<"Game"> | string
   team2Code?: Prisma.StringWithAggregatesFilter<"Game"> | string
   gameType?: Prisma.EnumGameTypeWithAggregatesFilter<"Game"> | $Enums.GameType
+  resultType?: Prisma.EnumGameResultWithAggregatesFilter<"Game"> | $Enums.GameResult
   winnerCode?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
   isDraw?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
   isCancelled?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
@@ -432,6 +444,7 @@ export type GameCreateInput = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -456,6 +469,7 @@ export type GameUncheckedCreateInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -476,6 +490,7 @@ export type GameUpdateInput = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -500,6 +515,7 @@ export type GameUncheckedUpdateInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -522,6 +538,7 @@ export type GameCreateManyInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -540,6 +557,7 @@ export type GameUpdateManyMutationInput = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -559,6 +577,7 @@ export type GameUncheckedUpdateManyInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -589,6 +608,7 @@ export type GameCountOrderByAggregateInput = {
   team1Code?: Prisma.SortOrder
   team2Code?: Prisma.SortOrder
   gameType?: Prisma.SortOrder
+  resultType?: Prisma.SortOrder
   winnerCode?: Prisma.SortOrder
   isDraw?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
@@ -614,6 +634,7 @@ export type GameMaxOrderByAggregateInput = {
   team1Code?: Prisma.SortOrder
   team2Code?: Prisma.SortOrder
   gameType?: Prisma.SortOrder
+  resultType?: Prisma.SortOrder
   winnerCode?: Prisma.SortOrder
   isDraw?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
@@ -634,6 +655,7 @@ export type GameMinOrderByAggregateInput = {
   team1Code?: Prisma.SortOrder
   team2Code?: Prisma.SortOrder
   gameType?: Prisma.SortOrder
+  resultType?: Prisma.SortOrder
   winnerCode?: Prisma.SortOrder
   isDraw?: Prisma.SortOrder
   isCancelled?: Prisma.SortOrder
@@ -796,6 +818,10 @@ export type EnumGameTypeFieldUpdateOperationsInput = {
   set?: $Enums.GameType
 }
 
+export type EnumGameResultFieldUpdateOperationsInput = {
+  set?: $Enums.GameResult
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -844,6 +870,7 @@ export type GameCreateWithoutTeam1Input = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -866,6 +893,7 @@ export type GameUncheckedCreateWithoutTeam1Input = {
   venue?: string | null
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -896,6 +924,7 @@ export type GameCreateWithoutTeam2Input = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -918,6 +947,7 @@ export type GameUncheckedCreateWithoutTeam2Input = {
   venue?: string | null
   team1Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -948,6 +978,7 @@ export type GameCreateWithoutWinnerInput = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -971,6 +1002,7 @@ export type GameUncheckedCreateWithoutWinnerInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -1021,6 +1053,7 @@ export type GameScalarWhereInput = {
   team1Code?: Prisma.StringFilter<"Game"> | string
   team2Code?: Prisma.StringFilter<"Game"> | string
   gameType?: Prisma.EnumGameTypeFilter<"Game"> | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFilter<"Game"> | $Enums.GameResult
   winnerCode?: Prisma.StringNullableFilter<"Game"> | string | null
   isDraw?: Prisma.BoolFilter<"Game"> | boolean
   isCancelled?: Prisma.BoolFilter<"Game"> | boolean
@@ -1071,6 +1104,7 @@ export type GameCreateWithoutUmpireAssignmentsInput = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -1094,6 +1128,7 @@ export type GameUncheckedCreateWithoutUmpireAssignmentsInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -1129,6 +1164,7 @@ export type GameUpdateWithoutUmpireAssignmentsInput = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1152,6 +1188,7 @@ export type GameUncheckedUpdateWithoutUmpireAssignmentsInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1171,6 +1208,7 @@ export type GameCreateWithoutPredictionsInput = {
   status?: $Enums.GameStatus
   venue?: string | null
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -1194,6 +1232,7 @@ export type GameUncheckedCreateWithoutPredictionsInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -1229,6 +1268,7 @@ export type GameUpdateWithoutPredictionsInput = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1252,6 +1292,7 @@ export type GameUncheckedUpdateWithoutPredictionsInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1272,6 +1313,7 @@ export type GameCreateManyTeam1Input = {
   venue?: string | null
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -1291,6 +1333,7 @@ export type GameCreateManyTeam2Input = {
   venue?: string | null
   team1Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   winnerCode?: string | null
   isDraw?: boolean
   isCancelled?: boolean
@@ -1311,6 +1354,7 @@ export type GameCreateManyWinnerInput = {
   team1Code: string
   team2Code: string
   gameType?: $Enums.GameType
+  resultType?: $Enums.GameResult
   isDraw?: boolean
   isCancelled?: boolean
   team1Score?: number | null
@@ -1328,6 +1372,7 @@ export type GameUpdateWithoutTeam1Input = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1350,6 +1395,7 @@ export type GameUncheckedUpdateWithoutTeam1Input = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1371,6 +1417,7 @@ export type GameUncheckedUpdateManyWithoutTeam1Input = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1389,6 +1436,7 @@ export type GameUpdateWithoutTeam2Input = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1411,6 +1459,7 @@ export type GameUncheckedUpdateWithoutTeam2Input = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1432,6 +1481,7 @@ export type GameUncheckedUpdateManyWithoutTeam2Input = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   winnerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1450,6 +1500,7 @@ export type GameUpdateWithoutWinnerInput = {
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1473,6 +1524,7 @@ export type GameUncheckedUpdateWithoutWinnerInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1494,6 +1546,7 @@ export type GameUncheckedUpdateManyWithoutWinnerInput = {
   team1Code?: Prisma.StringFieldUpdateOperationsInput | string
   team2Code?: Prisma.StringFieldUpdateOperationsInput | string
   gameType?: Prisma.EnumGameTypeFieldUpdateOperationsInput | $Enums.GameType
+  resultType?: Prisma.EnumGameResultFieldUpdateOperationsInput | $Enums.GameResult
   isDraw?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isCancelled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   team1Score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1553,6 +1606,7 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   team1Code?: boolean
   team2Code?: boolean
   gameType?: boolean
+  resultType?: boolean
   winnerCode?: boolean
   isDraw?: boolean
   isCancelled?: boolean
@@ -1579,6 +1633,7 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   team1Code?: boolean
   team2Code?: boolean
   gameType?: boolean
+  resultType?: boolean
   winnerCode?: boolean
   isDraw?: boolean
   isCancelled?: boolean
@@ -1602,6 +1657,7 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   team1Code?: boolean
   team2Code?: boolean
   gameType?: boolean
+  resultType?: boolean
   winnerCode?: boolean
   isDraw?: boolean
   isCancelled?: boolean
@@ -1625,6 +1681,7 @@ export type GameSelectScalar = {
   team1Code?: boolean
   team2Code?: boolean
   gameType?: boolean
+  resultType?: boolean
   winnerCode?: boolean
   isDraw?: boolean
   isCancelled?: boolean
@@ -1635,7 +1692,7 @@ export type GameSelectScalar = {
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "division" | "league" | "status" | "venue" | "team1Code" | "team2Code" | "gameType" | "winnerCode" | "isDraw" | "isCancelled" | "team1Score" | "team2Score" | "resultNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "division" | "league" | "status" | "venue" | "team1Code" | "team2Code" | "gameType" | "resultType" | "winnerCode" | "isDraw" | "isCancelled" | "team1Score" | "team2Score" | "resultNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team1?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   team2?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1674,6 +1731,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     team1Code: string
     team2Code: string
     gameType: $Enums.GameType
+    resultType: $Enums.GameResult
     winnerCode: string | null
     isDraw: boolean
     isCancelled: boolean
@@ -2119,6 +2177,7 @@ export interface GameFieldRefs {
   readonly team1Code: Prisma.FieldRef<"Game", 'String'>
   readonly team2Code: Prisma.FieldRef<"Game", 'String'>
   readonly gameType: Prisma.FieldRef<"Game", 'GameType'>
+  readonly resultType: Prisma.FieldRef<"Game", 'GameResult'>
   readonly winnerCode: Prisma.FieldRef<"Game", 'String'>
   readonly isDraw: Prisma.FieldRef<"Game", 'Boolean'>
   readonly isCancelled: Prisma.FieldRef<"Game", 'Boolean'>

@@ -1,4 +1,4 @@
-import { GameType } from "@/generated/prisma/client";
+import { GameResult, GameType } from "@/generated/prisma/client";
 
 const {
   gameFindManyMock,
@@ -78,6 +78,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-1",
         date: new Date("2026-05-02T14:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "A",
         isDraw: false,
         predictions: [
@@ -118,6 +119,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "playoff-1",
         date: new Date("2026-08-29T14:00:00.000Z"),
         gameType: GameType.PLAYOFF,
+        resultType: GameResult.WIN,
         winnerCode: "A",
         isDraw: false,
         predictions: [
@@ -158,6 +160,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-1",
         date: new Date("2026-08-22T14:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "A",
         isDraw: false,
         predictions: [
@@ -173,6 +176,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-2",
         date: new Date("2026-08-22T18:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "C",
         isDraw: false,
         predictions: [],
@@ -181,6 +185,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "playoff-1",
         date: new Date("2026-08-23T14:00:00.000Z"),
         gameType: GameType.PLAYOFF,
+        resultType: GameResult.WIN,
         winnerCode: "E",
         isDraw: false,
         predictions: [
@@ -221,6 +226,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-1",
         date: new Date("2026-08-22T14:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "A",
         isDraw: false,
         predictions: [
@@ -236,6 +242,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-2",
         date: new Date("2026-08-22T18:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "C",
         isDraw: false,
         predictions: [
@@ -296,6 +303,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "league-1",
         date: new Date("2026-05-02T14:00:00.000Z"),
         gameType: GameType.LEAGUE,
+        resultType: GameResult.WIN,
         winnerCode: "A",
         isDraw: false,
         predictions: [
@@ -317,6 +325,7 @@ describe("scoreGameWeekPredictions", () => {
         id: "playoff-1",
         date: new Date("2026-05-03T18:00:00.000Z"),
         gameType: GameType.PLAYOFF,
+        resultType: GameResult.WIN,
         winnerCode: "C",
         isDraw: false,
         predictions: [
@@ -352,5 +361,80 @@ describe("scoreGameWeekPredictions", () => {
     });
     expect(predictionUpdateManyMock).not.toHaveBeenCalled();
     expect(userProfileUpdateMock).not.toHaveBeenCalled();
+  });
+
+  it("scores tie/no-result games as zero points and excludes them from weekly standings", async () => {
+    gameFindManyMock.mockResolvedValue([
+      {
+        id: "league-1",
+        date: new Date("2026-05-02T14:00:00.000Z"),
+        gameType: GameType.LEAGUE,
+        resultType: GameResult.ABANDONED,
+        winnerCode: null,
+        isDraw: true,
+        predictions: [
+          {
+            id: "pred-1",
+            userProfileId: "user-1",
+            predictedWinnerCode: null,
+            isBoosted: false,
+          },
+          {
+            id: "pred-2",
+            userProfileId: "user-2",
+            predictedWinnerCode: "A",
+            isBoosted: true,
+          },
+        ],
+      },
+    ]);
+    userProfileFindManyMock.mockResolvedValue([
+      {
+        id: "user-1",
+        fantasyPoints: 5,
+        fullParticipationWeeks: 1,
+        boostersRemaining: 3,
+      },
+      {
+        id: "user-2",
+        fantasyPoints: 8,
+        fullParticipationWeeks: 2,
+        boostersRemaining: 6,
+      },
+    ]);
+
+    const preview = await previewGameWeekScoring("2026-W18");
+    const scored = await scoreGameWeekPredictions("2026-W18");
+
+    expect(preview).toEqual({
+      usersScored: 0,
+      totalPointsAwarded: 0,
+      rankings: [],
+    });
+    expect(scored).toEqual({ usersScored: 2, totalPointsAwarded: 0 });
+    expect(predictionUpdateManyMock).toHaveBeenCalledWith({
+      where: { id: { in: ["pred-1", "pred-2"] } },
+      data: {
+        isScored: true,
+        isCorrect: false,
+        pointsEarned: 0,
+      },
+    });
+    expect(userProfileUpdateMock).toHaveBeenNthCalledWith(1, {
+      where: { id: "user-1" },
+      data: {
+        fantasyPoints: { increment: 0 },
+        fullParticipationWeeks: 1,
+        boostersRemaining: 3,
+      },
+    });
+    expect(userProfileUpdateMock).toHaveBeenNthCalledWith(2, {
+      where: { id: "user-2" },
+      data: {
+        fantasyPoints: { increment: 0 },
+        fullParticipationWeeks: 2,
+        boostersRemaining: 6,
+      },
+    });
   });
 });
