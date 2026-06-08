@@ -140,6 +140,23 @@ export default function FantasyRulesPage() {
               </div>
             </div>
           </Card>
+
+          <Card className="p-5">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
+                <Trophy className="h-5 w-5" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Winner Selection</h2>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  If a week finishes with multiple winners, the weekly winner
+                  will first be decided by the season leaderboard standings at
+                  that time. If those players are still tied on the season
+                  leaderboard, the winner will be selected by lottery.
+                </p>
+              </div>
+            </div>
+          </Card>
         </div>
 
         <Card className="overflow-hidden border-amber-200 bg-gradient-to-br from-amber-50 via-background to-emerald-50 shadow-sm dark:border-amber-900/60 dark:from-amber-950/30 dark:via-background dark:to-emerald-950/20">
