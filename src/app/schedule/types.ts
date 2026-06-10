@@ -47,6 +47,7 @@ export type ScheduleGameListItem = {
   displayDateTime: string;
   division: string;
   gameType: "LEAGUE" | "PLAYOFF";
+  resultType: "PENDING" | "WIN" | "DRAW" | "ABANDONED" | "CANCELLED";
   status: ScheduleGameStatus;
   venue: string;
   homeTeamCode: string;

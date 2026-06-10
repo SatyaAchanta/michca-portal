@@ -1594,6 +1594,7 @@ export const GameScalarFieldEnum = {
   team1Code: 'team1Code',
   team2Code: 'team2Code',
   gameType: 'gameType',
+  resultType: 'resultType',
   winnerCode: 'winnerCode',
   isDraw: 'isDraw',
   isCancelled: 'isCancelled',
@@ -1965,6 +1966,20 @@ export type EnumGameTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'GameType[]'
  */
 export type ListEnumGameTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'GameResult'
+ */
+export type EnumGameResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameResult'>
+    
+
+
+/**
+ * Reference to a field of type 'GameResult[]'
+ */
+export type ListEnumGameResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameResult[]'>
     
 
 

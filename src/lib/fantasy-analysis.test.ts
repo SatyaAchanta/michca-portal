@@ -1,3 +1,5 @@
+import { GameResult } from "@/generated/prisma/client";
+
 const {
   userProfileFindUnique,
   userProfileCount,
@@ -54,6 +56,8 @@ function createPrediction(overrides: Partial<{
   date: string;
   division: "PREMIER_T20" | "DIV1_T20";
   gameType: "LEAGUE" | "PLAYOFF";
+  isDraw: boolean;
+  resultType: GameResult;
 }> = {}) {
   return {
     userProfileId: overrides.userProfileId ?? "user-1",
@@ -69,6 +73,10 @@ function createPrediction(overrides: Partial<{
       date: new Date(overrides.date ?? "2026-05-10T15:00:00.000Z"),
       division: overrides.division ?? "PREMIER_T20",
       gameType: overrides.gameType ?? "LEAGUE",
+      resultType:
+        overrides.resultType ??
+        (overrides.isDraw ? GameResult.ABANDONED : GameResult.WIN),
+      isDraw: overrides.isDraw ?? false,
     },
   };
 }
@@ -115,6 +123,55 @@ describe("computeFantasyAnalysisData", () => {
     expect(result.metrics.comparisons.overallAccuracyDelta).toBe(-0.125);
     expect(result.metrics.strengthsByDivision[0]?.division).toBe("PREMIER_T20");
     expect(result.analyticsFingerprint).toHaveLength(64);
+  });
+
+  it("ignores tie/no-result games in aggregate metrics", () => {
+    const userProfile = {
+      id: "user-1",
+      fantasyPoints: 3,
+      boostersRemaining: 9,
+      fullParticipationWeeks: 1,
+    };
+    const userPredictions = [
+      createPrediction({ gameId: "g1", date: "2026-05-03T15:00:00.000Z", isCorrect: true, pointsEarned: 1 }),
+      createPrediction({
+        gameId: "g2",
+        date: "2026-05-10T18:00:00.000Z",
+        predictedWinnerCode: null,
+        isCorrect: true,
+        pointsEarned: 1,
+        isDraw: true,
+        division: "DIV1_T20",
+      }),
+    ];
+    const communityPredictions = [
+      ...userPredictions,
+      createPrediction({ userProfileId: "user-2", gameId: "g1", date: "2026-05-03T15:00:00.000Z", predictedWinnerCode: "AAA", isCorrect: true, pointsEarned: 1 }),
+      createPrediction({
+        userProfileId: "user-2",
+        gameId: "g2",
+        date: "2026-05-10T18:00:00.000Z",
+        predictedWinnerCode: null,
+        isCorrect: true,
+        pointsEarned: 1,
+        isDraw: true,
+        division: "DIV1_T20",
+      }),
+    ];
+
+    const result = computeFantasyAnalysisData({
+      userProfile,
+      userPredictions,
+      communityPredictions,
+      totalProfiles: 2,
+      higherScoringProfiles: 0,
+    });
+
+    expect(result.scoredPredictionCount).toBe(1);
+    expect(result.metrics.season.accuracy).toBe(1);
+    expect(result.metrics.season.averagePointsPerPrediction).toBe(1);
+    expect(result.metrics.recentTrend.weeksAnalyzed).toBe(1);
+    expect(result.metrics.recentTrend.weeklyPoints).toEqual([1]);
   });
 });
 
@@ -185,6 +242,85 @@ describe("getFantasyAnalysisForUser", () => {
     expect(responsesCreate).not.toHaveBeenCalled();
   });
 
+  it("filters tie/no-result games out before analysis queries are processed", async () => {
+    userProfileFindUnique.mockResolvedValue(userProfile);
+    predictionFindMany.mockResolvedValueOnce(userPredictions);
+    predictionFindMany.mockResolvedValueOnce(communityPredictions);
+    userProfileCount.mockResolvedValueOnce(12);
+    userProfileCount.mockResolvedValueOnce(2);
+    fantasyAnalysisReportFindUnique.mockResolvedValue(null);
+    responsesCreate.mockResolvedValue({
+      output_text: JSON.stringify({
+        summary: "Filtered correctly.",
+        strengths: ["One"],
+        weaknesses: ["Two"],
+        recommendations: ["Three"],
+        confidenceNote: "Four",
+      }),
+    });
+    fantasyAnalysisReportUpsert.mockImplementation(async ({ update }: { update: Record<string, unknown> }) => ({
+      modelName: update.modelName,
+      reportPayload: update.reportPayload,
+      generatedAt: update.generatedAt,
+      expiresAt: update.expiresAt,
+    }));
+
+    await getFantasyAnalysisForUser("user-1");
+
+    expect(predictionFindMany).toHaveBeenNthCalledWith(1, {
+      where: {
+        userProfileId: "user-1",
+        isScored: true,
+        game: {
+          resultType: { not: GameResult.ABANDONED },
+        },
+      },
+      orderBy: { game: { date: "asc" } },
+      select: {
+        userProfileId: true,
+        predictedWinnerCode: true,
+        isBoosted: true,
+        isCorrect: true,
+        pointsEarned: true,
+        game: {
+          select: {
+            id: true,
+            date: true,
+            division: true,
+            gameType: true,
+            resultType: true,
+            isDraw: true,
+          },
+        },
+      },
+    });
+    expect(predictionFindMany).toHaveBeenNthCalledWith(2, {
+      where: {
+        isScored: true,
+        game: {
+          resultType: { not: GameResult.ABANDONED },
+        },
+      },
+      select: {
+        userProfileId: true,
+        predictedWinnerCode: true,
+        isBoosted: true,
+        isCorrect: true,
+        pointsEarned: true,
+        game: {
+          select: {
+            id: true,
+            date: true,
+            division: true,
+            gameType: true,
+            resultType: true,
+            isDraw: true,
+          },
+        },
+      },
+    });
+  });
+
   it("reuses a cached report when the fingerprint and expiry still match", async () => {
     userProfileFindUnique.mockResolvedValue(userProfile);
     predictionFindMany.mockResolvedValueOnce(userPredictions);
@@ -211,8 +347,8 @@ describe("getFantasyAnalysisForUser", () => {
       modelName: "gpt-5-mini",
       analyticsFingerprint: computation.analyticsFingerprint,
       reportPayload: cachedReport,
-      generatedAt: new Date("2026-05-15T12:00:00.000Z"),
-      expiresAt: new Date("2026-05-22T12:00:00.000Z"),
+      generatedAt: new Date("2026-05-24T12:00:00.000Z"),
+      expiresAt: new Date("2026-06-01T12:00:00.000Z"),
     });
 
     const result = await getFantasyAnalysisForUser("user-1");

@@ -1,4 +1,4 @@
-import { GameStatus } from "@/generated/prisma/client";
+import { GameResult, GameStatus } from "@/generated/prisma/client";
 import { cancelAdminGame, createAdminGame } from "@/app/admin/games/actions";
 
 const { revalidatePath, requireAdminAllowlistedProfile, teamFindUnique, gameCreate, gameFindUnique, gameUpdate } =
@@ -135,6 +135,7 @@ describe("admin games actions", () => {
       where: { id: "game-1" },
       data: {
         status: GameStatus.CANCELLED,
+        resultType: GameResult.CANCELLED,
         winnerCode: null,
         isDraw: false,
         isCancelled: true,

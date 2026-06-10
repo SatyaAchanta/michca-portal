@@ -14,6 +14,7 @@ type Props = {
 };
 
 type Status = "idle" | "loading" | "success" | "error";
+type GameResultValue = "WIN" | "DRAW" | "ABANDONED";
 
 export function SetResultButton({
   gameId,
@@ -25,16 +26,18 @@ export function SetResultButton({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
-  async function handleResult(winnerCode: string | null, isDraw: boolean) {
+  async function handleResult(resultType: GameResultValue, winnerCode: string | null) {
     setStatus("loading");
     setMessage("");
-    const res = await adminSetGameResult(gameId, winnerCode, isDraw);
+    const res = await adminSetGameResult(gameId, resultType, winnerCode);
     if (res.success) {
       setStatus("success");
       setMessage(
-        isDraw
-          ? "Marked as Draw / No Result"
-          : `Winner: ${winnerCode === team1Code ? team1Name : team2Name}`,
+        resultType === "DRAW"
+          ? "Marked as Draw / Tie"
+          : resultType === "ABANDONED"
+            ? "Marked as Abandoned"
+            : `Winner: ${winnerCode === team1Code ? team1Name : team2Name}`,
       );
     } else {
       setStatus("error");
@@ -73,7 +76,7 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(team1Code, false)}
+        onClick={() => handleResult("WIN", team1Code)}
         className="text-xs"
       >
         {isLoading ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : null}
@@ -83,16 +86,25 @@ export function SetResultButton({
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(null, true)}
+        onClick={() => handleResult("DRAW", null)}
         className="text-xs"
       >
-        Draw / No Result
+        Draw / Tie
       </Button>
       <Button
         variant="outline"
         size="sm"
         disabled={isLoading}
-        onClick={() => handleResult(team2Code, false)}
+        onClick={() => handleResult("ABANDONED", null)}
+        className="text-xs"
+      >
+        Abandoned
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={isLoading}
+        onClick={() => handleResult("WIN", team2Code)}
         className="text-xs"
       >
         {team2Name} Won

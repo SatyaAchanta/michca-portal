@@ -2,8 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
-import { GameStatus } from "@/generated/prisma/client";
+import { GameResult, GameStatus } from "@/generated/prisma/client";
 import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
+import { isFantasyScorableGame } from "@/lib/fantasy-scoring";
+import {
+  getGameResult,
+  getGameResultLabel,
+  hasWinningResult,
+  isDrawResult,
+} from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 import { previewGameWeekScoring, scoreGameWeekPredictions } from "@/lib/fantasy";
 
@@ -89,9 +96,12 @@ function getTeamFormResult(game: {
   team1Code: string;
   team2Code: string;
   winnerCode: string | null;
+  resultType: GameResult;
   isDraw: boolean;
-}, teamCode: string): TeamFormResult {
-  if (game.isDraw) return "D";
+  isCancelled?: boolean;
+}, teamCode: string): TeamFormResult | null {
+  if (isDrawResult(game)) return "D";
+  if (!hasWinningResult(game)) return null;
   return game.winnerCode === teamCode ? "W" : "L";
 }
 
@@ -294,6 +304,7 @@ export async function getFantasyGames() {
       team1Code: true,
       team2Code: true,
       winnerCode: true,
+      resultType: true,
       isDraw: true,
     },
   });
@@ -304,7 +315,10 @@ export async function getFantasyGames() {
       const existing = formMap.get(teamCode) ?? [];
       if (existing.length >= 5) continue;
 
-      existing.push(getTeamFormResult(game, teamCode));
+      const result = getTeamFormResult(game, teamCode);
+      if (result === null) continue;
+
+      existing.push(result);
       formMap.set(teamCode, existing);
     }
   }
@@ -360,6 +374,8 @@ export async function getWeeklyLeaderboards(): Promise<WeeklyLeaderboardWeek[]> 
     select: {
       id: true,
       date: true,
+      resultType: true,
+      isDraw: true,
       predictions: {
         select: {
           isScored: true,
@@ -412,6 +428,11 @@ export async function getWeeklyLeaderboards(): Promise<WeeklyLeaderboardWeek[]> 
 
     if (game.predictions.some((prediction) => !prediction.isScored)) {
       week.hasUnscoredPredictions = true;
+    }
+
+    if (!isFantasyScorableGame(game)) {
+      weeks.set(weekKey, week);
+      continue;
     }
 
     for (const prediction of game.predictions) {
@@ -512,6 +533,7 @@ export async function getLeaderboardParticipantPredictions(
           team1Code: true,
           team2Code: true,
           winnerCode: true,
+          resultType: true,
           isDraw: true,
           team1: {
             select: {
@@ -555,9 +577,9 @@ export async function getLeaderboardParticipantPredictions(
       gameType: prediction.game.gameType,
       matchupLabel: `${prediction.game.team1.teamShortCode} vs ${prediction.game.team2.teamShortCode}`,
       pickLabel: getTeamLabel(prediction.predictedWinnerCode, prediction.game),
-      resultLabel: prediction.game.isDraw
-        ? "Tie"
-        : getTeamLabel(prediction.game.winnerCode, prediction.game),
+      resultLabel:
+        getGameResultLabel(prediction.game) ??
+        getTeamLabel(prediction.game.winnerCode, prediction.game),
       isBoosted: prediction.isBoosted,
       isCorrect: prediction.isCorrect ?? false,
       pointsEarned: prediction.pointsEarned ?? 0,
@@ -677,8 +699,8 @@ export async function adminPreviewGameWeek(
 
 export async function adminSetGameResult(
   gameId: string,
-  winnerCode: string | null, // null = draw/no result
-  isDraw: boolean
+  resultType: GameResult,
+  winnerCode: string | null
 ): Promise<{ success: boolean; error?: string }> {
   const { userId } = await auth();
   if (!userId) return { success: false, error: "Not authenticated" };
@@ -707,13 +729,18 @@ export async function adminSetGameResult(
     return { success: false, error: "Game is already canceled" };
   }
 
+  if (resultType === GameResult.WIN && !winnerCode) {
+    return { success: false, error: "A winning team is required." };
+  }
+
   await prisma.game.update({
     where: { id: gameId },
     data: {
       status: GameStatus.COMPLETED,
-      winnerCode: isDraw ? null : winnerCode,
-      isDraw,
-      isCancelled: false,
+      resultType,
+      winnerCode: resultType === GameResult.WIN ? winnerCode : null,
+      isDraw: resultType === GameResult.DRAW,
+      isCancelled: resultType === GameResult.CANCELLED,
     },
   });
 

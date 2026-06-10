@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { GameStatus, type Division, type GameType } from "@/generated/prisma/client";
+import { GameResult, GameStatus, type Division, type GameType } from "@/generated/prisma/client";
 import { grounds } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 import { parseDetroitDateTime } from "@/lib/schedule-import";
@@ -215,6 +215,7 @@ export async function cancelAdminGame(
     where: { id: gameId },
     data: {
       status: GameStatus.CANCELLED,
+      resultType: GameResult.CANCELLED,
       winnerCode: null,
       isDraw: false,
       isCancelled: true,

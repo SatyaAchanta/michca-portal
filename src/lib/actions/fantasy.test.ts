@@ -1,4 +1,4 @@
-import { GameStatus, GameType } from "@/generated/prisma/client";
+import { GameResult, GameStatus, GameType } from "@/generated/prisma/client";
 
 const {
   auth,
@@ -57,6 +57,7 @@ vi.mock("@/lib/fantasy", () => ({
 import {
   getFantasyGames,
   getLeaderboardParticipantPredictions,
+  getWeeklyLeaderboards,
 } from "@/lib/actions/fantasy";
 
 describe("getFantasyGames", () => {
@@ -99,6 +100,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-12T14:00:00.000Z"),
           team1Code: "AAA",
           team2Code: "GGG",
+          resultType: GameResult.WIN,
           winnerCode: "AAA",
           isDraw: false,
         },
@@ -106,6 +108,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-11T14:00:00.000Z"),
           team1Code: "HHH",
           team2Code: "AAA",
+          resultType: GameResult.WIN,
           winnerCode: "HHH",
           isDraw: false,
         },
@@ -113,6 +116,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-10T14:00:00.000Z"),
           team1Code: "AAA",
           team2Code: "III",
+          resultType: GameResult.DRAW,
           winnerCode: null,
           isDraw: true,
         },
@@ -120,6 +124,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-09T14:00:00.000Z"),
           team1Code: "JJJ",
           team2Code: "AAA",
+          resultType: GameResult.WIN,
           winnerCode: "AAA",
           isDraw: false,
         },
@@ -127,6 +132,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-08T14:00:00.000Z"),
           team1Code: "AAA",
           team2Code: "KKK",
+          resultType: GameResult.WIN,
           winnerCode: "KKK",
           isDraw: false,
         },
@@ -134,6 +140,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-07T14:00:00.000Z"),
           team1Code: "AAA",
           team2Code: "LLL",
+          resultType: GameResult.WIN,
           winnerCode: "AAA",
           isDraw: false,
         },
@@ -141,6 +148,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-06T14:00:00.000Z"),
           team1Code: "BBB",
           team2Code: "MMM",
+          resultType: GameResult.WIN,
           winnerCode: "BBB",
           isDraw: false,
         },
@@ -148,6 +156,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-05T14:00:00.000Z"),
           team1Code: "NNN",
           team2Code: "BBB",
+          resultType: GameResult.DRAW,
           winnerCode: null,
           isDraw: true,
         },
@@ -155,6 +164,7 @@ describe("getFantasyGames", () => {
           date: new Date("2026-05-04T14:00:00.000Z"),
           team1Code: "CCC",
           team2Code: "OOO",
+          resultType: GameResult.WIN,
           winnerCode: "OOO",
           isDraw: false,
         },
@@ -192,6 +202,7 @@ describe("getFantasyGames", () => {
         team1Code: true,
         team2Code: true,
         winnerCode: true,
+        resultType: true,
         isDraw: true,
       },
     });
@@ -250,6 +261,7 @@ describe("getLeaderboardParticipantPredictions", () => {
           date: new Date("2026-05-10T16:00:00.000Z"),
           division: "DIV1_T20",
           gameType: GameType.LEAGUE,
+          resultType: GameResult.WIN,
           team1Code: "AAA",
           team2Code: "BBB",
           winnerCode: "BBB",
@@ -270,6 +282,7 @@ describe("getLeaderboardParticipantPredictions", () => {
           date: new Date("2026-05-03T14:00:00.000Z"),
           division: "PREMIER_T20",
           gameType: GameType.PLAYOFF,
+          resultType: GameResult.WIN,
           team1Code: "MOCC",
           team2Code: "LCC",
           winnerCode: "MOCC",
@@ -290,6 +303,7 @@ describe("getLeaderboardParticipantPredictions", () => {
           date: new Date("2026-05-09T14:00:00.000Z"),
           division: "DIV2_T20",
           gameType: GameType.LEAGUE,
+          resultType: GameResult.DRAW,
           team1Code: "CCC",
           team2Code: "DDD",
           winnerCode: null,
@@ -332,6 +346,7 @@ describe("getLeaderboardParticipantPredictions", () => {
             date: true,
             division: true,
             gameType: true,
+            resultType: true,
             team1Code: true,
             team2Code: true,
             winnerCode: true,
@@ -367,7 +382,7 @@ describe("getLeaderboardParticipantPredictions", () => {
               id: "pred-3",
               matchupLabel: "CEN vs DEL",
               pickLabel: "Tie",
-              resultLabel: "Tie",
+              resultLabel: "Draw",
               isBoosted: false,
               isCorrect: true,
               pointsEarned: 1,
@@ -400,5 +415,125 @@ describe("getLeaderboardParticipantPredictions", () => {
         },
       ],
     });
+  });
+});
+
+describe("getWeeklyLeaderboards", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("excludes draw/no-result games from weekly standings", async () => {
+    gameFindMany.mockResolvedValue([
+      {
+        id: "game-2",
+        date: new Date("2026-05-10T16:00:00.000Z"),
+        resultType: GameResult.ABANDONED,
+        isDraw: true,
+        predictions: [
+          {
+            isScored: true,
+            isCorrect: false,
+            pointsEarned: 0,
+            userProfile: {
+              id: "user-1",
+              firstName: "Aarav",
+              lastName: "Patel",
+              email: "aarav@example.com",
+              t20TeamCode: "AAA",
+            },
+          },
+        ],
+      },
+      {
+        id: "game-1",
+        date: new Date("2026-05-09T14:00:00.000Z"),
+        resultType: GameResult.WIN,
+        isDraw: false,
+        predictions: [
+          {
+            isScored: true,
+            isCorrect: true,
+            pointsEarned: 3,
+            userProfile: {
+              id: "user-1",
+              firstName: "Aarav",
+              lastName: "Patel",
+              email: "aarav@example.com",
+              t20TeamCode: "AAA",
+            },
+          },
+          {
+            isScored: true,
+            isCorrect: false,
+            pointsEarned: 0,
+            userProfile: {
+              id: "user-2",
+              firstName: "Ben",
+              lastName: "Shah",
+              email: "ben@example.com",
+              t20TeamCode: "BBB",
+            },
+          },
+        ],
+      },
+    ]);
+
+    const result = await getWeeklyLeaderboards();
+
+    expect(gameFindMany).toHaveBeenCalledWith({
+      where: { status: GameStatus.COMPLETED },
+      orderBy: { date: "desc" },
+      select: {
+        id: true,
+        date: true,
+        resultType: true,
+        isDraw: true,
+        predictions: {
+          select: {
+            isScored: true,
+            isCorrect: true,
+            pointsEarned: true,
+            userProfile: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                t20TeamCode: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    expect(result).toEqual([
+      {
+        weekKey: "2026-05-09",
+        label: "May 9 – May 10",
+        entries: [
+          {
+            id: "user-1",
+            firstName: "Aarav",
+            lastName: "Patel",
+            email: "aarav@example.com",
+            t20TeamCode: "AAA",
+            weeklyPoints: 3,
+            correctPredictions: 1,
+            totalPredictions: 1,
+          },
+          {
+            id: "user-2",
+            firstName: "Ben",
+            lastName: "Shah",
+            email: "ben@example.com",
+            t20TeamCode: "BBB",
+            weeklyPoints: 0,
+            correctPredictions: 0,
+            totalPredictions: 1,
+          },
+        ],
+      },
+    ]);
   });
 });
