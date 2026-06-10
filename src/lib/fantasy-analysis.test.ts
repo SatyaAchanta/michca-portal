@@ -446,8 +446,24 @@ describe("getFantasyAnalysisForUser", () => {
     expect(result.source).toBe("generated");
     expect(result.report.howToImprove).toHaveLength(1);
     expect(responsesCreate).toHaveBeenCalledTimes(1);
-    expect(responsesCreate.mock.calls[0]?.[0].input[0].content[0].text).toContain(
+    const request = responsesCreate.mock.calls[0]?.[0];
+    expect(request.input[0].content[0].text).toContain(
       "Base the analysis primarily on division-level performance",
+    );
+    expect(request.input[0].content[0].text).toContain(
+      "Each section must have a distinct purpose",
+    );
+    expect(request.input[0].content[0].text).toContain(
+      "Do not repeat the same sentence or same advice across sections",
+    );
+    expect(request.input[1].content[0].text).toContain(
+      "canImprove: mention only where performance can improve; do not include advice here.",
+    );
+    expect(request.input[1].content[0].text).toContain(
+      "howToImprove: give specific next actions; do not restate the problem.",
+    );
+    expect(request.input[1].content[0].text).toContain(
+      "Prefer 1-2 clear bullets per section unless the data strongly supports 3.",
     );
     expect(responsesCreate.mock.calls[0]?.[0].text.format.schema.required).toEqual([
       "goingWell",

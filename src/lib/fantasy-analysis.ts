@@ -541,7 +541,7 @@ async function generateFantasyAnalysisReport(
           {
             type: "input_text",
             text:
-              "You write compact, read-only fantasy cricket performance guidance. Use only the supplied analytics payload. Base the analysis primarily on division-level performance. Translate the metrics into plain user-facing language. Do not mention technical analytics terms such as delta, percentile, rank percentile, standard deviation, correlation, or raw field-comparison labels. Do not invent missing facts. If a division has no meaningful concern, say: Keep up the good work here. Keep the tone direct, practical, and non-chatty.",
+              "You write compact, read-only fantasy cricket performance guidance. Use only the supplied analytics payload. Base the analysis primarily on division-level performance. Translate metrics into plain user-facing cricket and fantasy language. Do not mention technical analytics terms such as delta, percentile, rank percentile, standard deviation, correlation, or raw field-comparison labels. Do not invent missing facts. Keep the tone direct, practical, and non-chatty. Each section must have a distinct purpose: goingWell is only for positive observations, canImprove is only for the specific division or pick pattern that needs attention, and howToImprove is only for concrete next actions. Do not repeat the same sentence or same advice across sections. When naming a division, start the item with the division name. If there is no meaningful issue for a division, say: Keep up the good work here.",
           },
         ],
       },
@@ -550,7 +550,21 @@ async function generateFantasyAnalysisReport(
         content: [
           {
             type: "input_text",
-            text: `Generate concise fantasy guidance from this analytics payload. Return only what is going well, what can be improved, and how it can be improved. Focus on divisions first, then use recent trend, boosters, and pick tendencies only when they make the division guidance more useful:\n${JSON.stringify(promptPayload, null, 2)}`,
+            text: `Generate concise fantasy guidance from this analytics payload.
+
+Rules:
+- Return exactly three sections: goingWell, canImprove, howToImprove.
+- Focus on divisions first.
+- goingWell: mention divisions or patterns that are working.
+- canImprove: mention only where performance can improve; do not include advice here.
+- howToImprove: give specific next actions; do not restate the problem.
+- Avoid repeating the same division insight in multiple sections.
+- Prefer 1-2 clear bullets per section unless the data strongly supports 3.
+- Use recent trend, boosters, and pick tendencies only when they explain division performance.
+- If everything looks good, use: Keep up the good work here.
+
+Analytics payload:
+${JSON.stringify(promptPayload, null, 2)}`,
           },
         ],
       },
