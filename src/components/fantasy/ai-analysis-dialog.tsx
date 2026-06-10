@@ -21,20 +21,6 @@ type LoadState =
   | { kind: "loaded"; data: FantasyAnalysisResponse }
   | { kind: "failed"; message: string };
 
-function formatPercent(value: number | null) {
-  if (value === null) return "—";
-  return `${Math.round(value * 100)}%`;
-}
-
-function formatTimestamp(value: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(value));
-}
-
 export function AiAnalysisDialog() {
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<LoadState>({ kind: "idle" });
@@ -113,99 +99,44 @@ export function AiAnalysisDialog() {
       </div>
     ) : (
       <div className="space-y-5 px-6 py-6">
-        <div className="grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Accuracy
-            </p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">
-              {formatPercent(state.data.metrics.season.accuracy)}
-            </p>
-          </div>
-          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Percentile
-            </p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">
-              {state.data.metrics.season.percentile === null
-                ? "—"
-                : `${state.data.metrics.season.percentile}th`}
-            </p>
-          </div>
-          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Boosted Pick Hit Rate
-            </p>
-            <p className="mt-1 text-2xl font-semibold text-foreground">
-              {formatPercent(state.data.metrics.boosters.accuracy)}
-            </p>
-          </div>
-        </div>
-
         <section className="space-y-2">
           <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Summary
-          </h3>
-          <p className="text-sm leading-6 text-foreground">{state.data.report.summary}</p>
-        </section>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <section className="space-y-2">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Strengths
-            </h3>
-            <ul className="space-y-2 text-sm text-foreground">
-              {state.data.report.strengths.map((item) => (
-                <li key={item} className="rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="space-y-2">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Weaknesses
-            </h3>
-            <ul className="space-y-2 text-sm text-foreground">
-              {state.data.report.weaknesses.map((item) => (
-                <li key={item} className="rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <section className="space-y-2">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Recommendations
+            What is going well?
           </h3>
           <ul className="space-y-2 text-sm text-foreground">
-            {state.data.report.recommendations.map((item) => (
-              <li key={item} className="rounded-xl border border-border/70 bg-primary/5 px-3 py-2">
+            {state.data.report.goingWell.map((item) => (
+              <li key={item} className="rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
                 {item}
               </li>
             ))}
           </ul>
         </section>
 
-        <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Confidence Note
-          </p>
-          <p className="mt-1 text-sm text-foreground">{state.data.report.confidenceNote}</p>
-        </div>
+        <section className="space-y-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            What can be improved?
+          </h3>
+          <ul className="space-y-2 text-sm text-foreground">
+            {state.data.report.canImprove.map((item) => (
+              <li key={item} className="rounded-xl border border-border/70 bg-muted/20 px-3 py-2">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3 text-xs text-muted-foreground">
-          <span>
-            This analysis includes your predictions for {state.data.scoredPredictionCount} completed games.
-          </span>
-          <span>
-            {state.data.source === "cache" ? "Cached" : "Generated"} • Updated{" "}
-            {formatTimestamp(state.data.generatedAt)}
-          </span>
-        </div>
+        <section className="space-y-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            How it can be improved?
+          </h3>
+          <ul className="space-y-2 text-sm text-foreground">
+            {state.data.report.howToImprove.map((item) => (
+              <li key={item} className="rounded-xl border border-border/70 bg-primary/5 px-3 py-2">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     );
 

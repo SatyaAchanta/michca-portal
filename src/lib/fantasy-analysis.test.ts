@@ -251,11 +251,9 @@ describe("getFantasyAnalysisForUser", () => {
     fantasyAnalysisReportFindUnique.mockResolvedValue(null);
     responsesCreate.mockResolvedValue({
       output_text: JSON.stringify({
-        summary: "Filtered correctly.",
-        strengths: ["One"],
-        weaknesses: ["Two"],
-        recommendations: ["Three"],
-        confidenceNote: "Four",
+        goingWell: ["One"],
+        canImprove: ["Two"],
+        howToImprove: ["Three"],
       }),
     });
     fantasyAnalysisReportUpsert.mockImplementation(async ({ update }: { update: Record<string, unknown> }) => ({
@@ -336,11 +334,9 @@ describe("getFantasyAnalysisForUser", () => {
       higherScoringProfiles: 2,
     });
     const cachedReport = {
-      summary: "Cached summary",
-      strengths: ["Strong recent form", "Good playoff reads"],
-      weaknesses: ["Boosters need work", "Division 1 has slipped"],
-      recommendations: ["Stay selective with boosts", "Lean into Premier form"],
-      confidenceNote: "Sample size is now stable.",
+      goingWell: ["Premier T20 picks are landing well.", "Recent form is steady."],
+      canImprove: ["Division 1 picks need cleaner reads."],
+      howToImprove: ["Compare Division 1 matchups more carefully before locking picks."],
     };
 
     fantasyAnalysisReportFindUnique.mockResolvedValue({
@@ -348,7 +344,7 @@ describe("getFantasyAnalysisForUser", () => {
       analyticsFingerprint: computation.analyticsFingerprint,
       reportPayload: cachedReport,
       generatedAt: new Date("2026-05-24T12:00:00.000Z"),
-      expiresAt: new Date("2026-06-01T12:00:00.000Z"),
+      expiresAt: new Date("2026-06-20T12:00:00.000Z"),
     });
 
     const result = await getFantasyAnalysisForUser("user-1");
@@ -359,25 +355,44 @@ describe("getFantasyAnalysisForUser", () => {
     }
 
     expect(result.source).toBe("cache");
-    expect(result.report.summary).toBe("Cached summary");
+    expect(result.report.goingWell[0]).toBe("Premier T20 picks are landing well.");
     expect(responsesCreate).not.toHaveBeenCalled();
     expect(fantasyAnalysisReportUpsert).not.toHaveBeenCalled();
   });
 
-  it("generates and persists a new report when no valid cache exists", async () => {
+  it("regenerates instead of reusing cached reports with the old payload shape", async () => {
     userProfileFindUnique.mockResolvedValue(userProfile);
     predictionFindMany.mockResolvedValueOnce(userPredictions);
     predictionFindMany.mockResolvedValueOnce(communityPredictions);
     userProfileCount.mockResolvedValueOnce(12);
     userProfileCount.mockResolvedValueOnce(2);
-    fantasyAnalysisReportFindUnique.mockResolvedValue(null);
+
+    const computation = computeFantasyAnalysisData({
+      userProfile,
+      userPredictions,
+      communityPredictions,
+      totalProfiles: 12,
+      higherScoringProfiles: 2,
+    });
+
+    fantasyAnalysisReportFindUnique.mockResolvedValue({
+      modelName: "gpt-5-mini",
+      analyticsFingerprint: computation.analyticsFingerprint,
+      reportPayload: {
+        summary: "Cached summary",
+        strengths: ["Strong recent form"],
+        weaknesses: ["Boosters need work"],
+        recommendations: ["Stay selective with boosts"],
+        confidenceNote: "Sample size is now stable.",
+      },
+      generatedAt: new Date("2026-05-24T12:00:00.000Z"),
+      expiresAt: new Date("2026-06-20T12:00:00.000Z"),
+    });
     responsesCreate.mockResolvedValue({
       output_text: JSON.stringify({
-        summary: "You are above average overall but too volatile on boosted picks.",
-        strengths: ["Season accuracy remains solid.", "Premier T20 reads are ahead of the field."],
-        weaknesses: ["Boosted picks are not converting enough.", "Recent contrarian shots have cooled."],
-        recommendations: ["Use boosts only on your strongest edges.", "Scale back low-confidence contrarian picks."],
-        confidenceNote: "The advice is based on a meaningful scored sample.",
+        goingWell: ["Premier T20 picks are working well."],
+        canImprove: ["Division 1 picks can improve."],
+        howToImprove: ["Review recent Division 1 results before making picks."],
       }),
     });
     fantasyAnalysisReportUpsert.mockImplementation(async ({ update }: { update: Record<string, unknown> }) => ({
@@ -395,8 +410,50 @@ describe("getFantasyAnalysisForUser", () => {
     }
 
     expect(result.source).toBe("generated");
-    expect(result.report.recommendations).toHaveLength(2);
+    expect(result.report.goingWell).toEqual(["Premier T20 picks are working well."]);
     expect(responsesCreate).toHaveBeenCalledTimes(1);
+    expect(fantasyAnalysisReportUpsert).toHaveBeenCalledTimes(1);
+  });
+
+  it("generates and persists a new report when no valid cache exists", async () => {
+    userProfileFindUnique.mockResolvedValue(userProfile);
+    predictionFindMany.mockResolvedValueOnce(userPredictions);
+    predictionFindMany.mockResolvedValueOnce(communityPredictions);
+    userProfileCount.mockResolvedValueOnce(12);
+    userProfileCount.mockResolvedValueOnce(2);
+    fantasyAnalysisReportFindUnique.mockResolvedValue(null);
+    responsesCreate.mockResolvedValue({
+      output_text: JSON.stringify({
+        goingWell: ["Premier T20 picks are working well.", "Recent weekly form is improving."],
+        canImprove: ["Division 1 picks are not converting enough."],
+        howToImprove: ["Be more selective with Division 1 toss-up games before using a boost."],
+      }),
+    });
+    fantasyAnalysisReportUpsert.mockImplementation(async ({ update }: { update: Record<string, unknown> }) => ({
+      modelName: update.modelName,
+      reportPayload: update.reportPayload,
+      generatedAt: update.generatedAt,
+      expiresAt: update.expiresAt,
+    }));
+
+    const result = await getFantasyAnalysisForUser("user-1");
+
+    expect(result.status).toBe("ready");
+    if (result.status !== "ready") {
+      throw new Error("Expected generated fantasy analysis result.");
+    }
+
+    expect(result.source).toBe("generated");
+    expect(result.report.howToImprove).toHaveLength(1);
+    expect(responsesCreate).toHaveBeenCalledTimes(1);
+    expect(responsesCreate.mock.calls[0]?.[0].input[0].content[0].text).toContain(
+      "Base the analysis primarily on division-level performance",
+    );
+    expect(responsesCreate.mock.calls[0]?.[0].text.format.schema.required).toEqual([
+      "goingWell",
+      "canImprove",
+      "howToImprove",
+    ]);
     expect(fantasyAnalysisReportUpsert).toHaveBeenCalledTimes(1);
   });
 

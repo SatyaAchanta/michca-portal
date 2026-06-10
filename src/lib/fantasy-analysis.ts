@@ -13,11 +13,9 @@ const FANTASY_ANALYSIS_DEFAULT_MODEL = "gpt-5-mini";
 const RECENT_WEEK_WINDOW = 5;
 
 export type FantasyAnalysisReportPayload = {
-  summary: string;
-  strengths: string[];
-  weaknesses: string[];
-  recommendations: string[];
-  confidenceNote: string;
+  goingWell: string[];
+  canImprove: string[];
+  howToImprove: string[];
 };
 
 export type FantasyAnalysisMetrics = {
@@ -166,11 +164,9 @@ function isValidReportPayload(value: unknown): value is FantasyAnalysisReportPay
     Array.isArray(entry) && entry.every((item) => typeof item === "string");
 
   return (
-    typeof candidate.summary === "string" &&
-    typeof candidate.confidenceNote === "string" &&
-    stringArray(candidate.strengths) &&
-    stringArray(candidate.weaknesses) &&
-    stringArray(candidate.recommendations)
+    stringArray(candidate.goingWell) &&
+    stringArray(candidate.canImprove) &&
+    stringArray(candidate.howToImprove)
   );
 }
 
@@ -545,7 +541,7 @@ async function generateFantasyAnalysisReport(
           {
             type: "input_text",
             text:
-              "You write compact, read-only fantasy performance reports. Use only the supplied analytics payload. Do not invent missing facts. Keep the tone analytical, direct, and non-chatty. Mention uncertainty when sample sizes are limited.",
+              "You write compact, read-only fantasy cricket performance guidance. Use only the supplied analytics payload. Base the analysis primarily on division-level performance. Translate the metrics into plain user-facing language. Do not mention technical analytics terms such as delta, percentile, rank percentile, standard deviation, correlation, or raw field-comparison labels. Do not invent missing facts. If a division has no meaningful concern, say: Keep up the good work here. Keep the tone direct, practical, and non-chatty.",
           },
         ],
       },
@@ -554,7 +550,7 @@ async function generateFantasyAnalysisReport(
         content: [
           {
             type: "input_text",
-            text: `Generate a concise report from this analytics payload:\n${JSON.stringify(promptPayload, null, 2)}`,
+            text: `Generate concise fantasy guidance from this analytics payload. Return only what is going well, what can be improved, and how it can be improved. Focus on divisions first, then use recent trend, boosters, and pick tendencies only when they make the division guidance more useful:\n${JSON.stringify(promptPayload, null, 2)}`,
           },
         ],
       },
@@ -568,33 +564,29 @@ async function generateFantasyAnalysisReport(
           type: "object",
           additionalProperties: false,
           properties: {
-            summary: { type: "string" },
-            strengths: {
+            goingWell: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            weaknesses: {
+            canImprove: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            recommendations: {
+            howToImprove: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            confidenceNote: { type: "string" },
           },
           required: [
-            "summary",
-            "strengths",
-            "weaknesses",
-            "recommendations",
-            "confidenceNote",
+            "goingWell",
+            "canImprove",
+            "howToImprove",
           ],
         },
       },
