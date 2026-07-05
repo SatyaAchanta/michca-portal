@@ -13,11 +13,9 @@ const FANTASY_ANALYSIS_DEFAULT_MODEL = "gpt-5-mini";
 const RECENT_WEEK_WINDOW = 5;
 
 export type FantasyAnalysisReportPayload = {
-  summary: string;
-  strengths: string[];
-  weaknesses: string[];
-  recommendations: string[];
-  confidenceNote: string;
+  goingWell: string[];
+  canImprove: string[];
+  howToImprove: string[];
 };
 
 export type FantasyAnalysisMetrics = {
@@ -166,11 +164,9 @@ function isValidReportPayload(value: unknown): value is FantasyAnalysisReportPay
     Array.isArray(entry) && entry.every((item) => typeof item === "string");
 
   return (
-    typeof candidate.summary === "string" &&
-    typeof candidate.confidenceNote === "string" &&
-    stringArray(candidate.strengths) &&
-    stringArray(candidate.weaknesses) &&
-    stringArray(candidate.recommendations)
+    stringArray(candidate.goingWell) &&
+    stringArray(candidate.canImprove) &&
+    stringArray(candidate.howToImprove)
   );
 }
 
@@ -545,7 +541,7 @@ async function generateFantasyAnalysisReport(
           {
             type: "input_text",
             text:
-              "You write compact, read-only fantasy performance reports. Use only the supplied analytics payload. Do not invent missing facts. Keep the tone analytical, direct, and non-chatty. Mention uncertainty when sample sizes are limited.",
+              "You write compact, read-only fantasy cricket performance guidance. Use only the supplied analytics payload. Base the analysis primarily on division-level performance. Translate metrics into plain user-facing cricket and fantasy language. Do not mention technical analytics terms such as delta, percentile, rank percentile, standard deviation, correlation, or raw field-comparison labels. Do not invent missing facts. Keep the tone direct, practical, and non-chatty. Each section must have a distinct purpose: goingWell is only for positive observations, canImprove is only for the specific division or pick pattern that needs attention, and howToImprove is only for concrete next actions. Do not repeat the same sentence or same advice across sections. When naming a division, start the item with the division name. If there is no meaningful issue for a division, say: Keep up the good work here.",
           },
         ],
       },
@@ -554,7 +550,21 @@ async function generateFantasyAnalysisReport(
         content: [
           {
             type: "input_text",
-            text: `Generate a concise report from this analytics payload:\n${JSON.stringify(promptPayload, null, 2)}`,
+            text: `Generate concise fantasy guidance from this analytics payload.
+
+Rules:
+- Return exactly three sections: goingWell, canImprove, howToImprove.
+- Focus on divisions first.
+- goingWell: mention divisions or patterns that are working.
+- canImprove: mention only where performance can improve; do not include advice here.
+- howToImprove: give specific next actions; do not restate the problem.
+- Avoid repeating the same division insight in multiple sections.
+- Prefer 1-2 clear bullets per section unless the data strongly supports 3.
+- Use recent trend, boosters, and pick tendencies only when they explain division performance.
+- If everything looks good, use: Keep up the good work here.
+
+Analytics payload:
+${JSON.stringify(promptPayload, null, 2)}`,
           },
         ],
       },
@@ -568,33 +578,29 @@ async function generateFantasyAnalysisReport(
           type: "object",
           additionalProperties: false,
           properties: {
-            summary: { type: "string" },
-            strengths: {
+            goingWell: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            weaknesses: {
+            canImprove: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            recommendations: {
+            howToImprove: {
               type: "array",
               items: { type: "string" },
-              minItems: 2,
+              minItems: 1,
               maxItems: 3,
             },
-            confidenceNote: { type: "string" },
           },
           required: [
-            "summary",
-            "strengths",
-            "weaknesses",
-            "recommendations",
-            "confidenceNote",
+            "goingWell",
+            "canImprove",
+            "howToImprove",
           ],
         },
       },

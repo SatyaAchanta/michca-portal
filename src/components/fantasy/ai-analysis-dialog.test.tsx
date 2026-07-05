@@ -37,11 +37,9 @@ describe("AiAnalysisDialog", () => {
       json: async () => ({
         status: "ready",
         report: {
-          summary: "You are outperforming the field on overall accuracy.",
-          strengths: ["Premier T20 reads are sharp.", "You are converting solid value from standard picks."],
-          weaknesses: ["Boosters are underperforming.", "Recent Division 1 picks have slipped."],
-          recommendations: ["Save boosts for cleaner edges.", "Tighten Division 1 picks next weekend."],
-          confidenceNote: "The sample size is large enough for directional advice.",
+          goingWell: ["Premier T20 reads are sharp.", "You are converting solid value from standard picks."],
+          canImprove: ["Recent Division 1 picks have slipped."],
+          howToImprove: ["Tighten Division 1 picks next weekend before using boosts."],
         },
         metrics: {
           season: {
@@ -97,10 +95,16 @@ describe("AiAnalysisDialog", () => {
     await user.click(screen.getByRole("button", { name: /ai analysis/i }));
 
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
-    expect(await screen.findByText(/outperforming the field/i)).toBeInTheDocument();
-    expect(screen.getByText("Strengths")).toBeInTheDocument();
-    expect(screen.getByText("Weaknesses")).toBeInTheDocument();
-    expect(screen.getByText("Recommendations")).toBeInTheDocument();
+    expect(await screen.findByText("What is going well?")).toBeInTheDocument();
+    expect(screen.getByText("What can be improved?")).toBeInTheDocument();
+    expect(screen.getByText("How it can be improved?")).toBeInTheDocument();
+    expect(screen.getByText("Premier T20 reads are sharp.")).toBeInTheDocument();
+    expect(screen.queryByText("Strengths")).not.toBeInTheDocument();
+    expect(screen.queryByText("Weaknesses")).not.toBeInTheDocument();
+    expect(screen.queryByText("Recommendations")).not.toBeInTheDocument();
+    expect(screen.queryByText("Summary")).not.toBeInTheDocument();
+    expect(screen.queryByText("Confidence Note")).not.toBeInTheDocument();
+    expect(screen.queryByText("Percentile")).not.toBeInTheDocument();
     expect(track).toHaveBeenCalledWith("fantasy_ai_analysis_opened", {
       surface: "fantasy_page",
     });
@@ -129,6 +133,6 @@ describe("AiAnalysisDialog", () => {
     await waitFor(() => {
       expect(screen.getByText("More scored picks needed")).toBeInTheDocument();
     });
-    expect(screen.getByText("4/10")).toBeInTheDocument();
+    expect(screen.getByText("AI Analysis becomes available after 10 scored predictions.")).toBeInTheDocument();
   });
 });
