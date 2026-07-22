@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ClipboardList,
   Gamepad2,
+  Network,
   CalendarPlus2,
   ShieldCheck,
   Users,
@@ -68,6 +69,13 @@ const ADMIN_SECTIONS = [
     description: "Set game results and calculate fantasy prediction points.",
     href: "/admin/fantasy",
     icon: Gamepad2,
+  },
+  {
+    key: "michcaMadness" as const,
+    label: "MichCA-Madness",
+    description: "Set playoff seeds, schedules, and bracket results.",
+    href: "/admin/michca-madness",
+    icon: Network,
   },
 ];
 

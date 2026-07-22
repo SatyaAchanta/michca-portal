@@ -398,7 +398,12 @@ export const ModelName = {
   CertificationAttempt: 'CertificationAttempt',
   CertificationAttemptQuestion: 'CertificationAttemptQuestion',
   Prediction: 'Prediction',
-  FantasyAnalysisReport: 'FantasyAnalysisReport'
+  FantasyAnalysisReport: 'FantasyAnalysisReport',
+  MichcaMadnessBracketConfig: 'MichcaMadnessBracketConfig',
+  MichcaMadnessSeed: 'MichcaMadnessSeed',
+  MichcaMadnessGameSlot: 'MichcaMadnessGameSlot',
+  MichcaMadnessEntry: 'MichcaMadnessEntry',
+  MichcaMadnessPick: 'MichcaMadnessPick'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "clubInfoSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion" | "prediction" | "fantasyAnalysisReport"
+    modelProps: "team" | "game" | "userProfile" | "umpiringTraining" | "youth15Registration" | "waiverSubmission" | "clubInfoSubmission" | "umpireAssignment" | "certificationQuestion" | "certificationQuestionOption" | "certificationTestWindow" | "certificationAttempt" | "certificationAttemptQuestion" | "prediction" | "fantasyAnalysisReport" | "michcaMadnessBracketConfig" | "michcaMadnessSeed" | "michcaMadnessGameSlot" | "michcaMadnessEntry" | "michcaMadnessPick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1528,6 +1533,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MichcaMadnessBracketConfig: {
+      payload: Prisma.$MichcaMadnessBracketConfigPayload<ExtArgs>
+      fields: Prisma.MichcaMadnessBracketConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MichcaMadnessBracketConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MichcaMadnessBracketConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.MichcaMadnessBracketConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MichcaMadnessBracketConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        findMany: {
+          args: Prisma.MichcaMadnessBracketConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>[]
+        }
+        create: {
+          args: Prisma.MichcaMadnessBracketConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        createMany: {
+          args: Prisma.MichcaMadnessBracketConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MichcaMadnessBracketConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.MichcaMadnessBracketConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        update: {
+          args: Prisma.MichcaMadnessBracketConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.MichcaMadnessBracketConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MichcaMadnessBracketConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MichcaMadnessBracketConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.MichcaMadnessBracketConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessBracketConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.MichcaMadnessBracketConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMichcaMadnessBracketConfig>
+        }
+        groupBy: {
+          args: Prisma.MichcaMadnessBracketConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessBracketConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MichcaMadnessBracketConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessBracketConfigCountAggregateOutputType> | number
+        }
+      }
+    }
+    MichcaMadnessSeed: {
+      payload: Prisma.$MichcaMadnessSeedPayload<ExtArgs>
+      fields: Prisma.MichcaMadnessSeedFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MichcaMadnessSeedFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MichcaMadnessSeedFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        findFirst: {
+          args: Prisma.MichcaMadnessSeedFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MichcaMadnessSeedFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        findMany: {
+          args: Prisma.MichcaMadnessSeedFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>[]
+        }
+        create: {
+          args: Prisma.MichcaMadnessSeedCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        createMany: {
+          args: Prisma.MichcaMadnessSeedCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MichcaMadnessSeedCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>[]
+        }
+        delete: {
+          args: Prisma.MichcaMadnessSeedDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        update: {
+          args: Prisma.MichcaMadnessSeedUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        deleteMany: {
+          args: Prisma.MichcaMadnessSeedDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MichcaMadnessSeedUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MichcaMadnessSeedUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>[]
+        }
+        upsert: {
+          args: Prisma.MichcaMadnessSeedUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessSeedPayload>
+        }
+        aggregate: {
+          args: Prisma.MichcaMadnessSeedAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMichcaMadnessSeed>
+        }
+        groupBy: {
+          args: Prisma.MichcaMadnessSeedGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessSeedGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MichcaMadnessSeedCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessSeedCountAggregateOutputType> | number
+        }
+      }
+    }
+    MichcaMadnessGameSlot: {
+      payload: Prisma.$MichcaMadnessGameSlotPayload<ExtArgs>
+      fields: Prisma.MichcaMadnessGameSlotFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MichcaMadnessGameSlotFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MichcaMadnessGameSlotFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        findFirst: {
+          args: Prisma.MichcaMadnessGameSlotFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MichcaMadnessGameSlotFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        findMany: {
+          args: Prisma.MichcaMadnessGameSlotFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>[]
+        }
+        create: {
+          args: Prisma.MichcaMadnessGameSlotCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        createMany: {
+          args: Prisma.MichcaMadnessGameSlotCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MichcaMadnessGameSlotCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>[]
+        }
+        delete: {
+          args: Prisma.MichcaMadnessGameSlotDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        update: {
+          args: Prisma.MichcaMadnessGameSlotUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        deleteMany: {
+          args: Prisma.MichcaMadnessGameSlotDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MichcaMadnessGameSlotUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MichcaMadnessGameSlotUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>[]
+        }
+        upsert: {
+          args: Prisma.MichcaMadnessGameSlotUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessGameSlotPayload>
+        }
+        aggregate: {
+          args: Prisma.MichcaMadnessGameSlotAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMichcaMadnessGameSlot>
+        }
+        groupBy: {
+          args: Prisma.MichcaMadnessGameSlotGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessGameSlotGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MichcaMadnessGameSlotCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessGameSlotCountAggregateOutputType> | number
+        }
+      }
+    }
+    MichcaMadnessEntry: {
+      payload: Prisma.$MichcaMadnessEntryPayload<ExtArgs>
+      fields: Prisma.MichcaMadnessEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MichcaMadnessEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MichcaMadnessEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.MichcaMadnessEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MichcaMadnessEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        findMany: {
+          args: Prisma.MichcaMadnessEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>[]
+        }
+        create: {
+          args: Prisma.MichcaMadnessEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        createMany: {
+          args: Prisma.MichcaMadnessEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MichcaMadnessEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.MichcaMadnessEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        update: {
+          args: Prisma.MichcaMadnessEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.MichcaMadnessEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MichcaMadnessEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MichcaMadnessEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.MichcaMadnessEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.MichcaMadnessEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMichcaMadnessEntry>
+        }
+        groupBy: {
+          args: Prisma.MichcaMadnessEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MichcaMadnessEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessEntryCountAggregateOutputType> | number
+        }
+      }
+    }
+    MichcaMadnessPick: {
+      payload: Prisma.$MichcaMadnessPickPayload<ExtArgs>
+      fields: Prisma.MichcaMadnessPickFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MichcaMadnessPickFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MichcaMadnessPickFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        findFirst: {
+          args: Prisma.MichcaMadnessPickFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MichcaMadnessPickFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        findMany: {
+          args: Prisma.MichcaMadnessPickFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>[]
+        }
+        create: {
+          args: Prisma.MichcaMadnessPickCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        createMany: {
+          args: Prisma.MichcaMadnessPickCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MichcaMadnessPickCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>[]
+        }
+        delete: {
+          args: Prisma.MichcaMadnessPickDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        update: {
+          args: Prisma.MichcaMadnessPickUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        deleteMany: {
+          args: Prisma.MichcaMadnessPickDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MichcaMadnessPickUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MichcaMadnessPickUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>[]
+        }
+        upsert: {
+          args: Prisma.MichcaMadnessPickUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MichcaMadnessPickPayload>
+        }
+        aggregate: {
+          args: Prisma.MichcaMadnessPickAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMichcaMadnessPick>
+        }
+        groupBy: {
+          args: Prisma.MichcaMadnessPickGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessPickGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MichcaMadnessPickCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MichcaMadnessPickCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1839,6 +2214,84 @@ export const FantasyAnalysisReportScalarFieldEnum = {
 export type FantasyAnalysisReportScalarFieldEnum = (typeof FantasyAnalysisReportScalarFieldEnum)[keyof typeof FantasyAnalysisReportScalarFieldEnum]
 
 
+export const MichcaMadnessBracketConfigScalarFieldEnum = {
+  id: 'id',
+  season: 'season',
+  division: 'division',
+  templateKey: 'templateKey',
+  status: 'status',
+  lockAt: 'lockAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessBracketConfigScalarFieldEnum = (typeof MichcaMadnessBracketConfigScalarFieldEnum)[keyof typeof MichcaMadnessBracketConfigScalarFieldEnum]
+
+
+export const MichcaMadnessSeedScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  seedKey: 'seedKey',
+  pool: 'pool',
+  seed: 'seed',
+  teamCode: 'teamCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessSeedScalarFieldEnum = (typeof MichcaMadnessSeedScalarFieldEnum)[keyof typeof MichcaMadnessSeedScalarFieldEnum]
+
+
+export const MichcaMadnessGameSlotScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  slotKey: 'slotKey',
+  round: 'round',
+  displayName: 'displayName',
+  sortOrder: 'sortOrder',
+  team1Source: 'team1Source',
+  team2Source: 'team2Source',
+  team1Code: 'team1Code',
+  team2Code: 'team2Code',
+  winnerCode: 'winnerCode',
+  gameId: 'gameId',
+  scheduledAt: 'scheduledAt',
+  venue: 'venue',
+  needsAttention: 'needsAttention',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessGameSlotScalarFieldEnum = (typeof MichcaMadnessGameSlotScalarFieldEnum)[keyof typeof MichcaMadnessGameSlotScalarFieldEnum]
+
+
+export const MichcaMadnessEntryScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  userProfileId: 'userProfileId',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessEntryScalarFieldEnum = (typeof MichcaMadnessEntryScalarFieldEnum)[keyof typeof MichcaMadnessEntryScalarFieldEnum]
+
+
+export const MichcaMadnessPickScalarFieldEnum = {
+  id: 'id',
+  entryId: 'entryId',
+  slotKey: 'slotKey',
+  predictedWinnerCode: 'predictedWinnerCode',
+  isCorrect: 'isCorrect',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessPickScalarFieldEnum = (typeof MichcaMadnessPickScalarFieldEnum)[keyof typeof MichcaMadnessPickScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2117,6 +2570,34 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'MichcaMadnessConfigStatus'
+ */
+export type EnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MichcaMadnessConfigStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MichcaMadnessConfigStatus[]'
+ */
+export type ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MichcaMadnessConfigStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MichcaMadnessEntryStatus'
+ */
+export type EnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MichcaMadnessEntryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MichcaMadnessEntryStatus[]'
+ */
+export type ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MichcaMadnessEntryStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2239,6 +2720,11 @@ export type GlobalOmitConfig = {
   certificationAttemptQuestion?: Prisma.CertificationAttemptQuestionOmit
   prediction?: Prisma.PredictionOmit
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportOmit
+  michcaMadnessBracketConfig?: Prisma.MichcaMadnessBracketConfigOmit
+  michcaMadnessSeed?: Prisma.MichcaMadnessSeedOmit
+  michcaMadnessGameSlot?: Prisma.MichcaMadnessGameSlotOmit
+  michcaMadnessEntry?: Prisma.MichcaMadnessEntryOmit
+  michcaMadnessPick?: Prisma.MichcaMadnessPickOmit
 }
 
 /* Types for Logging */

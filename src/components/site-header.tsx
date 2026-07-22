@@ -32,6 +32,7 @@ const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
   { label: "Fantasy", href: "/fantasy" },
+  { label: "Madness", href: "/michca-madness" },
 ];
 
 const publicMoreLinks: NavLink[] = [
