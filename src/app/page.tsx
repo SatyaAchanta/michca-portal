@@ -6,6 +6,7 @@ import {
   Calendar,
   Gamepad2,
   MapPin,
+  Sparkles,
   Trophy,
   Users,
 } from "lucide-react";
@@ -60,7 +61,40 @@ const quickLinks = [
   { label: "Account", href: "/account" },
   { label: "Schedule", href: "/schedule" },
   { label: "Fantasy", href: "/fantasy" },
+  { label: "Madness", href: "/michca-madness" },
 ];
+
+function MichcaMadnessAnnouncement() {
+  return (
+    <Card className="border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-5 shadow-sm dark:from-red-950/20 dark:via-background dark:to-amber-950/20 sm:p-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex min-w-0 gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
+            <Sparkles className="h-6 w-6" />
+          </div>
+          <div className="min-w-0 space-y-1">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
+              Coming Soon
+            </p>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              MichCA-Madness playoff brackets
+            </h2>
+            <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+              Build your playoff bracket, back your champions, and stay perfect
+              as the postseason unfolds. Updates will be posted when brackets open.
+            </p>
+          </div>
+        </div>
+        <Button asChild variant="destructive" className="shrink-0">
+          <Link href="/michca-madness">
+            View Bracket Hub
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+    </Card>
+  );
+}
 
 function getCurrentYear() {
   return Number.parseInt(
@@ -140,6 +174,9 @@ export default async function HomePage() {
               </div>
             </Card>
             <RegistrationBanner />
+            <div className="mt-4">
+              <MichcaMadnessAnnouncement />
+            </div>
           </div>
         </PageContainer>
 

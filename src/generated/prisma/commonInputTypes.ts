@@ -453,6 +453,40 @@ export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
+export type EnumMichcaMadnessConfigStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessConfigStatus | Prisma.EnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel> | $Enums.MichcaMadnessConfigStatus
+}
+
+export type EnumMichcaMadnessConfigStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessConfigStatus | Prisma.EnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessConfigStatusWithAggregatesFilter<$PrismaModel> | $Enums.MichcaMadnessConfigStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel>
+}
+
+export type EnumMichcaMadnessEntryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessEntryStatus | Prisma.EnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel> | $Enums.MichcaMadnessEntryStatus
+}
+
+export type EnumMichcaMadnessEntryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessEntryStatus | Prisma.EnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessEntryStatusWithAggregatesFilter<$PrismaModel> | $Enums.MichcaMadnessEntryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -876,6 +910,40 @@ export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessConfigStatus | Prisma.EnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel> | $Enums.MichcaMadnessConfigStatus
+}
+
+export type NestedEnumMichcaMadnessConfigStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessConfigStatus | Prisma.EnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessConfigStatus[] | Prisma.ListEnumMichcaMadnessConfigStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessConfigStatusWithAggregatesFilter<$PrismaModel> | $Enums.MichcaMadnessConfigStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMichcaMadnessConfigStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessEntryStatus | Prisma.EnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel> | $Enums.MichcaMadnessEntryStatus
+}
+
+export type NestedEnumMichcaMadnessEntryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MichcaMadnessEntryStatus | Prisma.EnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MichcaMadnessEntryStatus[] | Prisma.ListEnumMichcaMadnessEntryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMichcaMadnessEntryStatusWithAggregatesFilter<$PrismaModel> | $Enums.MichcaMadnessEntryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMichcaMadnessEntryStatusFilter<$PrismaModel>
 }
 
 

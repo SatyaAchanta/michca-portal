@@ -128,3 +128,20 @@ export const UmpiringTrainingDateOption = {
 } as const
 
 export type UmpiringTrainingDateOption = (typeof UmpiringTrainingDateOption)[keyof typeof UmpiringTrainingDateOption]
+
+
+export const MichcaMadnessConfigStatus = {
+  COMING_SOON: 'COMING_SOON',
+  READY: 'READY',
+  LOCKED: 'LOCKED'
+} as const
+
+export type MichcaMadnessConfigStatus = (typeof MichcaMadnessConfigStatus)[keyof typeof MichcaMadnessConfigStatus]
+
+
+export const MichcaMadnessEntryStatus = {
+  ALIVE: 'ALIVE',
+  ELIMINATED: 'ELIMINATED'
+} as const
+
+export type MichcaMadnessEntryStatus = (typeof MichcaMadnessEntryStatus)[keyof typeof MichcaMadnessEntryStatus]

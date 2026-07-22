@@ -92,6 +92,17 @@ enum UmpiringTrainingDateOption {
   APRIL_26_2026
 }
 
+enum MichcaMadnessConfigStatus {
+  COMING_SOON
+  READY
+  LOCKED
+}
+
+enum MichcaMadnessEntryStatus {
+  ALIVE
+  ELIMINATED
+}
+
 model Team {
   teamCode      String       @id
   format        TeamFormat
@@ -181,6 +192,7 @@ model UserProfile {
   teamsCaptained                Team[]                    @relation("TeamCaptain")
   teamsViceCaptained            Team[]                    @relation("TeamViceCaptain")
   predictions                   Prediction[]
+  michcaMadnessEntries          MichcaMadnessEntry[]
   fantasyAnalysisReport         FantasyAnalysisReport?
 
   @@index([email])
@@ -430,4 +442,98 @@ model FantasyAnalysisReport {
 
   @@index([expiresAt])
   @@index([analyticsFingerprint])
+}
+
+model MichcaMadnessBracketConfig {
+  id          String                    @id @default(uuid())
+  season      Int
+  division    Division
+  templateKey String
+  status      MichcaMadnessConfigStatus @default(COMING_SOON)
+  lockAt      DateTime?
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @updatedAt
+  seeds       MichcaMadnessSeed[]
+  slots       MichcaMadnessGameSlot[]
+  entries     MichcaMadnessEntry[]
+
+  @@unique([season, division])
+  @@index([status])
+  @@index([season])
+}
+
+model MichcaMadnessSeed {
+  id        String                     @id @default(uuid())
+  configId  String
+  seedKey   String
+  pool      String?
+  seed      Int
+  teamCode  String
+  createdAt DateTime                   @default(now())
+  updatedAt DateTime                   @updatedAt
+  config    MichcaMadnessBracketConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, seedKey])
+  @@unique([configId, teamCode])
+  @@index([teamCode])
+}
+
+model MichcaMadnessGameSlot {
+  id             String                     @id @default(uuid())
+  configId       String
+  slotKey        String
+  round          String
+  displayName    String
+  sortOrder      Int
+  team1Source    String
+  team2Source    String
+  team1Code      String?
+  team2Code      String?
+  winnerCode     String?
+  gameId         String?
+  scheduledAt    DateTime?
+  venue          String?
+  needsAttention Boolean                    @default(false)
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
+  config         MichcaMadnessBracketConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, slotKey])
+  @@index([gameId])
+  @@index([winnerCode])
+  @@index([scheduledAt])
+}
+
+model MichcaMadnessEntry {
+  id            String                    @id @default(uuid())
+  configId      String
+  userProfileId String
+  status        MichcaMadnessEntryStatus  @default(ALIVE)
+  submittedAt   DateTime                  @default(now())
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+  config        MichcaMadnessBracketConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+  userProfile   UserProfile               @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  picks         MichcaMadnessPick[]
+
+  @@unique([configId, userProfileId])
+  @@index([userProfileId])
+  @@index([status])
+  @@index([submittedAt])
+}
+
+model MichcaMadnessPick {
+  id                  String             @id @default(uuid())
+  entryId             String
+  slotKey             String
+  predictedWinnerCode String
+  isCorrect           Boolean?
+  resolvedAt          DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  entry               MichcaMadnessEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@unique([entryId, slotKey])
+  @@index([predictedWinnerCode])
+  @@index([isCorrect])
 }

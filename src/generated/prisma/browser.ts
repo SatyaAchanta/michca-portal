@@ -92,3 +92,28 @@ export type Prediction = Prisma.PredictionModel
  * 
  */
 export type FantasyAnalysisReport = Prisma.FantasyAnalysisReportModel
+/**
+ * Model MichcaMadnessBracketConfig
+ * 
+ */
+export type MichcaMadnessBracketConfig = Prisma.MichcaMadnessBracketConfigModel
+/**
+ * Model MichcaMadnessSeed
+ * 
+ */
+export type MichcaMadnessSeed = Prisma.MichcaMadnessSeedModel
+/**
+ * Model MichcaMadnessGameSlot
+ * 
+ */
+export type MichcaMadnessGameSlot = Prisma.MichcaMadnessGameSlotModel
+/**
+ * Model MichcaMadnessEntry
+ * 
+ */
+export type MichcaMadnessEntry = Prisma.MichcaMadnessEntryModel
+/**
+ * Model MichcaMadnessPick
+ * 
+ */
+export type MichcaMadnessPick = Prisma.MichcaMadnessPickModel
