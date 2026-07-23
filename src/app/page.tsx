@@ -1,23 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  Gamepad2,
-  MapPin,
-  Sparkles,
-  Trophy,
-  Users,
-} from "lucide-react";
+import { ArrowRight, Calendar, Gamepad2, Sparkles, Trophy } from "lucide-react";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
-import { RegistrationBanner } from "@/components/registration-banner";
-import { FantasyBanner } from "@/components/fantasy-banner";
-import { prisma } from "@/lib/prisma";
 import { DETROIT_TIMEZONE } from "@/app/schedule/types";
 
 export const metadata: Metadata = {
@@ -64,35 +52,130 @@ const quickLinks = [
   { label: "Madness", href: "/michca-madness" },
 ];
 
-function MichcaMadnessAnnouncement() {
+function PostseasonAnnouncement() {
   return (
     <Card className="border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-5 shadow-sm dark:from-red-950/20 dark:via-background dark:to-amber-950/20 sm:p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex min-w-0 gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
-            <Sparkles className="h-6 w-6" />
+            <Trophy className="h-6 w-6" />
           </div>
           <div className="min-w-0 space-y-1">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
-              Coming Soon
+              Playoff Push
             </p>
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              MichCA-Madness playoff brackets
+              Playoffs, fantasy stakes, and MichCA-Madness are heating up
             </h2>
             <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-              Build your playoff bracket, back your champions, and stay perfect
-              as the postseason unfolds. Updates will be posted when brackets open.
+              F40 and T30 are almost at playoff time. Follow the schedule, make
+              your fantasy picks for 3x playoff points, and get ready for
+              MichCA-Madness brackets opening during the week of August 3.
             </p>
           </div>
         </div>
-        <Button asChild variant="destructive" className="shrink-0">
-          <Link href="/michca-madness">
-            View Bracket Hub
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="destructive" className="shrink-0">
+            <Link href="/michca-madness">
+              Madness
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link href="/fantasy">Fantasy</Link>
+          </Button>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link href="/schedule">Schedule</Link>
+          </Button>
+        </div>
       </div>
     </Card>
+  );
+}
+
+function PlayoffSpotlight() {
+  return (
+    <div className="grid gap-4 lg:grid-cols-3">
+      <Card className="border border-border/70 bg-card p-6 shadow-md">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white">
+            <Calendar className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
+              Playoff Schedule
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Track the road to the finals
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              F40 and T30 are moving toward their biggest games. Keep an eye on
+              dates, venues, and matchups as playoff fixtures are confirmed.
+            </p>
+          </div>
+          <Button asChild>
+            <Link href="/schedule">
+              View Schedule
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+
+      <Card className="border-amber-500/25 bg-gradient-to-br from-amber-50 via-background to-card p-6 shadow-md dark:from-amber-950/20 dark:via-background dark:to-card">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-amber-500 text-white">
+            <Gamepad2 className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-amber-700 dark:text-amber-300">
+              Fantasy Playoffs
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Playoff games count 3x
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              Regular fantasy picks matter even more in the postseason. Each
+              playoff game is worth 3x points, so one correct call can move the
+              leaderboard.
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/fantasy">
+              Make Fantasy Picks
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+
+      <Card className="border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-6 shadow-md dark:from-red-950/20 dark:via-background dark:to-amber-950/20">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
+              MichCA-Madness
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Build the perfect bracket
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              F40 and T30 brackets open during the week of August 3. Once they
+              open, pick each division from the first playoff game through the
+              final and stay perfect as the postseason moves forward.
+            </p>
+          </div>
+          <Button asChild variant="destructive">
+            <Link href="/michca-madness">
+              Open Madness
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+    </div>
   );
 }
 
@@ -106,53 +189,8 @@ function getCurrentYear() {
   );
 }
 
-function getSeasonDateBounds(season: number) {
-  return {
-    start: new Date(Date.UTC(season, 0, 1)),
-    end: new Date(Date.UTC(season + 1, 0, 1)),
-  };
-}
-
-async function getHomeSeasonStats() {
+export default function HomePage() {
   const season = getCurrentYear();
-  const { start, end } = getSeasonDateBounds(season);
-  const games = await prisma.game.findMany({
-    where: {
-      date: {
-        gte: start,
-        lt: end,
-      },
-    },
-    select: {
-      date: true,
-      division: true,
-      venue: true,
-      team1Code: true,
-      team2Code: true,
-    },
-  });
-
-  const teamCodes = new Set<string>();
-  const venues = new Set<string>();
-
-  for (const game of games) {
-    teamCodes.add(game.team1Code);
-    teamCodes.add(game.team2Code);
-
-    if (game.venue && game.venue !== "N/A") {
-      venues.add(game.venue);
-    }
-  }
-
-  return {
-    season,
-    teamCount: teamCodes.size,
-    venueCount: venues.size,
-  };
-}
-
-export default async function HomePage() {
-  const stats = await getHomeSeasonStats();
 
   return (
     <>
@@ -173,9 +211,9 @@ export default async function HomePage() {
                 </div>
               </div>
             </Card>
-            <RegistrationBanner />
+            {/* <RegistrationBanner /> */}
             <div className="mt-4">
-              <MichcaMadnessAnnouncement />
+              <PostseasonAnnouncement />
             </div>
           </div>
         </PageContainer>
@@ -186,16 +224,16 @@ export default async function HomePage() {
               <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                 <div className="space-y-5">
                   <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-                    {stats.season} Season
+                    {season} Playoffs
                   </p>
                   <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                    Mich-CA wishes every team a great season
+                    F40 and T30 playoffs are right around the corner
                   </h1>
                   <p className="max-w-2xl text-base leading-8 text-muted-foreground">
-                    Play hard, play fair, and carry the spirit of cricket into
-                    every match. Respect the game, the umpires, your opponents,
-                    and your teammates as clubs across Michigan begin a full
-                    season of league play and playoff cricket.
+                    The regular-season push is giving way to knockout pressure.
+                    Follow the playoff race, watch the bracket take shape, and
+                    get ready for F40 and T30 MichCA-Madness brackets to open
+                    during the week of August 3.
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Button asChild size="lg">
@@ -205,112 +243,49 @@ export default async function HomePage() {
                       </Link>
                     </Button>
                     <Button asChild size="lg" variant="outline">
-                      <Link href="/teams">Browse Teams</Link>
+                      <Link href="/fantasy">Fantasy 3x Picks</Link>
                     </Button>
                   </div>
                 </div>
 
                 <Card className="relative overflow-hidden border border-border/70 bg-card p-6 shadow-md">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-amber-500/10 pointer-events-none" />
                   <div className="relative space-y-5">
-                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Gamepad2 className="h-6 w-6" />
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-600 text-white">
+                      <Trophy className="h-6 w-6" />
                     </div>
                     <div className="space-y-2">
                       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-                        Fantasy League · 2026
+                        Season Hub
                       </p>
                       <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-                        Think you know cricket? Prove it.
+                        Three ways to follow the race
                       </h2>
                       <p className="text-sm leading-7 text-muted-foreground">
-                        Pick winners every weekend, rack up points, and battle
-                        for the top of the leaderboard. The 2026 season is live
-                        — don&apos;t miss a matchday.
+                        Check the playoff schedule, make fantasy picks for 3x
+                        points, and get ready for F40 and T30 brackets opening
+                        during the week of August 3.
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-3">
                       <Button asChild size="sm">
-                        <Link href="/fantasy">
-                          Make Predictions
+                        <Link href="/schedule">
+                          Schedule
                           <ArrowRight className="h-3.5 w-3.5" />
                         </Link>
                       </Button>
                       <Button asChild size="sm" variant="outline">
-                        <Link href="/fantasy/leaderboard">
-                          <Trophy className="h-3.5 w-3.5" />
-                          Leaderboard
-                        </Link>
+                        <Link href="/fantasy">Fantasy</Link>
                       </Button>
                       <Button asChild size="sm" variant="outline">
-                        <Link href="/fantasy/rules">
-                          <BookOpen className="h-3.5 w-3.5" />
-                          Rules
-                        </Link>
+                        <Link href="/michca-madness">Madness</Link>
                       </Button>
                     </div>
                   </div>
                 </Card>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                {[
-                  {
-                    label: "Teams",
-                    value: String(stats.teamCount),
-                    icon: Users,
-                  },
-                  { label: "Divisions", value: "6", icon: Trophy },
-                  {
-                    label: "Venues",
-                    value: String(stats.venueCount),
-                    icon: MapPin,
-                  },
-                  { label: "Matches", value: "500+", icon: Calendar },
-                  {
-                    label: "Season + Playoffs",
-                    value: "May - Oct",
-                    icon: Calendar,
-                  },
-                ].map((stat) => (
-                  <Card
-                    key={stat.label}
-                    className="border border-border/70 bg-card p-5 shadow-sm"
-                  >
-                    <stat.icon className="mb-4 h-6 w-6 text-primary" />
-                    <p className="break-words text-2xl font-semibold tracking-tight text-foreground">
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {stat.label}
-                    </p>
-                  </Card>
-                ))}
-              </div>
-
-              <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
-                <Card className="border border-border/70 bg-card p-6 shadow-md">
-                  <div className="space-y-4">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Gamepad2 className="h-5 w-5" />
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
-                        Fantasy League
-                      </p>
-                      <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-                        Build your fantasy squad for the season
-                      </h2>
-                      <p className="text-sm leading-7 text-muted-foreground">
-                        Follow your favorite players, compare performances, and
-                        compete with the Mich-CA community throughout the
-                        schedule.
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-                <FantasyBanner />
-              </div>
+              <PlayoffSpotlight />
 
               <Card className="border border-border/70 bg-gradient-to-r from-card via-background to-secondary/30 p-6 shadow-md">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

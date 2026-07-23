@@ -7,11 +7,10 @@ import { AdminMichcaMadnessClient } from "@/components/michca-madness/admin-mich
 import { PageContainer } from "@/components/page-container";
 import { grounds } from "@/lib/data";
 import { getAdminMichcaMadnessData } from "@/lib/actions/michca-madness";
-import { canAccessAdminSection } from "@/lib/roles";
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
-  requireAnyAdminRole,
+  requireMichcaMadnessAdminProfile,
 } from "@/lib/user-profile";
 
 export const metadata: Metadata = {
@@ -20,17 +19,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminMichcaMadnessPage() {
-  let userProfile;
   try {
-    userProfile = await requireAnyAdminRole();
+    await requireMichcaMadnessAdminProfile();
   } catch (error) {
     if (error instanceof AuthenticationRequiredError) redirect("/sign-in");
     if (error instanceof InsufficientRoleError) redirect("/");
     throw error;
-  }
-
-  if (!canAccessAdminSection(userProfile.role, "michcaMadness")) {
-    redirect("/admin");
   }
 
   const data = await getAdminMichcaMadnessData();
@@ -97,4 +91,3 @@ export default async function AdminMichcaMadnessPage() {
     </div>
   );
 }
-

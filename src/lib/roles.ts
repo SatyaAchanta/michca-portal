@@ -14,7 +14,15 @@ export function hasRoleAtLeast(current: UserRole, required: UserRole) {
   return ROLE_RANK[current] >= ROLE_RANK[required];
 }
 
-export type AdminSection = "youth15" | "umpiring" | "waiver" | "clubInfo" | "teams" | "fantasy" | "games" | "michcaMadness";
+export type AdminSection =
+  | "youth15"
+  | "umpiring"
+  | "waiver"
+  | "clubInfo"
+  | "teams"
+  | "fantasy"
+  | "games"
+  | "michcaMadness";
 
 const SECTION_ALLOWED_ROLES: Record<AdminSection, UserRole[]> = {
   youth15: [UserRole.ADMIN],
@@ -32,6 +40,37 @@ export function canAccessAdminSection(
   section: AdminSection
 ): boolean {
   return SECTION_ALLOWED_ROLES[section].includes(role);
+}
+
+export function normalizeAllowlistEmail(email: string) {
+  return email.trim().toLowerCase();
+}
+
+export function parseEmailAllowlist(value: string | undefined) {
+  return (value ?? "")
+    .split(",")
+    .map((entry) => normalizeAllowlistEmail(entry))
+    .filter(Boolean);
+}
+
+export function isEmailInAllowlist(
+  email: string,
+  allowlistValue: string | undefined,
+) {
+  return parseEmailAllowlist(allowlistValue).includes(
+    normalizeAllowlistEmail(email),
+  );
+}
+
+export function canAccessMichcaMadnessAdmin(
+  role: UserRole,
+  email: string,
+  allowlistValue = process.env.MICHCA_MADNESS_ADMIN_EMAIL_ALLOWLIST,
+) {
+  return (
+    canAccessAdminSection(role, "michcaMadness") &&
+    isEmailInAllowlist(email, allowlistValue)
+  );
 }
 
 export function isAnyAdminRole(role: UserRole): boolean {

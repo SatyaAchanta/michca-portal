@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 
 import {
   getOpeningSlotKeys,
+  getDownstreamSlotKeys,
   requireMichcaMadnessTemplate,
   validateBracketPicks,
+  validatePartialBracketPicks,
 } from "@/lib/michca-madness";
 
 describe("michca-madness templates", () => {
@@ -73,5 +75,40 @@ describe("michca-madness templates", () => {
       "G2",
     ]);
   });
-});
 
+  it("allows partial picks without treating missing future games as invalid", () => {
+    const template = requireMichcaMadnessTemplate("PREMIER_T20");
+    const seeds = new Map(
+      Array.from({ length: 8 }, (_, index) => [
+        `S${index + 1}`,
+        `TEAM-${index + 1}`,
+      ]),
+    );
+    const picks = new Map([
+      ["QF3", "TEAM-6"],
+      ["QF2", "TEAM-2"],
+    ]);
+
+    const validation = validatePartialBracketPicks(template, seeds, picks);
+
+    expect(validation.isValid).toBe(true);
+    expect(validation.isComplete).toBe(false);
+    expect(validation.resolvedSlots.get("SF2")).toMatchObject({
+      team1Code: "TEAM-6",
+      team2Code: "TEAM-2",
+    });
+  });
+
+  it("identifies later picks to clear when an upstream pick changes", () => {
+    const template = requireMichcaMadnessTemplate("PREMIER_T20");
+
+    expect(getDownstreamSlotKeys(template, "QF3")).toEqual([
+      "QF2",
+      "QF4",
+      "QF1",
+      "SF2",
+      "SF1",
+      "F",
+    ]);
+  });
+});

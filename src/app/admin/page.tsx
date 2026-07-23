@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
-import { canAccessAdminSection } from "@/lib/roles";
+import { canAccessAdminSection, canAccessMichcaMadnessAdmin } from "@/lib/roles";
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
@@ -93,9 +93,13 @@ export default async function AdminPage() {
     throw error;
   }
 
-  const accessibleSections = ADMIN_SECTIONS.filter((s) =>
-    canAccessAdminSection(userProfile.role, s.key),
-  );
+  const accessibleSections = ADMIN_SECTIONS.filter((section) => {
+    if (section.key === "michcaMadness") {
+      return canAccessMichcaMadnessAdmin(userProfile.role, userProfile.email);
+    }
+
+    return canAccessAdminSection(userProfile.role, section.key);
+  });
 
   return (
     <div className="bg-background py-12">

@@ -551,6 +551,83 @@ export function validateBracketPicks(
   };
 }
 
+export function validatePartialBracketPicks(
+  template: BracketTemplate,
+  seedsByKey: Map<string, string>,
+  picksBySlot: Map<string, string>,
+) {
+  const errors: string[] = [];
+  const expectedSlotKeys = new Set(template.slots.map((slot) => slot.key));
+  const predictedWinners = new Map<string, string>();
+  const resolvedBySlot = new Map<string, ResolvedSlot>();
+
+  for (const key of picksBySlot.keys()) {
+    if (!expectedSlotKeys.has(key)) {
+      errors.push(`Unknown bracket game ${key}.`);
+    }
+  }
+
+  for (const slot of [...template.slots].sort((a, b) => a.sortOrder - b.sortOrder)) {
+    const resolved: ResolvedSlot = {
+      ...slot,
+      team1Code: resolveSource(
+        slot.team1Source,
+        seedsByKey,
+        predictedWinners,
+        resolvedBySlot,
+      ),
+      team2Code: resolveSource(
+        slot.team2Source,
+        seedsByKey,
+        predictedWinners,
+        resolvedBySlot,
+      ),
+    };
+    resolvedBySlot.set(slot.key, resolved);
+
+    const pick = picksBySlot.get(slot.key);
+    if (!pick) continue;
+
+    if (!resolved.team1Code || !resolved.team2Code) {
+      errors.push(`${slot.displayName} cannot be picked yet.`);
+      continue;
+    }
+
+    if (pick !== resolved.team1Code && pick !== resolved.team2Code) {
+      errors.push(`${slot.displayName} has an invalid winner.`);
+      continue;
+    }
+
+    predictedWinners.set(slot.key, pick);
+  }
+
+  return {
+    isValid: errors.length === 0,
+    isComplete:
+      errors.length === 0 &&
+      template.slots.every((slot) => Boolean(picksBySlot.get(slot.key))),
+    errors,
+    predictedWinners,
+    resolvedSlots: resolvedBySlot,
+  };
+}
+
+export function getDownstreamSlotKeys(
+  template: BracketTemplate,
+  slotKey: string,
+) {
+  const slotIndex = template.slots.findIndex((slot) => slot.key === slotKey);
+  if (slotIndex < 0) return [];
+  return template.slots.slice(slotIndex + 1).map((slot) => slot.key);
+}
+
+export function getRemainingPickCount(
+  template: BracketTemplate,
+  picksBySlot: Map<string, string>,
+) {
+  return template.slots.filter((slot) => !picksBySlot.get(slot.key)).length;
+}
+
 export function getOpeningSlotKeys(template: BracketTemplate) {
   return template.slots
     .filter(
@@ -583,4 +660,3 @@ export function areSeedsComplete(
 ) {
   return template.seeds.every((seed) => Boolean(seedsByKey.get(seed.key)));
 }
-

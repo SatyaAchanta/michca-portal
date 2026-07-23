@@ -8,32 +8,41 @@ import {
   GameStatus,
   MichcaMadnessConfigStatus,
   MichcaMadnessEntryStatus,
-  UserRole,
 } from "@/generated/prisma/client";
 import { grounds } from "@/lib/data";
 import {
   MICHCA_MADNESS_DIVISIONS,
   MICHCA_MADNESS_SEASON,
   areSeedsComplete,
+  getDownstreamSlotKeys,
   getOpeningSlotKeys,
+  getRemainingPickCount,
   requireMichcaMadnessTemplate,
   resolveBracketSlots,
   validateBracketPicks,
+  validatePartialBracketPicks,
   type MichcaMadnessDivision,
 } from "@/lib/michca-madness";
 import { prisma } from "@/lib/prisma";
-import { canAccessAdminSection } from "@/lib/roles";
 import { parseDetroitDateTime } from "@/lib/schedule-import";
 import {
   AuthenticationRequiredError,
-  InsufficientRoleError,
   getOrCreateCurrentUserProfile,
-  requireAnyAdminRole,
+  requireMichcaMadnessAdminProfile,
 } from "@/lib/user-profile";
 
 export type MichcaMadnessActionState = {
   status: "idle" | "success" | "error";
   message?: string;
+};
+
+export type MichcaMadnessPickSaveResponse = {
+  success: boolean;
+  message?: string;
+  savedPicks?: Array<{ slotKey: string; predictedWinnerCode: string }>;
+  completedCount?: number;
+  totalCount?: number;
+  isComplete?: boolean;
 };
 
 const INITIAL_ERROR: MichcaMadnessActionState = { status: "error" };
@@ -47,11 +56,7 @@ function revalidateMichcaMadness() {
 }
 
 async function requireMichcaMadnessAdmin() {
-  const profile = await requireAnyAdminRole();
-  if (!canAccessAdminSection(profile.role as UserRole, "fantasy")) {
-    throw new InsufficientRoleError(profile.role, UserRole.ADMIN);
-  }
-  return profile;
+  return requireMichcaMadnessAdminProfile();
 }
 
 function normalizeRequiredString(value: FormDataEntryValue | null) {
@@ -621,7 +626,148 @@ export async function submitMichcaMadnessBracket(
   return { status: "success", message: `${template.label} bracket saved.` };
 }
 
+export async function saveMichcaMadnessPick({
+  season = MICHCA_MADNESS_SEASON,
+  division,
+  slotKey,
+  predictedWinnerCode,
+}: {
+  season?: number;
+  division: MichcaMadnessDivision;
+  slotKey: string;
+  predictedWinnerCode: string;
+}): Promise<MichcaMadnessPickSaveResponse> {
+  let profile;
+  try {
+    profile = await getOrCreateCurrentUserProfile();
+  } catch {
+    return { success: false, message: "Please sign in before saving a bracket." };
+  }
+
+  const template = requireMichcaMadnessTemplate(division);
+  const slot = template.slots.find((item) => item.key === slotKey);
+  if (!slot) {
+    return { success: false, message: "Unknown bracket game." };
+  }
+
+  const config = await prisma.michcaMadnessBracketConfig.findUnique({
+    where: { season_division: { season, division } },
+    include: {
+      seeds: true,
+      slots: true,
+      entries: {
+        where: { userProfileId: profile.id },
+        include: { picks: true },
+      },
+    },
+  });
+
+  if (!config || config.status !== MichcaMadnessConfigStatus.READY) {
+    return { success: false, message: "This bracket is not open yet." };
+  }
+
+  const lockAt = config.lockAt ?? getLockAtFromSlots(config.slots);
+  if (hasBracketLocked(lockAt)) {
+    return { success: false, message: "This bracket is locked." };
+  }
+
+  const seedsByKey = buildSeedsMap(config.seeds);
+  if (!areSeedsComplete(template, seedsByKey)) {
+    return { success: false, message: "This bracket is still missing playoff teams." };
+  }
+
+  const downstreamSlotKeys = getDownstreamSlotKeys(template, slotKey);
+  const existingEntry = config.entries[0] ?? null;
+  const nextPicks = new Map(
+    existingEntry?.picks.map((pick) => [
+      pick.slotKey,
+      pick.predictedWinnerCode,
+    ]) ?? [],
+  );
+
+  nextPicks.set(slotKey, predictedWinnerCode);
+  for (const key of downstreamSlotKeys) {
+    nextPicks.delete(key);
+  }
+
+  const validation = validatePartialBracketPicks(template, seedsByKey, nextPicks);
+  if (!validation.isValid) {
+    return {
+      success: false,
+      message: validation.errors[0] ?? "That pick cannot be saved yet.",
+    };
+  }
+
+  const savedPicks = await prisma.$transaction(async (tx) => {
+    const entry = await tx.michcaMadnessEntry.upsert({
+      where: {
+        configId_userProfileId: {
+          configId: config.id,
+          userProfileId: profile.id,
+        },
+      },
+      create: {
+        configId: config.id,
+        userProfileId: profile.id,
+        status: MichcaMadnessEntryStatus.ALIVE,
+      },
+      update: {
+        status: MichcaMadnessEntryStatus.ALIVE,
+        submittedAt: new Date(),
+      },
+    });
+
+    await tx.michcaMadnessPick.deleteMany({
+      where: {
+        entryId: entry.id,
+        slotKey: { in: [slotKey, ...downstreamSlotKeys] },
+      },
+    });
+
+    await tx.michcaMadnessPick.create({
+      data: {
+        entryId: entry.id,
+        slotKey,
+        predictedWinnerCode,
+      },
+    });
+
+    return tx.michcaMadnessPick.findMany({
+      where: { entryId: entry.id },
+      orderBy: { createdAt: "asc" },
+      select: {
+        slotKey: true,
+        predictedWinnerCode: true,
+      },
+    });
+  });
+
+  const savedPickMap = new Map(
+    savedPicks.map((pick) => [pick.slotKey, pick.predictedWinnerCode]),
+  );
+  const postSaveValidation = validatePartialBracketPicks(
+    template,
+    seedsByKey,
+    savedPickMap,
+  );
+  const remainingCount = getRemainingPickCount(template, savedPickMap);
+
+  revalidateMichcaMadness();
+  return {
+    success: true,
+    message: postSaveValidation.isComplete
+      ? "Bracket complete and saved."
+      : `Saved · ${template.slots.length - remainingCount} of ${template.slots.length} picks complete.`,
+    savedPicks,
+    completedCount: template.slots.length - remainingCount,
+    totalCount: template.slots.length,
+    isComplete: postSaveValidation.isComplete,
+  };
+}
+
 export async function getAdminMichcaMadnessData(season = MICHCA_MADNESS_SEASON) {
+  await requireMichcaMadnessAdmin();
+
   const [configs, teams, playoffGames] = await Promise.all([
     prisma.michcaMadnessBracketConfig.findMany({
       where: { season },
@@ -712,6 +858,16 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
 
   const leaderboards = await Promise.all(
     configs.map(async (config) => {
+      const lockAt = config.lockAt ?? getLockAtFromSlots(config.slots);
+      if (!hasBracketLocked(lockAt)) {
+        return {
+          configId: config.id,
+          entries: [],
+        };
+      }
+
+      const template = requireMichcaMadnessTemplate(config.division);
+      const seedsByKey = buildSeedsMap(config.seeds);
       const entries = await prisma.michcaMadnessEntry.findMany({
         where: {
           configId: config.id,
@@ -721,6 +877,12 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
         select: {
           id: true,
           submittedAt: true,
+          picks: {
+            select: {
+              slotKey: true,
+              predictedWinnerCode: true,
+            },
+          },
           userProfile: {
             select: {
               firstName: true,
@@ -733,9 +895,16 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
         take: 100,
       });
 
+      const completeEntries = entries.filter((entry) => {
+        const picksBySlot = new Map(
+          entry.picks.map((pick) => [pick.slotKey, pick.predictedWinnerCode]),
+        );
+        return validatePartialBracketPicks(template, seedsByKey, picksBySlot).isComplete;
+      });
+
       return {
         configId: config.id,
-        entries: entries.map((entry, index) => ({
+        entries: completeEntries.map((entry, index) => ({
           id: entry.id,
           rank: index + 1,
           displayName: formatDisplayName(entry.userProfile),

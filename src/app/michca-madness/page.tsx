@@ -32,6 +32,9 @@ export default async function MichcaMadnessPage() {
             Pick every playoff winner before brackets lock, then stay perfect
             as each division moves toward championship weekend.
           </p>
+          <p className="max-w-2xl text-sm font-medium text-primary">
+            F40 and T30 brackets open during the week of August 3.
+          </p>
         </div>
 
         <MichcaMadnessClient
@@ -43,4 +46,3 @@ export default async function MichcaMadnessPage() {
     </div>
   );
 }
-

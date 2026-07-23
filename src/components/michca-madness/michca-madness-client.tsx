@@ -1,11 +1,16 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import {
+  AlertCircle,
+  ArrowRight,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   CircleDot,
   Crown,
+  Loader2,
   Lock,
   Shield,
   Sparkles,
@@ -13,15 +18,14 @@ import {
   XCircle,
 } from "lucide-react";
 
-import {
-  submitMichcaMadnessBracket,
-  type MichcaMadnessActionState,
-} from "@/lib/actions/michca-madness";
+import { saveMichcaMadnessPick } from "@/lib/actions/michca-madness";
 import {
   DIVISION_LABELS,
   MICHCA_MADNESS_DIVISIONS,
+  getDownstreamSlotKeys,
+  getRemainingPickCount,
   getSourceLabel,
-  validateBracketPicks,
+  validatePartialBracketPicks,
   type BracketTemplate,
   type MichcaMadnessDivision,
 } from "@/lib/michca-madness";
@@ -30,8 +34,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const INITIAL_STATE: MichcaMadnessActionState = { status: "idle" };
 const DETROIT_TIMEZONE = "America/Detroit";
+const BRACKET_CARD_WIDTH = 288;
+const BRACKET_CARD_HEIGHT = 236;
+const BRACKET_COLUMN_GAP = 112;
+const BRACKET_ROW_GAP = 36;
 
 type Team = {
   teamCode: string;
@@ -96,15 +103,7 @@ type MichcaMadnessClientProps = {
   divisions: DivisionData[];
 };
 
-function ActionMessage({ state }: { state: MichcaMadnessActionState }) {
-  if (state.status === "success" && state.message) {
-    return <p className="text-sm text-green-600 dark:text-green-400">{state.message}</p>;
-  }
-  if (state.status === "error" && state.message) {
-    return <p className="text-sm text-destructive">{state.message}</p>;
-  }
-  return null;
-}
+type MadnessView = "brackets" | "leaderboards";
 
 function formatDateTime(iso: string | null) {
   if (!iso) return "TBD";
@@ -223,7 +222,14 @@ function BracketSlotCard({
   onPick: (code: string) => void;
 }) {
   return (
-    <Card className="h-full p-4">
+    <Card
+      className={cn(
+        "h-full w-full border-border/70 bg-card p-4 shadow-sm transition-shadow",
+        winnerCode && "shadow-md",
+        slot.round === "Finals" &&
+          "border-amber-500/40 bg-amber-50/60 dark:bg-amber-950/20",
+      )}
+    >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="font-semibold">{slot.displayName}</p>
@@ -261,6 +267,376 @@ function BracketSlotCard({
   );
 }
 
+function getSourceSlotKey(source: string) {
+  if (source.startsWith("WIN:")) return source.slice(4);
+  if (source.startsWith("LOSS:")) return source.slice(5);
+  return null;
+}
+
+function getSlotSourceKeys(slot: { team1Source: string; team2Source: string }) {
+  return [slot.team1Source, slot.team2Source].flatMap((source) => {
+    const slotKey = getSourceSlotKey(source);
+    return slotKey ? [slotKey] : [];
+  });
+}
+
+function BracketBoard({
+  data,
+  validation,
+  picks,
+  disabled,
+  teamsByCode,
+  onPick,
+}: {
+  data: DivisionData;
+  validation: ReturnType<typeof validatePartialBracketPicks>;
+  picks: Map<string, string>;
+  disabled: boolean;
+  teamsByCode: Map<string, Team>;
+  onPick: (slotKey: string, code: string) => void;
+}) {
+  const groupedSlots = data.template.slots.reduce(
+    (groups, slot) => {
+      const existing = groups.get(slot.round) ?? [];
+      existing.push(slot);
+      groups.set(slot.round, existing);
+      return groups;
+    },
+    new Map<string, typeof data.template.slots>(),
+  );
+  const rounds = Array.from(groupedSlots.entries());
+  const roundIndexBySlot = new Map<string, number>();
+  rounds.forEach(([, slots], roundIndex) => {
+    slots.forEach((slot) => roundIndexBySlot.set(slot.key, roundIndex));
+  });
+
+  const positions = new Map<string, { x: number; y: number }>();
+  rounds.forEach(([, slots], roundIndex) => {
+    slots.forEach((slot, slotIndex) => {
+      const x = roundIndex * (BRACKET_CARD_WIDTH + BRACKET_COLUMN_GAP);
+      const sourceCenters = getSlotSourceKeys(slot)
+        .map((sourceKey) => positions.get(sourceKey))
+        .filter((position): position is { x: number; y: number } => Boolean(position))
+        .map((position) => position.y + BRACKET_CARD_HEIGHT / 2);
+      const fallbackY = slotIndex * (BRACKET_CARD_HEIGHT + BRACKET_ROW_GAP);
+      const y =
+        sourceCenters.length > 0
+          ? sourceCenters.reduce((sum, center) => sum + center, 0) /
+              sourceCenters.length -
+            BRACKET_CARD_HEIGHT / 2
+          : fallbackY;
+
+      positions.set(slot.key, { x, y: Math.max(0, y) });
+    });
+  });
+
+  const boardWidth =
+    rounds.length * BRACKET_CARD_WIDTH +
+    Math.max(rounds.length - 1, 0) * BRACKET_COLUMN_GAP;
+  const boardHeight =
+    Math.max(
+      ...Array.from(positions.values()).map(
+        (position) => position.y + BRACKET_CARD_HEIGHT,
+      ),
+      BRACKET_CARD_HEIGHT,
+    ) + 24;
+  const connectors = data.template.slots.flatMap((slot) => {
+    const target = positions.get(slot.key);
+    const targetRound = roundIndexBySlot.get(slot.key) ?? 0;
+    if (!target || targetRound === 0) return [];
+
+    return getSlotSourceKeys(slot).flatMap((sourceKey) => {
+      const source = positions.get(sourceKey);
+      if (!source) return [];
+      const startX = source.x + BRACKET_CARD_WIDTH;
+      const startY = source.y + BRACKET_CARD_HEIGHT / 2;
+      const endX = target.x;
+      const endY = target.y + BRACKET_CARD_HEIGHT / 2;
+      const midX = startX + (endX - startX) / 2;
+
+      return [
+        {
+          key: `${sourceKey}-${slot.key}`,
+          d: `M ${startX} ${startY} H ${midX} V ${endY} H ${endX - 10}`,
+        },
+      ];
+    });
+  });
+
+  return (
+    <div className="overflow-x-auto rounded-xl border bg-muted/20 p-3 sm:p-4">
+      <div
+        className="relative min-w-max"
+        style={{ width: boardWidth, height: boardHeight + 56 }}
+      >
+        <svg
+          className="pointer-events-none absolute left-0 top-14 z-0 overflow-visible"
+          width={boardWidth}
+          height={boardHeight}
+          viewBox={`0 0 ${boardWidth} ${boardHeight}`}
+          aria-hidden="true"
+        >
+          <defs>
+            <marker
+              id={`bracket-arrow-${data.division}`}
+              markerWidth="10"
+              markerHeight="10"
+              refX="8"
+              refY="5"
+              orient="auto"
+              markerUnits="strokeWidth"
+            >
+              <path
+                d="M 0 0 L 10 5 L 0 10 z"
+                className="fill-primary/65"
+              />
+            </marker>
+          </defs>
+          {connectors.map((connector) => (
+            <path
+              key={connector.key}
+              d={connector.d}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              markerEnd={`url(#bracket-arrow-${data.division})`}
+              className="text-primary/55"
+            />
+          ))}
+        </svg>
+
+        {rounds.map(([round], roundIndex) => (
+          <div
+            key={round}
+            className="absolute top-0 z-20 flex h-11 items-center justify-between gap-3 rounded-lg border bg-background/95 px-3 shadow-sm backdrop-blur"
+            style={{
+              left: roundIndex * (BRACKET_CARD_WIDTH + BRACKET_COLUMN_GAP),
+              width: BRACKET_CARD_WIDTH,
+            }}
+          >
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Stage {roundIndex + 1}
+              </p>
+              <h3 className="truncate text-sm font-semibold">{round}</h3>
+            </div>
+            {roundIndex === rounds.length - 1 ? (
+              <Trophy className="h-4 w-4 shrink-0 text-amber-500" />
+            ) : (
+              <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
+            )}
+          </div>
+        ))}
+
+        <div className="absolute left-0 top-14 z-10">
+          {data.template.slots.map((slot) => {
+            const position = positions.get(slot.key);
+            if (!position) return null;
+            const dbSlot = data.slots.find((item) => item.key === slot.key);
+            const resolved = validation.resolvedSlots.get(slot.key);
+            const selectedCode = picks.get(slot.key) ?? null;
+            return (
+              <div
+                key={slot.key}
+                className="absolute"
+                style={{
+                  left: position.x,
+                  top: position.y,
+                  width: BRACKET_CARD_WIDTH,
+                  height: BRACKET_CARD_HEIGHT,
+                }}
+              >
+                <BracketSlotCard
+                  slot={
+                    dbSlot ?? {
+                      ...slot,
+                      team1Code: null,
+                      team2Code: null,
+                      winnerCode: null,
+                      scheduledAt: null,
+                      venue: null,
+                      needsAttention: false,
+                    }
+                  }
+                  template={data.template}
+                  team1Code={resolved?.team1Code ?? dbSlot?.team1Code ?? null}
+                  team2Code={resolved?.team2Code ?? dbSlot?.team2Code ?? null}
+                  selectedCode={selectedCode}
+                  winnerCode={dbSlot?.winnerCode ?? null}
+                  disabled={disabled}
+                  teamsByCode={teamsByCode}
+                  onPick={(code) => onPick(slot.key, code)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function getGroupedRounds(template: BracketTemplate) {
+  const groupedSlots = template.slots.reduce(
+    (groups, slot) => {
+      const existing = groups.get(slot.round) ?? [];
+      existing.push(slot);
+      groups.set(slot.round, existing);
+      return groups;
+    },
+    new Map<string, typeof template.slots>(),
+  );
+
+  return Array.from(groupedSlots.entries());
+}
+
+function getAdvanceLabels(template: BracketTemplate, slotKey: string) {
+  return template.slots.flatMap((slot) => {
+    const labels: string[] = [];
+    if (slot.team1Source === `WIN:${slotKey}` || slot.team2Source === `WIN:${slotKey}`) {
+      labels.push(`Winner goes to ${slot.displayName}`);
+    }
+    if (slot.team1Source === `LOSS:${slotKey}` || slot.team2Source === `LOSS:${slotKey}`) {
+      labels.push(`Loser goes to ${slot.displayName}`);
+    }
+    return labels;
+  });
+}
+
+function MobileBracketRounds({
+  data,
+  validation,
+  picks,
+  disabled,
+  teamsByCode,
+  onPick,
+}: {
+  data: DivisionData;
+  validation: ReturnType<typeof validatePartialBracketPicks>;
+  picks: Map<string, string>;
+  disabled: boolean;
+  teamsByCode: Map<string, Team>;
+  onPick: (slotKey: string, code: string) => void;
+}) {
+  const rounds = getGroupedRounds(data.template);
+  const [selectedRoundIndex, setSelectedRoundIndex] = useState(0);
+  const selectedRound = rounds[selectedRoundIndex] ?? rounds[0];
+  const roundCount = rounds.length;
+
+  if (!selectedRound) return null;
+
+  return (
+    <div className="space-y-4 md:hidden">
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        {rounds.map(([round, slots], index) => {
+          const pickedInRound = slots.filter((slot) => picks.has(slot.key)).length;
+          return (
+            <button
+              key={round}
+              type="button"
+              onClick={() => setSelectedRoundIndex(index)}
+              className={cn(
+                "shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium",
+                selectedRoundIndex === index
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground",
+              )}
+            >
+              {round}
+              <span className="ml-2 text-xs opacity-80">
+                {pickedInRound}/{slots.length}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <Card className="p-4">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Stage {selectedRoundIndex + 1} of {roundCount}
+            </p>
+            <h3 className="text-xl font-semibold">{selectedRound[0]}</h3>
+          </div>
+          {selectedRoundIndex === roundCount - 1 ? (
+            <Trophy className="h-5 w-5 text-amber-500" />
+          ) : (
+            <ArrowRight className="h-5 w-5 text-primary" />
+          )}
+        </div>
+
+        <div className="space-y-4">
+          {selectedRound[1].map((slot) => {
+            const dbSlot = data.slots.find((item) => item.key === slot.key);
+            const resolved = validation.resolvedSlots.get(slot.key);
+            const selectedCode = picks.get(slot.key) ?? null;
+            const advanceLabels = getAdvanceLabels(data.template, slot.key);
+
+            return (
+              <div key={slot.key} className="space-y-2">
+                <BracketSlotCard
+                  slot={
+                    dbSlot ?? {
+                      ...slot,
+                      team1Code: null,
+                      team2Code: null,
+                      winnerCode: null,
+                      scheduledAt: null,
+                      venue: null,
+                      needsAttention: false,
+                    }
+                  }
+                  template={data.template}
+                  team1Code={resolved?.team1Code ?? dbSlot?.team1Code ?? null}
+                  team2Code={resolved?.team2Code ?? dbSlot?.team2Code ?? null}
+                  selectedCode={selectedCode}
+                  winnerCode={dbSlot?.winnerCode ?? null}
+                  disabled={disabled}
+                  teamsByCode={teamsByCode}
+                  onPick={(code) => onPick(slot.key, code)}
+                />
+                {advanceLabels.length > 0 ? (
+                  <div className="rounded-lg border border-dashed px-3 py-2 text-xs text-muted-foreground">
+                    {advanceLabels.join(" · ")}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={selectedRoundIndex === 0}
+            onClick={() => setSelectedRoundIndex((index) => Math.max(index - 1, 0))}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Previous
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={selectedRoundIndex === roundCount - 1}
+            onClick={() =>
+              setSelectedRoundIndex((index) =>
+                Math.min(index + 1, roundCount - 1),
+              )
+            }
+          >
+            Next
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
 function ComingSoonState() {
   return (
     <Card className="overflow-hidden border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-6 shadow-sm dark:from-red-950/20 dark:via-background dark:to-amber-950/20 sm:p-8">
@@ -273,8 +649,9 @@ function ComingSoonState() {
           MichCA-Madness is almost here.
         </h2>
         <p className="text-base leading-8 text-muted-foreground sm:text-lg">
-          Build your playoff bracket, back your champions, and stay perfect as
-          the postseason unfolds. Updates will be posted here when brackets open.
+          F40 and T30 brackets open during the week of August 3. Build your
+          playoff bracket, back your champions, and stay perfect as the
+          postseason unfolds.
         </p>
       </div>
     </Card>
@@ -290,9 +667,9 @@ function Leaderboard({
     <Card className="p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h3 className="font-semibold">Still Alive</h3>
+          <h3 className="font-semibold">Leaderboard</h3>
           <p className="text-sm text-muted-foreground">
-            Perfect brackets for this division.
+            Still-alive perfect brackets for this division.
           </p>
         </div>
         <Shield className="h-5 w-5 text-primary" />
@@ -302,7 +679,7 @@ function Leaderboard({
           No perfect brackets are on the board yet.
         </p>
       ) : (
-        <div className="space-y-2">
+        <div className="max-h-72 space-y-2 overflow-y-auto pr-1 sm:max-h-80 xl:max-h-[420px]">
           {entries.map((entry) => (
             <div
               key={entry.id}
@@ -323,6 +700,11 @@ function Leaderboard({
           ))}
         </div>
       )}
+      {entries.length > 0 ? (
+        <p className="mt-3 text-xs text-muted-foreground">
+          Showing up to 100 still-alive brackets.
+        </p>
+      ) : null}
     </Card>
   );
 }
@@ -341,6 +723,66 @@ function RulesCard() {
   );
 }
 
+function LeaderboardLockedState({ data }: { data: DivisionData }) {
+  const title = `${DIVISION_LABELS[data.division]} Leaderboard`;
+  const isConfigured = Boolean(data.config?.isReady);
+
+  return (
+    <Card className="border-dashed p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
+          <Lock className="h-5 w-5" />
+        </div>
+        <div className="space-y-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+            {isConfigured ? "Locked Until Brackets Close" : "Coming Soon"}
+          </p>
+          <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+            {isConfigured
+              ? "Leaderboard unlocks after this division's bracket closes. Until then, other users' bracket standings stay hidden."
+              : "This division's bracket is not open yet. Leaderboard standings will appear after the bracket is configured and later locked."}
+          </p>
+          {data.config?.lockAt ? (
+            <Badge variant="outline">Closes {formatDateTime(data.config.lockAt)}</Badge>
+          ) : null}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function DivisionLeaderboard({ data }: { data: DivisionData }) {
+  if (!data.config?.isReady || !data.config.isLocked) {
+    return <LeaderboardLockedState data={data} />;
+  }
+
+  return (
+    <div className="space-y-5">
+      <Card className="p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-1">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary">
+              Leaderboard
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {DIVISION_LABELS[data.division]} still-alive brackets
+            </h2>
+            <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+              These are complete brackets that are still perfect after resolved
+              results for this division.
+            </p>
+          </div>
+          <Badge variant="outline">
+            Locked {formatDateTime(data.config.lockAt)}
+          </Badge>
+        </div>
+      </Card>
+      <Leaderboard entries={data.leaderboard} />
+    </div>
+  );
+}
+
 function DivisionBracket({
   data,
   season,
@@ -350,10 +792,6 @@ function DivisionBracket({
   season: number;
   teamsByCode: Map<string, Team>;
 }) {
-  const [state, formAction, isPending] = useActionState(
-    submitMichcaMadnessBracket,
-    INITIAL_STATE,
-  );
   const initialPicks = useMemo(
     () =>
       new Map(
@@ -365,6 +803,13 @@ function DivisionBracket({
     [data.entry],
   );
   const [picks, setPicks] = useState(() => initialPicks);
+  const [saveMessage, setSaveMessage] = useState<string | null>(() =>
+    data.entry
+      ? `Saved · ${data.entry.picks.length} of ${data.template.slots.length} picks complete.`
+      : null,
+  );
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [savingSlotKey, setSavingSlotKey] = useState<string | null>(null);
   const seedsByKey = useMemo(
     () =>
       new Map(
@@ -374,25 +819,64 @@ function DivisionBracket({
       ),
     [data.seeds],
   );
-  const validation = validateBracketPicks(data.template, seedsByKey, picks);
-  const groupedSlots = data.template.slots.reduce(
-    (groups, slot) => {
-      const existing = groups.get(slot.round) ?? [];
-      existing.push(slot);
-      groups.set(slot.round, existing);
-      return groups;
-    },
-    new Map<string, typeof data.template.slots>(),
-  );
+  const validation = validatePartialBracketPicks(data.template, seedsByKey, picks);
+  const remainingCount = getRemainingPickCount(data.template, picks);
+  const completedCount = data.template.slots.length - remainingCount;
+  const firstMissingSlot = data.template.slots.find((slot) => !picks.get(slot.key));
   const disabled = data.config?.isLocked || data.entry?.status === "ELIMINATED";
+
+  async function handlePick(slotKey: string, code: string) {
+    if (disabled || savingSlotKey) return;
+
+    setSaveError(null);
+    setSaveMessage("Saving pick...");
+    setSavingSlotKey(slotKey);
+
+    const downstreamSlotKeys = getDownstreamSlotKeys(data.template, slotKey);
+    setPicks((current) => {
+      const next = new Map(current);
+      next.set(slotKey, code);
+      for (const key of downstreamSlotKeys) {
+        next.delete(key);
+      }
+      return next;
+    });
+
+    const result = await saveMichcaMadnessPick({
+      season,
+      division: data.division,
+      slotKey,
+      predictedWinnerCode: code,
+    });
+
+    if (result.success) {
+      if (result.savedPicks) {
+        setPicks(
+          new Map(
+            result.savedPicks.map((pick) => [
+              pick.slotKey,
+              pick.predictedWinnerCode,
+            ]),
+          ),
+        );
+      }
+      setSaveMessage(result.message ?? "Pick saved.");
+      setSaveError(null);
+    } else {
+      setSaveError(result.message ?? "Unable to save pick.");
+      setSaveMessage(null);
+    }
+
+    setSavingSlotKey(null);
+  }
 
   if (!data.config?.isReady) {
     return <ComingSoonState />;
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-      <div className="space-y-5">
+    <div className="grid min-w-0 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,320px)]">
+      <div className="min-w-0 space-y-5">
         <Card className="p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-1">
@@ -423,74 +907,89 @@ function DivisionBracket({
           </div>
         </Card>
 
-        <form action={formAction} className="space-y-5">
-          <input type="hidden" name="season" value={season} />
-          <input type="hidden" name="division" value={data.division} />
-          {data.template.slots.map((slot) => (
-            <input
-              key={slot.key}
-              type="hidden"
-              name={`pick:${slot.key}`}
-              value={picks.get(slot.key) ?? ""}
-            />
-          ))}
-
-          {Array.from(groupedSlots.entries()).map(([round, slots]) => (
-            <section key={round} className="space-y-3">
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                {round}
-              </h3>
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {slots.map((slot) => {
-                  const dbSlot = data.slots.find((item) => item.key === slot.key);
-                  const resolved = validation.resolvedSlots.get(slot.key);
-                  const selectedCode = picks.get(slot.key) ?? null;
-                  return (
-                    <BracketSlotCard
-                      key={slot.key}
-                      slot={dbSlot ?? { ...slot, team1Code: null, team2Code: null, winnerCode: null, scheduledAt: null, venue: null, needsAttention: false }}
-                      template={data.template}
-                      team1Code={resolved?.team1Code ?? dbSlot?.team1Code ?? null}
-                      team2Code={resolved?.team2Code ?? dbSlot?.team2Code ?? null}
-                      selectedCode={selectedCode}
-                      winnerCode={dbSlot?.winnerCode ?? null}
-                      disabled={Boolean(disabled)}
-                      teamsByCode={teamsByCode}
-                      onPick={(code) =>
-                        setPicks((current) => {
-                          const next = new Map(current);
-                          next.set(slot.key, code);
-                          const slotIndex = data.template.slots.findIndex(
-                            (item) => item.key === slot.key,
-                          );
-                          for (const laterSlot of data.template.slots.slice(slotIndex + 1)) {
-                            next.delete(laterSlot.key);
-                          }
-                          return next;
-                        })
-                      }
-                    />
-                  );
-                })}
-              </div>
-            </section>
-          ))}
-
-          <ActionMessage state={state} />
-          <Button
-            type="submit"
-            disabled={Boolean(disabled) || isPending || !validation.isValid}
+        <div className="space-y-5">
+          <Card
+            className={cn(
+              "p-4",
+              remainingCount === 0
+                ? "border-emerald-500/40 bg-emerald-50/60 dark:bg-emerald-950/20"
+                : "border-amber-500/40 bg-amber-50/60 dark:bg-amber-950/20",
+            )}
           >
-            <Trophy className="h-4 w-4" />
-            {isPending ? "Saving..." : data.entry ? "Update Bracket" : "Submit Bracket"}
-          </Button>
-        </form>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex gap-3">
+                <div
+                  className={cn(
+                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full",
+                    remainingCount === 0
+                      ? "bg-emerald-600 text-white"
+                      : "bg-amber-500 text-white",
+                  )}
+                >
+                  {savingSlotKey ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : remainingCount === 0 ? (
+                    <CheckCircle2 className="h-4 w-4" />
+                  ) : (
+                    <AlertCircle className="h-4 w-4" />
+                  )}
+                </div>
+                <div>
+                  <p className="font-semibold">
+                    {remainingCount === 0 ? "Bracket complete" : "Incomplete bracket"}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {remainingCount === 0
+                      ? "All picks are saved. You can still change them before lock."
+                      : `${remainingCount} ${
+                          remainingCount === 1 ? "pick is" : "picks are"
+                        } still missing${
+                          firstMissingSlot
+                            ? `, starting with ${firstMissingSlot.displayName}`
+                            : ""
+                        }.`}
+                  </p>
+                  {saveError ? (
+                    <p className="mt-1 text-sm text-destructive">{saveError}</p>
+                  ) : saveMessage ? (
+                    <p className="mt-1 text-sm text-muted-foreground">{saveMessage}</p>
+                  ) : null}
+                </div>
+              </div>
+              <Badge variant="outline">
+                {completedCount}/{data.template.slots.length} saved
+              </Badge>
+            </div>
+          </Card>
+
+          <div className="hidden md:block">
+            <p className="mb-2 text-xs text-muted-foreground">
+              Scroll sideways to view the full connected bracket.
+            </p>
+            <BracketBoard
+              data={data}
+              validation={validation}
+              picks={picks}
+              disabled={Boolean(disabled) || Boolean(savingSlotKey)}
+              teamsByCode={teamsByCode}
+              onPick={handlePick}
+            />
+          </div>
+
+          <MobileBracketRounds
+            data={data}
+            validation={validation}
+            picks={picks}
+            disabled={Boolean(disabled) || Boolean(savingSlotKey)}
+            teamsByCode={teamsByCode}
+            onPick={handlePick}
+          />
+        </div>
       </div>
 
-      <div className="space-y-5">
-        <Leaderboard entries={data.leaderboard} />
+      <aside className="min-w-0 space-y-5 xl:sticky xl:top-20 xl:self-start">
         <RulesCard />
-      </div>
+      </aside>
     </div>
   );
 }
@@ -504,6 +1003,7 @@ export function MichcaMadnessClient({
   const [selectedDivision, setSelectedDivision] = useState<MichcaMadnessDivision>(
     firstReady?.division ?? "PREMIER_T20",
   );
+  const [activeView, setActiveView] = useState<MadnessView>("brackets");
   const teamsByCode = useMemo(
     () => new Map(teams.map((team) => [team.teamCode, team])),
     [teams],
@@ -514,6 +1014,27 @@ export function MichcaMadnessClient({
 
   return (
     <div className="space-y-6">
+      <div className="inline-flex rounded-lg border bg-muted/30 p-1">
+        {[
+          { key: "brackets" as const, label: "Brackets" },
+          { key: "leaderboards" as const, label: "Leaderboards" },
+        ].map((view) => (
+          <button
+            key={view.key}
+            type="button"
+            onClick={() => setActiveView(view.key)}
+            className={cn(
+              "rounded-md px-4 py-2 text-sm font-medium transition-colors",
+              activeView === view.key
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {view.label}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-wrap gap-2">
         {MICHCA_MADNESS_DIVISIONS.map((division) => {
           const divisionData = divisions.find((item) => item.division === division);
@@ -539,15 +1060,19 @@ export function MichcaMadnessClient({
       </div>
 
       {selectedData ? (
-        <DivisionBracket
-          data={selectedData}
-          season={season}
-          teamsByCode={teamsByCode}
-        />
+        activeView === "brackets" ? (
+          <DivisionBracket
+            key={selectedData.division}
+            data={selectedData}
+            season={season}
+            teamsByCode={teamsByCode}
+          />
+        ) : (
+          <DivisionLeaderboard data={selectedData} />
+        )
       ) : (
         <ComingSoonState />
       )}
     </div>
   );
 }
-
