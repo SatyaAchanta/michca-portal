@@ -1,10 +1,11 @@
-# Calculate Fantasy Scoring Skill
-
-Use Playwright MCP for this workflow. The user wants to see the workflow happen in the UI.
-
-When asked to score weekly fantasy games, assign winners for the games in the supplied CSV and calculate fantasy points for that specific week only. Do not update any week or game that is not represented in the CSV. This workflow updates the database through the admin UI.
+---
+name: calculate-fantasy-scoring
+description: Guidelines for calculating fantasy scoring within the admin UI. This includes best practices for reading CSV files, matching games, and updating scores. Use Playwright MCP for this workflow. The user wants to see the workflow happen in the UI.
+---
 
 ## Instructions
+
+When asked to score weekly fantasy games, assign winners for the games in the supplied CSV and calculate fantasy points for that specific week only. Do not update any week or game that is not represented in the CSV. This workflow updates the database through the admin UI.
 
 1. Read the provided CSV file. If no CSV file is provided, ask the user to provide one.
 
