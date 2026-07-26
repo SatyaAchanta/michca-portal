@@ -23,6 +23,7 @@ import {
   validatePartialBracketPicks,
   type MichcaMadnessDivision,
 } from "@/lib/michca-madness";
+import { buildMichcaMadnessMatchupSnapshots } from "@/lib/michca-madness-matchup-snapshots";
 import { prisma } from "@/lib/prisma";
 import { parseDetroitDateTime } from "@/lib/schedule-import";
 import {
@@ -846,15 +847,82 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
     }
   }
 
-  const teams = await prisma.team.findMany({
-    where: { teamCode: { in: Array.from(allTeamCodes) } },
-    select: {
-      teamCode: true,
-      teamName: true,
-      teamShortCode: true,
-      logo: true,
-    },
-  });
+  const teamCodeList = Array.from(allTeamCodes);
+  const lockedConfigIds = configs
+    .filter((config) => hasBracketLocked(config.lockAt ?? getLockAtFromSlots(config.slots)))
+    .map((config) => config.id);
+
+  const seasonStart = new Date(Date.UTC(season, 0, 1));
+  const seasonEnd = new Date(Date.UTC(season + 1, 0, 1));
+
+  const [teams, completedGames, lockedCommunityPicks] = await Promise.all([
+    prisma.team.findMany({
+      where: { teamCode: { in: teamCodeList } },
+      select: {
+        teamCode: true,
+        teamName: true,
+        teamShortCode: true,
+        logo: true,
+      },
+    }),
+    teamCodeList.length
+      ? prisma.game.findMany({
+          where: {
+            status: GameStatus.COMPLETED,
+            division: { in: [...MICHCA_MADNESS_DIVISIONS] },
+            date: {
+              gte: seasonStart,
+              lt: seasonEnd,
+            },
+            OR: [
+              { team1Code: { in: teamCodeList } },
+              { team2Code: { in: teamCodeList } },
+            ],
+          },
+          orderBy: { date: "desc" },
+          select: {
+            date: true,
+            division: true,
+            team1Code: true,
+            team2Code: true,
+            winnerCode: true,
+            resultType: true,
+            isDraw: true,
+          },
+        })
+      : Promise.resolve([]),
+    lockedConfigIds.length
+      ? prisma.michcaMadnessPick.findMany({
+          where: {
+            entry: {
+              configId: { in: lockedConfigIds },
+            },
+          },
+          select: {
+            slotKey: true,
+            predictedWinnerCode: true,
+            entry: {
+              select: {
+                configId: true,
+              },
+            },
+          },
+        })
+      : Promise.resolve([]),
+  ]);
+
+  const communityPicksByConfigId = new Map<
+    string,
+    Array<{ slotKey: string; predictedWinnerCode: string }>
+  >();
+  for (const pick of lockedCommunityPicks) {
+    const existing = communityPicksByConfigId.get(pick.entry.configId) ?? [];
+    existing.push({
+      slotKey: pick.slotKey,
+      predictedWinnerCode: pick.predictedWinnerCode,
+    });
+    communityPicksByConfigId.set(pick.entry.configId, existing);
+  }
 
   const leaderboards = await Promise.all(
     configs.map(async (config) => {
@@ -935,10 +1003,42 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
       const resolvedSlots = resolveBracketSlots(template, seedsByKey, winnersBySlot);
       const entry = config?.entries[0] ?? null;
       const lockAt = config?.lockAt ?? getLockAtFromSlots(config?.slots ?? []);
+      const isLocked = hasBracketLocked(lockAt);
       const isReady =
         config?.status === MichcaMadnessConfigStatus.READY &&
         areSeedsComplete(template, seedsByKey) &&
         Boolean(lockAt);
+      const slots = template.slots.map((slot) => {
+        const dbSlot = config?.slots.find((item) => item.slotKey === slot.key);
+        const resolved = resolvedSlots.get(slot.key);
+        return {
+          ...slot,
+          team1Code: dbSlot?.team1Code ?? resolved?.team1Code ?? null,
+          team2Code: dbSlot?.team2Code ?? resolved?.team2Code ?? null,
+          winnerCode: dbSlot?.winnerCode ?? null,
+          scheduledAt: dbSlot?.scheduledAt?.toISOString() ?? null,
+          venue: dbSlot?.venue ?? null,
+          needsAttention: dbSlot?.needsAttention ?? false,
+        };
+      });
+      const matchupSnapshots = buildMichcaMadnessMatchupSnapshots({
+        division,
+        slots: slots.map((slot) => ({
+          key: slot.key,
+          team1Code: slot.team1Code,
+          team2Code: slot.team2Code,
+        })),
+        seeds: template.seeds.map((seed) => ({
+          seedKey: seed.key,
+          label: seed.label,
+          teamCode: seedsByKey.get(seed.key) ?? null,
+        })),
+        completedGames,
+        communityPicks:
+          config && isLocked
+            ? (communityPicksByConfigId.get(config.id) ?? [])
+            : null,
+      });
 
       return {
         division,
@@ -948,7 +1048,7 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
               id: config.id,
               status: config.status,
               lockAt: lockAt?.toISOString() ?? null,
-              isLocked: hasBracketLocked(lockAt),
+              isLocked,
               isReady,
             }
           : null,
@@ -956,19 +1056,8 @@ export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
           ...seed,
           teamCode: seedsByKey.get(seed.key) ?? null,
         })),
-        slots: template.slots.map((slot) => {
-          const dbSlot = config?.slots.find((item) => item.slotKey === slot.key);
-          const resolved = resolvedSlots.get(slot.key);
-          return {
-            ...slot,
-            team1Code: dbSlot?.team1Code ?? resolved?.team1Code ?? null,
-            team2Code: dbSlot?.team2Code ?? resolved?.team2Code ?? null,
-            winnerCode: dbSlot?.winnerCode ?? null,
-            scheduledAt: dbSlot?.scheduledAt?.toISOString() ?? null,
-            venue: dbSlot?.venue ?? null,
-            needsAttention: dbSlot?.needsAttention ?? false,
-          };
-        }),
+        slots,
+        matchupSnapshots,
         entry: entry
           ? {
               id: entry.id,

@@ -29,6 +29,7 @@ import {
   type BracketTemplate,
   type MichcaMadnessDivision,
 } from "@/lib/michca-madness";
+import type { MichcaMadnessMatchupSnapshot } from "@/lib/michca-madness-matchup-snapshots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -36,7 +37,7 @@ import { cn } from "@/lib/utils";
 
 const DETROIT_TIMEZONE = "America/Detroit";
 const BRACKET_CARD_WIDTH = 288;
-const BRACKET_CARD_HEIGHT = 236;
+const BRACKET_CARD_HEIGHT = 340;
 const BRACKET_COLUMN_GAP = 112;
 const BRACKET_ROW_GAP = 36;
 
@@ -78,6 +79,7 @@ type DivisionData = {
     venue: string | null;
     needsAttention: boolean;
   }>;
+  matchupSnapshots: MichcaMadnessMatchupSnapshot[];
   entry: {
     id: string;
     status: string;
@@ -124,10 +126,10 @@ function TeamName({
   return (
     <span className="min-w-0">
       <span className="block truncate font-medium">
-        {team?.teamShortCode || code}
+        {stripFormatPrefix(team?.teamShortCode || code)}
       </span>
       <span className="block truncate text-xs text-muted-foreground">
-        {team?.teamName ?? code}
+        {team?.teamName ? stripFormatPrefix(team.teamName) : stripFormatPrefix(code)}
       </span>
     </span>
   );
@@ -157,6 +159,61 @@ function ResultBadge({
   );
 }
 
+function FormChips({ form }: { form: Array<"W" | "L" | "D"> }) {
+  if (form.length === 0) {
+    return <span className="text-muted-foreground">No recent results</span>;
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1">
+      {form.map((result, index) => {
+        const isLatest = index === form.length - 1;
+        return (
+          <span
+            key={`${result}-${index}`}
+            className={cn(
+              "inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] leading-none",
+              isLatest ? "font-black ring-1 ring-current/45" : "font-semibold",
+              result === "W" &&
+                "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+              result === "L" &&
+                "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
+              result === "D" &&
+                "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+            )}
+            title={`${result === "W" ? "Win" : result === "L" ? "Loss" : "Draw"}${isLatest ? " · latest" : ""}`}
+          >
+            {result === "D" ? "-" : result}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+function formatHeadToHead(
+  snapshot: MichcaMadnessMatchupSnapshot,
+  team1Label: string,
+  team2Label: string,
+) {
+  const { headToHead } = snapshot;
+  if (headToHead.total === 0) return "H2H: No games this season";
+  const drawText =
+    headToHead.draws > 0
+      ? `, ${headToHead.draws} ${headToHead.draws === 1 ? "draw" : "draws"}`
+      : "";
+  return `H2H: ${team1Label} ${headToHead.team1Wins} - ${headToHead.team2Wins} ${team2Label}${drawText}`;
+}
+
+function stripFormatPrefix(code: string) {
+  return code.replace(/^(T20|F40|T30)-/i, "");
+}
+
+function getTeamShortCode(code: string, teamsByCode: Map<string, Team>) {
+  const team = teamsByCode.get(code);
+  return stripFormatPrefix(team?.teamShortCode || code);
+}
+
 function PickButton({
   code,
   fallback,
@@ -164,6 +221,7 @@ function PickButton({
   selected,
   disabled,
   winnerCode,
+  form,
   onPick,
 }: {
   code: string | null;
@@ -172,6 +230,7 @@ function PickButton({
   selected: boolean;
   disabled: boolean;
   winnerCode: string | null;
+  form?: Array<"W" | "L" | "D">;
   onPick: (code: string) => void;
 }) {
   const isResolvedWinner = Boolean(code && winnerCode === code);
@@ -183,7 +242,7 @@ function PickButton({
       disabled={!code || disabled}
       onClick={() => code && onPick(code)}
       className={cn(
-        "flex h-16 min-w-0 items-center justify-between gap-3 rounded-lg border px-3 text-left transition-colors",
+        "flex min-h-20 w-full min-w-0 items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition-colors",
         selected
           ? "border-primary bg-primary/10 text-foreground"
           : "border-border bg-background hover:border-primary/40",
@@ -194,7 +253,14 @@ function PickButton({
         (!code || disabled) && "cursor-default hover:border-border",
       )}
     >
-      <TeamName code={code} teamsByCode={teamsByCode} fallback={fallback} />
+      <div className="min-w-0">
+        <TeamName code={code} teamsByCode={teamsByCode} fallback={fallback} />
+        {code && form ? (
+          <div className="mt-1">
+            <FormChips form={form} />
+          </div>
+        ) : null}
+      </div>
       {selected ? <CircleDot className="h-4 w-4 shrink-0 text-primary" /> : null}
     </button>
   );
@@ -209,6 +275,7 @@ function BracketSlotCard({
   winnerCode,
   disabled,
   teamsByCode,
+  snapshot,
   onPick,
 }: {
   slot: DivisionData["slots"][number];
@@ -219,8 +286,16 @@ function BracketSlotCard({
   winnerCode: string | null;
   disabled: boolean;
   teamsByCode: Map<string, Team>;
+  snapshot: MichcaMadnessMatchupSnapshot | null;
   onPick: (code: string) => void;
 }) {
+  const matchingSnapshot =
+    snapshot &&
+    snapshot.team1Code === team1Code &&
+    snapshot.team2Code === team2Code
+      ? snapshot
+      : null;
+
   return (
     <Card
       className={cn(
@@ -246,8 +321,18 @@ function BracketSlotCard({
           selected={selectedCode === team1Code}
           disabled={disabled}
           winnerCode={winnerCode}
+          form={matchingSnapshot?.team1Form}
           onPick={onPick}
         />
+        {matchingSnapshot ? (
+          <div className="w-full rounded-md border bg-muted/30 px-3 py-1.5 text-center text-xs font-medium text-muted-foreground">
+            {formatHeadToHead(
+              matchingSnapshot,
+              getTeamShortCode(matchingSnapshot.team1Code, teamsByCode),
+              getTeamShortCode(matchingSnapshot.team2Code, teamsByCode),
+            )}
+          </div>
+        ) : null}
         <PickButton
           code={team2Code}
           fallback={getSourceLabel(slot.team2Source, template)}
@@ -255,6 +340,7 @@ function BracketSlotCard({
           selected={selectedCode === team2Code}
           disabled={disabled}
           winnerCode={winnerCode}
+          form={matchingSnapshot?.team2Form}
           onPick={onPick}
         />
       </div>
@@ -286,6 +372,7 @@ function BracketBoard({
   picks,
   disabled,
   teamsByCode,
+  snapshotBySlotKey,
   onPick,
 }: {
   data: DivisionData;
@@ -293,6 +380,7 @@ function BracketBoard({
   picks: Map<string, string>;
   disabled: boolean;
   teamsByCode: Map<string, Team>;
+  snapshotBySlotKey: Map<string, MichcaMadnessMatchupSnapshot>;
   onPick: (slotKey: string, code: string) => void;
 }) {
   const groupedSlots = data.template.slots.reduce(
@@ -465,6 +553,7 @@ function BracketBoard({
                   winnerCode={dbSlot?.winnerCode ?? null}
                   disabled={disabled}
                   teamsByCode={teamsByCode}
+                  snapshot={snapshotBySlotKey.get(slot.key) ?? null}
                   onPick={(code) => onPick(slot.key, code)}
                 />
               </div>
@@ -509,6 +598,7 @@ function MobileBracketRounds({
   picks,
   disabled,
   teamsByCode,
+  snapshotBySlotKey,
   onPick,
 }: {
   data: DivisionData;
@@ -516,6 +606,7 @@ function MobileBracketRounds({
   picks: Map<string, string>;
   disabled: boolean;
   teamsByCode: Map<string, Team>;
+  snapshotBySlotKey: Map<string, MichcaMadnessMatchupSnapshot>;
   onPick: (slotKey: string, code: string) => void;
 }) {
   const rounds = getGroupedRounds(data.template);
@@ -594,6 +685,7 @@ function MobileBracketRounds({
                   winnerCode={dbSlot?.winnerCode ?? null}
                   disabled={disabled}
                   teamsByCode={teamsByCode}
+                  snapshot={snapshotBySlotKey.get(slot.key) ?? null}
                   onPick={(code) => onPick(slot.key, code)}
                 />
                 {advanceLabels.length > 0 ? (
@@ -820,6 +912,10 @@ function DivisionBracket({
     [data.seeds],
   );
   const validation = validatePartialBracketPicks(data.template, seedsByKey, picks);
+  const snapshotBySlotKey = useMemo(
+    () => new Map(data.matchupSnapshots.map((snapshot) => [snapshot.slotKey, snapshot])),
+    [data.matchupSnapshots],
+  );
   const remainingCount = getRemainingPickCount(data.template, picks);
   const completedCount = data.template.slots.length - remainingCount;
   const firstMissingSlot = data.template.slots.find((slot) => !picks.get(slot.key));
@@ -972,6 +1068,7 @@ function DivisionBracket({
               picks={picks}
               disabled={Boolean(disabled) || Boolean(savingSlotKey)}
               teamsByCode={teamsByCode}
+              snapshotBySlotKey={snapshotBySlotKey}
               onPick={handlePick}
             />
           </div>
@@ -982,6 +1079,7 @@ function DivisionBracket({
             picks={picks}
             disabled={Boolean(disabled) || Boolean(savingSlotKey)}
             teamsByCode={teamsByCode}
+            snapshotBySlotKey={snapshotBySlotKey}
             onPick={handlePick}
           />
         </div>
