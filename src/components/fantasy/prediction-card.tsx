@@ -4,9 +4,11 @@ import { useState, useTransition } from "react";
 import { CheckCircle2, Loader2, Lock, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { TeamFormChips } from "@/components/team-form-chips";
 import { submitPrediction } from "@/lib/actions/fantasy";
 import { cn } from "@/lib/utils";
 import type { PredictionCount } from "@/components/fantasy/fantasy-client";
+import type { TeamFormResult } from "@/lib/team-form";
 
 type Game = {
   id: string;
@@ -19,8 +21,8 @@ type Game = {
   team2Code: string;
   team1: { teamName: string; teamShortCode: string; logo: string | null };
   team2: { teamName: string; teamShortCode: string; logo: string | null };
-  team1Form?: ("W" | "L" | "D")[];
-  team2Form?: ("W" | "L" | "D")[];
+  team1Form?: TeamFormResult[];
+  team2Form?: TeamFormResult[];
 };
 
 type ExistingPrediction = {
@@ -52,56 +54,6 @@ function formatGameDateTime(date: Date) {
     hour12: false,
     timeZone: DETROIT_TZ,
   }).format(date);
-}
-
-function FormChips({ form }: { form: ("W" | "L" | "D")[] }) {
-  return (
-    <div
-      className="flex items-center gap-1"
-      aria-label="Recent form"
-      data-testid="team-form"
-    >
-      {form.map((result, index) => {
-        const isLatest = index === form.length - 1;
-        const label =
-          result === "W" ? "Win" : result === "L" ? "Loss" : "Draw";
-        return (
-          <span
-            key={`${result}-${index}`}
-            aria-label={label}
-            data-latest={isLatest ? "true" : undefined}
-            data-result={result}
-            className={cn(
-              "inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-semibold leading-none",
-              result === "W" &&
-                "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-              result === "L" &&
-                "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
-              result === "D" &&
-                "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
-              isLatest && "ring-1 ring-current/35",
-            )}
-            title={label}
-          >
-            {result === "D" ? "-" : result}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
-function getFormSummary(form: ("W" | "L" | "D")[]) {
-  return `Form: ${form.map((result) => (result === "D" ? "-" : result)).join(" ")}`;
-}
-
-function TeamForm({ form }: { form: ("W" | "L" | "D")[] }) {
-  return (
-    <div className="mt-1.5">
-      <p className="sr-only">{getFormSummary(form)}</p>
-      <FormChips form={form} />
-    </div>
-  );
 }
 
 export function PredictionCard({
@@ -180,9 +132,12 @@ export function PredictionCard({
     >
       {/* ── Header ── */}
       <div className="flex max-w-full flex-wrap items-center justify-between gap-2">
-        <p className="min-w-0 text-sm text-muted-foreground">
-          {formatGameDateTime(game.date)}
-        </p>
+        <div className="min-w-0 text-sm text-muted-foreground">
+          <p>{formatGameDateTime(game.date)}</p>
+          <p className="mt-0.5 text-xs">
+            Venue: {game.venue?.trim() || "Venue TBD"}
+          </p>
+        </div>
         <div className="flex max-w-full items-center justify-end gap-1.5 flex-wrap">
           {isLocked && (
             <Badge
@@ -374,7 +329,7 @@ type TeamRowProps = {
   code: string;
   name: string;
   shortCode: string;
-  form?: ("W" | "L" | "D")[];
+  form?: TeamFormResult[];
   pickPct: number | null;
   isSelected: boolean;
   isLocked: boolean;
@@ -431,9 +386,7 @@ function TeamRow({
               {name}
             </span>
           </p>
-          {form && form.length > 0 && (
-            <TeamForm form={form} />
-          )}
+          <TeamFormChips form={form} />
         </div>
       </div>
 

@@ -2,17 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
-import { GameResult, GameStatus } from "@/generated/prisma/client";
+import { GameStatus } from "@/generated/prisma/client";
 import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { isFantasyScorableGame } from "@/lib/fantasy-scoring";
-import {
-  getGameResult,
-  getGameResultLabel,
-  hasWinningResult,
-  isDrawResult,
-} from "@/lib/game-results";
+import { getGameResultLabel } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 import { previewGameWeekScoring, scoreGameWeekPredictions } from "@/lib/fantasy";
+import { buildTeamFormMap } from "@/lib/team-form";
 
 function getDisplayName(profile: {
   firstName: string | null;
@@ -89,21 +85,6 @@ export type WeeklyLeaderboardWeek = {
   label: string;
   entries: WeeklyLeaderboardEntry[];
 };
-
-type TeamFormResult = "W" | "L" | "D";
-
-function getTeamFormResult(game: {
-  team1Code: string;
-  team2Code: string;
-  winnerCode: string | null;
-  resultType: GameResult;
-  isDraw: boolean;
-  isCancelled?: boolean;
-}, teamCode: string): TeamFormResult | null {
-  if (isDrawResult(game)) return "D";
-  if (!hasWinningResult(game)) return null;
-  return game.winnerCode === teamCode ? "W" : "L";
-}
 
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
@@ -309,24 +290,12 @@ export async function getFantasyGames() {
     },
   });
 
-  const formMap = new Map<string, TeamFormResult[]>();
-  for (const game of completedGames) {
-    for (const teamCode of [game.team1Code, game.team2Code]) {
-      const existing = formMap.get(teamCode) ?? [];
-      if (existing.length >= 5) continue;
-
-      const result = getTeamFormResult(game, teamCode);
-      if (result === null) continue;
-
-      existing.push(result);
-      formMap.set(teamCode, existing);
-    }
-  }
+  const formMap = buildTeamFormMap(completedGames, teamCodes);
 
   return games.map((game) => ({
     ...game,
-    team1Form: formMap.get(game.team1Code)?.slice().reverse(),
-    team2Form: formMap.get(game.team2Code)?.slice().reverse(),
+    team1Form: formMap.get(game.team1Code),
+    team2Form: formMap.get(game.team2Code),
   }));
 }
 

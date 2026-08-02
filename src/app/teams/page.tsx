@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { EmptyState } from "@/components/empty-state";
 import { PageContainer } from "@/components/page-container";
+import { TeamFormChips } from "@/components/team-form-chips";
 import { TeamsFilters } from "@/components/teams/teams-filters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTeams } from "@/lib/team-queries";
@@ -67,11 +68,12 @@ export default async function TeamsPage({ searchParams }: TeamsPageProps) {
               <Card key={team.teamCode} className="h-full">
                 <CardHeader className="space-y-3">
                   <div className="flex items-center justify-between gap-3">
-                    <div>
+                    <div className="min-w-0 space-y-2">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                         {TEAM_FORMAT_LABELS[team.format]}
                       </p>
                       <CardTitle className="mt-1 text-xl">{team.teamName}</CardTitle>
+                      <TeamFormChips form={team.form} />
                     </div>
                     <span className="rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
                       {team.teamShortCode}

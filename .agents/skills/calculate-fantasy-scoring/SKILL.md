@@ -7,7 +7,7 @@ description: Guidelines for calculating fantasy scoring within the admin UI. Thi
 
 When asked to score weekly fantasy games, assign winners for the games in the supplied CSV and calculate fantasy points for that specific week only. Do not update any week or game that is not represented in the CSV. This workflow updates the database through the admin UI.
 
-1. Read the provided CSV file. If no CSV file is provided, ask the user to provide one.
+1. Read the provided CSV file. If no CSV file is provided, ask the user to provide one. Ignore any of the YOUTH U-15 games. We dont conduct fantasy for those games.
 
 2. Use the websites in this order:
 

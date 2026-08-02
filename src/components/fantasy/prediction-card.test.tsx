@@ -46,6 +46,7 @@ describe("PredictionCard", () => {
     );
 
     expect(screen.getAllByText(/game locked/i)).toHaveLength(2);
+    expect(screen.getByText(/Venue: Farmington/i)).toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: /boost/i }),
     ).not.toBeInTheDocument();

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { AdminMichcaMadnessClient } from "@/components/michca-madness/admin-michca-madness-client";
 import { PageContainer } from "@/components/page-container";
 import { grounds } from "@/lib/data";
 import { getAdminMichcaMadnessData } from "@/lib/actions/michca-madness";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminMichcaMadnessPage() {
+  if (!isMichcaMadnessEnabled()) notFound();
+
   try {
     await requireMichcaMadnessAdminProfile();
   } catch (error) {

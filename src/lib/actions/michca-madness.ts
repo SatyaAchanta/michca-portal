@@ -24,6 +24,7 @@ import {
   type MichcaMadnessDivision,
 } from "@/lib/michca-madness";
 import { buildMichcaMadnessMatchupSnapshots } from "@/lib/michca-madness-matchup-snapshots";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 import { prisma } from "@/lib/prisma";
 import { parseDetroitDateTime } from "@/lib/schedule-import";
 import {
@@ -57,6 +58,9 @@ function revalidateMichcaMadness() {
 }
 
 async function requireMichcaMadnessAdmin() {
+  if (!isMichcaMadnessEnabled()) {
+    throw new Error("MichCA-Madness is disabled.");
+  }
   return requireMichcaMadnessAdminProfile();
 }
 
@@ -535,6 +539,10 @@ export async function submitMichcaMadnessBracket(
   _prevState: MichcaMadnessActionState,
   formData: FormData,
 ): Promise<MichcaMadnessActionState> {
+  if (!isMichcaMadnessEnabled()) {
+    return { ...INITIAL_ERROR, message: "MichCA-Madness is not available yet." };
+  }
+
   let profile;
   try {
     profile = await getOrCreateCurrentUserProfile();
@@ -638,6 +646,10 @@ export async function saveMichcaMadnessPick({
   slotKey: string;
   predictedWinnerCode: string;
 }): Promise<MichcaMadnessPickSaveResponse> {
+  if (!isMichcaMadnessEnabled()) {
+    return { success: false, message: "MichCA-Madness is not available yet." };
+  }
+
   let profile;
   try {
     profile = await getOrCreateCurrentUserProfile();
@@ -821,6 +833,10 @@ export async function getAdminMichcaMadnessData(season = MICHCA_MADNESS_SEASON) 
 }
 
 export async function getMichcaMadnessPageData(season = MICHCA_MADNESS_SEASON) {
+  if (!isMichcaMadnessEnabled()) {
+    throw new Error("MichCA-Madness is disabled.");
+  }
+
   const profile = await getOrCreateCurrentUserProfile();
   const configs = await prisma.michcaMadnessBracketConfig.findMany({
     where: { season },

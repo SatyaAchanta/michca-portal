@@ -13,6 +13,7 @@ import { redirect } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 import { canAccessAdminSection, canAccessMichcaMadnessAdmin } from "@/lib/roles";
 import {
   AuthenticationRequiredError,
@@ -80,6 +81,7 @@ const ADMIN_SECTIONS = [
 ];
 
 export default async function AdminPage() {
+  const madnessEnabled = isMichcaMadnessEnabled();
   let userProfile;
   try {
     userProfile = await requireAnyAdminRole();
@@ -95,7 +97,10 @@ export default async function AdminPage() {
 
   const accessibleSections = ADMIN_SECTIONS.filter((section) => {
     if (section.key === "michcaMadness") {
-      return canAccessMichcaMadnessAdmin(userProfile.role, userProfile.email);
+      return (
+        madnessEnabled &&
+        canAccessMichcaMadnessAdmin(userProfile.role, userProfile.email)
+      );
     }
 
     return canAccessAdminSection(userProfile.role, section.key);

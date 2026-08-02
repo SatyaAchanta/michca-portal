@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { MichcaMadnessClient } from "@/components/michca-madness/michca-madness-client";
 import { PageContainer } from "@/components/page-container";
 import { getMichcaMadnessPageData } from "@/lib/actions/michca-madness";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 
 export const metadata: Metadata = {
   title: "MichCA-Madness",
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default async function MichcaMadnessPage() {
+  if (!isMichcaMadnessEnabled()) notFound();
+
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
