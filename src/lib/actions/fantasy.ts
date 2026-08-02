@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
-import { GameStatus } from "@/generated/prisma/client";
+import { GameResult, GameStatus } from "@/generated/prisma/client";
 import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { isFantasyScorableGame } from "@/lib/fantasy-scoring";
 import { getGameResultLabel } from "@/lib/game-results";

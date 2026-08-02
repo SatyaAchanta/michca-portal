@@ -1,5 +1,3 @@
-import { UserRole } from "@/generated/prisma/client";
-
 import { GET } from "@/app/admin/club-info/export/route";
 
 const {
@@ -71,7 +69,7 @@ describe("club info export route", () => {
 
   it("redirects unauthorized users", async () => {
     requireRole.mockRejectedValue(
-      new InsufficientRoleError(UserRole.PLAYER, UserRole.STATS_COMMITTEE),
+      new InsufficientRoleError("Unauthorized"),
     );
 
     const response = await GET(new Request("http://localhost/admin/club-info/export"));

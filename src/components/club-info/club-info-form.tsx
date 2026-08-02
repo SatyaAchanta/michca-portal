@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import Link from "next/link";
 
 import { submitMyClubInfo } from "@/app/club-info/actions";
 import { Button } from "@/components/ui/button";

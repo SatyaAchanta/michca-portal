@@ -21,6 +21,9 @@ describe("RegistrationFields", () => {
         onPreferredLocationChange={() => {}}
         onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
+        onContactNumberChange={() => {}}
+        onAffiliationChange={() => {}}
+        onQuestionsChange={() => {}}
       />
     );
 
@@ -54,6 +57,9 @@ describe("RegistrationFields", () => {
         onPreferredLocationChange={() => {}}
         onDietaryPreferenceChange={() => {}}
         onPreviouslyCertifiedChange={() => {}}
+        onContactNumberChange={() => {}}
+        onAffiliationChange={() => {}}
+        onQuestionsChange={() => {}}
       />
     );
 
