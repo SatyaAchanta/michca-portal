@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   Calendar,
-  Clock,
   Flame,
   MapPin,
   Users,
@@ -49,7 +48,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* 1. PLAYOFF ANNOUNCEMENT HERO BANNER (HARMONIOUS LIGHT & DARK THEMES) */}
+      {/* 1. PLAYOFF ANNOUNCEMENT HERO BANNER */}
       <section className="relative overflow-hidden bg-gradient-to-b from-red-50/80 via-amber-50/30 to-background dark:from-slate-950 dark:via-slate-900 dark:to-background py-16 lg:py-24 border-b border-border/60 text-foreground dark:text-white">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(239,68,68,0.12),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(220,38,38,0.25),rgba(255,255,255,0))]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/30 dark:via-red-500/50 to-transparent" />
@@ -84,7 +83,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
               <Button asChild size="lg" className="bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-700 hover:to-amber-700 text-white border-0 shadow-md text-base px-8 h-12 font-bold">
                 <Link href="/fantasy">
                   <Zap className="mr-2 h-5 w-5 fill-amber-300 text-amber-300" />
-                  Make 3X / 9X Fantasy Picks
+                  Make Fantasy Picks
                 </Link>
               </Button>
 
@@ -106,7 +105,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
         </PageContainer>
       </section>
 
-      {/* 2. PLAYOFF SCHEDULE SECTION (FLOWS SEAMLESSLY FROM HERO TO FOOTER) */}
+      {/* 2. UPCOMING PLAYOFF GAMES SCHEDULE SECTION */}
       <section id="playoff-schedule" className="py-14 bg-background">
         <PageContainer>
           <div className="mx-auto max-w-5xl space-y-8">
@@ -117,10 +116,10 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                   <span>PLAYOFF FIXTURES</span>
                 </div>
                 <h2 className="text-3xl font-bold font-display text-foreground">
-                  Playoff Match Schedule
+                  Upcoming Playoff Games
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Upcoming F40 (Forty-Over) and T30 (Thirty-Over) knockout games. Predict winners for 3x / 9x points.
+                  F40 (Forty-Over) and T30 (Thirty-Over) postseason knockout matches.
                 </p>
               </div>
 
@@ -135,7 +134,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  All Fixtures
+                  All Divisions
                 </button>
                 <button
                   type="button"
@@ -162,77 +161,54 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
               </div>
             </div>
 
-            {/* Playoff Match Schedule Cards Grid */}
+            {/* Clean Playoff Match Schedule Cards Grid */}
             <div className="grid gap-6 md:grid-cols-2">
               {filteredGames.map((game) => {
-                const gameDate = new Date(game.date);
-                const formattedDate = gameDate.toLocaleDateString("en-US", {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric",
-                });
-                const formattedTime = gameDate.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                });
-
                 const isF40 = game.division === "F40";
 
                 return (
                   <Card
                     key={game.id}
-                    className="relative overflow-hidden border border-border/80 bg-card p-6 hover:border-red-500/50 hover:shadow-xl transition-all space-y-5"
+                    className="relative overflow-hidden border border-border/80 bg-card p-6 hover:border-red-500/50 hover:shadow-xl transition-all flex flex-col justify-between space-y-5"
                   >
+                    {/* Top Row: Division Badge */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase ${
-                            isF40
-                              ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20"
-                              : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
-                          }`}
-                        >
-                          {game.division} Playoff
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/20">
-                          <Zap className="h-3 w-3 fill-current" /> 3X / 9X PTS
-                        </span>
-                      </div>
-
-                      <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        {formattedDate} · {formattedTime}
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase ${
+                          isF40
+                            ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20"
+                            : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                        }`}
+                      >
+                        {game.division} Playoff
                       </span>
                     </div>
 
-                    {/* Matchup Team Showcase */}
-                    <div className="grid grid-cols-11 items-center bg-muted/30 p-4 rounded-xl border border-border/60 text-center">
-                      <div className="col-span-5 space-y-1 text-left sm:text-center">
-                        <p className="text-xs font-bold text-primary uppercase tracking-wider">
-                          {game.team1Code}
-                        </p>
-                        <p className="text-base font-extrabold text-foreground truncate">
+                    {/* Team Names Stacked on Individual Lines */}
+                    <div className="space-y-3 bg-muted/40 p-4 rounded-xl border border-border/60">
+                      <div className="flex items-center gap-3">
+                        <span className="h-2.5 w-2.5 rounded-full bg-primary shrink-0" />
+                        <p className="text-base font-extrabold text-foreground leading-snug">
                           {game.team1Name}
                         </p>
                       </div>
 
-                      <div className="col-span-1 flex items-center justify-center">
-                        <span className="text-xs font-black text-muted-foreground bg-muted h-7 w-7 rounded-full flex items-center justify-center border border-border/60">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-black uppercase text-muted-foreground bg-muted px-2 py-0.5 rounded-md border border-border/60 shrink-0">
                           VS
                         </span>
+                        <div className="h-px flex-1 bg-border/60" />
                       </div>
 
-                      <div className="col-span-5 space-y-1 text-right sm:text-center">
-                        <p className="text-xs font-bold text-primary uppercase tracking-wider">
-                          {game.team2Code}
-                        </p>
-                        <p className="text-base font-extrabold text-foreground truncate">
+                      <div className="flex items-center gap-3">
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-500 shrink-0" />
+                        <p className="text-base font-extrabold text-foreground leading-snug">
                           {game.team2Name}
                         </p>
                       </div>
                     </div>
 
-                    {/* Venue & Action Button */}
+                    {/* Bottom Row: Venue & Action Button */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1">
                       <div className="flex items-center gap-1.5 text-xs text-muted-foreground truncate">
                         <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
@@ -241,7 +217,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
 
                       <Button asChild size="sm" className="bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-700 hover:to-amber-700 text-white font-bold shrink-0 border-0">
                         <Link href="/fantasy">
-                          Predict Winner (3X / 9X)
+                          Predict Winner
                           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                         </Link>
                       </Button>
