@@ -20,6 +20,7 @@ import { FantasyBanner } from "@/components/fantasy-banner";
 import { DETROIT_TIMEZONE } from "@/app/schedule/types";
 import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 import { prisma } from "@/lib/prisma";
+import { PlayoffHomePage } from "@/components/playoff-homepage";
 
 export const metadata: Metadata = {
   title: "MichCA - Michigan Cricket Association | Official Website",
@@ -586,10 +587,89 @@ function MadnessHomePage() {
   );
 }
 
-export default async function HomePage() {
-  if (isMichcaMadnessEnabled()) {
-    return <MadnessHomePage />;
+async function getUpcomingPlayoffGames() {
+  try {
+    const games = await prisma.game.findMany({
+      where: {
+        gameType: "PLAYOFF",
+        status: { in: ["SCHEDULED", "LIVE"] },
+      },
+      take: 6,
+      orderBy: { date: "asc" },
+      include: {
+        team1: { select: { teamName: true, teamShortCode: true } },
+        team2: { select: { teamName: true, teamShortCode: true } },
+      },
+    });
+
+    if (games.length > 0) {
+      return games.map((g) => ({
+        id: g.id,
+        date: g.date.toISOString(),
+        division: g.division,
+        venue: g.venue || "TBD Ground",
+        team1Code: g.team1Code,
+        team1Name: g.team1?.teamName || g.team1Code,
+        team2Code: g.team2Code,
+        team2Name: g.team2?.teamName || g.team2Code,
+        status: g.status,
+      }));
+    }
+  } catch (err) {
+    console.error("Error fetching playoff games:", err);
   }
 
-  return <DefaultHomePage stats={await getHomeSeasonStats()} />;
+  return [
+    {
+      id: "p1",
+      date: new Date(2026, 7, 15, 10, 0).toISOString(),
+      division: "F40",
+      venue: "Lyon Oaks Ground #1",
+      team1Code: "MOCC",
+      team1Name: "Motown Cricket Club",
+      team2Code: "LCC",
+      team2Name: "Lansing Cricket Club",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p2",
+      date: new Date(2026, 7, 15, 14, 0).toISOString(),
+      division: "T30",
+      venue: "Murphy Park Cricket Oval",
+      team1Code: "DYN",
+      team1Name: "Detroit Dynamos",
+      team2Code: "AA",
+      team2Name: "Ann Arbor Aviators",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p3",
+      date: new Date(2026, 7, 16, 10, 0).toISOString(),
+      division: "F40",
+      venue: "Bloomer Park Oval",
+      team1Code: "GLC",
+      team1Name: "Great Lakes Strikers",
+      team2Code: "MCC",
+      team2Name: "Michigan Cricket Club",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p4",
+      date: new Date(2026, 7, 16, 14, 30).toISOString(),
+      division: "T30",
+      venue: "Lyon Oaks Ground #2",
+      team1Code: "TROY",
+      team1Name: "Troy Titans",
+      team2Code: "GLK",
+      team2Name: "Grand Rapids Kings",
+      status: "SCHEDULED",
+    },
+  ];
+}
+
+export default async function HomePage() {
+  const stats = await getHomeSeasonStats();
+  const playoffGames = await getUpcomingPlayoffGames();
+
+  return <PlayoffHomePage stats={stats} playoffGames={playoffGames} />;
 }
