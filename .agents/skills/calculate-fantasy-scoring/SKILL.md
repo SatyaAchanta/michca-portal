@@ -74,3 +74,11 @@ When asked to score weekly fantasy games, assign winners for the games in the su
 - After scoring succeeds, verify the UI success message or preview state.
 - Final response should only summarize the target week, games completed, players scored, and total points awarded.
 - If no scoring action was available, summarize that winners were assigned or already assigned, and report the target week's pending scoring state.
+
+## Browser/tooling requirements
+
+- Before saying browser/UI automation is unavailable, explicitly discover Playwright MCP tools for `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_fill_form`, and `browser_run_code_unsafe`.
+- Production fantasy scoring must use the admin UI with Playwright/browser clicks unless the user explicitly approves a non-UI fallback after a failed UI attempt.
+- For production login, prefer manual user login if filling credentials would expose passwords in tool arguments. Never print or pass passwords in visible logs/transcripts.
+- For result clicks, use accessibility snapshots and exact element refs in small batches. Refresh the snapshot after server actions because completed rows may disappear or reorder.
+- Verify production state after each batch or before scoring: completed/pending games, result types, winner codes, and unscored predictions.

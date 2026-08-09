@@ -109,4 +109,26 @@ describe("PredictionCard", () => {
 
     expect(screen.queryByTestId("team-form")).not.toBeInTheDocument();
   });
+
+  it("renders venue stats and hides the tie button for playoff games", () => {
+    render(
+      <PredictionCard
+        game={{
+          ...baseGame,
+          gameType: "PLAYOFF",
+          venue: "Lyon Oaks",
+          team1VenueStats: { gamesPlayed: 5, gamesWon: 3 },
+          team2VenueStats: { gamesPlayed: 0, gamesWon: 0 },
+        }}
+        canBoost
+        boostersRemaining={3}
+      />,
+    );
+
+    expect(screen.queryByRole("button", { name: /^tie$/i })).not.toBeInTheDocument();
+    const venueStats = screen.getByTestId("venue-stats");
+    expect(venueStats).toBeInTheDocument();
+    expect(venueStats).toHaveTextContent("MOCC: Won 3 of 5 games");
+    expect(venueStats).toHaveTextContent("LCC: No prior games");
+  });
 });

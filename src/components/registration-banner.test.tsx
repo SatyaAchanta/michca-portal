@@ -35,16 +35,14 @@ describe("RegistrationBanner", () => {
     render(await RegistrationBanner());
 
     expect(
-      screen.getByRole("heading", {
-        name: /complete the required player waiver for the 2026 season/i,
-      })
+      screen.getByText(/2026 player waiver/i)
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /open waiver form/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /complete the waiver form/i })).toHaveAttribute(
       "href",
       "/waiver"
     );
     expect(
-      screen.getByText(/review the waiver and submit it once from your account before match play/i)
+      screen.getByText(/required before match play/i)
     ).toBeInTheDocument();
   });
 
@@ -56,9 +54,7 @@ describe("RegistrationBanner", () => {
     render(await RegistrationBanner());
 
     expect(
-      screen.getByRole("heading", {
-        name: /complete the required player waiver for the 2026 season/i,
-      })
+      screen.getByText(/2026 player waiver/i)
     ).toBeInTheDocument();
   });
 

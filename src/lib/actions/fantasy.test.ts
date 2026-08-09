@@ -199,11 +199,14 @@ describe("getFantasyGames", () => {
       orderBy: { date: "desc" },
       select: {
         date: true,
+        division: true,
+        venue: true,
         team1Code: true,
         team2Code: true,
         winnerCode: true,
         resultType: true,
         isDraw: true,
+        status: true,
       },
     });
     expect(result).toEqual([

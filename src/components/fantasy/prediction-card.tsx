@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CheckCircle2, Loader2, Lock, Zap } from "lucide-react";
+import { CheckCircle2, Loader2, Lock, MapPin, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { TeamFormChips } from "@/components/team-form-chips";
@@ -9,6 +9,7 @@ import { submitPrediction } from "@/lib/actions/fantasy";
 import { cn } from "@/lib/utils";
 import type { PredictionCount } from "@/components/fantasy/fantasy-client";
 import type { TeamFormResult } from "@/lib/team-form";
+import type { TeamVenueStats } from "@/lib/team-venue-stats";
 
 type Game = {
   id: string;
@@ -23,6 +24,8 @@ type Game = {
   team2: { teamName: string; teamShortCode: string; logo: string | null };
   team1Form?: TeamFormResult[];
   team2Form?: TeamFormResult[];
+  team1VenueStats?: TeamVenueStats;
+  team2VenueStats?: TeamVenueStats;
 };
 
 type ExistingPrediction = {
@@ -175,29 +178,59 @@ export function PredictionCard({
           onClick={() => handleSelect(game.team1Code)}
         />
 
-        {/* Tie */}
-        <button
-          type="button"
-          disabled={!!isLocked || isPending}
-          onClick={() => handleSelect(null)}
-          className={cn(
-            "flex max-w-full items-center justify-between rounded-xl border-2 px-3 py-2.5 sm:px-4 text-sm font-medium transition-all",
-            selected === null
-              ? "border-slate-400 bg-slate-100 text-slate-700 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-100"
-              : "border-border text-muted-foreground hover:border-primary/30",
-            (isLocked || isPending) && "cursor-default",
-          )}
-        >
-          <div className="flex items-center gap-2">
-            {selected === null && (
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" />
-            )}
-            <span>Tie</span>
+        {/* Playoff Venue Stats or League Tie Button */}
+        {game.gameType === "PLAYOFF" ? (
+          <div
+            data-testid="venue-stats"
+            className="rounded-xl border border-border/80 bg-muted/30 px-3 py-2.5 sm:px-4 text-xs text-muted-foreground space-y-2"
+          >
+            <p className="font-semibold text-foreground/90 flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+              <span>Venue Stats ({game.venue?.trim() || "Venue TBD"})</span>
+            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="text-xs py-0.5 px-2.5 font-normal gap-1">
+                <span className="font-semibold text-foreground">
+                  {game.team1.teamShortCode} -
+                </span>
+                {game.team1VenueStats && game.team1VenueStats.gamesPlayed > 0
+                  ? `Won ${game.team1VenueStats.gamesWon} of ${game.team1VenueStats.gamesPlayed} ${game.team1VenueStats.gamesPlayed === 1 ? "game" : "games"}`
+                  : "No prior games"}
+              </Badge>
+              <Badge variant="outline" className="text-xs py-0.5 px-2.5 font-normal gap-1">
+                <span className="font-semibold text-foreground">
+                  {game.team2.teamShortCode}  -
+                </span>
+                {game.team2VenueStats && game.team2VenueStats.gamesPlayed > 0
+                  ? `Won ${game.team2VenueStats.gamesWon} of ${game.team2VenueStats.gamesPlayed} ${game.team2VenueStats.gamesPlayed === 1 ? "game" : "games"}`
+                  : "No prior games"}
+              </Badge>
+            </div>
           </div>
-          {drawPct !== null && (
-            <span className="tabular-nums text-xs">{drawPct}%</span>
-          )}
-        </button>
+        ) : (
+          <button
+            type="button"
+            disabled={!!isLocked || isPending}
+            onClick={() => handleSelect(null)}
+            className={cn(
+              "flex max-w-full items-center justify-between rounded-xl border-2 px-3 py-2.5 sm:px-4 text-sm font-medium transition-all",
+              selected === null
+                ? "border-slate-400 bg-slate-100 text-slate-700 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-100"
+                : "border-border text-muted-foreground hover:border-primary/30",
+              (isLocked || isPending) && "cursor-default",
+            )}
+          >
+            <div className="flex items-center gap-2">
+              {selected === null && (
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" />
+              )}
+              <span>Tie</span>
+            </div>
+            {drawPct !== null && (
+              <span className="tabular-nums text-xs">{drawPct}%</span>
+            )}
+          </button>
+        )}
 
         {/* Team 2 */}
         <TeamRow
@@ -224,7 +257,7 @@ export function PredictionCard({
                 style={{ width: `${(picks!.team1Count / total) * 100}%` }}
               />
             )}
-            {picks!.drawCount > 0 && (
+            {game.gameType !== "PLAYOFF" && picks!.drawCount > 0 && (
               <div
                 className="h-full bg-muted-foreground/30 transition-all"
                 style={{ width: `${(picks!.drawCount / total) * 100}%` }}
@@ -291,7 +324,7 @@ export function PredictionCard({
                 (selected === undefined ||
                   isPending ||
                   (!boosted && boostersRemaining <= 0)) &&
-                  "opacity-50 cursor-default",
+                "opacity-50 cursor-default",
               )}
             >
               <Zap className="h-3 w-3" />

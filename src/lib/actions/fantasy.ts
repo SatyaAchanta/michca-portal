@@ -9,6 +9,7 @@ import { getGameResultLabel } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 import { previewGameWeekScoring, scoreGameWeekPredictions } from "@/lib/fantasy";
 import { buildTeamFormMap } from "@/lib/team-form";
+import { buildTeamVenueStatsMap } from "@/lib/team-venue-stats";
 
 function getDisplayName(profile: {
   firstName: string | null;
@@ -282,21 +283,58 @@ export async function getFantasyGames() {
     orderBy: { date: "desc" },
     select: {
       date: true,
+      division: true,
+      venue: true,
       team1Code: true,
       team2Code: true,
       winnerCode: true,
       resultType: true,
       isDraw: true,
+      status: true,
     },
   });
 
   const formMap = buildTeamFormMap(completedGames, teamCodes);
 
-  return games.map((game) => ({
-    ...game,
-    team1Form: formMap.get(game.team1Code),
-    team2Form: formMap.get(game.team2Code),
-  }));
+  const playoffMatches = games
+    .filter((g) => g.gameType === "PLAYOFF" && g.venue)
+    .map((g) => ({
+      venue: g.venue,
+      division: g.division,
+      team1Code: g.team1Code,
+      team2Code: g.team2Code,
+    }));
+
+  const venueStatsMap = buildTeamVenueStatsMap(completedGames, playoffMatches);
+
+  return games.map((game) => {
+    const isPlayoff = game.gameType === "PLAYOFF";
+    const normVenue = game.venue ? game.venue.trim().toLowerCase() : null;
+
+    const team1VenueStats =
+      isPlayoff && normVenue
+        ? venueStatsMap.get(`${game.team1Code}:${game.division}:${normVenue}`) ?? {
+            gamesPlayed: 0,
+            gamesWon: 0,
+          }
+        : undefined;
+
+    const team2VenueStats =
+      isPlayoff && normVenue
+        ? venueStatsMap.get(`${game.team2Code}:${game.division}:${normVenue}`) ?? {
+            gamesPlayed: 0,
+            gamesWon: 0,
+          }
+        : undefined;
+
+    return {
+      ...game,
+      team1Form: formMap.get(game.team1Code),
+      team2Form: formMap.get(game.team2Code),
+      team1VenueStats,
+      team2VenueStats,
+    };
+  });
 }
 
 // ─── Get community prediction counts per game ────────────────────────────────
