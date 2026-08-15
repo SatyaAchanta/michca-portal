@@ -294,10 +294,21 @@ export function PredictionCard({
 
       {isLocked && !existing?.isScored && (
         <div className="flex min-h-[28px] flex-wrap items-center justify-between gap-2">
-          <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
-            <Lock className="h-3 w-3" />
-            Game locked
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+              <Lock className="h-3 w-3" />
+              Game locked
+            </span>
+            {existing?.isBoosted ? (
+              <Badge
+                variant="outline"
+                className="gap-1 border-amber-500/40 bg-amber-50 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-300"
+              >
+                <Zap className="h-3 w-3" />
+                Boosted
+              </Badge>
+            ) : null}
+          </div>
           {!isPending && status === "error" && (
             <span className="text-xs text-destructive">{errorMsg}</span>
           )}

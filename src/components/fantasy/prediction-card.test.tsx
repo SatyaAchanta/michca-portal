@@ -52,6 +52,55 @@ describe("PredictionCard", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("shows a read-only boosted badge beside the lock indicator", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-05-03T19:05:00.000Z"));
+
+    render(
+      <PredictionCard
+        game={baseGame}
+        existing={{
+          gameId: baseGame.id,
+          predictedWinnerCode: baseGame.team1Code,
+          isBoosted: true,
+          isScored: false,
+          isCorrect: null,
+          pointsEarned: null,
+        }}
+        canBoost
+        boostersRemaining={3}
+      />,
+    );
+
+    expect(screen.getByText("Boosted")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /boost/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("does not show a boosted badge for a locked unboosted prediction", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-05-03T19:05:00.000Z"));
+
+    render(
+      <PredictionCard
+        game={baseGame}
+        existing={{
+          gameId: baseGame.id,
+          predictedWinnerCode: baseGame.team1Code,
+          isBoosted: false,
+          isScored: false,
+          isCorrect: null,
+          pointsEarned: null,
+        }}
+        canBoost
+        boostersRemaining={3}
+      />,
+    );
+
+    expect(screen.queryByText("Boosted")).not.toBeInTheDocument();
+  });
+
   it("does not show the lock indicator before the deadline", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-05-03T18:30:00.000Z"));
@@ -128,7 +177,7 @@ describe("PredictionCard", () => {
     expect(screen.queryByRole("button", { name: /^tie$/i })).not.toBeInTheDocument();
     const venueStats = screen.getByTestId("venue-stats");
     expect(venueStats).toBeInTheDocument();
-    expect(venueStats).toHaveTextContent("MOCC: Won 3 of 5 games");
-    expect(venueStats).toHaveTextContent("LCC: No prior games");
+    expect(venueStats).toHaveTextContent("MOCC -Won 3 of 5 games");
+    expect(venueStats).toHaveTextContent("LCC -No prior games");
   });
 });
