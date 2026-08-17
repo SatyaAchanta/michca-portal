@@ -113,7 +113,7 @@ export function parseWaiverForm(formData: FormData): {
 
   let t20Division: string | null = null;
   let t20TeamCode: string | null = null;
-  let additionalT20Division: string | null = null;
+  const additionalT20Division: string | null = null;
   let additionalT20TeamCode: string | null = null;
   let hasT20Selection = false;
 

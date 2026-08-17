@@ -101,6 +101,80 @@ describe("getTeams", () => {
       orderBy: [{ format: "asc" }, { division: "asc" }, { teamName: "asc" }],
     });
   });
+
+  it("attaches oldest-to-newest team form from completed games", async () => {
+    findManyMock.mockResolvedValue([
+      {
+        teamCode: "T20-A",
+        format: "T20",
+        division: "Premier",
+        teamShortCode: "A",
+        teamName: "Alpha CC",
+        captain: null,
+        viceCaptain: null,
+      },
+      {
+        teamCode: "T20-B",
+        format: "T20",
+        division: "Premier",
+        teamShortCode: "B",
+        teamName: "Bravo CC",
+        captain: null,
+        viceCaptain: null,
+      },
+    ]);
+    gameFindManyMock.mockResolvedValue([
+      {
+        date: new Date("2026-05-15T12:00:00Z"),
+        team1Code: "T20-A",
+        team2Code: "T20-B",
+        winnerCode: "T20-A",
+        resultType: "WIN",
+        isDraw: false,
+      },
+      {
+        date: new Date("2026-05-08T12:00:00Z"),
+        team1Code: "T20-A",
+        team2Code: "T20-C",
+        winnerCode: null,
+        resultType: "DRAW",
+        isDraw: true,
+      },
+      {
+        date: new Date("2026-05-01T12:00:00Z"),
+        team1Code: "T20-A",
+        team2Code: "T20-B",
+        winnerCode: "T20-B",
+        resultType: "WIN",
+        isDraw: false,
+      },
+    ]);
+
+    const result = await getTeams({ format: "T20" });
+
+    expect(gameFindManyMock).toHaveBeenCalledWith({
+      where: {
+        status: "COMPLETED",
+        OR: [
+          { team1Code: { in: ["T20-A", "T20-B"] } },
+          { team2Code: { in: ["T20-A", "T20-B"] } },
+        ],
+      },
+      orderBy: { date: "desc" },
+      select: {
+        date: true,
+        team1Code: true,
+        team2Code: true,
+        winnerCode: true,
+        resultType: true,
+        isDraw: true,
+      },
+    });
+    expect(result.map((team) => ({ code: team.teamCode, form: team.form }))).toEqual([
+      { code: "T20-A", form: ["L", "D", "W"] },
+      { code: "T20-B", form: ["W", "L"] },
+    ]);
+  });
 });
 
 describe("getTeamByCode", () => {

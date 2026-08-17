@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   ClipboardList,
   Gamepad2,
+  Network,
   CalendarPlus2,
   ShieldCheck,
   Users,
@@ -12,7 +13,8 @@ import { redirect } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
 import { Card } from "@/components/ui/card";
-import { canAccessAdminSection } from "@/lib/roles";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
+import { canAccessAdminSection, canAccessMichcaMadnessAdmin } from "@/lib/roles";
 import {
   AuthenticationRequiredError,
   InsufficientRoleError,
@@ -69,9 +71,17 @@ const ADMIN_SECTIONS = [
     href: "/admin/fantasy",
     icon: Gamepad2,
   },
+  {
+    key: "michcaMadness" as const,
+    label: "MichCA-Madness",
+    description: "Set playoff seeds, schedules, and bracket results.",
+    href: "/admin/michca-madness",
+    icon: Network,
+  },
 ];
 
 export default async function AdminPage() {
+  const madnessEnabled = isMichcaMadnessEnabled();
   let userProfile;
   try {
     userProfile = await requireAnyAdminRole();
@@ -85,9 +95,16 @@ export default async function AdminPage() {
     throw error;
   }
 
-  const accessibleSections = ADMIN_SECTIONS.filter((s) =>
-    canAccessAdminSection(userProfile.role, s.key),
-  );
+  const accessibleSections = ADMIN_SECTIONS.filter((section) => {
+    if (section.key === "michcaMadness") {
+      return (
+        madnessEnabled &&
+        canAccessMichcaMadnessAdmin(userProfile.role, userProfile.email)
+      );
+    }
+
+    return canAccessAdminSection(userProfile.role, section.key);
+  });
 
   return (
     <div className="bg-background py-12">

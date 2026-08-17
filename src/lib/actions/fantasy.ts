@@ -5,14 +5,11 @@ import { auth } from "@clerk/nextjs/server";
 import { GameResult, GameStatus } from "@/generated/prisma/client";
 import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { isFantasyScorableGame } from "@/lib/fantasy-scoring";
-import {
-  getGameResult,
-  getGameResultLabel,
-  hasWinningResult,
-  isDrawResult,
-} from "@/lib/game-results";
+import { getGameResultLabel } from "@/lib/game-results";
 import { prisma } from "@/lib/prisma";
 import { previewGameWeekScoring, scoreGameWeekPredictions } from "@/lib/fantasy";
+import { buildTeamFormMap } from "@/lib/team-form";
+import { buildTeamVenueStatsMap } from "@/lib/team-venue-stats";
 
 function getDisplayName(profile: {
   firstName: string | null;
@@ -89,21 +86,6 @@ export type WeeklyLeaderboardWeek = {
   label: string;
   entries: WeeklyLeaderboardEntry[];
 };
-
-type TeamFormResult = "W" | "L" | "D";
-
-function getTeamFormResult(game: {
-  team1Code: string;
-  team2Code: string;
-  winnerCode: string | null;
-  resultType: GameResult;
-  isDraw: boolean;
-  isCancelled?: boolean;
-}, teamCode: string): TeamFormResult | null {
-  if (isDrawResult(game)) return "D";
-  if (!hasWinningResult(game)) return null;
-  return game.winnerCode === teamCode ? "W" : "L";
-}
 
 // ─── Submit or update a prediction ───────────────────────────────────────────
 
@@ -301,33 +283,58 @@ export async function getFantasyGames() {
     orderBy: { date: "desc" },
     select: {
       date: true,
+      division: true,
+      venue: true,
       team1Code: true,
       team2Code: true,
       winnerCode: true,
       resultType: true,
       isDraw: true,
+      status: true,
     },
   });
 
-  const formMap = new Map<string, TeamFormResult[]>();
-  for (const game of completedGames) {
-    for (const teamCode of [game.team1Code, game.team2Code]) {
-      const existing = formMap.get(teamCode) ?? [];
-      if (existing.length >= 5) continue;
+  const formMap = buildTeamFormMap(completedGames, teamCodes);
 
-      const result = getTeamFormResult(game, teamCode);
-      if (result === null) continue;
+  const playoffMatches = games
+    .filter((g) => g.gameType === "PLAYOFF" && g.venue)
+    .map((g) => ({
+      venue: g.venue,
+      division: g.division,
+      team1Code: g.team1Code,
+      team2Code: g.team2Code,
+    }));
 
-      existing.push(result);
-      formMap.set(teamCode, existing);
-    }
-  }
+  const venueStatsMap = buildTeamVenueStatsMap(completedGames, playoffMatches);
 
-  return games.map((game) => ({
-    ...game,
-    team1Form: formMap.get(game.team1Code)?.slice().reverse(),
-    team2Form: formMap.get(game.team2Code)?.slice().reverse(),
-  }));
+  return games.map((game) => {
+    const isPlayoff = game.gameType === "PLAYOFF";
+    const normVenue = game.venue ? game.venue.trim().toLowerCase() : null;
+
+    const team1VenueStats =
+      isPlayoff && normVenue
+        ? venueStatsMap.get(`${game.team1Code}:${game.division}:${normVenue}`) ?? {
+            gamesPlayed: 0,
+            gamesWon: 0,
+          }
+        : undefined;
+
+    const team2VenueStats =
+      isPlayoff && normVenue
+        ? venueStatsMap.get(`${game.team2Code}:${game.division}:${normVenue}`) ?? {
+            gamesPlayed: 0,
+            gamesWon: 0,
+          }
+        : undefined;
+
+    return {
+      ...game,
+      team1Form: formMap.get(game.team1Code),
+      team2Form: formMap.get(game.team2Code),
+      team1VenueStats,
+      team2VenueStats,
+    };
+  });
 }
 
 // ─── Get community prediction counts per game ────────────────────────────────

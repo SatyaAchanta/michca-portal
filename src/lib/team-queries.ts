@@ -1,8 +1,9 @@
 import "server-only";
 
-import type { TeamFormat } from "@/generated/prisma/client";
+import { GameStatus, type TeamFormat } from "@/generated/prisma/client";
 
 import { prisma } from "@/lib/prisma";
+import { buildTeamFormMap } from "@/lib/team-form";
 import type { TeamDivision } from "@/lib/team-data";
 import {
   getCurrentWaiverYear,
@@ -18,7 +19,7 @@ export async function getTeams(filters?: {
   const rawSearch = filters?.search?.trim();
   const search = rawSearch && rawSearch.length >= 2 ? rawSearch : undefined;
 
-  return prisma.team.findMany({
+  const teams = await prisma.team.findMany({
     where: {
       ...(filters?.format && filters.format !== "all" ? { format: filters.format } : {}),
       ...(filters?.division && filters.division !== "all"
@@ -53,6 +54,39 @@ export async function getTeams(filters?: {
     },
     orderBy: [{ format: "asc" }, { division: "asc" }, { teamName: "asc" }],
   });
+
+  const teamCodes = teams.map((team) => team.teamCode);
+  if (teamCodes.length === 0) {
+    return teams.map((team) => ({
+      ...team,
+      form: [],
+    }));
+  }
+
+  const completedGames = await prisma.game.findMany({
+    where: {
+      status: GameStatus.COMPLETED,
+      OR: [
+        { team1Code: { in: teamCodes } },
+        { team2Code: { in: teamCodes } },
+      ],
+    },
+    orderBy: { date: "desc" },
+    select: {
+      date: true,
+      team1Code: true,
+      team2Code: true,
+      winnerCode: true,
+      resultType: true,
+      isDraw: true,
+    },
+  });
+  const formMap = buildTeamFormMap(completedGames, teamCodes);
+
+  return teams.map((team) => ({
+    ...team,
+    form: formMap.get(team.teamCode) ?? [],
+  }));
 }
 
 export async function getTeamByCode(teamCode: string) {
@@ -99,7 +133,7 @@ export async function getTeamByCode(teamCode: string) {
     },
   };
 
-  const [players, upcomingGames, recentGames] = await Promise.all([
+  const [players, upcomingGames, recentGames, formGames] = await Promise.all([
     prisma.userProfile.findMany({
       where:
         team.format === "T20"
@@ -168,10 +202,28 @@ export async function getTeamByCode(teamCode: string) {
       take: 5,
       include: gameInclude,
     }),
+    prisma.game.findMany({
+      where: {
+        status: GameStatus.COMPLETED,
+        OR: [{ team1Code: team.teamCode }, { team2Code: team.teamCode }],
+      },
+      orderBy: { date: "desc" },
+      take: 25,
+      select: {
+        date: true,
+        team1Code: true,
+        team2Code: true,
+        winnerCode: true,
+        resultType: true,
+        isDraw: true,
+      },
+    }),
   ]);
+  const formMap = buildTeamFormMap(formGames, [team.teamCode]);
 
   return {
     ...team,
+    form: formMap.get(team.teamCode) ?? [],
     upcomingGames,
     recentGames,
     players: players.map((player) => ({

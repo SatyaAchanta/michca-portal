@@ -4,7 +4,13 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 
 import { UserRole, type UserProfile } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { hasRoleAtLeast, isAnyAdminRole } from "@/lib/roles";
+import {
+  canAccessMichcaMadnessAdmin,
+  hasRoleAtLeast,
+  isAnyAdminRole,
+  isEmailInAllowlist,
+  parseEmailAllowlist,
+} from "@/lib/roles";
 
 export class AuthenticationRequiredError extends Error {
   constructor(message = "Authentication required") {
@@ -28,35 +34,30 @@ export function normalizeEmail(email: string) {
 }
 
 function getAdminAllowlist() {
-  return (process.env.ADMIN_EMAIL_ALLOWLIST ?? "")
-    .split(",")
-    .map((entry) => entry.trim().toLowerCase())
-    .filter(Boolean);
+  return parseEmailAllowlist(process.env.ADMIN_EMAIL_ALLOWLIST);
 }
 
 function getUmpiringCommitteeAllowlist() {
-  return (process.env.UMPIRING_COMMITTEE_EMAIL_ALLOWLIST ?? "")
-    .split(",")
-    .map((entry) => entry.trim().toLowerCase())
-    .filter(Boolean);
+  return parseEmailAllowlist(process.env.UMPIRING_COMMITTEE_EMAIL_ALLOWLIST);
 }
 
 function getWaiverCommitteeAllowlist() {
-  return (process.env.WAIVER_COMMITTEE_EMAIL_ALLOWLIST ?? "")
-    .split(",")
-    .map((entry) => entry.trim().toLowerCase())
-    .filter(Boolean);
+  return parseEmailAllowlist(process.env.WAIVER_COMMITTEE_EMAIL_ALLOWLIST);
 }
 
 function getStatsCommitteeAllowlist() {
-  return (process.env.STATS_COMMITTEE_EMAIL_ALLOWLIST ?? "")
-    .split(",")
-    .map((entry) => entry.trim().toLowerCase())
-    .filter(Boolean);
+  return parseEmailAllowlist(process.env.STATS_COMMITTEE_EMAIL_ALLOWLIST);
 }
 
 export function isAdminAllowlisted(email: string) {
-  return getAdminAllowlist().includes(normalizeEmail(email));
+  return isEmailInAllowlist(email, process.env.ADMIN_EMAIL_ALLOWLIST);
+}
+
+export function isMichcaMadnessAdminAllowlisted(email: string) {
+  return isEmailInAllowlist(
+    email,
+    process.env.MICHCA_MADNESS_ADMIN_EMAIL_ALLOWLIST,
+  );
 }
 
 function resolveRoleForEmail(email: string): UserRole {
@@ -150,6 +151,14 @@ export async function requireAnyAdminRole(): Promise<UserProfile> {
 export async function requireAdminAllowlistedProfile(): Promise<UserProfile> {
   const profile = await getOrCreateCurrentUserProfile();
   if (!isAdminAllowlisted(profile.email)) {
+    throw new InsufficientRoleError(profile.role, UserRole.ADMIN);
+  }
+  return profile;
+}
+
+export async function requireMichcaMadnessAdminProfile(): Promise<UserProfile> {
+  const profile = await requireAnyAdminRole();
+  if (!canAccessMichcaMadnessAdmin(profile.role, profile.email)) {
     throw new InsufficientRoleError(profile.role, UserRole.ADMIN);
   }
   return profile;

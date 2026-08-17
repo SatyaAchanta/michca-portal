@@ -65,7 +65,12 @@ export const ModelName = {
   CertificationAttempt: 'CertificationAttempt',
   CertificationAttemptQuestion: 'CertificationAttemptQuestion',
   Prediction: 'Prediction',
-  FantasyAnalysisReport: 'FantasyAnalysisReport'
+  FantasyAnalysisReport: 'FantasyAnalysisReport',
+  MichcaMadnessBracketConfig: 'MichcaMadnessBracketConfig',
+  MichcaMadnessSeed: 'MichcaMadnessSeed',
+  MichcaMadnessGameSlot: 'MichcaMadnessGameSlot',
+  MichcaMadnessEntry: 'MichcaMadnessEntry',
+  MichcaMadnessPick: 'MichcaMadnessPick'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -354,6 +359,84 @@ export const FantasyAnalysisReportScalarFieldEnum = {
 } as const
 
 export type FantasyAnalysisReportScalarFieldEnum = (typeof FantasyAnalysisReportScalarFieldEnum)[keyof typeof FantasyAnalysisReportScalarFieldEnum]
+
+
+export const MichcaMadnessBracketConfigScalarFieldEnum = {
+  id: 'id',
+  season: 'season',
+  division: 'division',
+  templateKey: 'templateKey',
+  status: 'status',
+  lockAt: 'lockAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessBracketConfigScalarFieldEnum = (typeof MichcaMadnessBracketConfigScalarFieldEnum)[keyof typeof MichcaMadnessBracketConfigScalarFieldEnum]
+
+
+export const MichcaMadnessSeedScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  seedKey: 'seedKey',
+  pool: 'pool',
+  seed: 'seed',
+  teamCode: 'teamCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessSeedScalarFieldEnum = (typeof MichcaMadnessSeedScalarFieldEnum)[keyof typeof MichcaMadnessSeedScalarFieldEnum]
+
+
+export const MichcaMadnessGameSlotScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  slotKey: 'slotKey',
+  round: 'round',
+  displayName: 'displayName',
+  sortOrder: 'sortOrder',
+  team1Source: 'team1Source',
+  team2Source: 'team2Source',
+  team1Code: 'team1Code',
+  team2Code: 'team2Code',
+  winnerCode: 'winnerCode',
+  gameId: 'gameId',
+  scheduledAt: 'scheduledAt',
+  venue: 'venue',
+  needsAttention: 'needsAttention',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessGameSlotScalarFieldEnum = (typeof MichcaMadnessGameSlotScalarFieldEnum)[keyof typeof MichcaMadnessGameSlotScalarFieldEnum]
+
+
+export const MichcaMadnessEntryScalarFieldEnum = {
+  id: 'id',
+  configId: 'configId',
+  userProfileId: 'userProfileId',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessEntryScalarFieldEnum = (typeof MichcaMadnessEntryScalarFieldEnum)[keyof typeof MichcaMadnessEntryScalarFieldEnum]
+
+
+export const MichcaMadnessPickScalarFieldEnum = {
+  id: 'id',
+  entryId: 'entryId',
+  slotKey: 'slotKey',
+  predictedWinnerCode: 'predictedWinnerCode',
+  isCorrect: 'isCorrect',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MichcaMadnessPickScalarFieldEnum = (typeof MichcaMadnessPickScalarFieldEnum)[keyof typeof MichcaMadnessPickScalarFieldEnum]
 
 
 export const SortOrder = {

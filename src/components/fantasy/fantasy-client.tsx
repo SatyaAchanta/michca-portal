@@ -5,6 +5,8 @@ import { Card } from "@/components/ui/card";
 import { PredictionCard } from "@/components/fantasy/prediction-card";
 import { formatWeekendLabel, toSaturdayKey } from "@/lib/fantasy-dates";
 import { cn } from "@/lib/utils";
+import type { TeamFormResult } from "@/lib/team-form";
+import type { TeamVenueStats } from "@/lib/team-venue-stats";
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -19,8 +21,10 @@ type Game = {
   team2Code: string;
   team1: { teamName: string; teamShortCode: string; logo: string | null };
   team2: { teamName: string; teamShortCode: string; logo: string | null };
-  team1Form?: ("W" | "L" | "D")[];
-  team2Form?: ("W" | "L" | "D")[];
+  team1Form?: TeamFormResult[];
+  team2Form?: TeamFormResult[];
+  team1VenueStats?: TeamVenueStats;
+  team2VenueStats?: TeamVenueStats;
 };
 
 type ExistingPrediction = {

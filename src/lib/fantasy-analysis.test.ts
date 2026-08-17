@@ -343,8 +343,8 @@ describe("getFantasyAnalysisForUser", () => {
       modelName: "gpt-5-mini",
       analyticsFingerprint: computation.analyticsFingerprint,
       reportPayload: cachedReport,
-      generatedAt: new Date("2026-05-24T12:00:00.000Z"),
-      expiresAt: new Date("2026-06-20T12:00:00.000Z"),
+      generatedAt: new Date(),
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });
 
     const result = await getFantasyAnalysisForUser("user-1");

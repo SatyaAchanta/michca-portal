@@ -355,6 +355,7 @@ export type UserProfileWhereInput = {
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
   predictions?: Prisma.PredictionListRelationFilter
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryListRelationFilter
   fantasyAnalysisReport?: Prisma.XOR<Prisma.FantasyAnalysisReportNullableScalarRelationFilter, Prisma.FantasyAnalysisReportWhereInput> | null
 }
 
@@ -389,6 +390,7 @@ export type UserProfileOrderByWithRelationInput = {
   teamsCaptained?: Prisma.TeamOrderByRelationAggregateInput
   teamsViceCaptained?: Prisma.TeamOrderByRelationAggregateInput
   predictions?: Prisma.PredictionOrderByRelationAggregateInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryOrderByRelationAggregateInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportOrderByWithRelationInput
 }
 
@@ -426,6 +428,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   teamsCaptained?: Prisma.TeamListRelationFilter
   teamsViceCaptained?: Prisma.TeamListRelationFilter
   predictions?: Prisma.PredictionListRelationFilter
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryListRelationFilter
   fantasyAnalysisReport?: Prisma.XOR<Prisma.FantasyAnalysisReportNullableScalarRelationFilter, Prisma.FantasyAnalysisReportWhereInput> | null
 }, "id" | "clerkUserId">
 
@@ -512,6 +515,7 @@ export type UserProfileCreateInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -546,6 +550,7 @@ export type UserProfileUncheckedCreateInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -580,6 +585,7 @@ export type UserProfileUpdateInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -614,6 +620,7 @@ export type UserProfileUncheckedUpdateInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -959,6 +966,20 @@ export type UserProfileUpdateOneRequiredWithoutFantasyAnalysisReportNestedInput 
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutFantasyAnalysisReportInput, Prisma.UserProfileUpdateWithoutFantasyAnalysisReportInput>, Prisma.UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput>
 }
 
+export type UserProfileCreateNestedOneWithoutMichcaMadnessEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedCreateWithoutMichcaMadnessEntriesInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutMichcaMadnessEntriesInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+}
+
+export type UserProfileUpdateOneRequiredWithoutMichcaMadnessEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedCreateWithoutMichcaMadnessEntriesInput>
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutMichcaMadnessEntriesInput
+  upsert?: Prisma.UserProfileUpsertWithoutMichcaMadnessEntriesInput
+  connect?: Prisma.UserProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUpdateWithoutMichcaMadnessEntriesInput>, Prisma.UserProfileUncheckedUpdateWithoutMichcaMadnessEntriesInput>
+}
+
 export type UserProfileCreateWithoutTeamsCaptainedInput = {
   id?: string
   clerkUserId: string
@@ -989,6 +1010,7 @@ export type UserProfileCreateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1022,6 +1044,7 @@ export type UserProfileUncheckedCreateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1060,6 +1083,7 @@ export type UserProfileCreateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1093,6 +1117,7 @@ export type UserProfileUncheckedCreateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1142,6 +1167,7 @@ export type UserProfileUpdateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1175,6 +1201,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1219,6 +1246,7 @@ export type UserProfileUpdateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1252,6 +1280,7 @@ export type UserProfileUncheckedUpdateWithoutTeamsViceCaptainedInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1285,6 +1314,7 @@ export type UserProfileCreateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1318,6 +1348,7 @@ export type UserProfileUncheckedCreateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1367,6 +1398,7 @@ export type UserProfileUpdateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1400,6 +1432,7 @@ export type UserProfileUncheckedUpdateWithoutUmpiringTrainingInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1433,6 +1466,7 @@ export type UserProfileCreateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1466,6 +1500,7 @@ export type UserProfileUncheckedCreateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1515,6 +1550,7 @@ export type UserProfileUpdateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1548,6 +1584,7 @@ export type UserProfileUncheckedUpdateWithoutYouth15RegistrationInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1581,6 +1618,7 @@ export type UserProfileCreateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1614,6 +1652,7 @@ export type UserProfileUncheckedCreateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1663,6 +1702,7 @@ export type UserProfileUpdateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1696,6 +1736,7 @@ export type UserProfileUncheckedUpdateWithoutWaiverSubmissionsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1729,6 +1770,7 @@ export type UserProfileCreateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1762,6 +1804,7 @@ export type UserProfileUncheckedCreateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1811,6 +1854,7 @@ export type UserProfileUpdateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1844,6 +1888,7 @@ export type UserProfileUncheckedUpdateWithoutClubInfoSubmissionInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1877,6 +1922,7 @@ export type UserProfileCreateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1910,6 +1956,7 @@ export type UserProfileUncheckedCreateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -1959,6 +2006,7 @@ export type UserProfileUpdateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -1992,6 +2040,7 @@ export type UserProfileUncheckedUpdateWithoutUmpireAssignmentsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2025,6 +2074,7 @@ export type UserProfileCreateWithoutCertificationQuestionsCreatedInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2058,6 +2108,7 @@ export type UserProfileUncheckedCreateWithoutCertificationQuestionsCreatedInput 
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2107,6 +2158,7 @@ export type UserProfileUpdateWithoutCertificationQuestionsCreatedInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2140,6 +2192,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationQuestionsCreatedInput 
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2173,6 +2226,7 @@ export type UserProfileCreateWithoutCertificationWindowsStartedInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2206,6 +2260,7 @@ export type UserProfileUncheckedCreateWithoutCertificationWindowsStartedInput = 
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2255,6 +2310,7 @@ export type UserProfileUpdateWithoutCertificationWindowsStartedInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2288,6 +2344,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationWindowsStartedInput = 
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2321,6 +2378,7 @@ export type UserProfileCreateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2354,6 +2412,7 @@ export type UserProfileUncheckedCreateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2403,6 +2462,7 @@ export type UserProfileUpdateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2436,6 +2496,7 @@ export type UserProfileUncheckedUpdateWithoutCertificationAttemptsInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2469,6 +2530,7 @@ export type UserProfileCreateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2502,6 +2564,7 @@ export type UserProfileUncheckedCreateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
 }
 
@@ -2551,6 +2614,7 @@ export type UserProfileUpdateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2584,6 +2648,7 @@ export type UserProfileUncheckedUpdateWithoutPredictionsInput = {
   certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
   fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
@@ -2618,6 +2683,7 @@ export type UserProfileCreateWithoutFantasyAnalysisReportInput = {
   teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput = {
@@ -2651,6 +2717,7 @@ export type UserProfileUncheckedCreateWithoutFantasyAnalysisReportInput = {
   teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
   teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
   predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutFantasyAnalysisReportInput = {
@@ -2700,6 +2767,7 @@ export type UserProfileUpdateWithoutFantasyAnalysisReportInput = {
   teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput = {
@@ -2733,6 +2801,159 @@ export type UserProfileUncheckedUpdateWithoutFantasyAnalysisReportInput = {
   teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
   teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
   predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  michcaMadnessEntries?: Prisma.MichcaMadnessEntryUncheckedUpdateManyWithoutUserProfileNestedInput
+}
+
+export type UserProfileCreateWithoutMichcaMadnessEntriesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportCreateNestedOneWithoutUserProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutMichcaMadnessEntriesInput = {
+  id?: string
+  clerkUserId: string
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  contactNumber?: string | null
+  notificationsEnabled?: boolean
+  newsletterSubscribed?: boolean
+  role?: $Enums.UserRole
+  t20TeamCode?: string | null
+  secondaryTeamCode?: string | null
+  playingRole?: string | null
+  fantasyPoints?: number
+  boostersRemaining?: number
+  fantasyLevel?: number
+  fullParticipationWeeks?: number
+  levelBonusesAwarded?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedCreateNestedManyWithoutUmpireInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedCreateNestedOneWithoutUserProfileInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedCreateNestedOneWithoutUserProfileInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedCreateNestedManyWithoutUserProfileInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedCreateNestedOneWithoutUserProfileInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedCreateNestedManyWithoutCreatedByInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedCreateNestedManyWithoutStartedByInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedCreateNestedManyWithoutUserProfileInput
+  teamsCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutCaptainInput
+  teamsViceCaptained?: Prisma.TeamUncheckedCreateNestedManyWithoutViceCaptainInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserProfileInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedCreateNestedOneWithoutUserProfileInput
+}
+
+export type UserProfileCreateOrConnectWithoutMichcaMadnessEntriesInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedCreateWithoutMichcaMadnessEntriesInput>
+}
+
+export type UserProfileUpsertWithoutMichcaMadnessEntriesInput = {
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedUpdateWithoutMichcaMadnessEntriesInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedCreateWithoutMichcaMadnessEntriesInput>
+  where?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileUpdateToOneWithWhereWithoutMichcaMadnessEntriesInput = {
+  where?: Prisma.UserProfileWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutMichcaMadnessEntriesInput, Prisma.UserProfileUncheckedUpdateWithoutMichcaMadnessEntriesInput>
+}
+
+export type UserProfileUpdateWithoutMichcaMadnessEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUpdateOneWithoutUserProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutMichcaMadnessEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsletterSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  t20TeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryTeamCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playingRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fantasyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  boostersRemaining?: Prisma.IntFieldUpdateOperationsInput | number
+  fantasyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  fullParticipationWeeks?: Prisma.IntFieldUpdateOperationsInput | number
+  levelBonusesAwarded?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  umpireAssignments?: Prisma.UmpireAssignmentUncheckedUpdateManyWithoutUmpireNestedInput
+  umpiringTraining?: Prisma.UmpiringTrainingUncheckedUpdateOneWithoutUserProfileNestedInput
+  youth15Registration?: Prisma.Youth15RegistrationUncheckedUpdateOneWithoutUserProfileNestedInput
+  waiverSubmissions?: Prisma.WaiverSubmissionUncheckedUpdateManyWithoutUserProfileNestedInput
+  clubInfoSubmission?: Prisma.ClubInfoSubmissionUncheckedUpdateOneWithoutUserProfileNestedInput
+  certificationQuestionsCreated?: Prisma.CertificationQuestionUncheckedUpdateManyWithoutCreatedByNestedInput
+  certificationWindowsStarted?: Prisma.CertificationTestWindowUncheckedUpdateManyWithoutStartedByNestedInput
+  certificationAttempts?: Prisma.CertificationAttemptUncheckedUpdateManyWithoutUserProfileNestedInput
+  teamsCaptained?: Prisma.TeamUncheckedUpdateManyWithoutCaptainNestedInput
+  teamsViceCaptained?: Prisma.TeamUncheckedUpdateManyWithoutViceCaptainNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserProfileNestedInput
+  fantasyAnalysisReport?: Prisma.FantasyAnalysisReportUncheckedUpdateOneWithoutUserProfileNestedInput
 }
 
 
@@ -2749,6 +2970,7 @@ export type UserProfileCountOutputType = {
   teamsCaptained: number
   teamsViceCaptained: number
   predictions: number
+  michcaMadnessEntries: number
 }
 
 export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2760,6 +2982,7 @@ export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   teamsCaptained?: boolean | UserProfileCountOutputTypeCountTeamsCaptainedArgs
   teamsViceCaptained?: boolean | UserProfileCountOutputTypeCountTeamsViceCaptainedArgs
   predictions?: boolean | UserProfileCountOutputTypeCountPredictionsArgs
+  michcaMadnessEntries?: boolean | UserProfileCountOutputTypeCountMichcaMadnessEntriesArgs
 }
 
 /**
@@ -2828,6 +3051,13 @@ export type UserProfileCountOutputTypeCountPredictionsArgs<ExtArgs extends runti
   where?: Prisma.PredictionWhereInput
 }
 
+/**
+ * UserProfileCountOutputType without action
+ */
+export type UserProfileCountOutputTypeCountMichcaMadnessEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MichcaMadnessEntryWhereInput
+}
+
 
 export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2860,6 +3090,7 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
   predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
+  michcaMadnessEntries?: boolean | Prisma.UserProfile$michcaMadnessEntriesArgs<ExtArgs>
   fantasyAnalysisReport?: boolean | Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
@@ -2943,6 +3174,7 @@ export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.Internal
   teamsCaptained?: boolean | Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>
   teamsViceCaptained?: boolean | Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>
   predictions?: boolean | Prisma.UserProfile$predictionsArgs<ExtArgs>
+  michcaMadnessEntries?: boolean | Prisma.UserProfile$michcaMadnessEntriesArgs<ExtArgs>
   fantasyAnalysisReport?: boolean | Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>
   _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -2963,6 +3195,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     teamsCaptained: Prisma.$TeamPayload<ExtArgs>[]
     teamsViceCaptained: Prisma.$TeamPayload<ExtArgs>[]
     predictions: Prisma.$PredictionPayload<ExtArgs>[]
+    michcaMadnessEntries: Prisma.$MichcaMadnessEntryPayload<ExtArgs>[]
     fantasyAnalysisReport: Prisma.$FantasyAnalysisReportPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3390,6 +3623,7 @@ export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runt
   teamsCaptained<T extends Prisma.UserProfile$teamsCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamsViceCaptained<T extends Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$teamsViceCaptainedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   predictions<T extends Prisma.UserProfile$predictionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$predictionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PredictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  michcaMadnessEntries<T extends Prisma.UserProfile$michcaMadnessEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$michcaMadnessEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MichcaMadnessEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fantasyAnalysisReport<T extends Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$fantasyAnalysisReportArgs<ExtArgs>>): Prisma.Prisma__FantasyAnalysisReportClient<runtime.Types.Result.GetResult<Prisma.$FantasyAnalysisReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4078,6 +4312,30 @@ export type UserProfile$predictionsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PredictionScalarFieldEnum | Prisma.PredictionScalarFieldEnum[]
+}
+
+/**
+ * UserProfile.michcaMadnessEntries
+ */
+export type UserProfile$michcaMadnessEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MichcaMadnessEntry
+   */
+  select?: Prisma.MichcaMadnessEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MichcaMadnessEntry
+   */
+  omit?: Prisma.MichcaMadnessEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MichcaMadnessEntryInclude<ExtArgs> | null
+  where?: Prisma.MichcaMadnessEntryWhereInput
+  orderBy?: Prisma.MichcaMadnessEntryOrderByWithRelationInput | Prisma.MichcaMadnessEntryOrderByWithRelationInput[]
+  cursor?: Prisma.MichcaMadnessEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MichcaMadnessEntryScalarFieldEnum | Prisma.MichcaMadnessEntryScalarFieldEnum[]
 }
 
 /**

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PageContainer } from "@/components/page-container";
+import { TeamFormChips } from "@/components/team-form-chips";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTeamByCode } from "@/lib/team-queries";
@@ -125,6 +126,7 @@ export default async function TeamDetailPage({ params }: TeamDetailPageProps) {
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
                 {team.teamName}
               </h1>
+              <TeamFormChips form={team.form} />
               <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">
                 {team.description ??
                   "This team profile is live. Additional club details, social links, and branding will appear here as they are provided."}

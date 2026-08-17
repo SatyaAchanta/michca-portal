@@ -15,7 +15,6 @@ import { AdminFilters } from "@/components/umpiring-training/admin-filters";
 import {
   formatName,
   formatResultLabel,
-  formatSubmittedDate,
   parseDateFilterParam,
   parseLocationFilterParam,
   resultBadgeClass,

@@ -1,4 +1,3 @@
-import { UserRole } from "@/generated/prisma/client";
 import * as XLSX from "xlsx";
 
 import { GET } from "@/app/admin/waivers/export/route";
@@ -89,7 +88,7 @@ describe("waiver export route", () => {
 
   it("redirects unauthorized users", async () => {
     requireRole.mockRejectedValue(
-      new InsufficientRoleError(UserRole.PLAYER, UserRole.WAIVER_COMMITTEE),
+      new InsufficientRoleError("Unauthorized"),
     );
 
     const response = await GET(new Request("http://localhost/admin/waivers/export"));

@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Analytics } from "@vercel/analytics/next";
 import { getOrCreateCurrentUserProfile } from "@/lib/user-profile";
 import { isAnyAdminRole } from "@/lib/roles";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -85,7 +86,10 @@ export default async function RootLayout({
             } as React.CSSProperties
           }
         >
-          <SiteHeader isAdmin={isAdmin} />
+          <SiteHeader
+            isAdmin={isAdmin}
+            isMichcaMadnessEnabled={isMichcaMadnessEnabled()}
+          />
           <main className="min-h-screen">{children}</main>
           <Analytics />
           <script

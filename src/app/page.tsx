@@ -6,6 +6,7 @@ import {
   Calendar,
   Gamepad2,
   MapPin,
+  Sparkles,
   Trophy,
   Users,
 } from "lucide-react";
@@ -16,8 +17,10 @@ import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
 import { RegistrationBanner } from "@/components/registration-banner";
 import { FantasyBanner } from "@/components/fantasy-banner";
-import { prisma } from "@/lib/prisma";
 import { DETROIT_TIMEZONE } from "@/app/schedule/types";
+import { isMichcaMadnessEnabled } from "@/lib/feature-flags";
+import { prisma } from "@/lib/prisma";
+import { PlayoffHomePage } from "@/components/playoff-homepage";
 
 export const metadata: Metadata = {
   title: "MichCA - Michigan Cricket Association | Official Website",
@@ -56,11 +59,230 @@ export const metadata: Metadata = {
   },
 };
 
-const quickLinks = [
+const defaultQuickLinks = [
   { label: "Account", href: "/account" },
   { label: "Schedule", href: "/schedule" },
   { label: "Fantasy", href: "/fantasy" },
 ];
+
+const madnessQuickLinks = [
+  ...defaultQuickLinks,
+  { label: "Madness", href: "/michca-madness" },
+];
+
+type HomeSeasonStats = {
+  season: number;
+  teamCount: number;
+  venueCount: number;
+};
+
+function QuickLinksCard({
+  links,
+}: {
+  links: Array<{ label: string; href: string }>;
+}) {
+  return (
+    <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm md:hidden">
+      <div className="flex flex-col gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+          Quick Links
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {links.map((link) => (
+            <Button key={link.href} asChild variant="outline" size="sm">
+              <Link href={link.href}>{link.label}</Link>
+            </Button>
+          ))}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function CommunityCard() {
+  return (
+    <PageContainer className="py-16">
+      <Card className="p-8 md:p-12 text-center border border-border/70 bg-gradient-to-br from-card via-background to-secondary/50 shadow-md">
+        <h2 className="text-3xl font-bold tracking-tight mb-4">
+          Join the Michigan Cricket Community
+        </h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+          Whether you&apos;re a player, volunteer, or cricket enthusiast,
+          there&apos;s a place for you in MichCA. Explore our programs,
+          committees, and upcoming events.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button asChild size="lg">
+            <Link href="/about">Learn About Us</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/committees">Our Leadership</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/grounds">Find Grounds</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/history">Season History</Link>
+          </Button>
+        </div>
+      </Card>
+    </PageContainer>
+  );
+}
+
+function SeasonHistoryCard() {
+  return (
+    <Card className="border border-border/70 bg-gradient-to-r from-card via-background to-secondary/30 p-6 shadow-md">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="space-y-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
+            2025 Season History
+          </p>
+          <h2 className="text-2xl font-semibold text-foreground">
+            Explore last season&apos;s champions and runners-up archive
+          </h2>
+          <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+            The 2025 photo gallery remains available while the 2026 season gets
+            underway.
+          </p>
+        </div>
+        <Button asChild size="lg" variant="outline">
+          <Link href="/history">
+            View 2025 History
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
+function PostseasonAnnouncement() {
+  return (
+    <Card className="border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-5 shadow-sm dark:from-red-950/20 dark:via-background dark:to-amber-950/20 sm:p-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex min-w-0 gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
+            <Trophy className="h-6 w-6" />
+          </div>
+          <div className="min-w-0 space-y-1">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
+              Playoffs Are Here
+            </p>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              The road to the championship has begun
+            </h2>
+            <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+              Follow every playoff matchup, make your fantasy picks for 3x
+              points, and build your MichCA-Madness bracket as the postseason
+              unfolds.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="destructive" className="shrink-0">
+            <Link href="/michca-madness">
+              Madness
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link href="/fantasy">Fantasy</Link>
+          </Button>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link href="/schedule">Schedule</Link>
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function PlayoffSpotlight() {
+  return (
+    <div className="grid gap-4 lg:grid-cols-3">
+      <Card className="border border-border/70 bg-card p-6 shadow-md">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white">
+            <Calendar className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
+              Playoff Schedule
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Track the road to the finals
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              The postseason is underway. Keep an eye on dates, venues, and
+              matchups as teams continue their road to the finals.
+            </p>
+          </div>
+          <Button asChild>
+            <Link href="/schedule">
+              View Schedule
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+
+      <Card className="border-amber-500/25 bg-gradient-to-br from-amber-50 via-background to-card p-6 shadow-md dark:from-amber-950/20 dark:via-background dark:to-card">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-amber-500 text-white">
+            <Gamepad2 className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-amber-700 dark:text-amber-300">
+              Fantasy Playoffs
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Playoff games count 3x
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              Regular fantasy picks matter even more in the postseason. Each
+              playoff game is worth 3x points, so one correct call can move the
+              leaderboard.
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/fantasy">
+              Make Fantasy Picks
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+
+      <Card className="border-red-500/20 bg-gradient-to-br from-red-50 via-background to-amber-50 p-6 shadow-md dark:from-red-950/20 dark:via-background dark:to-amber-950/20">
+        <div className="space-y-5">
+          <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
+              MichCA-Madness
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              Build the perfect bracket
+            </h2>
+            <p className="text-sm leading-7 text-muted-foreground">
+              Pick each division from the first playoff game through the final
+              and see if your bracket stays perfect as the postseason moves
+              forward.
+            </p>
+          </div>
+          <Button asChild variant="destructive">
+            <Link href="/michca-madness">
+              Open Madness
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
 
 function getCurrentYear() {
   return Number.parseInt(
@@ -90,8 +312,6 @@ async function getHomeSeasonStats() {
       },
     },
     select: {
-      date: true,
-      division: true,
       venue: true,
       team1Code: true,
       team2Code: true,
@@ -117,28 +337,13 @@ async function getHomeSeasonStats() {
   };
 }
 
-export default async function HomePage() {
-  const stats = await getHomeSeasonStats();
-
+function DefaultHomePage({ stats }: { stats: HomeSeasonStats }) {
   return (
     <>
       <div className="bg-background">
         <PageContainer className="pt-6">
           <div className="mx-auto max-w-5xl">
-            <Card className="mb-4 border border-border/70 bg-card/80 p-4 shadow-sm md:hidden">
-              <div className="flex flex-col gap-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-                  Quick Links
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {quickLinks.map((link) => (
-                    <Button key={link.href} asChild variant="outline" size="sm">
-                      <Link href={link.href}>{link.label}</Link>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </Card>
+            <QuickLinksCard links={defaultQuickLinks} />
             <RegistrationBanner />
           </div>
         </PageContainer>
@@ -275,61 +480,195 @@ export default async function HomePage() {
                 <FantasyBanner />
               </div>
 
-              <Card className="border border-border/70 bg-gradient-to-r from-card via-background to-secondary/30 p-6 shadow-md">
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary">
-                      2025 Season History
-                    </p>
-                    <h2 className="text-2xl font-semibold text-foreground">
-                      Explore last season&apos;s champions and runners-up
-                      archive
-                    </h2>
-                    <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-                      The 2025 photo gallery remains available while the 2026
-                      season gets underway.
-                    </p>
-                  </div>
-                  <Button asChild size="lg" variant="outline">
-                    <Link href="/history">
-                      View 2025 History
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </Card>
+              <SeasonHistoryCard />
             </div>
           </PageContainer>
         </div>
 
-        <PageContainer className="py-16">
-          <Card className="p-8 md:p-12 text-center border border-border/70 bg-gradient-to-br from-card via-background to-secondary/50 shadow-md">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">
-              Join the Michigan Cricket Community
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              Whether you&apos;re a player, volunteer, or cricket enthusiast,
-              there&apos;s a place for you in MichCA. Explore our programs,
-              committees, and upcoming events.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg">
-                <Link href="/about">Learn About Us</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/committees">Our Leadership</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/grounds">Find Grounds</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/history">Season History</Link>
-              </Button>
-            </div>
-          </Card>
-        </PageContainer>
+        <CommunityCard />
       </div>
       <SiteFooter />
     </>
   );
+}
+
+function MadnessHomePage() {
+  const season = getCurrentYear();
+
+  return (
+    <>
+      <div className="bg-background">
+        <PageContainer className="pt-6">
+          <div className="mx-auto max-w-5xl">
+            <QuickLinksCard links={madnessQuickLinks} />
+            <div className="mt-4">
+              <PostseasonAnnouncement />
+            </div>
+          </div>
+        </PageContainer>
+
+        <div className="py-16 sm:py-20">
+          <PageContainer>
+            <div className="mx-auto max-w-6xl space-y-10">
+              <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                <div className="space-y-5">
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+                    {season} Playoffs
+                  </p>
+                  <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                    The playoffs have officially begun
+                  </h1>
+                  <p className="max-w-2xl text-base leading-8 text-muted-foreground">
+                    The postseason is here. Follow every matchup, watch the
+                    brackets take shape, and stay with the action all the way
+                    to the championship games.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild size="lg">
+                      <Link href="/schedule">
+                        View Schedule
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline">
+                      <Link href="/fantasy">Fantasy 3x Picks</Link>
+                    </Button>
+                  </div>
+                </div>
+
+                <Card className="relative overflow-hidden border border-border/70 bg-card p-6 shadow-md">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-amber-500/10 pointer-events-none" />
+                  <div className="relative space-y-5">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-600 text-white">
+                      <Trophy className="h-6 w-6" />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+                        Season Hub
+                      </p>
+                      <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+                        Three ways to follow the race
+                      </h2>
+                      <p className="text-sm leading-7 text-muted-foreground">
+                        Check the playoff schedule, make fantasy picks for 3x
+                        points, and build your MichCA-Madness bracket as the
+                        postseason unfolds.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <Button asChild size="sm">
+                        <Link href="/schedule">
+                          Schedule
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
+                      <Button asChild size="sm" variant="outline">
+                        <Link href="/fantasy">Fantasy</Link>
+                      </Button>
+                      <Button asChild size="sm" variant="outline">
+                        <Link href="/michca-madness">Madness</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <PlayoffSpotlight />
+              <SeasonHistoryCard />
+            </div>
+          </PageContainer>
+        </div>
+
+        <CommunityCard />
+      </div>
+      <SiteFooter />
+    </>
+  );
+}
+
+async function getUpcomingPlayoffGames() {
+  try {
+    const games = await prisma.game.findMany({
+      where: {
+        gameType: "PLAYOFF",
+        status: { in: ["SCHEDULED", "LIVE"] },
+      },
+      take: 6,
+      orderBy: { date: "asc" },
+      include: {
+        team1: { select: { teamName: true, teamShortCode: true } },
+        team2: { select: { teamName: true, teamShortCode: true } },
+      },
+    });
+
+    if (games.length > 0) {
+      return games.map((g) => ({
+        id: g.id,
+        date: g.date.toISOString(),
+        division: g.division,
+        venue: g.venue || "TBD Ground",
+        team1Code: g.team1Code,
+        team1Name: g.team1?.teamName || g.team1Code,
+        team2Code: g.team2Code,
+        team2Name: g.team2?.teamName || g.team2Code,
+        status: g.status,
+      }));
+    }
+  } catch (err) {
+    console.error("Error fetching playoff games:", err);
+  }
+
+  return [
+    {
+      id: "p1",
+      date: new Date(2026, 7, 15, 10, 0).toISOString(),
+      division: "F40",
+      venue: "Lyon Oaks Ground #1",
+      team1Code: "MOCC",
+      team1Name: "Motown Cricket Club",
+      team2Code: "LCC",
+      team2Name: "Lansing Cricket Club",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p2",
+      date: new Date(2026, 7, 15, 14, 0).toISOString(),
+      division: "T30",
+      venue: "Murphy Park Cricket Oval",
+      team1Code: "DYN",
+      team1Name: "Detroit Dynamos",
+      team2Code: "AA",
+      team2Name: "Ann Arbor Aviators",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p3",
+      date: new Date(2026, 7, 16, 10, 0).toISOString(),
+      division: "F40",
+      venue: "Bloomer Park Oval",
+      team1Code: "GLC",
+      team1Name: "Great Lakes Strikers",
+      team2Code: "MCC",
+      team2Name: "Michigan Cricket Club",
+      status: "SCHEDULED",
+    },
+    {
+      id: "p4",
+      date: new Date(2026, 7, 16, 14, 30).toISOString(),
+      division: "T30",
+      venue: "Lyon Oaks Ground #2",
+      team1Code: "TROY",
+      team1Name: "Troy Titans",
+      team2Code: "GLK",
+      team2Name: "Grand Rapids Kings",
+      status: "SCHEDULED",
+    },
+  ];
+}
+
+export default async function HomePage() {
+  const stats = await getHomeSeasonStats();
+  const playoffGames = await getUpcomingPlayoffGames();
+
+  return <PlayoffHomePage stats={stats} playoffGames={playoffGames} />;
 }

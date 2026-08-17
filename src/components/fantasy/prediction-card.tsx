@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CheckCircle2, Loader2, Lock, Zap } from "lucide-react";
+import { CheckCircle2, Loader2, Lock, MapPin, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { TeamFormChips } from "@/components/team-form-chips";
 import { submitPrediction } from "@/lib/actions/fantasy";
 import { cn } from "@/lib/utils";
 import type { PredictionCount } from "@/components/fantasy/fantasy-client";
+import type { TeamFormResult } from "@/lib/team-form";
+import type { TeamVenueStats } from "@/lib/team-venue-stats";
 
 type Game = {
   id: string;
@@ -19,8 +22,10 @@ type Game = {
   team2Code: string;
   team1: { teamName: string; teamShortCode: string; logo: string | null };
   team2: { teamName: string; teamShortCode: string; logo: string | null };
-  team1Form?: ("W" | "L" | "D")[];
-  team2Form?: ("W" | "L" | "D")[];
+  team1Form?: TeamFormResult[];
+  team2Form?: TeamFormResult[];
+  team1VenueStats?: TeamVenueStats;
+  team2VenueStats?: TeamVenueStats;
 };
 
 type ExistingPrediction = {
@@ -52,56 +57,6 @@ function formatGameDateTime(date: Date) {
     hour12: false,
     timeZone: DETROIT_TZ,
   }).format(date);
-}
-
-function FormChips({ form }: { form: ("W" | "L" | "D")[] }) {
-  return (
-    <div
-      className="flex items-center gap-1"
-      aria-label="Recent form"
-      data-testid="team-form"
-    >
-      {form.map((result, index) => {
-        const isLatest = index === form.length - 1;
-        const label =
-          result === "W" ? "Win" : result === "L" ? "Loss" : "Draw";
-        return (
-          <span
-            key={`${result}-${index}`}
-            aria-label={label}
-            data-latest={isLatest ? "true" : undefined}
-            data-result={result}
-            className={cn(
-              "inline-flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-semibold leading-none",
-              result === "W" &&
-                "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
-              result === "L" &&
-                "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
-              result === "D" &&
-                "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
-              isLatest && "ring-1 ring-current/35",
-            )}
-            title={label}
-          >
-            {result === "D" ? "-" : result}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
-function getFormSummary(form: ("W" | "L" | "D")[]) {
-  return `Form: ${form.map((result) => (result === "D" ? "-" : result)).join(" ")}`;
-}
-
-function TeamForm({ form }: { form: ("W" | "L" | "D")[] }) {
-  return (
-    <div className="mt-1.5">
-      <p className="sr-only">{getFormSummary(form)}</p>
-      <FormChips form={form} />
-    </div>
-  );
 }
 
 export function PredictionCard({
@@ -180,9 +135,12 @@ export function PredictionCard({
     >
       {/* ── Header ── */}
       <div className="flex max-w-full flex-wrap items-center justify-between gap-2">
-        <p className="min-w-0 text-sm text-muted-foreground">
-          {formatGameDateTime(game.date)}
-        </p>
+        <div className="min-w-0 text-sm text-muted-foreground">
+          <p>{formatGameDateTime(game.date)}</p>
+          <p className="mt-0.5 text-xs">
+            Venue: {game.venue?.trim() || "Venue TBD"}
+          </p>
+        </div>
         <div className="flex max-w-full items-center justify-end gap-1.5 flex-wrap">
           {isLocked && (
             <Badge
@@ -220,29 +178,59 @@ export function PredictionCard({
           onClick={() => handleSelect(game.team1Code)}
         />
 
-        {/* Tie */}
-        <button
-          type="button"
-          disabled={!!isLocked || isPending}
-          onClick={() => handleSelect(null)}
-          className={cn(
-            "flex max-w-full items-center justify-between rounded-xl border-2 px-3 py-2.5 sm:px-4 text-sm font-medium transition-all",
-            selected === null
-              ? "border-slate-400 bg-slate-100 text-slate-700 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-100"
-              : "border-border text-muted-foreground hover:border-primary/30",
-            (isLocked || isPending) && "cursor-default",
-          )}
-        >
-          <div className="flex items-center gap-2">
-            {selected === null && (
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" />
-            )}
-            <span>Tie</span>
+        {/* Playoff Venue Stats or League Tie Button */}
+        {game.gameType === "PLAYOFF" ? (
+          <div
+            data-testid="venue-stats"
+            className="rounded-xl border border-border/80 bg-muted/30 px-3 py-2.5 sm:px-4 text-xs text-muted-foreground space-y-2"
+          >
+            <p className="font-semibold text-foreground/90 flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+              <span>Venue Stats ({game.venue?.trim() || "Venue TBD"})</span>
+            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="text-xs py-0.5 px-2.5 font-normal gap-1">
+                <span className="font-semibold text-foreground">
+                  {game.team1.teamShortCode} -
+                </span>
+                {game.team1VenueStats && game.team1VenueStats.gamesPlayed > 0
+                  ? `Won ${game.team1VenueStats.gamesWon} of ${game.team1VenueStats.gamesPlayed} ${game.team1VenueStats.gamesPlayed === 1 ? "game" : "games"}`
+                  : "No prior games"}
+              </Badge>
+              <Badge variant="outline" className="text-xs py-0.5 px-2.5 font-normal gap-1">
+                <span className="font-semibold text-foreground">
+                  {game.team2.teamShortCode}  -
+                </span>
+                {game.team2VenueStats && game.team2VenueStats.gamesPlayed > 0
+                  ? `Won ${game.team2VenueStats.gamesWon} of ${game.team2VenueStats.gamesPlayed} ${game.team2VenueStats.gamesPlayed === 1 ? "game" : "games"}`
+                  : "No prior games"}
+              </Badge>
+            </div>
           </div>
-          {drawPct !== null && (
-            <span className="tabular-nums text-xs">{drawPct}%</span>
-          )}
-        </button>
+        ) : (
+          <button
+            type="button"
+            disabled={!!isLocked || isPending}
+            onClick={() => handleSelect(null)}
+            className={cn(
+              "flex max-w-full items-center justify-between rounded-xl border-2 px-3 py-2.5 sm:px-4 text-sm font-medium transition-all",
+              selected === null
+                ? "border-slate-400 bg-slate-100 text-slate-700 dark:border-slate-500 dark:bg-slate-700 dark:text-slate-100"
+                : "border-border text-muted-foreground hover:border-primary/30",
+              (isLocked || isPending) && "cursor-default",
+            )}
+          >
+            <div className="flex items-center gap-2">
+              {selected === null && (
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-300" />
+              )}
+              <span>Tie</span>
+            </div>
+            {drawPct !== null && (
+              <span className="tabular-nums text-xs">{drawPct}%</span>
+            )}
+          </button>
+        )}
 
         {/* Team 2 */}
         <TeamRow
@@ -269,7 +257,7 @@ export function PredictionCard({
                 style={{ width: `${(picks!.team1Count / total) * 100}%` }}
               />
             )}
-            {picks!.drawCount > 0 && (
+            {game.gameType !== "PLAYOFF" && picks!.drawCount > 0 && (
               <div
                 className="h-full bg-muted-foreground/30 transition-all"
                 style={{ width: `${(picks!.drawCount / total) * 100}%` }}
@@ -306,10 +294,21 @@ export function PredictionCard({
 
       {isLocked && !existing?.isScored && (
         <div className="flex min-h-[28px] flex-wrap items-center justify-between gap-2">
-          <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
-            <Lock className="h-3 w-3" />
-            Game locked
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+              <Lock className="h-3 w-3" />
+              Game locked
+            </span>
+            {existing?.isBoosted ? (
+              <Badge
+                variant="outline"
+                className="gap-1 border-amber-500/40 bg-amber-50 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-300"
+              >
+                <Zap className="h-3 w-3" />
+                Boosted
+              </Badge>
+            ) : null}
+          </div>
           {!isPending && status === "error" && (
             <span className="text-xs text-destructive">{errorMsg}</span>
           )}
@@ -336,7 +335,7 @@ export function PredictionCard({
                 (selected === undefined ||
                   isPending ||
                   (!boosted && boostersRemaining <= 0)) &&
-                  "opacity-50 cursor-default",
+                "opacity-50 cursor-default",
               )}
             >
               <Zap className="h-3 w-3" />
@@ -374,7 +373,7 @@ type TeamRowProps = {
   code: string;
   name: string;
   shortCode: string;
-  form?: ("W" | "L" | "D")[];
+  form?: TeamFormResult[];
   pickPct: number | null;
   isSelected: boolean;
   isLocked: boolean;
@@ -431,9 +430,7 @@ function TeamRow({
               {name}
             </span>
           </p>
-          {form && form.length > 0 && (
-            <TeamForm form={form} />
-          )}
+          <TeamFormChips form={form} />
         </div>
       </div>
 

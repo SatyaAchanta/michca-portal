@@ -32,6 +32,7 @@ const navLinks: NavLink[] = [
   { label: "Schedule", href: "/schedule" },
   { label: "Teams", href: "/teams" },
   { label: "Fantasy", href: "/fantasy" },
+  { label: "Madness", href: "/michca-madness" },
 ];
 
 const publicMoreLinks: NavLink[] = [
@@ -42,18 +43,25 @@ const publicMoreLinks: NavLink[] = [
 ];
 
 const mobileQuickLinkHrefs = new Set(["/account", "/schedule", "/fantasy"]);
-const mobileNavLinks: NavLink[] = [...navLinks, ...publicMoreLinks].filter(
-  (link) => !mobileQuickLinkHrefs.has(link.href),
-);
 
 type SiteHeaderProps = {
   isAdmin?: boolean;
+  isMichcaMadnessEnabled?: boolean;
 };
 
-export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
+export function SiteHeader({
+  isAdmin = false,
+  isMichcaMadnessEnabled = false,
+}: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const { signOut } = useClerk();
+  const visibleNavLinks = isMichcaMadnessEnabled
+    ? navLinks
+    : navLinks.filter((link) => link.href !== "/michca-madness");
+  const visibleMobileNavLinks = [...visibleNavLinks, ...publicMoreLinks].filter(
+    (link) => !mobileQuickLinkHrefs.has(link.href),
+  );
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
@@ -81,7 +89,7 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
         <div className="ml-2 flex shrink-0 items-center gap-2">
           <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
             <ThemeToggle />
-            {navLinks.map((link) => (
+            {visibleNavLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -209,7 +217,7 @@ export function SiteHeader({ isAdmin = false }: SiteHeaderProps) {
                     </Button>
                   </div>
                 </SignedIn>
-                {mobileNavLinks.map((link) => (
+                {visibleMobileNavLinks.map((link) => (
                   <Button
                     key={link.href}
                     asChild
