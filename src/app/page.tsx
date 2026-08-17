@@ -167,15 +167,15 @@ function PostseasonAnnouncement() {
           </div>
           <div className="min-w-0 space-y-1">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">
-              Playoff Push
+              Playoffs Are Here
             </p>
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              Playoffs, fantasy stakes, and MichCA-Madness are heating up
+              The road to the championship has begun
             </h2>
             <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
-              F40 and T30 are almost at playoff time. Follow the schedule, make
-              your fantasy picks for 3x playoff points, and get ready for
-              MichCA-Madness brackets opening during the week of August 3.
+              Follow every playoff matchup, make your fantasy picks for 3x
+              points, and build your MichCA-Madness bracket as the postseason
+              unfolds.
             </p>
           </div>
         </div>
@@ -214,8 +214,8 @@ function PlayoffSpotlight() {
               Track the road to the finals
             </h2>
             <p className="text-sm leading-7 text-muted-foreground">
-              F40 and T30 are moving toward their biggest games. Keep an eye on
-              dates, venues, and matchups as playoff fixtures are confirmed.
+              The postseason is underway. Keep an eye on dates, venues, and
+              matchups as teams continue their road to the finals.
             </p>
           </div>
           <Button asChild>
@@ -267,9 +267,9 @@ function PlayoffSpotlight() {
               Build the perfect bracket
             </h2>
             <p className="text-sm leading-7 text-muted-foreground">
-              F40 and T30 brackets open during the week of August 3. Once they
-              open, pick each division from the first playoff game through the
-              final and stay perfect as the postseason moves forward.
+              Pick each division from the first playoff game through the final
+              and see if your bracket stays perfect as the postseason moves
+              forward.
             </p>
           </div>
           <Button asChild variant="destructive">
@@ -516,13 +516,12 @@ function MadnessHomePage() {
                     {season} Playoffs
                   </p>
                   <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                    F40 and T30 playoffs are right around the corner
+                    The playoffs have officially begun
                   </h1>
                   <p className="max-w-2xl text-base leading-8 text-muted-foreground">
-                    The regular-season push is giving way to knockout pressure.
-                    Follow the playoff race, watch the bracket take shape, and
-                    get ready for F40 and T30 MichCA-Madness brackets to open
-                    during the week of August 3.
+                    The postseason is here. Follow every matchup, watch the
+                    brackets take shape, and stay with the action all the way
+                    to the championship games.
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Button asChild size="lg">
@@ -552,8 +551,8 @@ function MadnessHomePage() {
                       </h2>
                       <p className="text-sm leading-7 text-muted-foreground">
                         Check the playoff schedule, make fantasy picks for 3x
-                        points, and get ready for F40 and T30 brackets opening
-                        during the week of August 3.
+                        points, and build your MichCA-Madness bracket as the
+                        postseason unfolds.
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-3">

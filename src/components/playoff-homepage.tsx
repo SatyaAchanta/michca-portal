@@ -40,6 +40,9 @@ interface PlayoffHomePageProps {
 
 export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
   const [divisionFilter, setDivisionFilter] = useState<string>("ALL");
+  const divisions = Array.from(
+    new Set(playoffGames.map((game) => game.division)),
+  );
 
   const filteredGames = playoffGames.filter((game) => {
     if (divisionFilter === "ALL") return true;
@@ -62,12 +65,14 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
               </span>
               <Flame className="h-3.5 w-3.5 text-red-600 dark:text-red-400" />
-              <span>PLAYOFFS ARE LIVE · F40 & T30 KNOCKOUTS STARTED</span>
+              <span>
+                PLAYOFFS ARE LIVE · THE ROAD TO THE CHAMPIONSHIP STARTS NOW
+              </span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl font-extrabold tracking-tight text-foreground dark:text-white sm:text-6xl lg:text-7xl font-display">
-              F40 & T30 Playoffs <br className="hidden sm:inline" />
+              MichCA Playoffs <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-red-600 via-amber-600 to-amber-700 dark:from-red-400 dark:via-amber-300 dark:to-amber-500 bg-clip-text text-transparent">
                 Have Officially Begun
               </span>
@@ -75,7 +80,16 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
 
             {/* Subheadline */}
             <p className="mx-auto max-w-3xl text-base text-muted-foreground dark:text-slate-300 sm:text-xl leading-relaxed">
-              The fight for the championship cup is underway! Predict knockout winners across all F40 and T30 playoff matches to earn <strong className="text-red-700 dark:text-amber-400 font-bold">3X FANTASY POINTS</strong> per game — or unleash a massive <strong className="text-amber-700 dark:text-amber-300 font-black">9X MULTIPLIER</strong> with your booster!
+              The fight for the championship cup is underway! Predict winners
+              across every playoff matchup to earn{" "}
+              <strong className="text-red-700 dark:text-amber-400 font-bold">
+                3X FANTASY POINTS
+              </strong>{" "}
+              per game — or unleash a massive{" "}
+              <strong className="text-amber-700 dark:text-amber-300 font-black">
+                9X MULTIPLIER
+              </strong>{" "}
+              with your booster!
             </p>
 
             {/* Hero CTA buttons */}
@@ -119,12 +133,13 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                   Upcoming Playoff Games
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  F40 (Forty-Over) and T30 (Thirty-Over) postseason knockout matches.
+                  Follow the postseason matchups on the road to the
+                  championship.
                 </p>
               </div>
 
               {/* Division Filter Buttons */}
-              <div className="flex items-center gap-2 bg-muted/60 p-1 rounded-xl border border-border/60">
+              <div className="flex flex-wrap items-center gap-2 bg-muted/60 p-1 rounded-xl border border-border/60">
                 <button
                   type="button"
                   onClick={() => setDivisionFilter("ALL")}
@@ -136,36 +151,26 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                 >
                   All Divisions
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setDivisionFilter("F40")}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    divisionFilter === "F40"
-                      ? "bg-red-600 text-white shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  F40 Division
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDivisionFilter("T30")}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    divisionFilter === "T30"
-                      ? "bg-amber-600 text-white shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  T30 Division
-                </button>
+                {divisions.map((division) => (
+                  <button
+                    key={division}
+                    type="button"
+                    onClick={() => setDivisionFilter(division)}
+                    className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      divisionFilter === division
+                        ? "bg-red-600 text-white shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {division.replaceAll("_", " ")}
+                  </button>
+                ))}
               </div>
             </div>
 
             {/* Clean Playoff Match Schedule Cards Grid */}
             <div className="grid gap-6 md:grid-cols-2">
               {filteredGames.map((game) => {
-                const isF40 = game.division === "F40";
-
                 return (
                   <Card
                     key={game.id}
@@ -174,11 +179,7 @@ export function PlayoffHomePage({ stats, playoffGames }: PlayoffHomePageProps) {
                     {/* Top Row: Division Badge */}
                     <div className="flex items-center justify-between">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase ${
-                          isF40
-                            ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20"
-                            : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
-                        }`}
+                        className="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-extrabold uppercase text-red-600 dark:text-red-400"
                       >
                         {game.division} Playoff
                       </span>
