@@ -162,9 +162,9 @@ export function SiteHeader({
           </nav>
           <div className="hidden items-center gap-2 md:flex">
             <SignedOut>
-              <Button asChild variant="outline" size="sm">
-                <Link href="/sign-in">Sign In</Link>
-              </Button>
+              <p className="max-w-44 text-right text-xs leading-tight text-muted-foreground">
+                Website under maintenance for next season
+              </p>
             </SignedOut>
             <SignedIn>
               <UserButton />
@@ -186,14 +186,9 @@ export function SiteHeader({
                   <ThemeToggle />
                 </div>
                 <SignedOut>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="justify-start"
-                    onClick={() => setOpen(false)}
-                  >
-                    <Link href="/sign-in">Sign In</Link>
-                  </Button>
+                  <p className="text-sm text-muted-foreground">
+                    Website under maintenance for next season
+                  </p>
                 </SignedOut>
                 <SignedIn>
                   <div className="flex items-center justify-between gap-3">
