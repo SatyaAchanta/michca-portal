@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Eye, Loader2, Medal, Zap } from "lucide-react";
 
@@ -344,14 +343,13 @@ export function LeaderboardTable({
                           </Button>
                         ) : (
                           <Button
-                            asChild
                             variant="outline"
                             size="icon"
                             className="h-9 w-9"
+                            disabled
+                            aria-label="Picks unavailable during maintenance"
                           >
-                            <Link href="/sign-in" aria-label="Sign in to view picks">
-                              <Eye className="h-4 w-4" />
-                            </Link>
+                            <Eye className="h-4 w-4" />
                           </Button>
                         )}
                       </td>
